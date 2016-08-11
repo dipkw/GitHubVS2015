@@ -109,6 +109,7 @@
     <Compile Include="Helpers\ShowTaskBar.cs" />
     <Compile Include="Helpers\ToWord.cs" />
     <Compile Include="Product.cs" />
+    <Compile Include="Validations\Validation.cs" />
     <Compile Include="Views\homeView.xaml.cs">
       <DependentUpon>homeView.xaml</DependentUpon>
     </Compile>
