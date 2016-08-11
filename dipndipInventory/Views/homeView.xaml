@@ -1,0 +1,200 @@
+﻿<Window x:Class="dipndipInventory.Views.homeView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:dipndipInventory.Views"
+        xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+        mc:Ignorable="d"
+        Title="dipndipHome" Height="760" Width="1360" WindowState="Maximized">
+    <Grid x:Name="LayoutRoot" >
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <telerik:RadRibbonView  x:Name="radRibbonView1" VerticalAlignment="Top" Title="" ApplicationButtonContent="" ApplicationName="">
+            <!--<telerik:RadRibbonView.Backstage>
+                <telerik:RadRibbonBackstage >
+                    <telerik:RadRibbonBackstageItem Header="Log Off"  >
+                        <StackPanel>
+                            <telerik:RadButton Click="RadButton_Click_1" />
+                        </StackPanel>
+                    </telerik:RadRibbonBackstageItem>
+                </telerik:RadRibbonBackstage>
+            </telerik:RadRibbonView.Backstage>-->
+
+            <telerik:RadRibbonView.ContextualGroups>
+                <telerik:RadRibbonContextualGroup x:Name="xHidden" IsActive="{Binding IsChecked, ElementName=xToggle}"/>
+            </telerik:RadRibbonView.ContextualGroups>
+            <!--<telerik:RadRibbonTab Header="Users">
+                <telerik:RadRibbonGroup>
+                    <telerik:RadRibbonButton >
+                        <StackPanel>
+                            <Image Source="/dipndipInventory;component/images/menu_icons/clients_config_64.png" Width="32" Height="32"/>
+                            <TextBlock Text="Create User" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </telerik:RadRibbonButton>
+
+                </telerik:RadRibbonGroup>
+
+            </telerik:RadRibbonTab>
+            <telerik:RadRibbonTab Header="Sites">
+                <telerik:RadRibbonGroup>
+                    <telerik:RadRibbonButton >
+                        <StackPanel>
+                            <Image Source="/dipndipInventory;component/images/menu_icons/sites-2-icon.png" Width="32" Height="32"/>
+                            <TextBlock Text="Create Site" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </telerik:RadRibbonButton>
+
+                </telerik:RadRibbonGroup>
+
+            </telerik:RadRibbonTab>-->
+            <telerik:RadRibbonTab Header="dipndip" Visibility="Visible">
+
+                <!--<telerik:RadRibbonGroup Header="Sales">
+                    <telerik:RadRibbonButton   Width="70"  HorizontalContentAlignment="Center" x:Name="Sales" Click="Sales_Click" >
+                        <StackPanel>
+                            <Image Source="/dipndipInventory;component/Images/menu_icons/cart_icon64.png" Width="32" Height="32"/>
+                            <TextBlock Text="Sales" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </telerik:RadRibbonButton>
+                    <telerik:RadRibbonButton   Width="70"  HorizontalContentAlignment="Center" x:Name="SalesReturn" Click="SalesReturn_Click">
+                        <StackPanel>
+                            <Image Source="/dipndipInventory;component/images/menu_icons/exchange.png" Width="32" Height="32"/>
+                            <TextBlock Text="Return" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </telerik:RadRibbonButton>
+                    <telerik:RadRibbonButton   Width="70"  HorizontalContentAlignment="Center" x:Name="Receipt" Click="Receipt_Click">
+                        <StackPanel>
+                            <Image Source="/dipndipInventory;component/Images/menu_icons/billing.png" Width="32" Height="32"/>
+                            <TextBlock Text="Receipt" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+                        </StackPanel>
+                    </telerik:RadRibbonButton>
+                    <telerik:RadRibbonButton   Width="70"  HorizontalContentAlignment="Center" x:Name="Customers" Click="Customers_Click">
+                        <StackPanel>
+                            <Image Source="/dipndipInventory;component/Images/menu_icons/customers.png" Width="32" Height="32"/>
+                            <TextBlock Text="Customers" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </telerik:RadRibbonButton>
+
+
+                    <telerik:RadRibbonButton   Width="0"  HorizontalContentAlignment="Center" x:Name="SalesReportByCustomer">
+                        <StackPanel>
+                            <Image Source="/dipndipInventory;component/images/menu_icons/profit-icon.png" Width="32" Height="32"/>
+                            <TextBlock Text="Sales Report" HorizontalAlignment="Center" TextWrapping="Wrap"/>
+                            <TextBlock Text="Customer" HorizontalAlignment="Center" TextWrapping="Wrap"/>
+                        </StackPanel>
+                    </telerik:RadRibbonButton>
+                </telerik:RadRibbonGroup>-->
+
+                
+
+                <telerik:RadRibbonGroup Header="Items">
+                    <telerik:RadRibbonButton   Width="70"  HorizontalContentAlignment="Center" x:Name="Order">
+                        <StackPanel>
+                            <Image Source="/dipndipInventory;component/images/menu_icons/9_exit_641.png" Width="32" Height="32"/>
+                            <TextBlock Text="Order" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </telerik:RadRibbonButton>
+                    <telerik:RadRibbonButton   Width="70"  HorizontalContentAlignment="Center" x:Name="Receive">
+                        <StackPanel>
+                            <Image Source="/dipndipInventory;component/images/menu_icons/9_exit_641.png" Width="32" Height="32"/>
+                            <TextBlock Text="Receive" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </telerik:RadRibbonButton>
+                    <telerik:RadRibbonButton   Width="70"  HorizontalContentAlignment="Center" x:Name="Issue">
+                        <StackPanel>
+                            <Image Source="/dipndipInventory;component/images/menu_icons/9_exit_641.png" Width="32" Height="32"/>
+                            <TextBlock Text="Issue" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </telerik:RadRibbonButton>
+                    <telerik:RadRibbonButton   Width="70"  HorizontalContentAlignment="Center">
+                        <StackPanel>
+                            <Image Source="/dipndipInventory;component/Images/menu_icons/Icon-Tickets.png" Width="32" Height="32"/>
+                            <TextBlock Text="Categories" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </telerik:RadRibbonButton>
+                    <telerik:RadRibbonButton x:Name="UnitsMenu"  Width="70"  HorizontalContentAlignment="Center">
+                        <StackPanel>
+                            <Image Source="/dipndipInventory;component/Images/menu_icons/Icon-Tickets.png" Width="32" Height="32"/>
+                            <TextBlock Text="Units" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </telerik:RadRibbonButton>
+                    <telerik:RadRibbonButton x:Name="WHItemsMenu"  Width="70"  HorizontalContentAlignment="Center">
+                        <StackPanel>
+                            <Image Source="/dipndipInventory;component/Images/menu_icons/Icon-Tickets.png" Width="32" Height="32"/>
+                            <TextBlock Text="WH Items" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </telerik:RadRibbonButton>
+                    <telerik:RadRibbonButton x:Name="ItemUnitsMenu"  Width="70"  HorizontalContentAlignment="Center">
+                        <StackPanel>
+                            <Image Source="/dipndipInventory;component/Images/menu_icons/Icon-Tickets.png" Width="32" Height="32"/>
+                            <TextBlock Text="Item Units" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </telerik:RadRibbonButton>
+                    <telerik:RadRibbonButton x:Name="CKItemsMenu"  Width="70"  HorizontalContentAlignment="Center">
+                        <StackPanel>
+                            <Image Source="/dipndipInventory;component/Images/menu_icons/fast-food-icon.png" Width="32" Height="32"/>
+                            <TextBlock Text="CK Items" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </telerik:RadRibbonButton>
+                </telerik:RadRibbonGroup>
+
+                <telerik:RadRibbonGroup Header="Setup">
+                    <telerik:RadRibbonButton x:Name="UsersMenu"  Width="65"  HorizontalContentAlignment="Center" Click="UsersMenu_Click">
+                        <StackPanel>
+                            <Image Source="/dipndipInventory;component/images/menu_icons/clients_config_64.png" Width="32" Height="32"/>
+                            <TextBlock Text="Users" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </telerik:RadRibbonButton>
+                    <telerik:RadRibbonButton x:Name="SitesMenu"  Width="65"  HorizontalContentAlignment="Center">
+                        <StackPanel>
+                            <Image Source="/dipndipInventory;component/images/menu_icons/sites-2-icon.png" Width="32" Height="32"/>
+                            <TextBlock Text="Sites" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </telerik:RadRibbonButton>
+                </telerik:RadRibbonGroup>
+
+                <telerik:RadRibbonGroup Header="Exit">
+                    <telerik:RadRibbonButton   Width="70"  HorizontalContentAlignment="Center" x:Name="Exit" Click="Exit_Click">
+                        <StackPanel>
+                            <Image Source="/dipndipInventory;component/images/menu_icons/9_exit_641.png" Width="32" Height="32"/>
+                            <TextBlock Text="Exit" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </telerik:RadRibbonButton>
+                </telerik:RadRibbonGroup>
+
+                <!--<telerik:RadRibbonGroup>
+                    <StackPanel Margin="10,0,0,0" VerticalAlignment="Bottom" Orientation="Horizontal">
+                        <TextBlock Text="Signed in as: " FontSize="21" FontFamily="Monotype Corsiva"/>
+                        
+                        <TextBlock x:Name="txtUserName" Text="" FontSize="21" FontFamily="Monotype Corsiva"/>
+                    </StackPanel>
+                </telerik:RadRibbonGroup>-->
+            </telerik:RadRibbonTab>
+
+            <telerik:RadRibbonTab Header="Optical Shop" ContextualGroupName="xHidden">
+                <telerik:RadRibbonGroup Header="Sales">
+                    <telerik:RadRibbonButton Content="Customers"/>
+
+                </telerik:RadRibbonGroup>
+
+            </telerik:RadRibbonTab>
+        </telerik:RadRibbonView>
+        <StackPanel Margin="0,145,0,0" x:Name="stkGrid" VerticalAlignment="Stretch" >
+
+            <!--<Image Source="/dipndipInventory;component/images/home_background.jpg" Margin="0,0,0,0" Stretch="UniformToFill" />-->
+            <!--<Label Content="Image"/>-->
+            <Image Source="/dipndipInventory;component/images/dipndiplogo.png" Margin="450,250,450,50"/>
+        </StackPanel>
+        <!--<StackPanel Margin="0,145,0,0" x:Name="stkGrid" VerticalAlignment="Stretch" >
+
+            <Image Source="/Foamco;component/images/FoamcoLogo.JPG" Margin="0,0,0,0" Stretch="Fill" Height="600" />
+
+        </StackPanel>-->
+    </Grid>
+
+</Window>

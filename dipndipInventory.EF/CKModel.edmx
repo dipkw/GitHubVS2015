@@ -1,0 +1,943 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="dipckModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ck_item_details">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ck_item_id" Type="int" />
+          <Property Name="ckwh_item_id" Type="int" />
+          <Property Name="ckwh_item_qty" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="ckwh_item_unit_id" Type="int" />
+          <Property Name="created_by" Type="int" />
+          <Property Name="created_date" Type="datetime" />
+          <Property Name="modified_by" Type="int" />
+          <Property Name="modified_date" Type="datetime" />
+          <Property Name="active" Type="bit" />
+        </EntityType>
+        <EntityType Name="ck_items">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ck_item_code" Type="int" />
+          <Property Name="ck_item_description" Type="nvarchar" MaxLength="50" />
+          <Property Name="ck_desired_qty" Type="int" />
+          <Property Name="ck_unit_id" Type="int" />
+          <Property Name="ck_item_unit_cost" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="created_by" Type="int" />
+          <Property Name="created_date" Type="datetime" />
+          <Property Name="modified_by" Type="int" />
+          <Property Name="modified_date" Type="datetime" />
+          <Property Name="active" Type="int" />
+        </EntityType>
+        <EntityType Name="ck_units">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="unit_description" Type="nvarchar" MaxLength="50" />
+          <Property Name="created_by" Type="int" />
+          <Property Name="created_date" Type="datetime" />
+          <Property Name="modified_by" Type="int" />
+          <Property Name="modified_date" Type="datetime" />
+          <Property Name="active" Type="bit" />
+        </EntityType>
+        <EntityType Name="ck_users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="uname" Type="nvarchar" MaxLength="50" />
+          <Property Name="username" Type="nvarchar" MaxLength="150" />
+          <Property Name="password" Type="nvarchar" MaxLength="50" />
+          <Property Name="role" Type="nvarchar" MaxLength="50" />
+          <Property Name="active" Type="bit" />
+        </EntityType>
+        <EntityType Name="ckwh_category">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="category_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="created_by" Type="int" />
+          <Property Name="created_date" Type="datetime" />
+          <Property Name="modified_by" Type="int" />
+          <Property Name="modified_date" Type="datetime" />
+          <Property Name="active" Type="bit" />
+        </EntityType>
+        <EntityType Name="ckwh_item_unit">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ckwh_item_id" Type="int" />
+          <Property Name="ck_unit_id" Type="int" />
+          <Property Name="cnv_factor" Type="int" />
+          <Property Name="created_by" Type="int" />
+          <Property Name="created_date" Type="datetime" />
+          <Property Name="modified_by" Type="int" />
+          <Property Name="modified_date" Type="datetime" />
+          <Property Name="active" Type="bit" />
+        </EntityType>
+        <EntityType Name="ckwh_items">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="wh_item_code" Type="nvarchar" MaxLength="50" />
+          <Property Name="wh_item_description" Type="nvarchar" MaxLength="150" />
+          <Property Name="wh_category_id" Type="int" />
+          <Property Name="wh_category_description" Type="nvarchar" MaxLength="50" />
+          <Property Name="wh_unit_id" Type="int" />
+          <Property Name="quantity" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="unit_cost" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="site_id" Type="int" />
+          <Property Name="created_by" Type="int" />
+          <Property Name="created_date" Type="datetime" />
+          <Property Name="modified_by" Type="int" />
+          <Property Name="modified_date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="sites">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="site_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="created_by" Type="int" />
+          <Property Name="created_date" Type="datetime" />
+          <Property Name="modified_by" Type="int" />
+          <Property Name="modified_date" Type="datetime" />
+          <Property Name="active" Type="bit" />
+        </EntityType>
+        <Association Name="FK_ck_item_details_ck_users">
+          <End Role="ck_users" Type="Self.ck_users" Multiplicity="0..1" />
+          <End Role="ck_item_details" Type="Self.ck_item_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ck_users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ck_item_details">
+              <PropertyRef Name="created_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ck_item_details_ck_users1">
+          <End Role="ck_users" Type="Self.ck_users" Multiplicity="0..1" />
+          <End Role="ck_item_details" Type="Self.ck_item_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ck_users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ck_item_details">
+              <PropertyRef Name="modified_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ck_item_details_ckwh_item_unit">
+          <End Role="ckwh_item_unit" Type="Self.ckwh_item_unit" Multiplicity="0..1" />
+          <End Role="ck_item_details" Type="Self.ck_item_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ckwh_item_unit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ck_item_details">
+              <PropertyRef Name="ckwh_item_unit_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ck_items_ck_units">
+          <End Role="ck_units" Type="Self.ck_units" Multiplicity="0..1" />
+          <End Role="ck_items" Type="Self.ck_items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ck_units">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ck_items">
+              <PropertyRef Name="ck_unit_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ck_items_ck_users">
+          <End Role="ck_users" Type="Self.ck_users" Multiplicity="0..1" />
+          <End Role="ck_items" Type="Self.ck_items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ck_users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ck_items">
+              <PropertyRef Name="created_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ck_items_ck_users1">
+          <End Role="ck_users" Type="Self.ck_users" Multiplicity="0..1" />
+          <End Role="ck_items" Type="Self.ck_items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ck_users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ck_items">
+              <PropertyRef Name="modified_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ckwh_item_unit_ck_units">
+          <End Role="ck_units" Type="Self.ck_units" Multiplicity="0..1" />
+          <End Role="ckwh_item_unit" Type="Self.ckwh_item_unit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ck_units">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ckwh_item_unit">
+              <PropertyRef Name="ck_unit_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ckwh_item_unit_ck_users">
+          <End Role="ck_users" Type="Self.ck_users" Multiplicity="0..1" />
+          <End Role="ckwh_item_unit" Type="Self.ckwh_item_unit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ck_users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ckwh_item_unit">
+              <PropertyRef Name="created_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ckwh_item_unit_ck_users1">
+          <End Role="ck_users" Type="Self.ck_users" Multiplicity="0..1" />
+          <End Role="ckwh_item_unit" Type="Self.ckwh_item_unit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ck_users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ckwh_item_unit">
+              <PropertyRef Name="modified_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ckwh_item_unit_ckwh_items">
+          <End Role="ckwh_items" Type="Self.ckwh_items" Multiplicity="0..1" />
+          <End Role="ckwh_item_unit" Type="Self.ckwh_item_unit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ckwh_items">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ckwh_item_unit">
+              <PropertyRef Name="ckwh_item_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ckwh_items_ck_users">
+          <End Role="ck_users" Type="Self.ck_users" Multiplicity="0..1" />
+          <End Role="ckwh_items" Type="Self.ckwh_items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ck_users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ckwh_items">
+              <PropertyRef Name="created_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ckwh_items_ck_users1">
+          <End Role="ck_users" Type="Self.ck_users" Multiplicity="0..1" />
+          <End Role="ckwh_items" Type="Self.ckwh_items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ck_users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ckwh_items">
+              <PropertyRef Name="modified_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ckwh_items_ckwh_category">
+          <End Role="ckwh_category" Type="Self.ckwh_category" Multiplicity="0..1" />
+          <End Role="ckwh_items" Type="Self.ckwh_items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ckwh_category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ckwh_items">
+              <PropertyRef Name="wh_category_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ckwh_items_sites">
+          <End Role="sites" Type="Self.sites" Multiplicity="0..1" />
+          <End Role="ckwh_items" Type="Self.ckwh_items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sites">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ckwh_items">
+              <PropertyRef Name="site_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_sites_ck_users">
+          <End Role="ck_users" Type="Self.ck_users" Multiplicity="0..1" />
+          <End Role="sites" Type="Self.sites" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ck_users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="sites">
+              <PropertyRef Name="created_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_sites_ck_users1">
+          <End Role="ck_users" Type="Self.ck_users" Multiplicity="0..1" />
+          <End Role="sites" Type="Self.sites" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ck_users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="sites">
+              <PropertyRef Name="modified_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="dipckModelStoreContainer">
+          <EntitySet Name="ck_item_details" EntityType="Self.ck_item_details" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ck_items" EntityType="Self.ck_items" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ck_units" EntityType="Self.ck_units" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ck_users" EntityType="Self.ck_users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ckwh_category" EntityType="Self.ckwh_category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ckwh_item_unit" EntityType="Self.ckwh_item_unit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ckwh_items" EntityType="Self.ckwh_items" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sites" EntityType="Self.sites" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ck_item_details_ck_users" Association="Self.FK_ck_item_details_ck_users">
+            <End Role="ck_users" EntitySet="ck_users" />
+            <End Role="ck_item_details" EntitySet="ck_item_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ck_item_details_ck_users1" Association="Self.FK_ck_item_details_ck_users1">
+            <End Role="ck_users" EntitySet="ck_users" />
+            <End Role="ck_item_details" EntitySet="ck_item_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ck_item_details_ckwh_item_unit" Association="Self.FK_ck_item_details_ckwh_item_unit">
+            <End Role="ckwh_item_unit" EntitySet="ckwh_item_unit" />
+            <End Role="ck_item_details" EntitySet="ck_item_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ck_items_ck_units" Association="Self.FK_ck_items_ck_units">
+            <End Role="ck_units" EntitySet="ck_units" />
+            <End Role="ck_items" EntitySet="ck_items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ck_items_ck_users" Association="Self.FK_ck_items_ck_users">
+            <End Role="ck_users" EntitySet="ck_users" />
+            <End Role="ck_items" EntitySet="ck_items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ck_items_ck_users1" Association="Self.FK_ck_items_ck_users1">
+            <End Role="ck_users" EntitySet="ck_users" />
+            <End Role="ck_items" EntitySet="ck_items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ckwh_item_unit_ck_units" Association="Self.FK_ckwh_item_unit_ck_units">
+            <End Role="ck_units" EntitySet="ck_units" />
+            <End Role="ckwh_item_unit" EntitySet="ckwh_item_unit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ckwh_item_unit_ck_users" Association="Self.FK_ckwh_item_unit_ck_users">
+            <End Role="ck_users" EntitySet="ck_users" />
+            <End Role="ckwh_item_unit" EntitySet="ckwh_item_unit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ckwh_item_unit_ck_users1" Association="Self.FK_ckwh_item_unit_ck_users1">
+            <End Role="ck_users" EntitySet="ck_users" />
+            <End Role="ckwh_item_unit" EntitySet="ckwh_item_unit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ckwh_item_unit_ckwh_items" Association="Self.FK_ckwh_item_unit_ckwh_items">
+            <End Role="ckwh_items" EntitySet="ckwh_items" />
+            <End Role="ckwh_item_unit" EntitySet="ckwh_item_unit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ckwh_items_ck_users" Association="Self.FK_ckwh_items_ck_users">
+            <End Role="ck_users" EntitySet="ck_users" />
+            <End Role="ckwh_items" EntitySet="ckwh_items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ckwh_items_ck_users1" Association="Self.FK_ckwh_items_ck_users1">
+            <End Role="ck_users" EntitySet="ck_users" />
+            <End Role="ckwh_items" EntitySet="ckwh_items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ckwh_items_ckwh_category" Association="Self.FK_ckwh_items_ckwh_category">
+            <End Role="ckwh_category" EntitySet="ckwh_category" />
+            <End Role="ckwh_items" EntitySet="ckwh_items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ckwh_items_sites" Association="Self.FK_ckwh_items_sites">
+            <End Role="sites" EntitySet="sites" />
+            <End Role="ckwh_items" EntitySet="ckwh_items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_sites_ck_users" Association="Self.FK_sites_ck_users">
+            <End Role="ck_users" EntitySet="ck_users" />
+            <End Role="sites" EntitySet="sites" />
+          </AssociationSet>
+          <AssociationSet Name="FK_sites_ck_users1" Association="Self.FK_sites_ck_users1">
+            <End Role="ck_users" EntitySet="ck_users" />
+            <End Role="sites" EntitySet="sites" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="dipckModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ck_item_details">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ck_item_id" Type="Int32" />
+          <Property Name="ckwh_item_id" Type="Int32" />
+          <Property Name="ckwh_item_qty" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="ckwh_item_unit_id" Type="Int32" />
+          <Property Name="created_by" Type="Int32" />
+          <Property Name="created_date" Type="DateTime" Precision="3" />
+          <Property Name="modified_by" Type="Int32" />
+          <Property Name="modified_date" Type="DateTime" Precision="3" />
+          <Property Name="active" Type="Boolean" />
+          <NavigationProperty Name="ck_users" Relationship="dipckModel.FK_ck_item_details_ck_users" FromRole="ck_item_details" ToRole="ck_users" />
+          <NavigationProperty Name="ck_users1" Relationship="dipckModel.FK_ck_item_details_ck_users1" FromRole="ck_item_details" ToRole="ck_users" />
+          <NavigationProperty Name="ckwh_item_unit" Relationship="dipckModel.FK_ck_item_details_ckwh_item_unit" FromRole="ck_item_details" ToRole="ckwh_item_unit" />
+        </EntityType>
+        <EntityType Name="ck_items">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ck_item_code" Type="Int32" />
+          <Property Name="ck_item_description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ck_desired_qty" Type="Int32" />
+          <Property Name="ck_unit_id" Type="Int32" />
+          <Property Name="ck_item_unit_cost" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="created_date" Type="DateTime" Precision="3" />
+          <Property Name="modified_by" Type="Int32" />
+          <Property Name="modified_date" Type="DateTime" Precision="3" />
+          <Property Name="active" Type="Int32" />
+          <Property Name="created_by" Type="Int32" />
+          <NavigationProperty Name="ck_units" Relationship="dipckModel.FK_ck_items_ck_units" FromRole="ck_items" ToRole="ck_units" />
+          <NavigationProperty Name="ck_users" Relationship="dipckModel.FK_ck_items_ck_users" FromRole="ck_items" ToRole="ck_users" />
+          <NavigationProperty Name="ck_users1" Relationship="dipckModel.FK_ck_items_ck_users1" FromRole="ck_items" ToRole="ck_users" />
+        </EntityType>
+        <EntityType Name="ck_units">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="unit_description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="created_by" Type="Int32" />
+          <Property Name="created_date" Type="DateTime" Precision="3" />
+          <Property Name="modified_by" Type="Int32" />
+          <Property Name="modified_date" Type="DateTime" Precision="3" />
+          <Property Name="active" Type="Boolean" />
+          <NavigationProperty Name="ck_items" Relationship="dipckModel.FK_ck_items_ck_units" FromRole="ck_units" ToRole="ck_items" />
+          <NavigationProperty Name="ckwh_item_unit" Relationship="dipckModel.FK_ckwh_item_unit_ck_units" FromRole="ck_units" ToRole="ckwh_item_unit" />
+        </EntityType>
+        <EntityType Name="ck_users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="role" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="active" Type="Boolean" />
+          <NavigationProperty Name="sites" Relationship="Self.FK_sites_ck_users" FromRole="ck_users" ToRole="sites" />
+          <NavigationProperty Name="sites1" Relationship="Self.FK_sites_ck_users1" FromRole="ck_users" ToRole="sites" />
+          <NavigationProperty Name="ck_item_details" Relationship="dipckModel.FK_ck_item_details_ck_users" FromRole="ck_users" ToRole="ck_item_details" />
+          <NavigationProperty Name="ck_item_details1" Relationship="dipckModel.FK_ck_item_details_ck_users1" FromRole="ck_users" ToRole="ck_item_details" />
+          <NavigationProperty Name="ck_items" Relationship="dipckModel.FK_ck_items_ck_users" FromRole="ck_users" ToRole="ck_items" />
+          <NavigationProperty Name="ck_items1" Relationship="dipckModel.FK_ck_items_ck_users1" FromRole="ck_users" ToRole="ck_items" />
+          <NavigationProperty Name="ckwh_item_unit" Relationship="dipckModel.FK_ckwh_item_unit_ck_users" FromRole="ck_users" ToRole="ckwh_item_unit" />
+          <NavigationProperty Name="ckwh_item_unit1" Relationship="dipckModel.FK_ckwh_item_unit_ck_users1" FromRole="ck_users" ToRole="ckwh_item_unit" />
+          <NavigationProperty Name="ckwh_items" Relationship="dipckModel.FK_ckwh_items_ck_users" FromRole="ck_users" ToRole="ckwh_items" />
+          <NavigationProperty Name="ckwh_items1" Relationship="dipckModel.FK_ckwh_items_ck_users1" FromRole="ck_users" ToRole="ckwh_items" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="uname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ckwh_category">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="category_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="created_by" Type="Int32" />
+          <Property Name="created_date" Type="DateTime" Precision="3" />
+          <Property Name="modified_by" Type="Int32" />
+          <Property Name="modified_date" Type="DateTime" Precision="3" />
+          <Property Name="active" Type="Boolean" />
+          <NavigationProperty Name="ckwh_items" Relationship="Self.FK_ckwh_items_ckwh_category" FromRole="ckwh_category" ToRole="ckwh_items" />
+        </EntityType>
+        <EntityType Name="ckwh_item_unit">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ckwh_item_id" Type="Int32" />
+          <Property Name="ck_unit_id" Type="Int32" />
+          <Property Name="cnv_factor" Type="Int32" />
+          <Property Name="created_by" Type="Int32" />
+          <Property Name="created_date" Type="DateTime" Precision="3" />
+          <Property Name="modified_by" Type="Int32" />
+          <Property Name="modified_date" Type="DateTime" Precision="3" />
+          <Property Name="active" Type="Boolean" />
+          <NavigationProperty Name="ck_item_details" Relationship="dipckModel.FK_ck_item_details_ckwh_item_unit" FromRole="ckwh_item_unit" ToRole="ck_item_details" />
+          <NavigationProperty Name="ck_units" Relationship="dipckModel.FK_ckwh_item_unit_ck_units" FromRole="ckwh_item_unit" ToRole="ck_units" />
+          <NavigationProperty Name="ck_users" Relationship="dipckModel.FK_ckwh_item_unit_ck_users" FromRole="ckwh_item_unit" ToRole="ck_users" />
+          <NavigationProperty Name="ck_users1" Relationship="dipckModel.FK_ckwh_item_unit_ck_users1" FromRole="ckwh_item_unit" ToRole="ck_users" />
+          <NavigationProperty Name="ckwh_items" Relationship="dipckModel.FK_ckwh_item_unit_ckwh_items" FromRole="ckwh_item_unit" ToRole="ckwh_items" />
+        </EntityType>
+        <EntityType Name="ckwh_items">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="wh_item_code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="wh_item_description" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="wh_category_id" Type="Int32" />
+          <Property Name="wh_category_description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="wh_unit_id" Type="Int32" />
+          <Property Name="quantity" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="unit_cost" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="site_id" Type="Int32" />
+          <Property Name="created_by" Type="Int32" />
+          <Property Name="created_date" Type="DateTime" Precision="3" />
+          <Property Name="modified_by" Type="Int32" />
+          <Property Name="modified_date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ckwh_category" Relationship="Self.FK_ckwh_items_ckwh_category" FromRole="ckwh_items" ToRole="ckwh_category" />
+          <NavigationProperty Name="ck_users" Relationship="dipckModel.FK_ckwh_items_ck_users" FromRole="ckwh_items" ToRole="ck_users" />
+          <NavigationProperty Name="ck_users1" Relationship="dipckModel.FK_ckwh_items_ck_users1" FromRole="ckwh_items" ToRole="ck_users" />
+          <NavigationProperty Name="ckwh_item_unit" Relationship="dipckModel.FK_ckwh_item_unit_ckwh_items" FromRole="ckwh_items" ToRole="ckwh_item_unit" />
+          <NavigationProperty Name="site" Relationship="dipckModel.FK_ckwh_items_sites" FromRole="ckwh_items" ToRole="site" />
+        </EntityType>
+        <EntityType Name="site">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="site_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="created_by" Type="Int32" />
+          <Property Name="created_date" Type="DateTime" Precision="3" />
+          <Property Name="modified_by" Type="Int32" />
+          <Property Name="modified_date" Type="DateTime" Precision="3" />
+          <Property Name="active" Type="Boolean" />
+          <NavigationProperty Name="ck_users" Relationship="Self.FK_sites_ck_users" FromRole="sites" ToRole="ck_users" />
+          <NavigationProperty Name="ck_users1" Relationship="Self.FK_sites_ck_users1" FromRole="sites" ToRole="ck_users" />
+          <NavigationProperty Name="ckwh_items" Relationship="dipckModel.FK_ckwh_items_sites" FromRole="site" ToRole="ckwh_items" />
+        </EntityType>
+        <Association Name="FK_sites_ck_users">
+          <End Role="ck_users" Type="Self.ck_users" Multiplicity="0..1" />
+          <End Role="sites" Type="Self.site" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ck_users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="sites">
+              <PropertyRef Name="created_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_sites_ck_users1">
+          <End Role="ck_users" Type="Self.ck_users" Multiplicity="0..1" />
+          <End Role="sites" Type="Self.site" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ck_users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="sites">
+              <PropertyRef Name="modified_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ckwh_items_ckwh_category">
+          <End Role="ckwh_category" Type="Self.ckwh_category" Multiplicity="0..1" />
+          <End Role="ckwh_items" Type="Self.ckwh_items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ckwh_category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ckwh_items">
+              <PropertyRef Name="wh_category_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CKEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ck_item_details" EntityType="Self.ck_item_details" />
+          <EntitySet Name="ck_items" EntityType="Self.ck_items" />
+          <EntitySet Name="ck_units" EntityType="Self.ck_units" />
+          <EntitySet Name="ck_users" EntityType="Self.ck_users" />
+          <EntitySet Name="ckwh_category" EntityType="Self.ckwh_category" />
+          <EntitySet Name="ckwh_item_unit" EntityType="Self.ckwh_item_unit" />
+          <EntitySet Name="ckwh_items" EntityType="Self.ckwh_items" />
+          <EntitySet Name="sites" EntityType="Self.site" />
+          <AssociationSet Name="FK_sites_ck_users" Association="Self.FK_sites_ck_users">
+            <End Role="ck_users" EntitySet="ck_users" />
+            <End Role="sites" EntitySet="sites" />
+          </AssociationSet>
+          <AssociationSet Name="FK_sites_ck_users1" Association="Self.FK_sites_ck_users1">
+            <End Role="ck_users" EntitySet="ck_users" />
+            <End Role="sites" EntitySet="sites" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ckwh_items_ckwh_category" Association="Self.FK_ckwh_items_ckwh_category">
+            <End Role="ckwh_category" EntitySet="ckwh_category" />
+            <End Role="ckwh_items" EntitySet="ckwh_items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ck_item_details_ck_users" Association="dipckModel.FK_ck_item_details_ck_users">
+            <End Role="ck_users" EntitySet="ck_users" />
+            <End Role="ck_item_details" EntitySet="ck_item_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ck_item_details_ck_users1" Association="dipckModel.FK_ck_item_details_ck_users1">
+            <End Role="ck_users" EntitySet="ck_users" />
+            <End Role="ck_item_details" EntitySet="ck_item_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ck_item_details_ckwh_item_unit" Association="dipckModel.FK_ck_item_details_ckwh_item_unit">
+            <End Role="ckwh_item_unit" EntitySet="ckwh_item_unit" />
+            <End Role="ck_item_details" EntitySet="ck_item_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ck_items_ck_units" Association="dipckModel.FK_ck_items_ck_units">
+            <End Role="ck_units" EntitySet="ck_units" />
+            <End Role="ck_items" EntitySet="ck_items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ck_items_ck_users" Association="dipckModel.FK_ck_items_ck_users">
+            <End Role="ck_users" EntitySet="ck_users" />
+            <End Role="ck_items" EntitySet="ck_items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ck_items_ck_users1" Association="dipckModel.FK_ck_items_ck_users1">
+            <End Role="ck_users" EntitySet="ck_users" />
+            <End Role="ck_items" EntitySet="ck_items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ckwh_item_unit_ck_units" Association="dipckModel.FK_ckwh_item_unit_ck_units">
+            <End Role="ck_units" EntitySet="ck_units" />
+            <End Role="ckwh_item_unit" EntitySet="ckwh_item_unit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ckwh_item_unit_ck_users" Association="dipckModel.FK_ckwh_item_unit_ck_users">
+            <End Role="ck_users" EntitySet="ck_users" />
+            <End Role="ckwh_item_unit" EntitySet="ckwh_item_unit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ckwh_item_unit_ck_users1" Association="dipckModel.FK_ckwh_item_unit_ck_users1">
+            <End Role="ck_users" EntitySet="ck_users" />
+            <End Role="ckwh_item_unit" EntitySet="ckwh_item_unit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ckwh_items_ck_users" Association="dipckModel.FK_ckwh_items_ck_users">
+            <End Role="ck_users" EntitySet="ck_users" />
+            <End Role="ckwh_items" EntitySet="ckwh_items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ckwh_items_ck_users1" Association="dipckModel.FK_ckwh_items_ck_users1">
+            <End Role="ck_users" EntitySet="ck_users" />
+            <End Role="ckwh_items" EntitySet="ckwh_items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ckwh_item_unit_ckwh_items" Association="dipckModel.FK_ckwh_item_unit_ckwh_items">
+            <End Role="ckwh_items" EntitySet="ckwh_items" />
+            <End Role="ckwh_item_unit" EntitySet="ckwh_item_unit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ckwh_items_sites" Association="dipckModel.FK_ckwh_items_sites">
+            <End Role="site" EntitySet="sites" />
+            <End Role="ckwh_items" EntitySet="ckwh_items" />
+          </AssociationSet>
+        </EntityContainer>
+        <Association Name="FK_ck_item_details_ck_users">
+          <End Type="dipckModel.ck_users" Role="ck_users" Multiplicity="0..1" />
+          <End Type="dipckModel.ck_item_details" Role="ck_item_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ck_users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ck_item_details">
+              <PropertyRef Name="created_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ck_item_details_ck_users1">
+          <End Type="dipckModel.ck_users" Role="ck_users" Multiplicity="0..1" />
+          <End Type="dipckModel.ck_item_details" Role="ck_item_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ck_users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ck_item_details">
+              <PropertyRef Name="modified_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ck_item_details_ckwh_item_unit">
+          <End Type="dipckModel.ckwh_item_unit" Role="ckwh_item_unit" Multiplicity="0..1" />
+          <End Type="dipckModel.ck_item_details" Role="ck_item_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ckwh_item_unit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ck_item_details">
+              <PropertyRef Name="ckwh_item_unit_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ck_items_ck_units">
+          <End Type="dipckModel.ck_units" Role="ck_units" Multiplicity="0..1" />
+          <End Type="dipckModel.ck_items" Role="ck_items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ck_units">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ck_items">
+              <PropertyRef Name="ck_unit_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ck_items_ck_users">
+          <End Type="dipckModel.ck_users" Role="ck_users" Multiplicity="0..1" />
+          <End Type="dipckModel.ck_items" Role="ck_items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ck_users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ck_items">
+              <PropertyRef Name="created_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ck_items_ck_users1">
+          <End Type="dipckModel.ck_users" Role="ck_users" Multiplicity="0..1" />
+          <End Type="dipckModel.ck_items" Role="ck_items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ck_users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ck_items">
+              <PropertyRef Name="modified_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ckwh_item_unit_ck_units">
+          <End Type="dipckModel.ck_units" Role="ck_units" Multiplicity="0..1" />
+          <End Type="dipckModel.ckwh_item_unit" Role="ckwh_item_unit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ck_units">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ckwh_item_unit">
+              <PropertyRef Name="ck_unit_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ckwh_item_unit_ck_users">
+          <End Type="dipckModel.ck_users" Role="ck_users" Multiplicity="0..1" />
+          <End Type="dipckModel.ckwh_item_unit" Role="ckwh_item_unit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ck_users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ckwh_item_unit">
+              <PropertyRef Name="created_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ckwh_item_unit_ck_users1">
+          <End Type="dipckModel.ck_users" Role="ck_users" Multiplicity="0..1" />
+          <End Type="dipckModel.ckwh_item_unit" Role="ckwh_item_unit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ck_users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ckwh_item_unit">
+              <PropertyRef Name="modified_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ckwh_items_ck_users">
+          <End Type="dipckModel.ck_users" Role="ck_users" Multiplicity="0..1" />
+          <End Type="dipckModel.ckwh_items" Role="ckwh_items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ck_users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ckwh_items">
+              <PropertyRef Name="created_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ckwh_items_ck_users1">
+          <End Type="dipckModel.ck_users" Role="ck_users" Multiplicity="0..1" />
+          <End Type="dipckModel.ckwh_items" Role="ckwh_items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ck_users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ckwh_items">
+              <PropertyRef Name="modified_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ckwh_item_unit_ckwh_items">
+          <End Type="dipckModel.ckwh_items" Role="ckwh_items" Multiplicity="0..1" />
+          <End Type="dipckModel.ckwh_item_unit" Role="ckwh_item_unit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ckwh_items">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ckwh_item_unit">
+              <PropertyRef Name="ckwh_item_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ckwh_items_sites">
+          <End Type="dipckModel.site" Role="site" Multiplicity="0..1" />
+          <End Type="dipckModel.ckwh_items" Role="ckwh_items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="site">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ckwh_items">
+              <PropertyRef Name="site_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="dipckModelStoreContainer" CdmEntityContainer="CKEntities">
+          <EntitySetMapping Name="ck_item_details">
+            <EntityTypeMapping TypeName="dipckModel.ck_item_details">
+              <MappingFragment StoreEntitySet="ck_item_details">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ck_item_id" ColumnName="ck_item_id" />
+                <ScalarProperty Name="ckwh_item_id" ColumnName="ckwh_item_id" />
+                <ScalarProperty Name="ckwh_item_qty" ColumnName="ckwh_item_qty" />
+                <ScalarProperty Name="ckwh_item_unit_id" ColumnName="ckwh_item_unit_id" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+                <ScalarProperty Name="modified_date" ColumnName="modified_date" />
+                <ScalarProperty Name="active" ColumnName="active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ck_items">
+            <EntityTypeMapping TypeName="dipckModel.ck_items">
+              <MappingFragment StoreEntitySet="ck_items">
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ck_item_code" ColumnName="ck_item_code" />
+                <ScalarProperty Name="ck_item_description" ColumnName="ck_item_description" />
+                <ScalarProperty Name="ck_desired_qty" ColumnName="ck_desired_qty" />
+                <ScalarProperty Name="ck_unit_id" ColumnName="ck_unit_id" />
+                <ScalarProperty Name="ck_item_unit_cost" ColumnName="ck_item_unit_cost" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+                <ScalarProperty Name="modified_date" ColumnName="modified_date" />
+                <ScalarProperty Name="active" ColumnName="active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ck_units">
+            <EntityTypeMapping TypeName="dipckModel.ck_units">
+              <MappingFragment StoreEntitySet="ck_units">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="unit_description" ColumnName="unit_description" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+                <ScalarProperty Name="modified_date" ColumnName="modified_date" />
+                <ScalarProperty Name="active" ColumnName="active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ck_users">
+            <EntityTypeMapping TypeName="dipckModel.ck_users">
+              <MappingFragment StoreEntitySet="ck_users">
+                <ScalarProperty Name="uname" ColumnName="uname" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="role" ColumnName="role" />
+                <ScalarProperty Name="active" ColumnName="active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ckwh_category">
+            <EntityTypeMapping TypeName="dipckModel.ckwh_category">
+              <MappingFragment StoreEntitySet="ckwh_category">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="category_name" ColumnName="category_name" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+                <ScalarProperty Name="modified_date" ColumnName="modified_date" />
+                <ScalarProperty Name="active" ColumnName="active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ckwh_item_unit">
+            <EntityTypeMapping TypeName="dipckModel.ckwh_item_unit">
+              <MappingFragment StoreEntitySet="ckwh_item_unit">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ckwh_item_id" ColumnName="ckwh_item_id" />
+                <ScalarProperty Name="ck_unit_id" ColumnName="ck_unit_id" />
+                <ScalarProperty Name="cnv_factor" ColumnName="cnv_factor" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+                <ScalarProperty Name="modified_date" ColumnName="modified_date" />
+                <ScalarProperty Name="active" ColumnName="active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ckwh_items">
+            <EntityTypeMapping TypeName="dipckModel.ckwh_items">
+              <MappingFragment StoreEntitySet="ckwh_items">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="wh_item_code" ColumnName="wh_item_code" />
+                <ScalarProperty Name="wh_item_description" ColumnName="wh_item_description" />
+                <ScalarProperty Name="wh_category_id" ColumnName="wh_category_id" />
+                <ScalarProperty Name="wh_category_description" ColumnName="wh_category_description" />
+                <ScalarProperty Name="wh_unit_id" ColumnName="wh_unit_id" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="unit_cost" ColumnName="unit_cost" />
+                <ScalarProperty Name="site_id" ColumnName="site_id" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+                <ScalarProperty Name="modified_date" ColumnName="modified_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sites">
+            <EntityTypeMapping TypeName="dipckModel.site">
+              <MappingFragment StoreEntitySet="sites">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="site_name" ColumnName="site_name" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+                <ScalarProperty Name="modified_date" ColumnName="modified_date" />
+                <ScalarProperty Name="active" ColumnName="active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
