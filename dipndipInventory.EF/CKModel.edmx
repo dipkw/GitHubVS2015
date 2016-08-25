@@ -30,6 +30,8 @@
           <Property Name="ck_desired_qty" Type="int" />
           <Property Name="ck_unit_id" Type="int" />
           <Property Name="ck_item_unit_cost" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="production_date" Type="datetime" />
+          <Property Name="expiry_date" Type="datetime" />
           <Property Name="created_by" Type="int" />
           <Property Name="created_date" Type="datetime" />
           <Property Name="modified_by" Type="int" />
@@ -421,6 +423,8 @@
           <NavigationProperty Name="ck_units" Relationship="dipckModel.FK_ck_items_ck_units" FromRole="ck_items" ToRole="ck_units" />
           <NavigationProperty Name="ck_users" Relationship="dipckModel.FK_ck_items_ck_users" FromRole="ck_items" ToRole="ck_users" />
           <NavigationProperty Name="ck_users1" Relationship="dipckModel.FK_ck_items_ck_users1" FromRole="ck_items" ToRole="ck_users" />
+          <Property Name="production_date" Type="DateTime" Precision="3" />
+          <Property Name="expiry_date" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="ck_units">
           <Key>
@@ -818,6 +822,8 @@
           <EntitySetMapping Name="ck_items">
             <EntityTypeMapping TypeName="dipckModel.ck_items">
               <MappingFragment StoreEntitySet="ck_items">
+                <ScalarProperty Name="expiry_date" ColumnName="expiry_date" />
+                <ScalarProperty Name="production_date" ColumnName="production_date" />
                 <ScalarProperty Name="created_by" ColumnName="created_by" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ck_item_code" ColumnName="ck_item_code" />

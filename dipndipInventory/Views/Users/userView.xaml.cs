@@ -1,5 +1,6 @@
 ﻿using dipndipInventory.EF;
 using dipndipInventory.EF.DataServices;
+using dipndipInventory.ViewModels;
 using md5crypt;
 using System;
 using System.Collections.Generic;
@@ -38,6 +39,8 @@ namespace dipndipInventory.Views.Users
         private void ReadAllUsers()
         {
             IEnumerable<ck_users> objUsers = _context.ReadAllUsers();
+            //var objUsers = _context.ReadUsers();
+            //IEnumerable<UserViewModel> objUsers = (IEnumerable<UserViewModel>)_context.ReadUsers();
             dgUsers.ItemsSource = objUsers;
             txtName.Focus();
         }

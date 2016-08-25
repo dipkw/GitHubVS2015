@@ -25,6 +25,8 @@ namespace dipndipInventory.EF
         public Nullable<System.DateTime> modified_date { get; set; }
         public Nullable<int> active { get; set; }
         public Nullable<int> created_by { get; set; }
+        public Nullable<System.DateTime> production_date { get; set; }
+        public Nullable<System.DateTime> expiry_date { get; set; }
     
         public virtual ck_units ck_units { get; set; }
         public virtual ck_users ck_users { get; set; }

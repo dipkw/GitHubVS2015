@@ -1,4 +1,5 @@
-﻿using System;
+﻿using dipndipInventory.EF.CustomModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -96,5 +97,41 @@ namespace dipndipInventory.EF.DataServices
 
             return _result;
         }
+
+        public IEnumerable<UserCustomModel> ReadUsers()
+        {
+            //UserCustomModel users;
+            _context = new CKEntities();
+            var result=(IEnumerable<UserCustomModel>)null;
+            try
+            {
+                 result = (from cusers in _context.ck_users where cusers.Id > 0 select new UserCustomModel { Id = cusers.Id, uname = cusers.uname, username = cusers.username, role = cusers.role });
+            }
+            catch(Exception e)
+            {
+
+            }
+            //users = (IEnumerable < UserCustomModel >) result;
+            //return users;
+            return result.ToList<UserCustomModel>();
+        }
+
+        public dynamic ReadUsers1()
+        {
+            _context = new CKEntities();
+            var result = (from cusers in _context.ck_users where cusers.Id > 0 select new UserCustomModel { Id = cusers.Id, uname = cusers.uname, username = cusers.username, role = cusers.role });
+            try
+            {
+                
+            }
+            catch (Exception e)
+            {
+
+            }
+            //users = (IEnumerable < UserCustomModel >) result;
+            //return users;
+            return result.ToList();
+        }
+
     }
 }

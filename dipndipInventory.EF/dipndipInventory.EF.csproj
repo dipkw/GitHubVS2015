@@ -87,6 +87,7 @@
     <Compile Include="ck_users.cs">
       <DependentUpon>CKModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="CustomModels\UserCustomModel.cs" />
     <Compile Include="DataServices\UserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="site.cs">
