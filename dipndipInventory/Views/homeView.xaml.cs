@@ -1,4 +1,5 @@
 ﻿using dipndipInventory.EF;
+using dipndipInventory.Views.Site;
 using dipndipInventory.Views.Users;
 using System;
 using System.Collections.Generic;
@@ -53,6 +54,12 @@ namespace dipndipInventory.Views
         {
             userView uv = new userView();
             uv.Show();
+        }
+
+        private void SitesMenu_Click(object sender, RoutedEventArgs e)
+        {
+            siteView sv = new siteView();
+            sv.Show();
         }
     }
 }

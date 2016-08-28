@@ -1,0 +1,76 @@
+﻿<telerik:RadWindow
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:dipndipInventory.Views.Users"
+        xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" x:Class="dipndipInventory.Views.Site.siteView"
+        mc:Ignorable="d"
+        Header="Sites" Height="700" Width="1024" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="350*"/>
+            <RowDefinition Height="250"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="500"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Border Grid.ColumnSpan="2" Margin="10" BorderBrush="Black" BorderThickness="0.5" >
+            <telerik:RadGridView x:Name="dgSites" AutoGenerateColumns="False" IsReadOnly="True" RowIndicatorVisibility="Collapsed" IsSynchronizedWithCurrentItem="False" FocusManager.FocusedElement="{Binding ElementName=dgSites}" HorizontalAlignment="Left" VerticalAlignment="Top" SelectionChanged="dgSites_SelectionChanged" >
+                <telerik:RadGridView.Columns>
+                    <telerik:GridViewDataColumn x:Name="SiteName" DataMemberBinding="{Binding site_name}" Width="*" Header="Site Name"/>
+                    
+                    <telerik:GridViewColumn Width="80">
+                        <telerik:GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <telerik:RadButton Content="Edit" x:Name="btnEdit" Margin="5" Click="btnEdit_Click" />
+                            </DataTemplate>
+                        </telerik:GridViewColumn.CellTemplate>
+                    </telerik:GridViewColumn>
+                </telerik:RadGridView.Columns>
+            </telerik:RadGridView>
+        </Border>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Grid.ColumnSpan="2">
+            <StackPanel Orientation="Vertical" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Row="1" Grid.Column="1">
+                <StackPanel Orientation="Horizontal" >
+                    <telerik:Label Content="Site Name" Height="25" Width="150"/>
+                   <!--<telerik:RadMaskedTextInput Name="txtSiteName" Width="250" Margin="3" TabIndex="0" Placeholder=" " TextMode="MaskedText"/>-->
+                    <telerik:RadMaskedTextInput Name="txtSiteName" Width="250" Margin="3" TabIndex="0" Placeholder="_" TextMode="MaskedText" Mask="" InputBehavior="Insert"/>
+                </StackPanel>
+
+
+                
+
+
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Grid.Column="0" Margin="5,0,0,0" VerticalAlignment="Top"  Grid.Row="1" Visibility="Collapsed">
+
+                <StackPanel Orientation="Horizontal" >
+                    <telerik:Label x:Name="lblRoomCharge" Content="Rate" Height="25" Width="150"/>
+                    <telerik:RadMaskedNumericInput x:Name="txtRoomCharge" Width="250" Margin="3" TabIndex="2" Mask="" FormatString="0.00" IsClearButtonVisible="False"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" >
+                    <telerik:Label Content="Start Date" Height="25" Width="150"/>
+                    <telerik:RadDateTimePicker x:Name="dtpStartDate" Width="250" Margin="3" TabIndex="4" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" >
+                    <telerik:Label Content="End Date" Height="25" Width="150"/>
+                    <telerik:RadDateTimePicker x:Name="dtpEndDate" Width="250" Margin="3" TabIndex="5" />
+                </StackPanel>
+
+
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal"  HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row="2" Margin="0,0,5,5" Grid.ColumnSpan="2">
+            <telerik:RadButton Content="Save" Margin="3" Width="50" Name="btnSave"  TabIndex="6"  Click="btnSave_Click"/>
+            <telerik:RadButton Content="New" Margin="3" Width="50" Name="btnNew"  TabIndex="7" Click="btnNew_Click"/>
+            <telerik:RadButton Content="Delete" Margin="3" Width="50" x:Name="btnDelete" TabIndex="8" Click="btnDelete_Click"/>
+            <telerik:RadButton Content="Close" Margin="3" Width="50" Name="btnClose"   TabIndex="9" Click="btnClose_Click"/>
+        </StackPanel>
+    </Grid>
+</telerik:RadWindow>

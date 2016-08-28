@@ -119,6 +119,9 @@
     <Compile Include="Views\Login\loginView.xaml.cs">
       <DependentUpon>loginView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Site\siteView.xaml.cs">
+      <DependentUpon>siteView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Users\userView.xaml.cs">
       <DependentUpon>userView.xaml</DependentUpon>
     </Compile>
@@ -139,6 +142,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Login\loginView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Site\siteView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

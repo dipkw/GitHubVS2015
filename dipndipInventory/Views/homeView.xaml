@@ -150,7 +150,7 @@
                             <TextBlock Text="Users" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </telerik:RadRibbonButton>
-                    <telerik:RadRibbonButton x:Name="SitesMenu"  Width="65"  HorizontalContentAlignment="Center">
+                    <telerik:RadRibbonButton x:Name="SitesMenu"  Width="65"  HorizontalContentAlignment="Center" Click="SitesMenu_Click">
                         <StackPanel>
                             <Image Source="/dipndipInventory;component/images/menu_icons/sites-2-icon.png" Width="32" Height="32"/>
                             <TextBlock Text="Sites" HorizontalAlignment="Center"/>

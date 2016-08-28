@@ -8,7 +8,7 @@ using System.Windows.Controls;
 
 using Telerik.Windows.Controls;
 
-namespace Foamco.Validations
+namespace dipndipInventory.Validations
 {
    public class Validate
     {

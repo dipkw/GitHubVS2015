@@ -29,7 +29,7 @@ namespace dipndipInventory.Views.Users
         UserService _context = new UserService();
         bool edit_mode = false;
         //string username = string.Empty;
-        int id = 0;
+        int id = 0; 
         public userView()
         {
             InitializeComponent();
