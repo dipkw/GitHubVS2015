@@ -28,9 +28,9 @@
             <telerik:Label Content="User Authentication" Margin="15,80,0,0" Grid.ColumnSpan="2"/>
             <telerik:Label Content="User Name" Grid.Row="1" Grid.Column="1" Margin="8,0,9,0"/>
             <!--<telerik:RadMaskedTextInput Name="txtUserName"  Grid.Row="1" Grid.Column="2" Height="25" Placeholder=" " />-->
-            <TextBox Name="txtUserName"  Grid.Row="1" Grid.Column="2" Height="25"  />
+            <TextBox Name="txtUserName"  Grid.Row="1" Grid.Column="2" Height="25" Text="user1"  />
             <telerik:Label Content="Password" Grid.Row="2" Grid.Column="1" Margin="8,0,9,0"  />
-            <PasswordBox  Name="txtPassword" Grid.Row="2" Grid.Column="2"  Height="25"  KeyDown="txtPassword_KeyDown" Margin="0,11,0,14" GotFocus="txtPassword_GotFocus" Password=""/>
+            <PasswordBox  Name="txtPassword" Grid.Row="2" Grid.Column="2"  Height="25"  KeyDown="txtPassword_KeyDown" Margin="0,11,0,14" GotFocus="txtPassword_GotFocus" Password="user1" ToolTip="Please Enter Your Password"/>
             <StackPanel Grid.Column="2" Grid.Row="3" Orientation="Horizontal" Grid.RowSpan="2">
                 <telerik:RadButton Content="Ok" Name="btnOk" Margin="5" Width="60" Height="25" Click="btnOk_Click" />
                 <telerik:RadButton Content="Cancel" Name="btnCancel" Margin="5" Width="60" Height="25" Click="btnCancel_Click" />

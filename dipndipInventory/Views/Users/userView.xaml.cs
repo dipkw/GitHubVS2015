@@ -1,5 +1,6 @@
 ﻿using dipndipInventory.EF;
 using dipndipInventory.EF.DataServices;
+using dipndipInventory.Validations;
 using dipndipInventory.ViewModels;
 using md5crypt;
 using System;
@@ -139,27 +140,27 @@ namespace dipndipInventory.Views.Users
         public bool validateUser()
         {
 
-            //    if (Validate.TxtMaskBlankCheck(txtName, "Name"))
-            //    {
-            //        return false;
-            //    }
+            if (Validate.TxtMaskBlankCheck(txtName, "Name"))
+            {
+                return false;
+            }
 
-            //    if (Validate.TxtMaskBlankCheck(txtUsername, "Username"))
-            //    {
-            //        return false;
-            //    }
+            if (Validate.TxtMaskBlankCheck(txtUsername, "Username"))
+            {
+                return false;
+            }
 
-            //    if (Validate.TxtMaskBlankCheck(txtPassword, "Password"))
-            //    {
-            //        return false;
-            //    }
+            if (Validate.TxtMaskBlankCheck(txtPassword, "Password"))
+            {
+                return false;
+            }
 
-            //    if (Validate.ComboMaskBlankCheck(cmbRole, "Role"))
-            //    {
-            //        return false;
-            //    }
+            if (Validate.ComboMaskBlankCheck(cmbRole, "Role"))
+            {
+                return false;
+            }
 
-                return true;
+            return true;
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)

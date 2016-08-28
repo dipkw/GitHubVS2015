@@ -1,5 +1,6 @@
 ﻿using dipndipInventory.EF;
 using dipndipInventory.Views.Site;
+using dipndipInventory.Views.Stock;
 using dipndipInventory.Views.Users;
 using System;
 using System.Collections.Generic;
@@ -60,6 +61,24 @@ namespace dipndipInventory.Views
         {
             siteView sv = new siteView();
             sv.Show();
+        }
+
+        private void CategoryMenu_Click(object sender, RoutedEventArgs e)
+        {
+            itemcategoryView cv = new itemcategoryView();
+            cv.Show();
+        }
+
+        private void UnitsMenu_Click(object sender, RoutedEventArgs e)
+        {
+            unitView uv = new unitView();
+            uv.Show();
+        }
+
+        private void WHItemsMenu_Click(object sender, RoutedEventArgs e)
+        {
+            warehouseitemsView wv = new warehouseitemsView();
+            wv.Show();
         }
     }
 }

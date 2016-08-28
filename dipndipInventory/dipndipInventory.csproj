@@ -122,6 +122,15 @@
     <Compile Include="Views\Site\siteView.xaml.cs">
       <DependentUpon>siteView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Stock\itemcategoryView.xaml.cs">
+      <DependentUpon>itemcategoryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Stock\unitView.xaml.cs">
+      <DependentUpon>unitView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Stock\warehouseitemsView.xaml.cs">
+      <DependentUpon>warehouseitemsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Users\userView.xaml.cs">
       <DependentUpon>userView.xaml</DependentUpon>
     </Compile>
@@ -146,6 +155,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Site\siteView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Stock\itemcategoryView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Stock\unitView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Stock\warehouseitemsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

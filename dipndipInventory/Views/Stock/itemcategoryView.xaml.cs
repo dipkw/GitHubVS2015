@@ -17,60 +17,60 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Telerik.Windows.Controls;
 
-namespace dipndipInventory.Views.Site
+namespace dipndipInventory.Views.Stock
 {
     /// <summary>
-    /// Interaction logic for siteView.xaml
+    /// Interaction logic for itemcategoryView.xaml
     /// </summary>
-    public partial class siteView : RadWindow
+    public partial class itemcategoryView : RadWindow
     {
-        SiteService _context = new SiteService();
+        CategoryService _context = new CategoryService();
         bool edit_mode = false;
         //string username = string.Empty;
         int id = 0;
-        public siteView()
+        public itemcategoryView()
         {
             InitializeComponent();
-            ReadAllSites();
+            ReadAllCategories();
         }
 
-        private void ReadAllSites()
+        private void ReadAllCategories()
         {
-            IEnumerable<site> objSites = _context.ReadAllSites();
-            dgSites.ItemsSource = objSites;
-            txtSiteName.Focus();
+            IEnumerable<ckwh_category> objCategories = _context.ReadAllCategories();
+            dgCategories.ItemsSource = objCategories;
+            txtCategoryName.Focus();
         }
 
-        private void SelectSite()
+        private void SelectCategory()
         {
             try
             {
-                if (dgSites.SelectedItem == null)
+                if (dgCategories.SelectedItem == null)
                 {
                     return;
                 }
 
-                site objSite = (dgSites.SelectedItem) as site;
+                ckwh_category objCategory = (dgCategories.SelectedItem) as ckwh_category;
 
-                id = objSite.Id;
+                id = objCategory.Id;
                 //user_Id = objUser.user_id;
 
                 //username = objUser.username;
 
-                txtSiteID.Value = objSite.site_id;
-                txtSiteID.IsReadOnly = true;
+                txtCategoryCode.Value = objCategory.category_code;
+                txtCategoryCode.IsReadOnly = true;
 
-                txtSiteName.Value = objSite.site_name;
-                txtSiteName.IsReadOnly = true;
+                txtCategoryName.Value = objCategory.category_name;
+                txtCategoryName.IsReadOnly = true;
 
                 btnSave.IsEnabled = false;
             }
             catch { }
         }
 
-        private void dgSites_SelectionChanged(object sender, SelectionChangeEventArgs e)
+        private void dgCategories_SelectionChanged(object sender, SelectionChangeEventArgs e)
         {
-            SelectSite();
+            SelectCategory();
         }
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
@@ -86,32 +86,32 @@ namespace dipndipInventory.Views.Site
             //    return;
             //}
 
-            if (dgSites.SelectedItem == null)
+            if (dgCategories.SelectedItem == null)
             {
                 return;
             }
 
-            txtSiteName.IsReadOnly = false;
+            txtCategoryName.IsReadOnly = false;
             //txtUsername.IsReadOnly = false;
             edit_mode = true;
             btnSave.IsEnabled = true;
-            txtSiteName.Focus();
+            txtCategoryName.Focus();
         }
 
         private void ClearFields()
         {
-            txtSiteID.IsReadOnly = false;
-            txtSiteID.Value = string.Empty;
+            txtCategoryCode.IsReadOnly = false;
+            txtCategoryCode.Value = string.Empty;
 
-            txtSiteName.IsReadOnly = false;
+            txtCategoryName.IsReadOnly = false;
 
-            txtSiteName.Value = string.Empty;
+            txtCategoryName.Value = string.Empty;
 
             id = 0;
             //username = string.Empty;
             edit_mode = false;
 
-            ReadAllSites();
+            ReadAllCategories();
         }
 
         private void btnNew_Click(object sender, RoutedEventArgs e)
@@ -122,13 +122,19 @@ namespace dipndipInventory.Views.Site
 
         private bool validateUser()
         {
-            if (Validate.TxtMaskBlankCheck(txtSiteName, "Site Name"))
+            if (Validate.TxtMaskBlankCheck(txtCategoryCode, "Category Code"))
+            {
+                return false;
+            }
+
+            if (Validate.TxtMaskBlankCheck(txtCategoryName, "Category Name"))
             {
                 return false;
             }
 
             return true;
         }
+
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             if (validateUser())
@@ -136,21 +142,20 @@ namespace dipndipInventory.Views.Site
                 RadWindow.Confirm("Do you want to Continue ?", this.onSave);
             }
         }
-
         private void onSave(object sender, WindowClosedEventArgs e)
         {
             if (e.DialogResult == true)
             {
-                saveSite();
+                saveCategory();
             }
         }
 
-        private void saveSite()
+        private void saveCategory()
         {
-            site objSite = new site();
-            objSite.site_id = txtSiteID.Value;
-            objSite.site_name = txtSiteName.Value;
-            
+            ckwh_category objCategory = new ckwh_category();
+            objCategory.category_code = txtCategoryCode.Value;
+            objCategory.category_name = txtCategoryName.Value;
+
 
             string _dbresponse = string.Empty;
 
@@ -158,24 +163,25 @@ namespace dipndipInventory.Views.Site
             {
                 if (edit_mode)
                 {
-                    objSite.Id = id;
+                    objCategory.Id = id;
                     // objUser.username = username;
-                    objSite.modified_by = GlobalVariables.ActiveUser.Id;
-                    objSite.modified_date = DateTime.Now;
-                    _dbresponse = _context.UpdateSite(objSite) > 0 ? "Site Details Updated Successfully" : "Unable to Update Site Details";
+                    objCategory.modified_by = GlobalVariables.ActiveUser.Id;
+                    objCategory.modified_date = DateTime.Now;
+                    _dbresponse = _context.UpdateCategory(objCategory) > 0 ? "Category Details Updated Successfully" : "Unable to Update Category Details";
                 }
                 else
                 {
-                    objSite.created_by = GlobalVariables.ActiveUser.Id;
-                    objSite.created_date = DateTime.Now;
-                    if (_context.IsExistingSite(objSite.Id))
+                    objCategory.created_by = GlobalVariables.ActiveUser.Id;
+                    objCategory.created_date = DateTime.Now;
+                    objCategory.active = true;
+                    if (_context.IsExistingCategory(objCategory.Id))
                     {
-                        RadWindow.Alert("Existing Site");
-                        txtSiteName.SelectionStart = txtSiteName.Value.Length;
-                        txtSiteName.Focus();
+                        RadWindow.Alert("Existing Category");
+                        txtCategoryName.SelectionStart = txtCategoryName.Value.Length;
+                        txtCategoryName.Focus();
                         return;
                     }
-                    _dbresponse = _context.CreateSite(objSite) > 0 ? "Site Details Created Successfully" : "Unable to Save Site Details";
+                    _dbresponse = _context.CreateCategory(objCategory) > 0 ? "Category Details Created Successfully" : "Unable to Save Category Details";
                 }
 
                 RadWindow.Alert(_dbresponse);
@@ -192,30 +198,30 @@ namespace dipndipInventory.Views.Site
             //    return;
             //}
 
-            if (dgSites.SelectedItem != null)
+            if (dgCategories.SelectedItem != null)
             {
-                RadWindow.Confirm("Do you want to Continue?", this.onDeleteSite);
+                RadWindow.Confirm("Do you want to Continue?", this.onDeleteCategory);
             }
         }
 
-        private void onDeleteSite(object sender, WindowClosedEventArgs e)
+        private void onDeleteCategory(object sender, WindowClosedEventArgs e)
         {
             if (e.DialogResult == true)
             {
-                deleteSite();
+                deleteCategory();
                 ClearFields();
-                ReadAllSites();
+                ReadAllCategories();
             }
         }
 
-        private void deleteSite()
+        private void deleteCategory()
         {
             try
             {
-                site objSite = new site();
-                objSite.Id = id;
+                ckwh_category objCategory = new ckwh_category();
+                objCategory.Id = id;
 
-                string _dbresponse = _context.DeleteSite(objSite) > 0 ? "Site Details deleted successfully" : "Unable to delete Site Details";
+                string _dbresponse = _context.DeleteCategory(objCategory) > 0 ? "Category Details deleted successfully" : "Unable to delete Category Details";
 
                 RadWindow.Alert(_dbresponse);
             }

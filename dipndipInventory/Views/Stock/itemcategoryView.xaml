@@ -1,12 +1,12 @@
-﻿<telerik:RadWindow
+﻿<telerik:RadWindow x:Class="dipndipInventory.Views.Stock.itemcategoryView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:dipndipInventory.Views.Users"
-        xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" x:Class="dipndipInventory.Views.Site.siteView"
+        xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+        xmlns:local="clr-namespace:dipndipInventory.Views.Stock"
         mc:Ignorable="d"
-        Header="Sites" Height="700" Width="1024" WindowStartupLocation="CenterScreen">
+        Header="Categories" Height="700" Width="1024" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="350*"/>
@@ -18,9 +18,9 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Border Grid.ColumnSpan="2" Margin="10" BorderBrush="Black" BorderThickness="0.5" >
-            <telerik:RadGridView x:Name="dgSites" AutoGenerateColumns="False" IsReadOnly="True" RowIndicatorVisibility="Collapsed" IsSynchronizedWithCurrentItem="False" FocusManager.FocusedElement="{Binding ElementName=dgSites}" HorizontalAlignment="Left" VerticalAlignment="Top" SelectionChanged="dgSites_SelectionChanged" >
+            <telerik:RadGridView x:Name="dgCategories" AutoGenerateColumns="False" IsReadOnly="True" RowIndicatorVisibility="Collapsed" IsSynchronizedWithCurrentItem="False" FocusManager.FocusedElement="{Binding ElementName=dgCategories}" HorizontalAlignment="Left" VerticalAlignment="Top"  SelectionChanged="dgCategories_SelectionChanged">
                 <telerik:RadGridView.Columns>
-                    <telerik:GridViewDataColumn x:Name="SiteID" DataMemberBinding="{Binding site_id}" Width="*" Header="Site ID"/>
+                    <telerik:GridViewDataColumn x:Name="CategoryCode" DataMemberBinding="{Binding category_code}" Width="*" Header="Category Code"/>
 
                     <!--<telerik:GridViewColumn Width="80">
                         <telerik:GridViewColumn.CellTemplate>
@@ -29,8 +29,8 @@
                             </DataTemplate>
                         </telerik:GridViewColumn.CellTemplate>
                     </telerik:GridViewColumn>-->
-                    <telerik:GridViewDataColumn x:Name="SiteName" DataMemberBinding="{Binding site_name}" Width="*" Header="Site Name"/>
-                    
+                    <telerik:GridViewDataColumn x:Name="CategoryName" DataMemberBinding="{Binding category_name}" Width="*" Header="Category Name"/>
+
                     <telerik:GridViewColumn Width="80">
                         <telerik:GridViewColumn.CellTemplate>
                             <DataTemplate>
@@ -45,14 +45,14 @@
         <StackPanel Grid.Row="1" Orientation="Horizontal" Grid.ColumnSpan="2">
             <StackPanel Orientation="Vertical" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Row="1" Grid.Column="1">
                 <StackPanel Orientation="Horizontal" >
-                    <telerik:Label Content="Site ID" Height="25" Width="150"/>
-                   <!--<telerik:RadMaskedTextInput Name="txtSiteName" Width="250" Margin="3" TabIndex="0" Placeholder=" " TextMode="MaskedText"/>-->
-                    <telerik:RadMaskedTextInput Name="txtSiteID" Width="250" Margin="3" TabIndex="0" Placeholder="_" TextMode="MaskedText" Mask="" InputBehavior="Insert"/>
+                    <telerik:Label Content="Category Code" Height="25" Width="150"/>
+                    <!--<telerik:RadMaskedTextInput Name="txtSiteName" Width="250" Margin="3" TabIndex="0" Placeholder=" " TextMode="MaskedText"/>-->
+                    <telerik:RadMaskedTextInput Name="txtCategoryCode" Width="250" Margin="3" TabIndex="0" Placeholder="_" TextMode="MaskedText" Mask="" InputBehavior="Insert" IsReadOnly="False"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" >
-                    <telerik:Label Content="Site Name" Height="25" Width="150"/>
+                    <telerik:Label Content="Category Name" Height="25" Width="150"/>
                     <!--<telerik:RadMaskedTextInput Name="txtSiteName" Width="250" Margin="3" TabIndex="0" Placeholder=" " TextMode="MaskedText"/>-->
-                    <telerik:RadMaskedTextInput Name="txtSiteName" Width="250" Margin="3" TabIndex="0" Placeholder="_" TextMode="MaskedText" Mask="" InputBehavior="Insert"/>
+                    <telerik:RadMaskedTextInput Name="txtCategoryName" Width="250" Margin="3" TabIndex="0" Placeholder="_" TextMode="MaskedText" Mask="" InputBehavior="Insert"/>
                 </StackPanel>
 
 
@@ -81,9 +81,9 @@
         </StackPanel>
 
         <StackPanel Orientation="Horizontal"  HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row="2" Margin="0,0,5,5" Grid.ColumnSpan="2">
-            <telerik:RadButton Content="Save" Margin="3" Width="50" Name="btnSave"  TabIndex="6"  Click="btnSave_Click"/>
+            <telerik:RadButton Content="Save" Margin="3" Width="50" Name="btnSave"  TabIndex="6" Click="btnSave_Click"/>
             <telerik:RadButton Content="New" Margin="3" Width="50" Name="btnNew"  TabIndex="7" Click="btnNew_Click"/>
-            <telerik:RadButton Content="Delete" Margin="3" Width="50" x:Name="btnDelete" TabIndex="8" Click="btnDelete_Click"/>
+            <telerik:RadButton Content="Delete" Margin="3" Width="50" x:Name="btnDelete" TabIndex="8" Click="btnDelete_Click" />
             <telerik:RadButton Content="Close" Margin="3" Width="50" Name="btnClose"   TabIndex="9" Click="btnClose_Click"/>
         </StackPanel>
     </Grid>

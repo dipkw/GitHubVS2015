@@ -33,6 +33,7 @@ namespace dipndipInventory.EF
         public Nullable<System.DateTime> created_date { get; set; }
         public Nullable<int> modified_by { get; set; }
         public Nullable<System.DateTime> modified_date { get; set; }
+        public string wh_unit_description { get; set; }
     
         public virtual ckwh_category ckwh_category { get; set; }
         public virtual ck_users ck_users { get; set; }

@@ -33,5 +33,7 @@ namespace dipndipInventory.EF
         public virtual ICollection<ck_items> ck_items { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ckwh_item_unit> ckwh_item_unit { get; set; }
+        public virtual ck_users ck_users { get; set; }
+        public virtual ck_users ck_users1 { get; set; }
     }
 }

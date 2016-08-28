@@ -17,60 +17,60 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Telerik.Windows.Controls;
 
-namespace dipndipInventory.Views.Site
+namespace dipndipInventory.Views.Stock
 {
     /// <summary>
-    /// Interaction logic for siteView.xaml
+    /// Interaction logic for unitView.xaml
     /// </summary>
-    public partial class siteView : RadWindow
+    public partial class unitView : RadWindow
     {
-        SiteService _context = new SiteService();
+        UnitService _context = new UnitService();
         bool edit_mode = false;
         //string username = string.Empty;
         int id = 0;
-        public siteView()
+        public unitView()
         {
             InitializeComponent();
-            ReadAllSites();
+            ReadAllUnits();
         }
 
-        private void ReadAllSites()
+        private void ReadAllUnits()
         {
-            IEnumerable<site> objSites = _context.ReadAllSites();
-            dgSites.ItemsSource = objSites;
-            txtSiteName.Focus();
+            IEnumerable<ck_units> objUnits = _context.ReadAllUnits();
+            dgUnits.ItemsSource = objUnits;
+            txtDescription.Focus();
         }
 
-        private void SelectSite()
+        private void SelectUnit()
         {
             try
             {
-                if (dgSites.SelectedItem == null)
+                if (dgUnits.SelectedItem == null)
                 {
                     return;
                 }
 
-                site objSite = (dgSites.SelectedItem) as site;
+                ck_units objUnit = (dgUnits.SelectedItem) as ck_units;
 
-                id = objSite.Id;
+                id = objUnit.Id;
                 //user_Id = objUser.user_id;
 
                 //username = objUser.username;
 
-                txtSiteID.Value = objSite.site_id;
-                txtSiteID.IsReadOnly = true;
+                //txtUnitID.Value = objUnit.unit_description;
+                //txtUnitID.IsReadOnly = true;
 
-                txtSiteName.Value = objSite.site_name;
-                txtSiteName.IsReadOnly = true;
+                txtDescription.Value = objUnit.unit_description;
+                txtDescription.IsReadOnly = true;
 
                 btnSave.IsEnabled = false;
             }
             catch { }
         }
 
-        private void dgSites_SelectionChanged(object sender, SelectionChangeEventArgs e)
+        private void dgUnits_SelectionChanged(object sender, SelectionChangeEventArgs e)
         {
-            SelectSite();
+            SelectUnit();
         }
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
@@ -86,32 +86,32 @@ namespace dipndipInventory.Views.Site
             //    return;
             //}
 
-            if (dgSites.SelectedItem == null)
+            if (dgUnits.SelectedItem == null)
             {
                 return;
             }
 
-            txtSiteName.IsReadOnly = false;
+            txtDescription.IsReadOnly = false;
             //txtUsername.IsReadOnly = false;
             edit_mode = true;
             btnSave.IsEnabled = true;
-            txtSiteName.Focus();
+            txtDescription.Focus();
         }
 
         private void ClearFields()
         {
-            txtSiteID.IsReadOnly = false;
-            txtSiteID.Value = string.Empty;
+            txtUnitID.IsReadOnly = false;
+            txtUnitID.Value = string.Empty;
 
-            txtSiteName.IsReadOnly = false;
+            txtDescription.IsReadOnly = false;
 
-            txtSiteName.Value = string.Empty;
+            txtDescription.Value = string.Empty;
 
             id = 0;
             //username = string.Empty;
             edit_mode = false;
 
-            ReadAllSites();
+            ReadAllUnits();
         }
 
         private void btnNew_Click(object sender, RoutedEventArgs e)
@@ -122,18 +122,24 @@ namespace dipndipInventory.Views.Site
 
         private bool validateUser()
         {
-            if (Validate.TxtMaskBlankCheck(txtSiteName, "Site Name"))
+            //if (Validate.TxtMaskBlankCheck(txtUnitID, "Unit ID"))
+            //{
+            //    return false;
+            //}
+
+            if (Validate.TxtMaskBlankCheck(txtDescription, "Description"))
             {
                 return false;
             }
 
             return true;
         }
+
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             if (validateUser())
             {
-                RadWindow.Confirm("Do you want to Continue ?", this.onSave);
+                RadWindow.Confirm("Do you want to Continue?", this.onSave);
             }
         }
 
@@ -141,16 +147,16 @@ namespace dipndipInventory.Views.Site
         {
             if (e.DialogResult == true)
             {
-                saveSite();
+                saveUnit();
             }
         }
 
-        private void saveSite()
+        private void saveUnit()
         {
-            site objSite = new site();
-            objSite.site_id = txtSiteID.Value;
-            objSite.site_name = txtSiteName.Value;
-            
+            ck_units objUnit = new ck_units();
+            objUnit.unit_description = txtDescription.Value;
+            //objUnit.category_name = txtCategoryName.Value;
+
 
             string _dbresponse = string.Empty;
 
@@ -158,24 +164,25 @@ namespace dipndipInventory.Views.Site
             {
                 if (edit_mode)
                 {
-                    objSite.Id = id;
+                    objUnit.Id = id;
                     // objUser.username = username;
-                    objSite.modified_by = GlobalVariables.ActiveUser.Id;
-                    objSite.modified_date = DateTime.Now;
-                    _dbresponse = _context.UpdateSite(objSite) > 0 ? "Site Details Updated Successfully" : "Unable to Update Site Details";
+                    objUnit.modified_by = GlobalVariables.ActiveUser.Id;
+                    objUnit.modified_date = DateTime.Now;
+                    _dbresponse = _context.UpdateUnit(objUnit) > 0 ? "Unit Details Updated Successfully" : "Unable to Update Unit Details";
                 }
                 else
                 {
-                    objSite.created_by = GlobalVariables.ActiveUser.Id;
-                    objSite.created_date = DateTime.Now;
-                    if (_context.IsExistingSite(objSite.Id))
+                    objUnit.created_by = GlobalVariables.ActiveUser.Id;
+                    objUnit.created_date = DateTime.Now;
+                    objUnit.active = true;
+                    if (_context.IsExistingUnit(objUnit.Id))
                     {
-                        RadWindow.Alert("Existing Site");
-                        txtSiteName.SelectionStart = txtSiteName.Value.Length;
-                        txtSiteName.Focus();
+                        RadWindow.Alert("Existing Category");
+                        txtDescription.SelectionStart = txtDescription.Value.Length;
+                        txtDescription.Focus();
                         return;
                     }
-                    _dbresponse = _context.CreateSite(objSite) > 0 ? "Site Details Created Successfully" : "Unable to Save Site Details";
+                    _dbresponse = _context.CreateUnit(objUnit) > 0 ? "Unit Details Created Successfully" : "Unable to Save Unit Details";
                 }
 
                 RadWindow.Alert(_dbresponse);
@@ -192,30 +199,30 @@ namespace dipndipInventory.Views.Site
             //    return;
             //}
 
-            if (dgSites.SelectedItem != null)
+            if (dgUnits.SelectedItem != null)
             {
-                RadWindow.Confirm("Do you want to Continue?", this.onDeleteSite);
+                RadWindow.Confirm("Do you want to Continue?", this.onDeleteUnit);
             }
         }
 
-        private void onDeleteSite(object sender, WindowClosedEventArgs e)
+        private void onDeleteUnit(object sender, WindowClosedEventArgs e)
         {
             if (e.DialogResult == true)
             {
-                deleteSite();
+                deleteUnit();
                 ClearFields();
-                ReadAllSites();
+                ReadAllUnits();
             }
         }
 
-        private void deleteSite()
+        private void deleteUnit()
         {
             try
             {
-                site objSite = new site();
-                objSite.Id = id;
+                ck_units objUnit = new ck_units();
+                objUnit.Id = id;
 
-                string _dbresponse = _context.DeleteSite(objSite) > 0 ? "Site Details deleted successfully" : "Unable to delete Site Details";
+                string _dbresponse = _context.DeleteUnit(objUnit) > 0 ? "Unit Details deleted successfully" : "Unable to delete Unit Details";
 
                 RadWindow.Alert(_dbresponse);
             }

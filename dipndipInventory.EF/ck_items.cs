@@ -17,7 +17,6 @@ namespace dipndipInventory.EF
         public int Id { get; set; }
         public Nullable<int> ck_item_code { get; set; }
         public string ck_item_description { get; set; }
-        public Nullable<int> ck_desired_qty { get; set; }
         public Nullable<int> ck_unit_id { get; set; }
         public Nullable<decimal> ck_item_unit_cost { get; set; }
         public Nullable<System.DateTime> created_date { get; set; }
@@ -27,9 +26,10 @@ namespace dipndipInventory.EF
         public Nullable<int> created_by { get; set; }
         public Nullable<System.DateTime> production_date { get; set; }
         public Nullable<System.DateTime> expiry_date { get; set; }
+        public Nullable<int> ck_design_qty { get; set; }
     
-        public virtual ck_units ck_units { get; set; }
         public virtual ck_users ck_users { get; set; }
         public virtual ck_users ck_users1 { get; set; }
+        public virtual ck_units ck_units { get; set; }
     }
 }
