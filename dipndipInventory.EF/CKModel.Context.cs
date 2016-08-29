@@ -12,6 +12,8 @@ namespace dipndipInventory.EF
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class CKEntities : DbContext
     {
@@ -33,5 +35,10 @@ namespace dipndipInventory.EF
         public virtual DbSet<ckwh_items> ckwh_items { get; set; }
         public virtual DbSet<site> sites { get; set; }
         public virtual DbSet<ck_units> ck_units { get; set; }
+    
+        public virtual ObjectResult<ReadWarehouseItems_Result> ReadWarehouseItems()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ReadWarehouseItems_Result>("ReadWarehouseItems");
+        }
     }
 }

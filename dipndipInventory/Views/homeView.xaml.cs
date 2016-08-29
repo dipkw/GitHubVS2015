@@ -80,5 +80,11 @@ namespace dipndipInventory.Views
             warehouseitemsView wv = new warehouseitemsView();
             wv.Show();
         }
+
+        private void ItemUnitsMenu_Click(object sender, RoutedEventArgs e)
+        {
+            ckitemunitsetupView usv = new ckitemunitsetupView();
+            usv.Show();
+        }
     }
 }

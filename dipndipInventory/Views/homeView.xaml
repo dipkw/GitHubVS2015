@@ -129,7 +129,7 @@
                             <TextBlock Text="WH Items" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </telerik:RadRibbonButton>
-                    <telerik:RadRibbonButton x:Name="ItemUnitsMenu"  Width="70"  HorizontalContentAlignment="Center">
+                    <telerik:RadRibbonButton x:Name="ItemUnitsMenu"  Width="70"  HorizontalContentAlignment="Center" Click="ItemUnitsMenu_Click">
                         <StackPanel>
                             <Image Source="/dipndipInventory;component/Images/menu_icons/Icon-Tickets.png" Width="32" Height="32"/>
                             <TextBlock Text="Item Units" HorizontalAlignment="Center"/>

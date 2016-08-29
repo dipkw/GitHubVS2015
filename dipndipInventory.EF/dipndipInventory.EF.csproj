@@ -94,6 +94,9 @@
     <Compile Include="DataServices\UserService.cs" />
     <Compile Include="DataServices\WHItemService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReadWarehouseItems_Result.cs">
+      <DependentUpon>CKModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="site.cs">
       <DependentUpon>CKModel.tt</DependentUpon>
     </Compile>

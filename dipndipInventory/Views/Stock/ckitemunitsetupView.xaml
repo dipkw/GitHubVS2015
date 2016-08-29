@@ -1,12 +1,12 @@
-﻿<telerik:RadWindow x:Class="dipndipInventory.Views.Stock.warehouseitemsView"
+﻿<telerik:RadWindow x:Class="dipndipInventory.Views.Stock.ckitemunitsetupView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
         xmlns:local="clr-namespace:dipndipInventory.Views.Stock"
+        xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
         mc:Ignorable="d"
-        Header="Warehouse Items" Height="700" Width="1024" WindowStartupLocation="CenterScreen">
+        Header="CK Item Unit Setup" Height="700" Width="1024" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="350*"/>
@@ -18,7 +18,7 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Border Grid.ColumnSpan="2" Margin="10" BorderBrush="Black" BorderThickness="0.5" >
-            <telerik:RadGridView x:Name="dgWHItems" AutoGenerateColumns="False" IsReadOnly="True" RowIndicatorVisibility="Collapsed" IsSynchronizedWithCurrentItem="False" FocusManager.FocusedElement="{Binding ElementName=dgWHItems}" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <telerik:RadGridView x:Name="dgWHItems" AutoGenerateColumns="False" IsReadOnly="True" RowIndicatorVisibility="Collapsed" IsSynchronizedWithCurrentItem="False" FocusManager.FocusedElement="{Binding ElementName=dgWHItems}" HorizontalAlignment="Left" VerticalAlignment="Top" SelectionChanged="dgWHItems_SelectionChanged">
                 <telerik:RadGridView.Columns>
                     <telerik:GridViewDataColumn x:Name="ItemCode" DataMemberBinding="{Binding wh_item_code}" Width="*" Header="Item Code"/>
 
@@ -29,7 +29,7 @@
                             </DataTemplate>
                         </telerik:GridViewColumn.CellTemplate>
                     </telerik:GridViewColumn>-->
-                    <telerik:GridViewDataColumn x:Name="ItemDesc" DataMemberBinding="{Binding wh_item_description}" Width="*" Header="Item Description"/>
+                    <telerik:GridViewDataColumn x:Name="ItemDesc" DataMemberBinding="{Binding wh_item_description}" Width="3*" Header="Item Description"/>
                     <telerik:GridViewDataColumn x:Name="CatDesc" DataMemberBinding="{Binding wh_category_description}" Width="*" Header="Category"/>
                     <telerik:GridViewDataColumn x:Name="Unit" DataMemberBinding="{Binding wh_unit_description}" Width="*" Header="Unit"/>
                     <telerik:GridViewDataColumn x:Name="CurCost" DataMemberBinding="{Binding unit_cost}" Width="*" Header="Current Cost" TextAlignment="Right"/>
@@ -46,7 +46,7 @@
             </telerik:RadGridView>
         </Border>
 
-        <StackPanel Grid.Row="1" Orientation="Horizontal" Grid.ColumnSpan="2">
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Grid.ColumnSpan="1">
             <StackPanel Orientation="Vertical" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Row="1" Grid.Column="1">
                 <StackPanel Orientation="Horizontal" Visibility="Collapsed">
                     <telerik:Label Content="Unit ID" Height="25" Width="150"/>
@@ -54,13 +54,26 @@
                     <telerik:RadMaskedTextInput Name="txtUnitID" Width="250" Margin="3" TabIndex="0" Placeholder="_" TextMode="MaskedText" Mask="" InputBehavior="Insert" IsReadOnly="False"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" >
+                    <telerik:Label Content="Item Code" Height="25" Width="150"/>
+                    <telerik:RadMaskedTextInput Name="txtItemCode" Width="250" Margin="3" TabIndex="0" Placeholder="_" TextMode="MaskedText" Mask="" InputBehavior="Insert"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" >
                     <telerik:Label Content="Description" Height="25" Width="150"/>
-                    <!--<telerik:RadMaskedTextInput Name="txtSiteName" Width="250" Margin="3" TabIndex="0" Placeholder=" " TextMode="MaskedText"/>-->
                     <telerik:RadMaskedTextInput Name="txtDescription" Width="250" Margin="3" TabIndex="0" Placeholder="_" TextMode="MaskedText" Mask="" InputBehavior="Insert"/>
                 </StackPanel>
-
-
-
+                <StackPanel Orientation="Horizontal">
+                    <telerik:Label Content="Unit" Height="25" Width="150"/>
+                    <telerik:RadComboBox x:Name="cmbUnit" Width="250" Margin="3" TabIndex="2"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" >
+                    <telerik:Label Content="Conversion Factor" Height="25" Width="150"/>
+                    <telerik:RadMaskedNumericInput Name="txtConvFactor" Width="250" Margin="3" TabIndex="0" Placeholder="_" TextMode="MaskedText" Mask="" InputBehavior="Insert" FormatString="0.000"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,30,0,0" HorizontalAlignment="Right">
+                    <telerik:RadButton Content="Add Unit" Margin="3" Width="70" Name="btnAddUnit" Click="btnAddUnit_Click" />
+                    <telerik:RadButton Content="Delete Unit" Margin="3" Width="70" x:Name="btnDeleteUnit" />
+                    <telerik:RadButton Content="Save Item" Margin="3" Width="70" x:Name="btnSaveItem" />
+                </StackPanel>
 
 
             </StackPanel>
@@ -83,6 +96,16 @@
 
             </StackPanel>
         </StackPanel>
+        <Border Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="1" Margin="10" BorderBrush="Black" BorderThickness="0.5" >
+            <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Horizontal" Grid.ColumnSpan="1">
+                <telerik:RadGridView x:Name="dgWHItemUnits" AutoGenerateColumns="False" IsReadOnly="True" RowIndicatorVisibility="Collapsed" IsSynchronizedWithCurrentItem="False" FocusManager.FocusedElement="{Binding ElementName=dgWHItemUnits}" HorizontalAlignment="Left" VerticalAlignment="Top"  CanUserSortGroups="False" ShowGroupPanel="False">
+                    <telerik:RadGridView.Columns>
+                        <telerik:GridViewDataColumn x:Name="ItemUnit" DataMemberBinding="{Binding unitText}" Width="150" Header="Item Unit"/>
+                        <telerik:GridViewDataColumn x:Name="ConvFact" DataMemberBinding="{Binding conversionFactor}" Width="2*" Header="Conversion Factor" />
+                    </telerik:RadGridView.Columns>
+                </telerik:RadGridView>
+            </StackPanel>
+        </Border>
 
         <StackPanel Orientation="Horizontal"  HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row="2" Margin="0,0,5,5" Grid.ColumnSpan="2">
             <telerik:RadButton Content="Save" Margin="3" Width="50" Name="btnSave"  TabIndex="6"/>

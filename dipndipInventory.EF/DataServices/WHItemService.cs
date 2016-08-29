@@ -32,13 +32,24 @@ namespace dipndipInventory.EF.DataServices
             try
             {
                 _context = new CKEntities();
-                IEnumerable<ckwh_items> objWHItems = (from whitems in _context.ckwh_items orderby whitems.Id descending select whitems);
+                IEnumerable<ckwh_items> objWHItems = (from whitems in _context.ckwh_items orderby whitems.Id ascending select whitems);
                 return objWHItems;
             }
             catch
             {
                 return null;
             }
+        }
+
+        public IEnumerable<ckwh_items> ReadAllWarehouseItemsSP()
+        {
+            try
+            {
+                _context = new CKEntities();
+                IEnumerable<ckwh_items> objWHItems = _context.ckwh_items.SqlQuery("exec dbo.ReadWarehouseItems").ToList<ckwh_items>();
+                return objWHItems;
+            }
+            catch { return null; }
         }
 
         public int UpdateWHItem(ckwh_items objWHItem)

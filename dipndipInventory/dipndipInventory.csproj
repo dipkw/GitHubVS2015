@@ -35,6 +35,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Images\topdesk.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
@@ -112,6 +115,7 @@
     <Compile Include="Helpers\ToWord.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="Validations\Validation.cs" />
+    <Compile Include="ViewModels\ItemUnitViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
     <Compile Include="Views\homeView.xaml.cs">
       <DependentUpon>homeView.xaml</DependentUpon>
@@ -121,6 +125,9 @@
     </Compile>
     <Compile Include="Views\Site\siteView.xaml.cs">
       <DependentUpon>siteView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Stock\ckitemunitsetupView.xaml.cs">
+      <DependentUpon>ckitemunitsetupView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Stock\itemcategoryView.xaml.cs">
       <DependentUpon>itemcategoryView.xaml</DependentUpon>
@@ -155,6 +162,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Site\siteView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Stock\ckitemunitsetupView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -256,7 +267,9 @@
       <Name>dipndipInventory.EF</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Views\Test\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="OpenAccessNuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -360,6 +360,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="ReadWarehouseItems" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="dipckModelStoreContainer">
           <EntitySet Name="ck_item_details" EntityType="Self.ck_item_details" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ck_items" EntityType="Self.ck_items" Schema="dbo" store:Type="Tables" />
@@ -718,6 +719,7 @@
             <End Role="ck_users" EntitySet="ck_users" />
             <End Role="ck_units" EntitySet="ck_units" />
           </AssociationSet>
+          <FunctionImport Name="ReadWarehouseItems" ReturnType="Collection(dipckModel.ReadWarehouseItems_Result)" />
           </EntityContainer>
         <Association Name="FK_ck_item_details_ck_users">
           <End Type="dipckModel.ck_users" Role="ck_users" Multiplicity="0..1" />
@@ -939,6 +941,22 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="ReadWarehouseItems_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="wh_item_code" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="wh_item_description" Nullable="true" MaxLength="150" />
+          <Property Type="Int32" Name="wh_category_id" Nullable="true" />
+          <Property Type="String" Name="wh_category_description" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="wh_unit_id" Nullable="true" />
+          <Property Type="String" Name="wh_unit_description" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="quantity" Nullable="true" Precision="18" Scale="3" />
+          <Property Type="Decimal" Name="unit_cost" Nullable="true" Precision="18" Scale="3" />
+          <Property Type="Int32" Name="site_id" Nullable="true" />
+          <Property Type="Int32" Name="created_by" Nullable="true" />
+          <Property Type="DateTime" Name="created_date" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="modified_by" Nullable="true" />
+          <Property Type="DateTime" Name="modified_date" Nullable="true" Precision="23" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1068,6 +1086,26 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="ReadWarehouseItems" FunctionName="dipckModel.Store.ReadWarehouseItems">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="dipckModel.ReadWarehouseItems_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="wh_item_code" ColumnName="wh_item_code" />
+                <ScalarProperty Name="wh_item_description" ColumnName="wh_item_description" />
+                <ScalarProperty Name="wh_category_id" ColumnName="wh_category_id" />
+                <ScalarProperty Name="wh_category_description" ColumnName="wh_category_description" />
+                <ScalarProperty Name="wh_unit_id" ColumnName="wh_unit_id" />
+                <ScalarProperty Name="wh_unit_description" ColumnName="wh_unit_description" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="unit_cost" ColumnName="unit_cost" />
+                <ScalarProperty Name="site_id" ColumnName="site_id" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+                <ScalarProperty Name="modified_date" ColumnName="modified_date" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
