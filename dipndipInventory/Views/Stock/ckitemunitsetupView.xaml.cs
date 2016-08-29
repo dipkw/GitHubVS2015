@@ -99,6 +99,20 @@ namespace dipndipInventory.Views.Stock
 
         private void btnAddUnit_Click(object sender, RoutedEventArgs e)
         {
+            //if(cmbUnit.SelectedIndex==-1)
+            //{
+            //    MessageBox.Show("Please select a unit to add");
+            //    return;
+            //}
+            if(!CheckUnitDetails())
+            {
+                return;
+            }
+            if(UnitExistForItem((int)cmbUnit.SelectedValue))
+            {
+                MessageBox.Show("Existing Unit");
+                return;
+            }
             ItemUnitViewModel objItemUnitViewModel = new ItemUnitViewModel();
             objItemUnitViewModel.itemCode = txtItemCode.Value;
             objItemUnitViewModel.unitId = (int)cmbUnit.SelectedValue;
@@ -106,6 +120,36 @@ namespace dipndipInventory.Views.Stock
             objItemUnitViewModel.conversionFactor = (decimal)txtConvFactor.Value;
             itemUnits.Add(objItemUnitViewModel);
             dgWHItemUnits.ItemsSource = itemUnits.ToList();
+        }
+
+        private bool UnitExistForItem(int unitId)
+        {
+            var search_result = itemUnits.Find(x => x.unitId == unitId);
+            if(search_result==null)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        private void UpdateItemUnitList()
+        {
+            //Read units from database for the selected item and update the 'itemUnits' List
+        }
+
+        private bool CheckUnitDetails()
+        {
+            if (cmbUnit.SelectedIndex == -1)
+            {
+                MessageBox.Show("Please select a unit to add");
+                return false;
+            }
+            if(txtConvFactor.Value<=0 || txtConvFactor.Value==null)
+            {
+                MessageBox.Show("Invalid input for Conversion Factor");
+                return false;
+            }
+            return true;
         }
     }
 }
