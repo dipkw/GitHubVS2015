@@ -83,7 +83,7 @@ namespace dipndipInventory.Views
 
         private void ItemUnitsMenu_Click(object sender, RoutedEventArgs e)
         {
-            ckitemunitsetupView usv = new ckitemunitsetupView();
+            whitemunitsetupView usv = new whitemunitsetupView();
             usv.Show();
         }
     }

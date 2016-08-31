@@ -138,6 +138,9 @@
     <Compile Include="Views\Stock\warehouseitemsView.xaml.cs">
       <DependentUpon>warehouseitemsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Stock\whitemunitsetupView.xaml.cs">
+      <DependentUpon>whitemunitsetupView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Users\userView.xaml.cs">
       <DependentUpon>userView.xaml</DependentUpon>
     </Compile>
@@ -178,6 +181,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Stock\warehouseitemsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Stock\whitemunitsetupView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

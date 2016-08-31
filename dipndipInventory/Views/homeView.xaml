@@ -95,13 +95,13 @@
                 <telerik:RadRibbonGroup Header="Items">
                     <telerik:RadRibbonButton   Width="70"  HorizontalContentAlignment="Center" x:Name="Order">
                         <StackPanel>
-                            <Image Source="/dipndipInventory;component/images/menu_icons/9_exit_641.png" Width="32" Height="32"/>
+                            <Image Source="/dipndipInventory;component/images/menu_icons/fast-food-icon.png" Width="32" Height="32"/>
                             <TextBlock Text="Order" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </telerik:RadRibbonButton>
                     <telerik:RadRibbonButton   Width="70"  HorizontalContentAlignment="Center" x:Name="Receive">
                         <StackPanel>
-                            <Image Source="/dipndipInventory;component/images/menu_icons/9_exit_641.png" Width="32" Height="32"/>
+                            <Image Source="/dipndipInventory;component/images/menu_icons/Icon-Tickets.png" Width="32" Height="32"/>
                             <TextBlock Text="Receive" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </telerik:RadRibbonButton>
