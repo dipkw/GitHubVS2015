@@ -31,6 +31,8 @@ namespace dipndipInventory.EF
             this.ckwh_category1 = new HashSet<ckwh_category>();
             this.ck_units = new HashSet<ck_units>();
             this.ck_units1 = new HashSet<ck_units>();
+            this.wh_item_unit = new HashSet<wh_item_unit>();
+            this.wh_item_unit1 = new HashSet<wh_item_unit>();
         }
     
         public int Id { get; set; }
@@ -68,5 +70,9 @@ namespace dipndipInventory.EF
         public virtual ICollection<ck_units> ck_units { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ck_units> ck_units1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<wh_item_unit> wh_item_unit { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<wh_item_unit> wh_item_unit1 { get; set; }
     }
 }

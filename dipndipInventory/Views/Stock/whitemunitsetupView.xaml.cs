@@ -24,10 +24,13 @@ namespace dipndipInventory.Views.Stock
     public partial class whitemunitsetupView : RadWindow
     {
         WHItemService _context = new WHItemService();
+        WHItemUnitService _ucontext = new WHItemUnitService();
         bool edit_mode = false;
         //string username = string.Empty;
         int id = 0;
         int selected_unit_id = 0;
+        decimal selected_unit_cost = 0.000m;
+        string base_unit = string.Empty;
         List<ItemUnitViewModel> itemUnits = new List<ItemUnitViewModel>();
         public whitemunitsetupView()
         {
@@ -46,10 +49,10 @@ namespace dipndipInventory.Views.Stock
 
         private void ReadAllWarehouseItemsSP()
         {
-            IEnumerable<ckwh_items> objWarehouseItems = _context.ReadAllWarehouseItemsSP();
-            dgWHItems.ItemsSource = objWarehouseItems;
-            FillUnits();
-            txtDescription.Focus();
+            //IEnumerable<ckwh_items> objWarehouseItems = _context.ReadAllWarehouseItemsSP();
+            //dgWHItems.ItemsSource = objWarehouseItems;
+            //FillUnits();
+            //txtDescription.Focus();
         }
 
         public void FillUnits()
@@ -90,6 +93,11 @@ namespace dipndipInventory.Views.Stock
                 btnDelete.IsEnabled = false;
                 btnSaveItem.IsEnabled = false;
                 btnSave.IsEnabled = false;
+
+                selected_unit_cost = (decimal)objWHItems.unit_cost;
+                base_unit = objWHItems.wh_unit_description;
+
+                UpdateItemUnitList();
             }
             catch { }
         }
@@ -154,6 +162,8 @@ namespace dipndipInventory.Views.Stock
             objItemUnitViewModel.unitId = (int)cmbUnit.SelectedValue;
             objItemUnitViewModel.unitText = cmbUnit.Text;
             objItemUnitViewModel.conversionFactor = (decimal)txtConvFactor.Value;
+            objItemUnitViewModel.baseUnit = base_unit;
+            objItemUnitViewModel.unitCost = objItemUnitViewModel.conversionFactor * selected_unit_cost;
             itemUnits.Add(objItemUnitViewModel);
             dgWHItemUnits.ItemsSource = itemUnits.ToList();
             cmbUnit.SelectedIndex = -1;
@@ -202,7 +212,8 @@ namespace dipndipInventory.Views.Stock
                 }
 
                 ItemUnitViewModel objItemUnitViewModel = (dgWHItemUnits.SelectedItem) as ItemUnitViewModel;
-                selected_unit_id = objItemUnitViewModel.unitId;
+                //selected_unit_id = objItemUnitViewModel.unitId;
+                selected_unit_id = objItemUnitViewModel.id;
             }
             catch { }
         }
@@ -210,16 +221,76 @@ namespace dipndipInventory.Views.Stock
         private void btnDeleteUnit_Click(object sender, RoutedEventArgs e)
         {
             dgWHItemUnits.ItemsSource = null;
-            itemUnits.RemoveAll(x => x.unitId == selected_unit_id);
+            //itemUnits.RemoveAll(x => x.unitId == selected_unit_id);
+            itemUnits.RemoveAll(x => x.id == selected_unit_id);
             dgWHItemUnits.ItemsSource = itemUnits;
             selected_unit_id = 0;
+            selected_unit_cost = 0.000m;
             btnDeleteUnit.IsEnabled = false;
+        }
+
+        private void SaveItemUnit()
+        {
+            if(_ucontext.IsExistingWHItemUnitByWHItemId(id))
+            {
+                _ucontext.DeleteWHItemUnitByWHItemId(id);
+                CreateItemUnits();
+            }
+            else
+            {
+                CreateItemUnits();
+            }
+        }
+
+        public void CreateItemUnits()
+        {
+            int itemCount = 0;
+            itemCount = itemUnits.Count();
+            string _dbresponse = string.Empty;
+            for (int i = 0; i < itemCount; i++)
+            {
+                wh_item_unit objWHItemUnit = new wh_item_unit();
+                //objWHItemUnit.wh_item_id = itemUnits[i].itemId;
+                objWHItemUnit.wh_item_id = id;
+                objWHItemUnit.ck_unit_id = itemUnits[i].unitId;
+                objWHItemUnit.cnv_factor = itemUnits[i].conversionFactor;
+                _dbresponse = _ucontext.CreateWHItemUnit(objWHItemUnit) > 0 ? "Item Unit Details Updated Successfully" : "Unable to Update Item Unit Details"; ;
+            }
         }
 
         private void UpdateItemUnitList()
         {
             //Read units from database for the selected item and update the 'itemUnits' List
+            IEnumerable<wh_item_unit> item_units = _ucontext.ReadAllWHItemUnitsByWHItemId(id);
+            itemUnits.Clear();
+            //MessageBox.Show(item_units.Count().ToString());
+            foreach (wh_item_unit item_unit in item_units)
+            {
+                ItemUnitViewModel objItemUnitViewModel = new ItemUnitViewModel();
+                objItemUnitViewModel.id = item_unit.Id;
+                objItemUnitViewModel.unitId = (int)item_unit.ck_unit_id;
+                objItemUnitViewModel.unitText = item_unit.ck_units.unit_description;
+                objItemUnitViewModel.conversionFactor = (decimal)item_unit.cnv_factor;
+                objItemUnitViewModel.baseUnit = base_unit;
+                objItemUnitViewModel.unitCost = objItemUnitViewModel.conversionFactor * selected_unit_cost;
+                itemUnits.Add(objItemUnitViewModel);
+            }
+            dgWHItemUnits.ItemsSource = null;
+            dgWHItemUnits.ItemsSource = itemUnits;
+            dgWHItemUnits.Items.Refresh();
         }
 
+        private void btnSaveItem_Click(object sender, RoutedEventArgs e)
+        {
+            RadWindow.Confirm("Do you want to Continue ?", this.onSave);
+        }
+
+        private void onSave(object sender, WindowClosedEventArgs e)
+        {
+            if (e.DialogResult == true)
+            {
+                SaveItemUnit();
+            }
+        }
     }
 }

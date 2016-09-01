@@ -72,7 +72,7 @@
                 <StackPanel Orientation="Horizontal" Margin="0,30,0,0" HorizontalAlignment="Right">
                     <telerik:RadButton Content="Add Unit" Margin="3" Width="70" Name="btnAddUnit" Click="btnAddUnit_Click" />
                     <telerik:RadButton Content="Delete Unit" Margin="3" Width="70" x:Name="btnDeleteUnit" Click="btnDeleteUnit_Click"/>
-                    <telerik:RadButton Content="Save Item" Margin="3" Width="70" x:Name="btnSaveItem" />
+                    <telerik:RadButton Content="Save Item" Margin="3" Width="70" x:Name="btnSaveItem" Click="btnSaveItem_Click"/>
                 </StackPanel>
 
 
@@ -100,8 +100,11 @@
             <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Horizontal" Grid.ColumnSpan="1">
                 <telerik:RadGridView x:Name="dgWHItemUnits" AutoGenerateColumns="False" IsReadOnly="True" RowIndicatorVisibility="Collapsed" IsSynchronizedWithCurrentItem="False" FocusManager.FocusedElement="{Binding ElementName=dgWHItemUnits}" HorizontalAlignment="Left" VerticalAlignment="Top"  CanUserSortGroups="False" ShowGroupPanel="False" SelectionChanged="dgWHItemUnits_SelectionChanged">
                     <telerik:RadGridView.Columns>
-                        <telerik:GridViewDataColumn x:Name="ItemUnit" DataMemberBinding="{Binding unitText}" Width="150" Header="Item Unit"/>
-                        <telerik:GridViewDataColumn x:Name="ConvFact" DataMemberBinding="{Binding conversionFactor}" Width="2*" Header="Conversion Factor" />
+                        <telerik:GridViewDataColumn x:Name="Id" DataMemberBinding="{Binding Id}" Width="100" Header="Item Unit Id" IsVisible="False"/>
+                        <telerik:GridViewDataColumn x:Name="ItemUnit" DataMemberBinding="{Binding unitText}" Width="100" Header="Item Unit"/>
+                        <telerik:GridViewDataColumn x:Name="ConvFact" DataMemberBinding="{Binding conversionFactor}" Width="150" Header="Conversion Factor" />
+                        <telerik:GridViewDataColumn x:Name="BaseUnit" DataMemberBinding="{Binding baseUnit}" Width="120" Header="Base Unit" />
+                        <telerik:GridViewDataColumn x:Name="UnitCost" DataMemberBinding="{Binding unitCost}" Width="2*" Header="Unit Cost" />
                     </telerik:RadGridView.Columns>
                 </telerik:RadGridView>
             </StackPanel>

@@ -33,6 +33,11 @@
         <AssociationConnector Association="dipckModel.FK_ckwh_item_unit_ck_units" />
         <AssociationConnector Association="dipckModel.FK_ck_units_ck_users" />
         <AssociationConnector Association="dipckModel.FK_ck_units_ck_users1" />
+        <EntityTypeShape EntityType="dipckModel.wh_item_unit" Width="1.5" PointX="10.875" PointY="2.375" />
+        <AssociationConnector Association="dipckModel.FK_wh_item_unit_ck_units" />
+        <AssociationConnector Association="dipckModel.FK_wh_item_unit_ck_users" />
+        <AssociationConnector Association="dipckModel.FK_wh_item_unit_ck_users1" />
+        <AssociationConnector Association="dipckModel.FK_wh_item_unit_wh_item_unit" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
