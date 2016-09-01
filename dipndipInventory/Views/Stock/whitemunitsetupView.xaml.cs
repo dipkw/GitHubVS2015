@@ -231,6 +231,7 @@ namespace dipndipInventory.Views.Stock
 
         private void SaveItemUnit()
         {
+            //Update previous related records id with new id
             if(_ucontext.IsExistingWHItemUnitByWHItemId(id))
             {
                 _ucontext.DeleteWHItemUnitByWHItemId(id);
@@ -255,6 +256,7 @@ namespace dipndipInventory.Views.Stock
                 objWHItemUnit.ck_unit_id = itemUnits[i].unitId;
                 objWHItemUnit.cnv_factor = itemUnits[i].conversionFactor;
                 _dbresponse = _ucontext.CreateWHItemUnit(objWHItemUnit) > 0 ? "Item Unit Details Updated Successfully" : "Unable to Update Item Unit Details"; ;
+                RadWindow.Alert(_dbresponse);
             }
         }
 
