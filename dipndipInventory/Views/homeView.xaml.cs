@@ -86,5 +86,11 @@ namespace dipndipInventory.Views
             whitemunitsetupView usv = new whitemunitsetupView();
             usv.Show();
         }
+
+        private void CKItemsMenu_Click(object sender, RoutedEventArgs e)
+        {
+            ckitemsView ckv = new ckitemsView();
+            ckv.Show();
+        }
     }
 }

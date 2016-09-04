@@ -20,57 +20,75 @@ using Telerik.Windows.Controls;
 namespace dipndipInventory.Views.Stock
 {
     /// <summary>
-    /// Interaction logic for unitView.xaml
+    /// Interaction logic for ckitemsView.xaml
     /// </summary>
-    public partial class unitView : RadWindow
+    public partial class ckitemsView : RadWindow
     {
-        UnitService _context = new UnitService();
+        CKItemService _context = new CKItemService();
+        UnitService _ucontext = new UnitService();
         bool edit_mode = false;
         //string username = string.Empty;
         int id = 0;
-        public unitView()
+        public ckitemsView()
         {
             InitializeComponent();
-            ReadAllUnits();
+            ReadAllCKItems();
+            FillUnits();
         }
 
-        private void ReadAllUnits()
+        private void ReadAllCKItems()
         {
-            IEnumerable<ck_units> objUnits = _context.ReadAllUnits();
-            dgUnits.ItemsSource = objUnits;
-            txtDescription.Focus();
+            IEnumerable<ck_items> objCKItems = _context.ReadAllCKItems();
+            dgCKItems.ItemsSource = objCKItems;
+            txtItemCode.Focus();
         }
 
-        private void SelectUnit()
+        public void FillUnits()
+        {
+            IEnumerable<ck_units> objUnits = _ucontext.ReadAllUnits();
+            cmbUnit.DisplayMemberPath = "unit_description";
+            cmbUnit.SelectedValuePath = "id";
+            cmbUnit.ItemsSource = objUnits.ToList();
+        }
+        private void SelectCKItem()
         {
             try
             {
-                if (dgUnits.SelectedItem == null)
+                if (dgCKItems.SelectedItem == null)
                 {
                     return;
                 }
 
-                ck_units objUnit = (dgUnits.SelectedItem) as ck_units;
+                ck_items objCKItem = (dgCKItems.SelectedItem) as ck_items;
 
-                id = objUnit.Id;
+                id = objCKItem.Id;
                 //user_Id = objUser.user_id;
 
                 //username = objUser.username;
 
                 //txtUnitID.Value = objUnit.unit_description;
                 //txtUnitID.IsReadOnly = true;
+                txtItemCode.Value = objCKItem.ck_item_code;
+                txtItemCode.IsReadOnly = true;
 
-                txtDescription.Value = objUnit.unit_description;
+                txtDescription.Value = objCKItem.ck_item_description;
                 txtDescription.IsReadOnly = true;
+
+                cmbUnit.SelectedValue = objCKItem.ck_unit_id;
+                cmbUnit.IsReadOnly = true;
+                cmbUnit.IsHitTestVisible = false;
+
+                txtDesiredQty.Value = (int)txtDesiredQty.Value;
+                txtDesiredQty.IsReadOnly = true;
 
                 btnSave.IsEnabled = false;
             }
             catch { }
         }
 
-        private void dgUnits_SelectionChanged(object sender, SelectionChangeEventArgs e)
+        private void dgCKItems_SelectionChanged(object sender, SelectionChangeEventArgs e)
         {
-            SelectUnit();
+            SelectCKItem();
         }
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
@@ -86,12 +104,15 @@ namespace dipndipInventory.Views.Stock
             //    return;
             //}
 
-            if (dgUnits.SelectedItem == null)
+            if (dgCKItems.SelectedItem == null)
             {
                 return;
             }
 
             txtDescription.IsReadOnly = false;
+            cmbUnit.IsReadOnly = false;
+            cmbUnit.IsHitTestVisible = true;
+            txtDesiredQty.IsReadOnly = false;
             //txtUsername.IsReadOnly = false;
             edit_mode = true;
             btnSave.IsEnabled = true;
@@ -103,15 +124,24 @@ namespace dipndipInventory.Views.Stock
             txtUnitID.IsReadOnly = false;
             txtUnitID.Value = string.Empty;
 
-            txtDescription.IsReadOnly = false;
+            txtItemCode.IsReadOnly = false;
+            txtItemCode.Value = string.Empty;
 
+            txtDescription.IsReadOnly = false;
             txtDescription.Value = string.Empty;
+
+            cmbUnit.SelectedIndex = -1;
+            cmbUnit.IsReadOnly = true;
+            cmbUnit.IsHitTestVisible = false;
+
+            txtDesiredQty.Value = 0;
+            txtDesiredQty.IsReadOnly = true;
 
             id = 0;
             //username = string.Empty;
             edit_mode = false;
 
-            ReadAllUnits();
+            ReadAllCKItems();
         }
 
         private void btnNew_Click(object sender, RoutedEventArgs e)
@@ -120,14 +150,29 @@ namespace dipndipInventory.Views.Stock
             btnSave.IsEnabled = true;
         }
 
-        private bool validateUnit()
+        private bool validateCKItem()
         {
             //if (Validate.TxtMaskBlankCheck(txtUnitID, "Unit ID"))
             //{
             //    return false;
             //}
 
+            if (Validate.TxtMaskBlankCheck(txtItemCode, "Item Code"))
+            {
+                return false;
+            }
+
             if (Validate.TxtMaskBlankCheck(txtDescription, "Description"))
+            {
+                return false;
+            }
+
+            if (Validate.ComboMaskBlankCheck(cmbUnit, "Unit"))
+            {
+                return false;
+            }
+
+            if (Validate.TxtMaskNumericBlankCheck(txtDesiredQty, "Desired Quantity"))
             {
                 return false;
             }
@@ -137,7 +182,7 @@ namespace dipndipInventory.Views.Stock
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            if (validateUnit())
+            if (validateCKItem())
             {
                 RadWindow.Confirm("Do you want to Continue?", this.onSave);
             }
@@ -147,14 +192,14 @@ namespace dipndipInventory.Views.Stock
         {
             if (e.DialogResult == true)
             {
-                saveUnit();
+                saveCKItem();
             }
         }
 
-        private void saveUnit()
+        private void saveCKItem()
         {
-            ck_units objUnit = new ck_units();
-            objUnit.unit_description = txtDescription.Value;
+            ck_items objCKItem = new ck_items();
+            objCKItem.ck_item_description = txtDescription.Value;
             //objUnit.category_name = txtCategoryName.Value;
 
 
@@ -164,25 +209,26 @@ namespace dipndipInventory.Views.Stock
             {
                 if (edit_mode)
                 {
-                    objUnit.Id = id;
+                    objCKItem.Id = id;
                     // objUser.username = username;
-                    objUnit.modified_by = GlobalVariables.ActiveUser.Id;
-                    objUnit.modified_date = DateTime.Now;
-                    _dbresponse = _context.UpdateUnit(objUnit) > 0 ? "Unit Details Updated Successfully" : "Unable to Update Unit Details";
+                    objCKItem.modified_by = GlobalVariables.ActiveUser.Id;
+                    objCKItem.modified_date = DateTime.Now;
+                    _dbresponse = _context.UpdateCKItem(objCKItem) > 0 ? "Item Updated Successfully" : "Unable to Update Central Kitchen Item";
                 }
                 else
                 {
-                    objUnit.created_by = GlobalVariables.ActiveUser.Id;
-                    objUnit.created_date = DateTime.Now;
-                    objUnit.active = true;
-                    if (_context.IsExistingUnit(objUnit.Id))
+                    objCKItem.ck_item_code = _context.GetNewItemCode();
+                    objCKItem.created_by = GlobalVariables.ActiveUser.Id;
+                    objCKItem.created_date = DateTime.Now;
+                    objCKItem.active = true;
+                    if (_context.IsExistingCKIem(objCKItem.Id))
                     {
-                        RadWindow.Alert("Existing Category");
+                        RadWindow.Alert("Existing Item");
                         txtDescription.SelectionStart = txtDescription.Value.Length;
                         txtDescription.Focus();
                         return;
                     }
-                    _dbresponse = _context.CreateUnit(objUnit) > 0 ? "Unit Details Created Successfully" : "Unable to Save Unit Details";
+                    _dbresponse = _context.CreateCKItems(objCKItem) > 0 ? "Item Created Successfully" : "Unable to Save Item";
                 }
 
                 RadWindow.Alert(_dbresponse);
@@ -199,30 +245,30 @@ namespace dipndipInventory.Views.Stock
             //    return;
             //}
 
-            if (dgUnits.SelectedItem != null)
+            if (dgCKItems.SelectedItem != null)
             {
-                RadWindow.Confirm("Do you want to Continue?", this.onDeleteUnit);
+                RadWindow.Confirm("Do you want to Continue?", this.onDeleteCKItem);
             }
         }
 
-        private void onDeleteUnit(object sender, WindowClosedEventArgs e)
+        private void onDeleteCKItem(object sender, WindowClosedEventArgs e)
         {
             if (e.DialogResult == true)
             {
-                deleteUnit();
+                deleteCKItem();
                 ClearFields();
-                ReadAllUnits();
+                ReadAllCKItems();
             }
         }
 
-        private void deleteUnit()
+        private void deleteCKItem()
         {
             try
             {
-                ck_units objUnit = new ck_units();
-                objUnit.Id = id;
+                ck_items objCKItem = new ck_items();
+                objCKItem.Id = id;
 
-                string _dbresponse = _context.DeleteUnit(objUnit) > 0 ? "Unit Details deleted successfully" : "Unable to delete Unit Details";
+                string _dbresponse = _context.DeleteUnit(objCKItem) > 0 ? "Item deleted successfully" : "Unable to delete Item";
 
                 RadWindow.Alert(_dbresponse);
             }

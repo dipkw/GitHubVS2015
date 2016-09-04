@@ -28,7 +28,6 @@ namespace dipndipInventory.EF
         }
     
         public virtual DbSet<ck_item_details> ck_item_details { get; set; }
-        public virtual DbSet<ck_items> ck_items { get; set; }
         public virtual DbSet<ck_users> ck_users { get; set; }
         public virtual DbSet<ckwh_category> ckwh_category { get; set; }
         public virtual DbSet<ckwh_item_unit> ckwh_item_unit { get; set; }
@@ -36,6 +35,7 @@ namespace dipndipInventory.EF
         public virtual DbSet<site> sites { get; set; }
         public virtual DbSet<ck_units> ck_units { get; set; }
         public virtual DbSet<wh_item_unit> wh_item_unit { get; set; }
+        public virtual DbSet<ck_items> ck_items { get; set; }
     
         public virtual ObjectResult<ReadWarehouseItems_Result> ReadWarehouseItems()
         {
