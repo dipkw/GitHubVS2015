@@ -92,5 +92,11 @@ namespace dipndipInventory.Views
             ckitemsView ckv = new ckitemsView();
             ckv.Show();
         }
+
+        private void CKItemsRecipeMenu_Click(object sender, RoutedEventArgs e)
+        {
+            ckitemrecipeView irv = new ckitemrecipeView();
+            irv.Show();
+        }
     }
 }
