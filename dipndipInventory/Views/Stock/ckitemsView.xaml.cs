@@ -40,14 +40,17 @@ namespace dipndipInventory.Views.Stock
         {
             IEnumerable<ck_items> objCKItems = _context.ReadAllCKItems();
             dgCKItems.ItemsSource = objCKItems;
-            txtItemCode.Focus();
+            txtItemCode.Value = _context.GetNewItemCode();
+            txtItemCode.IsEnabled = false;
+            txtItemCode.IsReadOnly = true;
+            txtDescription.Focus();
         }
 
         public void FillUnits()
         {
             IEnumerable<ck_units> objUnits = _ucontext.ReadAllUnits();
             cmbUnit.DisplayMemberPath = "unit_description";
-            cmbUnit.SelectedValuePath = "id";
+            cmbUnit.SelectedValuePath = "Id";
             cmbUnit.ItemsSource = objUnits.ToList();
         }
         private void SelectCKItem()
@@ -69,6 +72,7 @@ namespace dipndipInventory.Views.Stock
                 //txtUnitID.Value = objUnit.unit_description;
                 //txtUnitID.IsReadOnly = true;
                 txtItemCode.Value = objCKItem.ck_item_code;
+                txtItemCode.IsEnabled = false;
                 txtItemCode.IsReadOnly = true;
 
                 txtDescription.Value = objCKItem.ck_item_description;
@@ -124,8 +128,9 @@ namespace dipndipInventory.Views.Stock
             txtUnitID.IsReadOnly = false;
             txtUnitID.Value = string.Empty;
 
-            txtItemCode.IsReadOnly = false;
-            txtItemCode.Value = string.Empty;
+            txtItemCode.IsReadOnly = true;
+            //txtItemCode.Value = string.Empty;
+            txtItemCode.Value = _context.GetNewItemCode();
 
             txtDescription.IsReadOnly = false;
             txtDescription.Value = string.Empty;
@@ -157,10 +162,10 @@ namespace dipndipInventory.Views.Stock
             //    return false;
             //}
 
-            if (Validate.TxtMaskBlankCheck(txtItemCode, "Item Code"))
-            {
-                return false;
-            }
+            //if (Validate.TxtMaskBlankCheck(txtItemCode, "Item Code"))
+            //{
+            //    return false;
+            //}
 
             if (Validate.TxtMaskBlankCheck(txtDescription, "Description"))
             {
@@ -200,6 +205,8 @@ namespace dipndipInventory.Views.Stock
         {
             ck_items objCKItem = new ck_items();
             objCKItem.ck_item_description = txtDescription.Value;
+            objCKItem.ck_unit_id = (int)cmbUnit.SelectedValue;
+            objCKItem.ck_desired_qty = (int)txtDesiredQty.Value;
             //objUnit.category_name = txtCategoryName.Value;
 
 

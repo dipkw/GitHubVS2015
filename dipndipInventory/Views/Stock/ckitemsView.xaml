@@ -30,9 +30,9 @@
                         </telerik:GridViewColumn.CellTemplate>
                     </telerik:GridViewColumn>-->
                     <telerik:GridViewDataColumn x:Name="ItemDesc" DataMemberBinding="{Binding ck_item_description}" Width="*" Header="Item Description"/>
-                    <telerik:GridViewDataColumn x:Name="Unit" DataMemberBinding="{Binding ck_item_description}" Width="*" Header="Unit"/>
+                    <telerik:GridViewDataColumn x:Name="Unit" DataMemberBinding="{Binding ck_units.unit_description}" Width="*" Header="Unit"/>
+                    <telerik:GridViewDataColumn x:Name="DesiredQty" DataMemberBinding="{Binding ck_desired_qty}" Width="*" Header="Desired Qty" TextAlignment="Right"/>
                     <telerik:GridViewDataColumn x:Name="CurCost" DataMemberBinding="{Binding unit_cost}" Width="*" Header="Current Cost" TextAlignment="Right"/>
-                    <telerik:GridViewDataColumn x:Name="DesiredQty" DataMemberBinding="{Binding desired_quantity}" Width="*" Header="Desired Qty" TextAlignment="Right"/>
                     <telerik:GridViewDataColumn x:Name="QtyOnHand" DataMemberBinding="{Binding quantity}" Width="*" Header="Qty on Hand" TextAlignment="Right"/>
                     <telerik:GridViewDataColumn x:Name="UnitCost" DataMemberBinding="{Binding unit_cost}" Width="*" Header="Unit Cost" TextAlignment="Right"/>
 
@@ -57,12 +57,12 @@
                 <StackPanel Orientation="Horizontal" >
                     <telerik:Label Content="Item Code" Height="25" Width="150"/>
                     <!--<telerik:RadMaskedTextInput Name="txtSiteName" Width="250" Margin="3" TabIndex="0" Placeholder=" " TextMode="MaskedText"/>-->
-                    <telerik:RadMaskedTextInput Name="txtItemCode" Width="250" Margin="3" TabIndex="0" Placeholder="_" TextMode="MaskedText" Mask="" InputBehavior="Insert"/>
+                    <telerik:RadMaskedTextInput Name="txtItemCode" Width="250" Margin="3" TabIndex="0" Placeholder="_" TextMode="MaskedText" Mask="" InputBehavior="Insert" AcceptsReturn="False"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" >
                     <telerik:Label Content="Description" Height="25" Width="150"/>
-                    <telerik:RadMaskedTextInput Name="txtDescription" Width="250" Margin="3" TabIndex="0" Placeholder="_" TextMode="MaskedText" Mask="" InputBehavior="Insert"/>
+                    <telerik:RadMaskedTextInput Name="txtDescription" Width="250" Margin="3" TabIndex="1" Placeholder="_" TextMode="MaskedText" Mask="" InputBehavior="Insert"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal">
@@ -72,7 +72,7 @@
 
                 <StackPanel Orientation="Horizontal" >
                     <telerik:Label Content="Desired Quantity" Height="25" Width="150"/>
-                    <telerik:RadMaskedNumericInput Name="txtDesiredQty" Width="250" Margin="3" TabIndex="0" Placeholder="_" TextMode="MaskedText" Mask="" InputBehavior="Insert" FormatString="0"/>
+                    <telerik:RadMaskedNumericInput Name="txtDesiredQty" Width="250" Margin="3" TabIndex="3" Placeholder="_" TextMode="MaskedText" Mask="" InputBehavior="Insert" FormatString="0"/>
                 </StackPanel>
 
 
@@ -100,10 +100,10 @@
         </StackPanel>
 
         <StackPanel Orientation="Horizontal"  HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row="2" Margin="0,0,5,5" Grid.ColumnSpan="2">
-            <telerik:RadButton Content="Save" Margin="3" Width="50" Name="btnSave"  TabIndex="6" Click="btnSave_Click"/>
-            <telerik:RadButton Content="New" Margin="3" Width="50" Name="btnNew"  TabIndex="7" Click="btnNew_Click"/>
-            <telerik:RadButton Content="Delete" Margin="3" Width="50" x:Name="btnDelete" TabIndex="8" Click="btnDelete_Click"/>
-            <telerik:RadButton Content="Close" Margin="3" Width="50" Name="btnClose"   TabIndex="9" Click="btnClose_Click"/>
+            <telerik:RadButton Content="Save" Margin="3" Width="50" Name="btnSave"  TabIndex="4" Click="btnSave_Click"/>
+            <telerik:RadButton Content="New" Margin="3" Width="50" Name="btnNew"  TabIndex="5" Click="btnNew_Click"/>
+            <telerik:RadButton Content="Delete" Margin="3" Width="50" x:Name="btnDelete" TabIndex="6" Click="btnDelete_Click"/>
+            <telerik:RadButton Content="Close" Margin="3" Width="50" Name="btnClose"   TabIndex="7" Click="btnClose_Click"/>
         </StackPanel>
     </Grid>
 </telerik:RadWindow>
