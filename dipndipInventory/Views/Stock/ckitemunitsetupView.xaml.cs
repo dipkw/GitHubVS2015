@@ -146,7 +146,7 @@ namespace dipndipInventory.Views.Stock
             }
             if(txtConvFactor.Value<=0 || txtConvFactor.Value==null)
             {
-                MessageBox.Show("Invalid input for Conversion Factor");
+                MessageBox.Show("Please enter a valid Conversion Factor");
                 return false;
             }
             return true;

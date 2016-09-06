@@ -45,6 +45,7 @@
         <AssociationConnector Association="dipckModel.FK_ck_items_ck_units" />
         <AssociationConnector Association="dipckModel.FK_ck_items_ck_users" />
         <AssociationConnector Association="dipckModel.FK_ck_items_ck_users1" />
+        <AssociationConnector Association="dipckModel.FK_ck_item_details_ckwh_items" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

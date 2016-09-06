@@ -75,7 +75,42 @@ namespace dipndipInventory.EF.DataServices
             }
         }
 
+        public decimal? GetCurrentCost(int wh_item_id)
+        {
+            decimal? curr_cost = 0.0m;
 
+            try
+            {
+                _context = new CKEntities();
+                curr_cost = (from whitems in _context.ckwh_items where whitems.Id == wh_item_id select whitems.unit_cost).FirstOrDefault();
+            }
+            catch { return null; }
 
+            return curr_cost;
+        }
+
+        public string GetItemCode(int id)
+        {
+            string item_code = string.Empty;
+
+            try
+            {
+                item_code = (from whitems in _context.ckwh_items where whitems.Id == id select whitems.wh_item_code).FirstOrDefault();
+            }
+            catch { return null; }
+            return item_code;
+        }
+
+        public string GetItemDescription(int id)
+        {
+            string item_description = string.Empty;
+
+            try
+            {
+                item_description = (from whitems in _context.ckwh_items where whitems.Id == id select whitems.wh_item_description).FirstOrDefault();
+            }
+            catch { return null; }
+            return item_description;
+        }
     }
 }

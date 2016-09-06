@@ -141,10 +141,10 @@
                             <TextBlock Text="CK Items" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </telerik:RadRibbonButton>
-                    <telerik:RadRibbonButton x:Name="CKItemsRecipeMenu"  Width="70"  HorizontalContentAlignment="Center" Click="CKItemsRecipeMenu_Click">
+                    <telerik:RadRibbonButton x:Name="CKItemsRecipeMenu"  Width="85"  HorizontalContentAlignment="Center" Click="CKItemsRecipeMenu_Click">
                         <StackPanel>
                             <Image Source="/dipndipInventory;component/Images/menu_icons/fast-food-icon.png" Width="32" Height="32"/>
-                            <TextBlock Text="CK Items" HorizontalAlignment="Center"/>
+                            <TextBlock Text="CK Item Recipe" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </telerik:RadRibbonButton>
                 </telerik:RadRibbonGroup>

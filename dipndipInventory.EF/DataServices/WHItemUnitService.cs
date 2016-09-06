@@ -153,5 +153,19 @@ namespace dipndipInventory.EF.DataServices
             }
         }
 
+        public decimal? GetConversionFactor(int id)
+        {
+            decimal? conv_factor = 0.0m;
+
+            try
+            {
+                _context = new CKEntities();
+                conv_factor = (from whitemunit in _context.wh_item_unit where whitemunit.Id == id select whitemunit.cnv_factor).FirstOrDefault();
+            }
+            catch { return null; }
+
+            return conv_factor;
+        }
+
     }
 }

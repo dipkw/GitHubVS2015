@@ -65,5 +65,44 @@ namespace dipndipInventory.EF.DataServices
                 return 0;
             }
         }
+
+        public bool IsExistingCKItemRecipeByCKItemId(int ck_item__id)
+        {
+            bool _result = false;
+            _context = new CKEntities();
+
+            ck_item_details objckitemDetail = (from ckitemdetail in _context.ck_item_details where ckitemdetail.ck_item_id == ck_item__id select ckitemdetail).FirstOrDefault();
+
+            if (objckitemDetail != null)
+            {
+                _result = true;
+            }
+
+            return _result;
+        }
+
+        public int DeleteCKItemRecipeByCKItemId(int ck_item_id)
+        {
+            try
+            {
+                _context = new CKEntities();
+                //wh_item_unit objWHItemUnitToDelete = (from whitemunit in _context.wh_item_unit where whitemunit.wh_item_id == wh_item_id select whitemunit).Single();
+                IEnumerable<ck_item_details> objCKItemRecipesToDelete = (from ckitemrecipe in _context.ck_item_details where ckitemrecipe.ck_item_id == ck_item_id select ckitemrecipe);
+
+                foreach (ck_item_details objCKItemRecipeToDelete in objCKItemRecipesToDelete)
+                {
+                    _context.ck_item_details.Remove(objCKItemRecipeToDelete);
+
+                }
+                _context.SaveChanges();
+                _context.Dispose();
+                return 1;
+            }
+            catch (Exception e)
+            {
+                _context.Dispose();
+                return 0;
+            }
+        }
     }
 }

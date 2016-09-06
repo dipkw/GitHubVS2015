@@ -171,6 +171,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ck_item_details_ckwh_items">
+          <End Role="ckwh_items" Type="Self.ckwh_items" Multiplicity="0..1" />
+          <End Role="ck_item_details" Type="Self.ck_item_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ckwh_items">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ck_item_details">
+              <PropertyRef Name="ckwh_item_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ck_items_ck_units">
           <End Role="ck_units" Type="Self.ck_units" Multiplicity="0..1" />
           <End Role="ck_items" Type="Self.ck_items" Multiplicity="*" />
@@ -446,6 +458,10 @@
             <End Role="ckwh_item_unit" EntitySet="ckwh_item_unit" />
             <End Role="ck_item_details" EntitySet="ck_item_details" />
           </AssociationSet>
+          <AssociationSet Name="FK_ck_item_details_ckwh_items" Association="Self.FK_ck_item_details_ckwh_items">
+            <End Role="ckwh_items" EntitySet="ckwh_items" />
+            <End Role="ck_item_details" EntitySet="ck_item_details" />
+          </AssociationSet>
           <AssociationSet Name="FK_ck_items_ck_units" Association="Self.FK_ck_items_ck_units">
             <End Role="ck_units" EntitySet="ck_units" />
             <End Role="ck_items" EntitySet="ck_items" />
@@ -552,6 +568,7 @@
           <NavigationProperty Name="ck_users" Relationship="dipckModel.FK_ck_item_details_ck_users" FromRole="ck_item_details" ToRole="ck_users" />
           <NavigationProperty Name="ck_users1" Relationship="dipckModel.FK_ck_item_details_ck_users1" FromRole="ck_item_details" ToRole="ck_users" />
           <NavigationProperty Name="ckwh_item_unit" Relationship="dipckModel.FK_ck_item_details_ckwh_item_unit" FromRole="ck_item_details" ToRole="ckwh_item_unit" />
+          <NavigationProperty Name="ckwh_items" Relationship="dipckModel.FK_ck_item_details_ckwh_items" FromRole="ck_item_details" ToRole="ckwh_items" />
         </EntityType>
         <EntityType Name="ck_users">
           <Key>
@@ -638,6 +655,7 @@
           <NavigationProperty Name="ckwh_item_unit" Relationship="dipckModel.FK_ckwh_item_unit_ckwh_items" FromRole="ckwh_items" ToRole="ckwh_item_unit" />
           <NavigationProperty Name="site" Relationship="dipckModel.FK_ckwh_items_sites" FromRole="ckwh_items" ToRole="site" />
           <Property Name="wh_unit_description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ck_item_details" Relationship="dipckModel.FK_ck_item_details_ckwh_items" FromRole="ckwh_items" ToRole="ck_item_details" />
         </EntityType>
         <EntityType Name="site">
           <Key>
@@ -797,6 +815,10 @@
           <AssociationSet Name="FK_ck_items_ck_users1" Association="dipckModel.FK_ck_items_ck_users1">
             <End Role="ck_users" EntitySet="ck_users" />
             <End Role="ck_items" EntitySet="ck_items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ck_item_details_ckwh_items" Association="dipckModel.FK_ck_item_details_ckwh_items">
+            <End Role="ckwh_items" EntitySet="ckwh_items" />
+            <End Role="ck_item_details" EntitySet="ck_item_details" />
           </AssociationSet>
           </EntityContainer>
         <Association Name="FK_ck_item_details_ck_users">
@@ -1122,6 +1144,18 @@
             </Principal>
             <Dependent Role="ck_items">
               <PropertyRef Name="modified_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ck_item_details_ckwh_items">
+          <End Type="dipckModel.ckwh_items" Role="ckwh_items" Multiplicity="0..1" />
+          <End Type="dipckModel.ck_item_details" Role="ck_item_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ckwh_items">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ck_item_details">
+              <PropertyRef Name="ckwh_item_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
