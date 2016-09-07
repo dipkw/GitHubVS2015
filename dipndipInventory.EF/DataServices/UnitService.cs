@@ -97,5 +97,15 @@ namespace dipndipInventory.EF.DataServices
             return _result;
         }
 
+        public string GetUnitDescription(int ck_unit_id)
+        {
+            string unit_description = string.Empty;
+            _context = new CKEntities();
+
+            unit_description = (from units in _context.ck_units where units.Id == ck_unit_id select units.unit_description).FirstOrDefault();
+
+            return unit_description;
+        }
+
     }
 }

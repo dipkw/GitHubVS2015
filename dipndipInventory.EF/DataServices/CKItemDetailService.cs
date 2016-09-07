@@ -19,7 +19,7 @@ namespace dipndipInventory.EF.DataServices
                 _context.SaveChanges();
                 _context.Dispose();
             }
-            catch
+            catch(Exception ex)
             {
                 _context.Dispose();
                 return 0;
@@ -49,7 +49,7 @@ namespace dipndipInventory.EF.DataServices
                 //ck_users objUserToUpdate = new ck_users();
                 ck_item_details objCKItemDetailsToUpdate = (from ckitemdetails in _context.ck_item_details where ckitemdetails.Id == objCKItemDetails.Id select ckitemdetails).SingleOrDefault();
                 objCKItemDetailsToUpdate.ckwh_item_qty = objCKItemDetails.ckwh_item_qty;
-                objCKItemDetailsToUpdate.ckwh_item_unit = objCKItemDetails.ckwh_item_unit;
+                //objCKItemDetailsToUpdate.ckwh_item_unit = objCKItemDetails.ckwh_item_unit;
                 objCKItemDetailsToUpdate.ckwh_item_unit_id = objCKItemDetails.ckwh_item_unit_id;
                 objCKItemDetailsToUpdate.modified_date = objCKItemDetails.modified_date;
                 objCKItemDetailsToUpdate.modified_by = objCKItemDetails.modified_by;
@@ -102,6 +102,20 @@ namespace dipndipInventory.EF.DataServices
             {
                 _context.Dispose();
                 return 0;
+            }
+        }
+
+        public IEnumerable<ck_item_details> ReadAllCKItemRecipeByCKItemId(int ck_item_id)
+        {
+            try
+            {
+                _context = new CKEntities();
+                IEnumerable<ck_item_details> objCKItemRecipes = (from ckitemrecipes in _context.ck_item_details where ckitemrecipes.ck_item_id == ck_item_id orderby ckitemrecipes.Id descending select ckitemrecipes);
+                return objCKItemRecipes;
+            }
+            catch
+            {
+                return null;
             }
         }
     }

@@ -82,7 +82,7 @@ namespace dipndipInventory.Views.Stock
                 cmbUnit.IsReadOnly = true;
                 cmbUnit.IsHitTestVisible = false;
 
-                txtDesiredQty.Value = (int)txtDesiredQty.Value;
+                txtDesiredQty.Value = (int)objCKItem.ck_desired_qty;
                 txtDesiredQty.IsReadOnly = true;
 
                 btnSave.IsEnabled = false;
@@ -136,11 +136,11 @@ namespace dipndipInventory.Views.Stock
             txtDescription.Value = string.Empty;
 
             cmbUnit.SelectedIndex = -1;
-            cmbUnit.IsReadOnly = true;
-            cmbUnit.IsHitTestVisible = false;
+            cmbUnit.IsReadOnly = false;
+            cmbUnit.IsHitTestVisible = true;
 
             txtDesiredQty.Value = 0;
-            txtDesiredQty.IsReadOnly = true;
+            txtDesiredQty.IsReadOnly = false;
 
             id = 0;
             //username = string.Empty;

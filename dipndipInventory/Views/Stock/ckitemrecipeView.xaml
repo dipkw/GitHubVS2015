@@ -87,7 +87,7 @@
                 <StackPanel Orientation="Horizontal" Margin="0,30,0,0" HorizontalAlignment="Right">
                     <telerik:RadButton Content="Add Recipe" Margin="3" Width="80" Name="btnAddRecipeItem" Click="btnAddRecipeItem_Click"/>
                     <telerik:RadButton Content="Delete Recipe" Margin="3" Width="80" x:Name="btnDeleteRecipeItem" Click="btnDeleteRecipeItem_Click"/>
-                    <telerik:RadButton Content="Save Item" Margin="3" Width="80" x:Name="btnSaveItem"/>
+                    <telerik:RadButton Content="Save Item" Margin="3" Width="80" x:Name="btnSaveItem" Click="btnSaveItem_Click"/>
                 </StackPanel>
 
 

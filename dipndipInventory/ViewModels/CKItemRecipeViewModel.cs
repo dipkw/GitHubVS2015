@@ -12,6 +12,7 @@ namespace dipndipInventory.ViewModels
         public string wh_item_code { get; set; }
         public string wh_item_description { get; set; }
         public decimal quantity { get; set; }
+        public int wh_item_unit_id { get; set; }
         public string uom { get; set; }
         public decimal unit_cost { get; set; }
     }

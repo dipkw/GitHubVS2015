@@ -42,7 +42,8 @@ namespace dipndipInventory.Views.Stock
         public ckitemrecipeView()
         {
             InitializeComponent();
-            ReadAllCKItems();
+            //ReadAllCKItems();
+            LoadAllItemRecipeList();
             FillWHItems();
         }
 
@@ -104,6 +105,7 @@ namespace dipndipInventory.Views.Stock
             objCKItemRecipeViewModel.wh_item_description = _whcontext.GetItemDescription(wh_item_id);
             objCKItemRecipeViewModel.quantity = (decimal)txtQty.Value;
             objCKItemRecipeViewModel.uom = cmbUnit.Text;
+            objCKItemRecipeViewModel.wh_item_unit_id = unit_id;
             conv_factor = (decimal)_whucontext.GetConversionFactor(unit_id);
             objCKItemRecipeViewModel.unit_cost = (decimal)((wh_item_curr_cost * conv_factor) * objCKItemRecipeViewModel.quantity);
             ck_item_cost += objCKItemRecipeViewModel.unit_cost;
@@ -125,6 +127,14 @@ namespace dipndipInventory.Views.Stock
         private void UpdateCKItemUnitCost()
         {
             objCKItems.Where(p => p.Id == id).Select(u => { u.ck_item_unit_cost = ck_item_cost; return u; }).ToList();
+            dgCKItems.ItemsSource = null;
+            //dgCKItems.ItemsSource = objCKItems.ToList();
+            dgCKItems.ItemsSource = objCKItems;
+        }
+
+        private void UpdateCKItemUnitCostById(int param_id)
+        {
+            objCKItems.Where(p => p.Id == param_id).Select(u => { u.ck_item_unit_cost = ck_item_cost; return u; }).ToList();
             dgCKItems.ItemsSource = null;
             dgCKItems.ItemsSource = objCKItems.ToList();
         }
@@ -178,6 +188,7 @@ namespace dipndipInventory.Views.Stock
         private void dgCKItems_SelectionChanged(object sender, SelectionChangeEventArgs e)
         {
             SelectItem();
+            LoadItemRecipeList();
         }
 
         private void SelectItem()
@@ -271,7 +282,7 @@ namespace dipndipInventory.Views.Stock
         {
             if (_dtcontext.IsExistingCKItemRecipeByCKItemId(id))
             {
-                //_ucontext.DeleteWHItemUnitByWHItemId(id);
+                _dtcontext.DeleteCKItemRecipeByCKItemId(id);
                 CreateItemUnits();
             }
             else
@@ -292,8 +303,67 @@ namespace dipndipInventory.Views.Stock
                 objCKItemDetails.ck_item_id = id;
                 objCKItemDetails.ckwh_item_id = itemRecipeList[i].wh_item_id;
                 objCKItemDetails.ckwh_item_qty = itemRecipeList[i].quantity;
+                objCKItemDetails.ckwh_item_unit_id = itemRecipeList[i].wh_item_unit_id;
                 _dbresponse = _dtcontext.CreateCKItemDetails(objCKItemDetails) > 0 ? "CK Item Recipe Updated Successfully" : "Unable to Update CK Item Recipe Details"; ;
                 RadWindow.Alert(_dbresponse);
+            }
+        }
+
+        private void LoadItemRecipeList()
+        {
+            //Read units from database for the selected item and update the 'itemUnits' List
+            IEnumerable<ck_item_details> item_recipes = _dtcontext.ReadAllCKItemRecipeByCKItemId(id);
+            itemRecipeList.Clear();
+            ck_item_cost = 0.0m;
+            //MessageBox.Show(item_units.Count().ToString());
+            foreach (ck_item_details item_recipe in item_recipes)
+            {
+                CKItemRecipeViewModel objItemRecipeViewModel = new CKItemRecipeViewModel();
+                objItemRecipeViewModel.wh_item_id = (int)item_recipe.ckwh_item_id;
+                objItemRecipeViewModel.wh_item_code = _whcontext.GetItemCode(objItemRecipeViewModel.wh_item_id);
+                objItemRecipeViewModel.wh_item_description = _whcontext.GetItemDescription(objItemRecipeViewModel.wh_item_id);
+                objItemRecipeViewModel.quantity = (decimal)item_recipe.ckwh_item_qty;
+                objItemRecipeViewModel.uom = item_recipe.wh_item_unit.ck_units.unit_description;
+                //objItemRecipeViewModel.unit_cost = objItemRecipeViewModel.conversionFactor * selected_unit_cost;
+                wh_item_curr_cost = (decimal)_whcontext.GetCurrentCost(objItemRecipeViewModel.wh_item_id);
+                objItemRecipeViewModel.unit_cost = ((decimal)(item_recipe.wh_item_unit.cnv_factor*wh_item_curr_cost)* objItemRecipeViewModel.quantity);
+                ck_item_cost += objItemRecipeViewModel.unit_cost;
+                itemRecipeList.Add(objItemRecipeViewModel);
+            }
+            dgCKItemRecipe.ItemsSource = null;
+            dgCKItemRecipe.ItemsSource = itemRecipeList;
+            dgCKItemRecipe.Items.Refresh();
+            //UpdateCKItemUnitCost();
+        }
+
+        private void LoadAllItemRecipeList()
+        {
+            objCKItems = _ckcontext.ReadAllCKItems();
+            dgCKItems.ItemsSource = objCKItems;
+            foreach (ck_items ck_item in objCKItems)
+            {
+                ck_item_cost = 0.0m;
+                IEnumerable<ck_item_details> item_recipes = _dtcontext.ReadAllCKItemRecipeByCKItemId(ck_item.Id);
+                itemRecipeList.Clear();
+                foreach (ck_item_details item_recipe in item_recipes)
+                {
+                    //MessageBox.Show(item_units.Count().ToString());
+                    CKItemRecipeViewModel objItemRecipeViewModel = new CKItemRecipeViewModel();
+                    objItemRecipeViewModel.wh_item_id = (int)item_recipe.ckwh_item_id;
+                    objItemRecipeViewModel.wh_item_code = _whcontext.GetItemCode(objItemRecipeViewModel.wh_item_id);
+                    objItemRecipeViewModel.wh_item_description = _whcontext.GetItemDescription(objItemRecipeViewModel.wh_item_id);
+                    objItemRecipeViewModel.quantity = (decimal)item_recipe.ckwh_item_qty;
+                    objItemRecipeViewModel.uom = item_recipe.wh_item_unit.ck_units.unit_description;
+                    //objItemRecipeViewModel.unit_cost = objItemRecipeViewModel.conversionFactor * selected_unit_cost;
+                    wh_item_curr_cost = (decimal)_whcontext.GetCurrentCost(objItemRecipeViewModel.wh_item_id);
+                    objItemRecipeViewModel.unit_cost = ((decimal)(item_recipe.wh_item_unit.cnv_factor * wh_item_curr_cost) * objItemRecipeViewModel.quantity);
+                    ck_item_cost += objItemRecipeViewModel.unit_cost;
+                    //itemRecipeList.Add(objItemRecipeViewModel);
+                    //dgCKItemRecipe.ItemsSource = null;
+                    //dgCKItemRecipe.ItemsSource = itemRecipeList;
+                    //dgCKItemRecipe.Items.Refresh();
+                }
+                UpdateCKItemUnitCostById(ck_item.Id);
             }
         }
     }
