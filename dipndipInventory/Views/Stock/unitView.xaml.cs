@@ -31,6 +31,7 @@ namespace dipndipInventory.Views.Stock
         public unitView()
         {
             InitializeComponent();
+            ShowTaskBar.ShowInTaskbar(this, "Units");
             ReadAllUnits();
         }
 

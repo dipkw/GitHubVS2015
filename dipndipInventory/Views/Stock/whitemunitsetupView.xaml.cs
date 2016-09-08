@@ -1,5 +1,6 @@
 ﻿using dipndipInventory.EF;
 using dipndipInventory.EF.DataServices;
+using dipndipInventory.Helpers;
 using dipndipInventory.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -35,6 +36,7 @@ namespace dipndipInventory.Views.Stock
         public whitemunitsetupView()
         {
             InitializeComponent();
+            ShowTaskBar.ShowInTaskbar(this, "Warehouse Item Unit Setup");
             ReadAllWHItems();
             //ReadAllWarehouseItemsSP();
         }

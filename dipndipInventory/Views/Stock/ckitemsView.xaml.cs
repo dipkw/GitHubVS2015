@@ -32,6 +32,7 @@ namespace dipndipInventory.Views.Stock
         public ckitemsView()
         {
             InitializeComponent();
+            ShowTaskBar.ShowInTaskbar(this, "Central Kitchen Items");
             ReadAllCKItems();
             FillUnits();
         }

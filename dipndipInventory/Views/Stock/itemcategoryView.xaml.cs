@@ -31,6 +31,7 @@ namespace dipndipInventory.Views.Stock
         public itemcategoryView()
         {
             InitializeComponent();
+            ShowTaskBar.ShowInTaskbar(this, "Item Category");
             ReadAllCategories();
         }
 

@@ -1,9 +1,12 @@
 ﻿using dipndipInventory.EF;
+using dipndipInventory.Helpers;
 using dipndipInventory.Views.Site;
 using dipndipInventory.Views.Stock;
 using dipndipInventory.Views.Users;
+using Microsoft.SqlServer.Dts.Runtime;
 using System;
 using System.Collections.Generic;
+using System.IO.Packaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -97,6 +100,32 @@ namespace dipndipInventory.Views
         {
             ckitemrecipeView irv = new ckitemrecipeView();
             irv.Show();
+        }
+
+        private void UpdateWHCost_Click(object sender, RoutedEventArgs e)
+        {
+            string pkgLocation = @"D:\Prj\SSIS\ImportCostChangeHistory\ImportCostChangeHistory\ImportCostChange.dtsx";
+
+            Microsoft.SqlServer.Dts.Runtime.Package pkg;
+            Microsoft.SqlServer.Dts.Runtime.Application app;
+            DTSExecResult pkgResults;
+            Variables vars;
+
+            app = new Microsoft.SqlServer.Dts.Runtime.Application();
+            pkg = app.LoadPackage(pkgLocation, null);
+
+            //vars = pkg.Variables;
+            //vars["A_Variable"].Value = "Some value";
+
+            //pkgResults = pkg.Execute(null, vars, null, null, null);
+            pkgResults = pkg.Execute();
+
+            if (pkgResults == DTSExecResult.Success)
+                //Console.WriteLine("Package ran successfully");
+                MessageBox.Show("Cost Change History Updated Successfully");
+            else
+                //Console.WriteLine("Package failed");
+                MessageBox.Show("Cost Change History Updation Failed");
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using dipndipInventory.EF;
 using dipndipInventory.EF.DataServices;
+using dipndipInventory.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +30,7 @@ namespace dipndipInventory.Views.Stock
         public warehouseitemsView()
         {
             InitializeComponent();
+            ShowTaskBar.ShowInTaskbar(this, "Warehouse Items");
             ReadAllWHItems();
         }
 

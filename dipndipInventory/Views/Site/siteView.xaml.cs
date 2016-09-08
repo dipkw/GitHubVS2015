@@ -31,6 +31,7 @@ namespace dipndipInventory.Views.Site
         public siteView()
         {
             InitializeComponent();
+            ShowTaskBar.ShowInTaskbar(this, "Sites");
             ReadAllSites();
         }
 

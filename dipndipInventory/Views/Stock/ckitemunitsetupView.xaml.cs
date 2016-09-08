@@ -1,5 +1,6 @@
 ﻿using dipndipInventory.EF;
 using dipndipInventory.EF.DataServices;
+using dipndipInventory.Helpers;
 using dipndipInventory.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -31,6 +32,7 @@ namespace dipndipInventory.Views.Stock
         public ckitemunitsetupView()
         {
             InitializeComponent();
+            ShowTaskBar.ShowInTaskbar(this, "Central Kitchen Item Unit Setup");
             ReadAllWHItems();
             //ReadAllWarehouseItemsSP();
         }

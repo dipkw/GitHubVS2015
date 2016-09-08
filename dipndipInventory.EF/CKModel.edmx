@@ -121,6 +121,19 @@
           <Property Name="modified_date" Type="datetime" />
           <Property Name="active" Type="bit" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="wh_cost_change_history">
+          <Property Name="ITEMNMBR" Type="varchar" MaxLength="31" />
+          <Property Name="WH_ITEM_CODE" Type="nvarchar" MaxLength="50" />
+          <Property Name="ORD" Type="int" />
+          <Property Name="PREVCOST" Type="numeric" Precision="19" Scale="5" />
+          <Property Name="PRESENTCOST" Type="numeric" Precision="19" Scale="5" />
+          <Property Name="CHANGEDATE_I" Type="datetime" />
+          <Property Name="TIME1" Type="datetime" />
+          <Property Name="CHANGEBY_I" Type="varchar" MaxLength="15" />
+          <Property Name="DEX_ROW_ID" Type="int" />
+        </EntityType>-->
         <EntityType Name="wh_item_unit">
           <Key>
             <PropertyRef Name="Id" />

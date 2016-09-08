@@ -1,5 +1,6 @@
 ﻿using dipndipInventory.EF;
 using dipndipInventory.EF.DataServices;
+using dipndipInventory.Helpers;
 using dipndipInventory.Validations;
 using dipndipInventory.ViewModels;
 using md5crypt;
@@ -34,6 +35,7 @@ namespace dipndipInventory.Views.Users
         public userView()
         {
             InitializeComponent();
+            ShowTaskBar.ShowInTaskbar(this, "Users");
             ReadAllUsers();
         }
 

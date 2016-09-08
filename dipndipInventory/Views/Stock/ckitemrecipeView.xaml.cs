@@ -1,5 +1,6 @@
 ﻿using dipndipInventory.EF;
 using dipndipInventory.EF.DataServices;
+using dipndipInventory.Helpers;
 using dipndipInventory.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -42,6 +43,7 @@ namespace dipndipInventory.Views.Stock
         public ckitemrecipeView()
         {
             InitializeComponent();
+            ShowTaskBar.ShowInTaskbar(this, "CK Item Recipe");
             //ReadAllCKItems();
             LoadAllItemRecipeList();
             FillWHItems();
@@ -280,6 +282,55 @@ namespace dipndipInventory.Views.Stock
 
         private void SaveItemRecipe()
         {
+            string _dbresponse = string.Empty;
+            foreach(CKItemRecipeViewModel itemRecipe in itemRecipeList)
+            {
+                ck_item_details objCKItemRecipe = new ck_item_details();
+                objCKItemRecipe.ck_item_id = id;
+                objCKItemRecipe.ckwh_item_id = itemRecipe.wh_item_id;
+                objCKItemRecipe.ckwh_item_qty = itemRecipe.quantity;
+                objCKItemRecipe.ckwh_item_unit_id = itemRecipe.wh_item_unit_id;
+                if (_dtcontext.IsExistingCKItemRecipe(id,itemRecipe.wh_item_id))
+                {
+                    objCKItemRecipe.Id = _dtcontext.GetID(id, itemRecipe.wh_item_id);
+                    objCKItemRecipe.modified_by = GlobalVariables.ActiveUser.Id;
+                    objCKItemRecipe.modified_date = DateTime.Now;
+                    _dbresponse = _dtcontext.UpdateCKItemRecipe(objCKItemRecipe) > 0 ? "CK Item Recipe Updated Successfully" : "Unable to Update CK Item Recipe Details"; 
+                    if(_dbresponse == "Unable to Update CK Item Recipe Details")
+                    {
+                        break;
+                    }
+                }
+                else
+                {
+                    objCKItemRecipe.created_by = GlobalVariables.ActiveUser.Id;
+                    objCKItemRecipe.created_date = DateTime.Now;
+                    _dbresponse = _dtcontext.CreateCKItemDetails(objCKItemRecipe) > 0 ? "CK Item Recipe Updated Successfully" : "Unable to Update CK Item Recipe Details";
+                    if (_dbresponse == "Unable to Update CK Item Recipe Details")
+                    {
+                        break;
+                    }
+                }
+            }
+            IEnumerable<ck_item_details> objCKItemDetails = _dtcontext.ReadAllCKItemRecipeByCKItemId(id);
+            foreach(ck_item_details itemDetail in objCKItemDetails)
+            {
+                //search_result = itemRecipeList.FirstOrDefault(item => item.wh_item_id == itemDetail.ckwh_item_id).ToString();
+                var search_result = itemRecipeList.Where(item => item.wh_item_id == itemDetail.ckwh_item_id);
+                if(search_result.Count()==0)
+                {
+                    _dbresponse = _dtcontext.DeleteCKItemRecipeById((int)itemDetail.Id) > 0 ? "CK Item Recipe Updated Successfully" : "Unable to Update CK Item Recipe Details";
+                    if (_dbresponse == "Unable to Update CK Item Recipe Details")
+                    {
+                        break;
+                    }
+                }
+            }
+
+            RadWindow.Alert(_dbresponse);
+        }
+        private void SaveItemRecipe1()
+        {
             if (_dtcontext.IsExistingCKItemRecipeByCKItemId(id))
             {
                 _dtcontext.DeleteCKItemRecipeByCKItemId(id);
@@ -304,7 +355,7 @@ namespace dipndipInventory.Views.Stock
                 objCKItemDetails.ckwh_item_id = itemRecipeList[i].wh_item_id;
                 objCKItemDetails.ckwh_item_qty = itemRecipeList[i].quantity;
                 objCKItemDetails.ckwh_item_unit_id = itemRecipeList[i].wh_item_unit_id;
-                _dbresponse = _dtcontext.CreateCKItemDetails(objCKItemDetails) > 0 ? "CK Item Recipe Updated Successfully" : "Unable to Update CK Item Recipe Details"; ;
+                _dbresponse = _dtcontext.CreateCKItemDetails(objCKItemDetails) > 0 ? "CK Item Recipe Updated Successfully" : "Unable to Update CK Item Recipe Details"; 
                 RadWindow.Alert(_dbresponse);
             }
         }
@@ -324,6 +375,7 @@ namespace dipndipInventory.Views.Stock
                 objItemRecipeViewModel.wh_item_description = _whcontext.GetItemDescription(objItemRecipeViewModel.wh_item_id);
                 objItemRecipeViewModel.quantity = (decimal)item_recipe.ckwh_item_qty;
                 objItemRecipeViewModel.uom = item_recipe.wh_item_unit.ck_units.unit_description;
+                objItemRecipeViewModel.wh_item_unit_id = (int)item_recipe.ckwh_item_unit_id;
                 //objItemRecipeViewModel.unit_cost = objItemRecipeViewModel.conversionFactor * selected_unit_cost;
                 wh_item_curr_cost = (decimal)_whcontext.GetCurrentCost(objItemRecipeViewModel.wh_item_id);
                 objItemRecipeViewModel.unit_cost = ((decimal)(item_recipe.wh_item_unit.cnv_factor*wh_item_curr_cost)* objItemRecipeViewModel.quantity);
@@ -354,11 +406,12 @@ namespace dipndipInventory.Views.Stock
                     objItemRecipeViewModel.wh_item_description = _whcontext.GetItemDescription(objItemRecipeViewModel.wh_item_id);
                     objItemRecipeViewModel.quantity = (decimal)item_recipe.ckwh_item_qty;
                     objItemRecipeViewModel.uom = item_recipe.wh_item_unit.ck_units.unit_description;
+                    objItemRecipeViewModel.wh_item_unit_id = (int)item_recipe.ckwh_item_unit_id;
                     //objItemRecipeViewModel.unit_cost = objItemRecipeViewModel.conversionFactor * selected_unit_cost;
                     wh_item_curr_cost = (decimal)_whcontext.GetCurrentCost(objItemRecipeViewModel.wh_item_id);
                     objItemRecipeViewModel.unit_cost = ((decimal)(item_recipe.wh_item_unit.cnv_factor * wh_item_curr_cost) * objItemRecipeViewModel.quantity);
                     ck_item_cost += objItemRecipeViewModel.unit_cost;
-                    //itemRecipeList.Add(objItemRecipeViewModel);
+                    itemRecipeList.Add(objItemRecipeViewModel);
                     //dgCKItemRecipe.ItemsSource = null;
                     //dgCKItemRecipe.ItemsSource = itemRecipeList;
                     //dgCKItemRecipe.Items.Refresh();

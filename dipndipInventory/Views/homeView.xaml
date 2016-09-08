@@ -162,6 +162,12 @@
                             <TextBlock Text="Sites" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </telerik:RadRibbonButton>
+                    <telerik:RadRibbonButton x:Name="UpdateWHCost"  Width="65"  HorizontalContentAlignment="Center" Click="UpdateWHCost_Click">
+                        <StackPanel>
+                            <Image Source="/dipndipInventory;component/images/menu_icons/sites-2-icon.png" Width="32" Height="32"/>
+                            <TextBlock Text="Update WH Cost" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </telerik:RadRibbonButton>
                 </telerik:RadRibbonGroup>
 
                 <telerik:RadRibbonGroup Header="Exit">
