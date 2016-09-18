@@ -18,6 +18,9 @@ namespace dipndipInventory.EF
         public wh_item_unit()
         {
             this.ck_item_details = new HashSet<ck_item_details>();
+            this.order_details = new HashSet<order_details>();
+            this.orders = new HashSet<order>();
+            this.receipt_details = new HashSet<receipt_details>();
         }
     
         public int Id { get; set; }
@@ -30,12 +33,18 @@ namespace dipndipInventory.EF
         public Nullable<System.DateTime> modified_date { get; set; }
         public Nullable<bool> active { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ck_item_details> ck_item_details { get; set; }
         public virtual ck_units ck_units { get; set; }
         public virtual ck_users ck_users { get; set; }
         public virtual ck_users ck_users1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<order_details> order_details { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<order> orders { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<receipt_details> receipt_details { get; set; }
         public virtual wh_item_unit wh_item_unit1 { get; set; }
         public virtual wh_item_unit wh_item_unit2 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ck_item_details> ck_item_details { get; set; }
     }
 }

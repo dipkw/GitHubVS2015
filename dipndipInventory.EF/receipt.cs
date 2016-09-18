@@ -12,17 +12,19 @@ namespace dipndipInventory.EF
     using System;
     using System.Collections.Generic;
     
-    public partial class ckwh_category
+    public partial class receipt
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ckwh_category()
+        public receipt()
         {
-            this.ckwh_items = new HashSet<ckwh_items>();
+            this.receipt_details = new HashSet<receipt_details>();
         }
     
         public int Id { get; set; }
-        public string category_code { get; set; }
-        public string category_name { get; set; }
+        public Nullable<System.DateTime> receipt_date { get; set; }
+        public Nullable<int> order_id { get; set; }
+        public Nullable<int> issued_site { get; set; }
+        public Nullable<int> received_site { get; set; }
         public Nullable<int> created_by { get; set; }
         public Nullable<System.DateTime> created_date { get; set; }
         public Nullable<int> modified_by { get; set; }
@@ -31,7 +33,10 @@ namespace dipndipInventory.EF
     
         public virtual ck_users ck_users { get; set; }
         public virtual ck_users ck_users1 { get; set; }
+        public virtual order order { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ckwh_items> ckwh_items { get; set; }
+        public virtual ICollection<receipt_details> receipt_details { get; set; }
+        public virtual site site { get; set; }
+        public virtual site site1 { get; set; }
     }
 }

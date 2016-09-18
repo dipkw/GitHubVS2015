@@ -12,17 +12,21 @@ namespace dipndipInventory.EF
     using System;
     using System.Collections.Generic;
     
-    public partial class ckwh_category
+    public partial class order
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ckwh_category()
+        public order()
         {
-            this.ckwh_items = new HashSet<ckwh_items>();
+            this.order_details = new HashSet<order_details>();
+            this.receipts = new HashSet<receipt>();
         }
     
         public int Id { get; set; }
-        public string category_code { get; set; }
-        public string category_name { get; set; }
+        public Nullable<System.DateTime> order_date { get; set; }
+        public Nullable<int> wh_item_id { get; set; }
+        public Nullable<int> wh_item_unit_id { get; set; }
+        public Nullable<int> order_from_site_id { get; set; }
+        public Nullable<int> order_to_site_id { get; set; }
         public Nullable<int> created_by { get; set; }
         public Nullable<System.DateTime> created_date { get; set; }
         public Nullable<int> modified_by { get; set; }
@@ -31,7 +35,13 @@ namespace dipndipInventory.EF
     
         public virtual ck_users ck_users { get; set; }
         public virtual ck_users ck_users1 { get; set; }
+        public virtual ckwh_items ckwh_items { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ckwh_items> ckwh_items { get; set; }
+        public virtual ICollection<order_details> order_details { get; set; }
+        public virtual site site { get; set; }
+        public virtual site site1 { get; set; }
+        public virtual wh_item_unit wh_item_unit { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<receipt> receipts { get; set; }
     }
 }

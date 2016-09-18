@@ -17,8 +17,11 @@ namespace dipndipInventory.EF
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public ckwh_items()
         {
-            this.ckwh_item_unit = new HashSet<ckwh_item_unit>();
             this.ck_item_details = new HashSet<ck_item_details>();
+            this.ckwh_item_unit = new HashSet<ckwh_item_unit>();
+            this.order_details = new HashSet<order_details>();
+            this.orders = new HashSet<order>();
+            this.receipt_details = new HashSet<receipt_details>();
         }
     
         public int Id { get; set; }
@@ -27,6 +30,7 @@ namespace dipndipInventory.EF
         public Nullable<int> wh_category_id { get; set; }
         public string wh_category_description { get; set; }
         public Nullable<int> wh_unit_id { get; set; }
+        public string wh_unit_description { get; set; }
         public Nullable<decimal> quantity { get; set; }
         public Nullable<decimal> unit_cost { get; set; }
         public Nullable<int> site_id { get; set; }
@@ -34,15 +38,20 @@ namespace dipndipInventory.EF
         public Nullable<System.DateTime> created_date { get; set; }
         public Nullable<int> modified_by { get; set; }
         public Nullable<System.DateTime> modified_date { get; set; }
-        public string wh_unit_description { get; set; }
     
-        public virtual ckwh_category ckwh_category { get; set; }
-        public virtual ck_users ck_users { get; set; }
-        public virtual ck_users ck_users1 { get; set; }
-        public virtual site site { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ckwh_item_unit> ckwh_item_unit { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ck_item_details> ck_item_details { get; set; }
+        public virtual ck_users ck_users { get; set; }
+        public virtual ck_users ck_users1 { get; set; }
+        public virtual ckwh_category ckwh_category { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ckwh_item_unit> ckwh_item_unit { get; set; }
+        public virtual site site { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<order_details> order_details { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<order> orders { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<receipt_details> receipt_details { get; set; }
     }
 }
