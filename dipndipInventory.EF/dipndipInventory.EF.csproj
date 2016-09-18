@@ -91,6 +91,7 @@
     <Compile Include="DataServices\CategoryService.cs" />
     <Compile Include="DataServices\CKItemDetailService.cs" />
     <Compile Include="DataServices\CKItemService.cs" />
+    <Compile Include="DataServices\CKOrderService.cs" />
     <Compile Include="DataServices\SiteService.cs" />
     <Compile Include="DataServices\UnitService.cs" />
     <Compile Include="DataServices\UserService.cs" />

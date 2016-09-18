@@ -84,7 +84,7 @@ namespace dipndipInventory.EF.DataServices
             }
         }
 
-        public bool IsExistingCKIem(int ck_item_id)
+        public bool IsExistingCKItem(int ck_item_id)
         {
             bool _result = false;
             _context = new CKEntities();

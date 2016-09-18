@@ -42,6 +42,7 @@ namespace dipndipInventory.Views.Stock
             IEnumerable<ck_items> objCKItems = _context.ReadAllCKItems();
             dgCKItems.ItemsSource = objCKItems;
             txtItemCode.Value = _context.GetNewItemCode();
+            ck_item_barcode.Text = txtItemCode.Value;
             txtItemCode.IsEnabled = false;
             txtItemCode.IsReadOnly = true;
             txtDescription.Focus();
@@ -73,6 +74,7 @@ namespace dipndipInventory.Views.Stock
                 //txtUnitID.Value = objUnit.unit_description;
                 //txtUnitID.IsReadOnly = true;
                 txtItemCode.Value = objCKItem.ck_item_code;
+                ck_item_barcode.Text = txtItemCode.Value;
                 txtItemCode.IsEnabled = false;
                 txtItemCode.IsReadOnly = true;
 
@@ -229,7 +231,7 @@ namespace dipndipInventory.Views.Stock
                     objCKItem.created_by = GlobalVariables.ActiveUser.Id;
                     objCKItem.created_date = DateTime.Now;
                     objCKItem.active = true;
-                    if (_context.IsExistingCKIem(objCKItem.Id))
+                    if (_context.IsExistingCKItem(objCKItem.Id))
                     {
                         RadWindow.Alert("Existing Item");
                         txtDescription.SelectionStart = txtDescription.Value.Length;
