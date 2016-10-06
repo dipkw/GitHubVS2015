@@ -17,6 +17,7 @@ using dipndipInventory.EF;
 using md5crypt;
 using System.Windows.Threading;
 using Telerik.Windows.Controls;
+using dipndipInventory.EF.DataServices;
 
 namespace dipndipInventory.Views.Login
 {
@@ -36,13 +37,31 @@ namespace dipndipInventory.Views.Login
         {
             InitializeComponent();
             txtUserName.Focus();
+            FillAllSites();
         }
 
+        private void FillAllSites()
+        {
+            SiteService _scontext = new SiteService();
+            IEnumerable<site> objSites = _scontext.ReadAllSites();
+            cmbSites.DisplayMemberPath = "site_name";
+            cmbSites.SelectedValuePath = "Id";
+            cmbSites.ItemsSource = objSites.ToList();
+            cmbSites.SelectedIndex = -1;
+        }
         private void btnOk_Click(object sender, RoutedEventArgs e)
         {
             try
             {
+                if(cmbSites.SelectedIndex==-1)
+                {
+                    MessageBox.Show("Please Select Branch");
+                    return;
+                }
                 ck_users objUser= new ck_users();
+                site objSite = new site();
+                objSite.Id = (int)cmbSites.SelectedValue;
+                objSite.site_name = cmbSites.Text;
                 string username = txtUserName.Text;
                 string password = txtPassword.Password;
                 objUser = VerifyUser(username, password);
@@ -50,9 +69,11 @@ namespace dipndipInventory.Views.Login
                 {
                     //if ((txtUserName.MaskedText == "admin" && txtPassword.Password == "admin"))
                     //{
-                    homeView objHomeView = new homeView(objUser);
-                    objHomeView.Show();
                     GlobalVariables.ActiveUser = objUser;
+                    GlobalVariables.ActiveSite.Id = (int)cmbSites.SelectedValue;
+                    //homeView objHomeView = new homeView(objUser);
+                    homeView objHomeView = new homeView(objUser,objSite);
+                    objHomeView.Show();
                     this.Hide();
 
                     //}

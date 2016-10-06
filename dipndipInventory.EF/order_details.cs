@@ -18,7 +18,7 @@ namespace dipndipInventory.EF
         public Nullable<int> order_id { get; set; }
         public Nullable<int> ckwh_item_id { get; set; }
         public Nullable<int> wh_item_unit_id { get; set; }
-        public Nullable<int> qty { get; set; }
+        public Nullable<decimal> qty { get; set; }
         public Nullable<int> created_by { get; set; }
         public Nullable<System.DateTime> created_date { get; set; }
         public Nullable<int> modified_by { get; set; }

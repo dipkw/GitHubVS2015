@@ -48,6 +48,23 @@ namespace dipndipInventory.Views
 
             radRibbonView1.ApplicationName += " (Signed in as: " + objUser.username + ")";
         }
+
+        public homeView(ck_users objUser, site objSite)
+        {
+            Telerik.Windows.Controls.StyleManager.ApplicationTheme = new Telerik.Windows.Controls.SummerTheme();
+            InitializeComponent();
+            StyleManager.SetTheme(radRibbonView1, new Telerik.Windows.Controls.Expression_DarkTheme());
+            if (objUser.role != "Admin")
+            {
+                //StaffMenu.IsEnabled = false;
+                //BackupDB.IsEnabled = false;
+            }
+
+            //lblUserName.Content = objStaff.User_name;
+            //txtUserName.Text = objStaff.User_name;
+
+            radRibbonView1.ApplicationName += " Signed in as: " + objUser.username + " / Active Branch: " + objSite.site_name;
+        }
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
             System.Environment.Exit(0);
@@ -104,8 +121,9 @@ namespace dipndipInventory.Views
 
         private void UpdateWHCost_Click(object sender, RoutedEventArgs e)
         {
-            string pkgLocation = @"D:\Prj\SSIS\ImportCostChangeHistory\ImportCostChangeHistory\ImportCostChange.dtsx";
-
+            //string pkgLocation = @"D:\Prj\SSIS\ImportCostChangeHistory\ImportCostChangeHistory\ImportCostChange.dtsx";
+            string pkgLocation = @"D:\Prj\test\ssisexec\ImportCostChange.dtsx";
+        
             Microsoft.SqlServer.Dts.Runtime.Package pkg;
             Microsoft.SqlServer.Dts.Runtime.Application app;
             DTSExecResult pkgResults;
@@ -126,6 +144,12 @@ namespace dipndipInventory.Views
             else
                 //Console.WriteLine("Package failed");
                 MessageBox.Show("Cost Change History Updation Failed");
+        }
+
+        private void Order_Click(object sender, RoutedEventArgs e)
+        {
+            orderdetailsView odv = new orderdetailsView();
+            odv.Show();
         }
     }
 }

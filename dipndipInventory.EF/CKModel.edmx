@@ -117,7 +117,7 @@
           <Property Name="order_no" Type="nvarchar" MaxLength="50" />
           <Property Name="ckwh_item_id" Type="int" />
           <Property Name="wh_item_unit_id" Type="int" />
-          <Property Name="qty" Type="int" />
+          <Property Name="qty" Type="decimal" Precision="18" Scale="3" />
           <Property Name="created_by" Type="int" />
           <Property Name="created_date" Type="datetime" />
           <Property Name="modified_by" Type="int" />
@@ -133,6 +133,7 @@
           <Property Name="order_date" Type="datetime" />
           <Property Name="wh_item_id" Type="int" />
           <Property Name="wh_item_unit_id" Type="int" />
+          <Property Name="wh_item_unit_description" Type="nvarchar" MaxLength="50" />
           <Property Name="order_from_site_id" Type="int" />
           <Property Name="order_to_site_id" Type="int" />
           <Property Name="created_by" Type="int" />
@@ -1351,7 +1352,7 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
           <Property Name="order_id" Type="Int32" />
           <Property Name="ckwh_item_id" Type="Int32" />
           <Property Name="wh_item_unit_id" Type="Int32" />
-          <Property Name="qty" Type="Int32" />
+          <Property Name="qty" Type="Decimal" />
           <Property Name="created_by" Type="Int32" />
           <Property Name="created_date" Type="DateTime" Precision="3" />
           <Property Name="modified_by" Type="Int32" />
@@ -1388,6 +1389,7 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
           <NavigationProperty Name="wh_item_unit" Relationship="dipckModel.FK_orders_wh_item_unit" FromRole="order" ToRole="wh_item_unit" />
           <NavigationProperty Name="receipts" Relationship="dipckModel.FK_receipts_orders" FromRole="order" ToRole="receipt" />
           <Property Name="order_no" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="wh_item_unit_description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="receipt_details">
           <Key>
@@ -2186,6 +2188,7 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
           <EntitySetMapping Name="orders">
             <EntityTypeMapping TypeName="dipckModel.order">
               <MappingFragment StoreEntitySet="orders">
+                <ScalarProperty Name="wh_item_unit_description" ColumnName="wh_item_unit_description" />
                 <ScalarProperty Name="order_no" ColumnName="order_no" />
                 <ScalarProperty Name="active" ColumnName="active" />
                 <ScalarProperty Name="modified_date" ColumnName="modified_date" />

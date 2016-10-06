@@ -121,6 +121,7 @@
     <Compile Include="Validations\Validation.cs" />
     <Compile Include="ViewModels\CKItemRecipeViewModel.cs" />
     <Compile Include="ViewModels\ItemUnitViewModel.cs" />
+    <Compile Include="ViewModels\OrderDetailsViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
     <Compile Include="Views\homeView.xaml.cs">
       <DependentUpon>homeView.xaml</DependentUpon>
@@ -140,11 +141,20 @@
     <Compile Include="Views\Stock\ckitemunitsetupView.xaml.cs">
       <DependentUpon>ckitemunitsetupView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Stock\ckorderView.xaml.cs">
+      <DependentUpon>ckorderView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Stock\itemcategoryView.xaml.cs">
       <DependentUpon>itemcategoryView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Stock\orderdetailsView.xaml.cs">
+      <DependentUpon>orderdetailsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Stock\unitView.xaml.cs">
       <DependentUpon>unitView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Stock\warehouseitemsearchView.xaml.cs">
+      <DependentUpon>warehouseitemsearchView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Stock\warehouseitemsView.xaml.cs">
       <DependentUpon>warehouseitemsView.xaml</DependentUpon>
@@ -191,11 +201,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Stock\ckorderView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Stock\itemcategoryView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Stock\orderdetailsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Stock\unitView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Stock\warehouseitemsearchView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

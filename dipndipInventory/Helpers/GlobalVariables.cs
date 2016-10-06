@@ -16,6 +16,7 @@ namespace dipndipInventory.Helpers
         public static string sharedSecret = "socialdnalabs";
         public static string DATE_FORMAT = "dd/MM/yyyy";
         public static ck_users ActiveUser = new ck_users();
+        public static site ActiveSite = new site();
         public static long selected_stock_id = 0;
         public static string ActiveBranch = "CK";
     }

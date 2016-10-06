@@ -31,7 +31,21 @@ namespace dipndipInventory.EF.DataServices
             try
             {
                 _context = new CKEntities();
-                IEnumerable<site> objSite = (from site in _context.sites orderby site.Id descending select site);
+                IEnumerable<site> objSite = (from tmpsite in _context.sites orderby tmpsite.site_name ascending select tmpsite);
+                return objSite;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public IEnumerable<site> ReadAllSitesSortByIdDesc()
+        {
+            try
+            {
+                _context = new CKEntities();
+                IEnumerable<site> objSite = (from tmpsite in _context.sites orderby tmpsite.Id descending select tmpsite);
                 return objSite;
             }
             catch
@@ -46,7 +60,7 @@ namespace dipndipInventory.EF.DataServices
             {
                 _context = new CKEntities();
                 //ck_users objUserToUpdate = new ck_users();
-                site objSiteToUpdate = (from site in _context.sites where site.Id == objSite.Id select site).SingleOrDefault();
+                site objSiteToUpdate = (from tmpsite in _context.sites where tmpsite.Id == objSite.Id select tmpsite).SingleOrDefault();
                 objSiteToUpdate.site_name = objSite.site_name;
                 objSiteToUpdate.modified_date = objSite.modified_date;
                 objSiteToUpdate.modified_by = objSite.modified_by;
@@ -68,7 +82,7 @@ namespace dipndipInventory.EF.DataServices
             try
             {
                 _context = new CKEntities();
-                site objSiteToDelete = (from site in _context.sites where site.Id == objSite.Id select site).Single();
+                site objSiteToDelete = (from tmpsite in _context.sites where tmpsite.Id == objSite.Id select tmpsite).Single();
                 _context.sites.Remove(objSiteToDelete);
                 _context.SaveChanges();
                 _context.Dispose();
@@ -86,7 +100,7 @@ namespace dipndipInventory.EF.DataServices
             bool _result = false;
             _context = new CKEntities();
 
-            site objSite = (from site in _context.sites where site.Id == site_id select site).FirstOrDefault();
+            site objSite = (from tmpsite in _context.sites where tmpsite.Id == site_id select tmpsite).FirstOrDefault();
 
             if (objSite != null)
             {
@@ -96,6 +110,15 @@ namespace dipndipInventory.EF.DataServices
             return _result;
         }
 
+        public int GetSiteIDBySiteName(string site_name)
+        {
+            int site_id = 0;
 
+            _context = new CKEntities();
+
+            site_id = (from tmpsite in _context.sites where tmpsite.site_name == site_name select tmpsite.Id).FirstOrDefault();
+
+            return site_id;
+        }
     }
 }

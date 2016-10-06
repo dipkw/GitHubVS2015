@@ -32,6 +32,34 @@ namespace dipndipInventory.EF.DataServices
             try
             {
                 _context = new CKEntities();
+                IEnumerable<ckwh_items> objWHItems = (from whitems in _context.ckwh_items where whitems.wh_item_code != "CASH001" orderby whitems.wh_item_code ascending select whitems);
+                return objWHItems;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public IEnumerable<ckwh_items> ReadAllWHItemsWithCash()
+        {
+            try
+            {
+                _context = new CKEntities();
+                IEnumerable<ckwh_items> objWHItems = (from whitems in _context.ckwh_items orderby whitems.wh_item_code ascending select whitems);
+                return objWHItems;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public IEnumerable<ckwh_items> ReadAllWHItemsSortById()
+        {
+            try
+            {
+                _context = new CKEntities();
                 IEnumerable<ckwh_items> objWHItems = (from whitems in _context.ckwh_items orderby whitems.Id ascending select whitems);
                 return objWHItems;
             }
@@ -95,6 +123,7 @@ namespace dipndipInventory.EF.DataServices
 
             try
             {
+                _context = new CKEntities();
                 item_code = (from whitems in _context.ckwh_items where whitems.Id == id select whitems.wh_item_code).FirstOrDefault();
             }
             catch { return null; }
@@ -107,10 +136,22 @@ namespace dipndipInventory.EF.DataServices
 
             try
             {
+                _context = new CKEntities();
                 item_description = (from whitems in _context.ckwh_items where whitems.Id == id select whitems.wh_item_description).FirstOrDefault();
             }
             catch { return null; }
             return item_description;
+        }
+
+        public ckwh_items GetItemByCode(string item_code)
+        {
+            try
+            {
+                _context = new CKEntities();
+                ckwh_items item_details = (from whitems in _context.ckwh_items where whitems.wh_item_code == item_code select whitems).FirstOrDefault();
+                return item_details;
+            }
+            catch { return null; }
         }
     }
 }

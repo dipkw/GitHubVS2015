@@ -93,7 +93,7 @@
                 
 
                 <telerik:RadRibbonGroup Header="Items">
-                    <telerik:RadRibbonButton   Width="70"  HorizontalContentAlignment="Center" x:Name="Order">
+                    <telerik:RadRibbonButton   Width="70"  HorizontalContentAlignment="Center" x:Name="Order" Click="Order_Click">
                         <StackPanel>
                             <Image Source="/dipndipInventory;component/images/menu_icons/fast-food-icon.png" Width="32" Height="32"/>
                             <TextBlock Text="Order" HorizontalAlignment="Center"/>

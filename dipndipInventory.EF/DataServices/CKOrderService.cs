@@ -115,7 +115,7 @@ namespace dipndipInventory.EF.DataServices
             return _result;
         }
 
-        public string GetNewOrderNo()
+        public string GetNewCKOrderNo()
         {
             try
             {
@@ -160,6 +160,20 @@ namespace dipndipInventory.EF.DataServices
             return ckOrderId;
         }
 
+        public IEnumerable<order> ReadAllActiveBranchOrders(int site_id)
+        {
+            try
+            {
+                _context = new CKEntities();
+                IEnumerable<order> objCKOrders = (from ckorders in _context.orders where ckorders.order_from_site_id == site_id orderby ckorders.Id ascending select ckorders);
+                return objCKOrders;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
 
         //***************************** Order Details ****************************************
 
@@ -173,7 +187,7 @@ namespace dipndipInventory.EF.DataServices
                 _context.SaveChanges();
                 _context.Dispose();
             }
-            catch
+            catch(Exception e)
             {
                 _context.Dispose();
                 return 0;
@@ -261,7 +275,7 @@ namespace dipndipInventory.EF.DataServices
 
         //***************************** Order ************************************************
 
-        public int CreatePurchase(order order_master, List<order_details> order_detail_list)
+        public int CreateOrder(order order_master, List<order_details> order_detail_list)
         {
             int result = 0;
 
