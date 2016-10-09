@@ -33,10 +33,10 @@ namespace dipndipInventory.EF
     
         public virtual ck_users ck_users { get; set; }
         public virtual ck_users ck_users1 { get; set; }
-        public virtual order order { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<receipt_details> receipt_details { get; set; }
         public virtual site site { get; set; }
         public virtual site site1 { get; set; }
+        public virtual order order { get; set; }
     }
 }

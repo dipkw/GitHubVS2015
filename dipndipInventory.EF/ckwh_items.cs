@@ -20,7 +20,6 @@ namespace dipndipInventory.EF
             this.ck_item_details = new HashSet<ck_item_details>();
             this.ckwh_item_unit = new HashSet<ckwh_item_unit>();
             this.order_details = new HashSet<order_details>();
-            this.orders = new HashSet<order>();
             this.receipt_details = new HashSet<receipt_details>();
         }
     
@@ -49,8 +48,6 @@ namespace dipndipInventory.EF
         public virtual site site { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<order_details> order_details { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<order> orders { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<receipt_details> receipt_details { get; set; }
     }

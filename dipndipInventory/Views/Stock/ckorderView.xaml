@@ -10,7 +10,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="350*"/>
-            <RowDefinition Height="250"/>
+            <!--<RowDefinition Height="250"/>-->
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -22,24 +22,26 @@
                 <telerik:RadGridView.Columns>
                     <telerik:GridViewDataColumn x:Name="OrderNo" DataMemberBinding="{Binding order_no}" Width="*" Header="Order No"/>
 
-                    <!--<telerik:GridViewColumn Width="80">
-                        <telerik:GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <telerik:RadButton Content="Edit" x:Name="btnEdit" Margin="5" Click="btnEdit_Click" />
-                            </DataTemplate>
-                        </telerik:GridViewColumn.CellTemplate>
-                    </telerik:GridViewColumn>-->
+                    
                     <telerik:GridViewDataColumn x:Name="OrderDate" DataMemberBinding="{Binding order_date}" Width="*" Header="Date"/>
                     <telerik:GridViewDataColumn x:Name="OrderFrom" DataMemberBinding="{Binding site.site_name}" Width="*" Header="Order From"/>
                     <telerik:GridViewDataColumn x:Name="OrderTo" DataMemberBinding="{Binding site1.site_name}" Width="*" Header="Order To"/>
+                    <telerik:GridViewDataColumn x:Name="OrderStatus" DataMemberBinding="{Binding order_status}" Width="*" Header="Order Status"/>
 
                     <telerik:GridViewColumn Width="80">
+                        <telerik:GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <telerik:RadButton Content="Edit" x:Name="btnEdit" Margin="5" Click="btnEdit_Click" Visibility="Visible"/>
+                            </DataTemplate>
+                        </telerik:GridViewColumn.CellTemplate>
+                    </telerik:GridViewColumn>
+                    <!--<telerik:GridViewColumn Width="80">
                         <telerik:GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <telerik:RadButton Content="Edit" x:Name="btnEdit" Margin="5"/>
                             </DataTemplate>
                         </telerik:GridViewColumn.CellTemplate>
-                    </telerik:GridViewColumn>
+                    </telerik:GridViewColumn>-->
                 </telerik:RadGridView.Columns>
             </telerik:RadGridView>
         </Border>

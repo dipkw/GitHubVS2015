@@ -151,5 +151,11 @@ namespace dipndipInventory.Views
             orderdetailsView odv = new orderdetailsView();
             odv.Show();
         }
+
+        private void CKOrders_Click(object sender, RoutedEventArgs e)
+        {
+            ckorderView cko = new ckorderView();
+            cko.Show();
+        }
     }
 }

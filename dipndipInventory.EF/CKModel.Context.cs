@@ -35,11 +35,11 @@ namespace dipndipInventory.EF
         public virtual DbSet<ckwh_item_unit> ckwh_item_unit { get; set; }
         public virtual DbSet<ckwh_items> ckwh_items { get; set; }
         public virtual DbSet<order_details> order_details { get; set; }
-        public virtual DbSet<order> orders { get; set; }
         public virtual DbSet<receipt_details> receipt_details { get; set; }
         public virtual DbSet<receipt> receipts { get; set; }
         public virtual DbSet<site> sites { get; set; }
         public virtual DbSet<wh_item_unit> wh_item_unit { get; set; }
+        public virtual DbSet<order> orders { get; set; }
     
         public virtual ObjectResult<ReadWarehouseItems_Result> ReadWarehouseItems()
         {

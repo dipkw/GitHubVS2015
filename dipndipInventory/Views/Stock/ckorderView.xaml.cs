@@ -1,4 +1,7 @@
-﻿using System;
+﻿using dipndipInventory.EF;
+using dipndipInventory.EF.DataServices;
+using dipndipInventory.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +23,26 @@ namespace dipndipInventory.Views.Stock
     /// </summary>
     public partial class ckorderView : RadWindow
     {
+        CKOrderService _context = new CKOrderService();
+        bool edit_mode = false;
+        //string username = string.Empty;
+        int id = 0;
         public ckorderView()
         {
             InitializeComponent();
+            ShowTaskBar.ShowInTaskbar(this, "Central Kitchen Orders");
+            ReadAllCKOrders();
+        }
+
+        private void ReadAllCKOrders()
+        {
+            IEnumerable<order> objOrders = _context.ReadAllActiveCKOrders();
+            dgCKOrders.ItemsSource = objOrders;
+        }
+
+        private void btnEdit_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

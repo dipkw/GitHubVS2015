@@ -93,10 +93,16 @@
                 
 
                 <telerik:RadRibbonGroup Header="Items">
-                    <telerik:RadRibbonButton   Width="70"  HorizontalContentAlignment="Center" x:Name="Order" Click="Order_Click">
+                    <telerik:RadRibbonButton   Width="70"  HorizontalContentAlignment="Center" x:Name="CKOrders" Click="CKOrders_Click">
                         <StackPanel>
                             <Image Source="/dipndipInventory;component/images/menu_icons/fast-food-icon.png" Width="32" Height="32"/>
-                            <TextBlock Text="Order" HorizontalAlignment="Center"/>
+                            <TextBlock Text="Orders" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </telerik:RadRibbonButton>
+                    <telerik:RadRibbonButton   Width="70"  HorizontalContentAlignment="Center" x:Name="NewOrder" Click="Order_Click">
+                        <StackPanel>
+                            <Image Source="/dipndipInventory;component/images/menu_icons/fast-food-icon.png" Width="32" Height="32"/>
+                            <TextBlock Text="New Order" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </telerik:RadRibbonButton>
                     <telerik:RadRibbonButton   Width="70"  HorizontalContentAlignment="Center" x:Name="Receive">

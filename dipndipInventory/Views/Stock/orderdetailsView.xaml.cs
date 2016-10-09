@@ -288,6 +288,11 @@ namespace dipndipInventory.Views.Stock
 
         private void btnNew_Click(object sender, RoutedEventArgs e)
         {
+            ClearOrder();
+        }
+
+        private void ClearOrder()
+        {
             btnSave.IsEnabled = true;
             string order_no = _context.GetNewCKOrderNo();
             txtOrderNo.Value = order_no;
@@ -297,7 +302,6 @@ namespace dipndipInventory.Views.Stock
             SetDate();
             txtItemCode.Focus();
         }
-
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             if (ValidateOrderDetails())
@@ -345,6 +349,8 @@ namespace dipndipInventory.Views.Stock
             order_master.order_date = dtpDate.SelectedDate + DateTime.Now.TimeOfDay;
             order_master.order_from_site_id = GlobalVariables.ActiveSite.Id;
             order_master.order_to_site_id = _scontext.GetSiteIDBySiteName("Central Warehouse");
+            order_master.order_status = "Pending";
+            order_master.active = true;
 
             List<order_details> order_detail_list = new List<order_details>();
             foreach(var odetail in OrderDetailsList)
@@ -368,10 +374,15 @@ namespace dipndipInventory.Views.Stock
 
                 }
                 else
-                { 
+                {
+                    order_master.created_by = GlobalVariables.ActiveUser.Id;
+                    order_master.created_date = DateTime.Now;
                     _result = _ocontext.CreateOrder(order_master, order_detail_list) > 0 ? "Order Details Created Successfully" : "Unable to Create Order Details";
                     RadWindow.Alert(_result);
-                    OrderDetailsList.Clear();
+                    if(_result == "Order Details Created Successfully")
+                    {
+                        ClearOrder();
+                    }
                 }
             }
             catch { }

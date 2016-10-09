@@ -174,6 +174,20 @@ namespace dipndipInventory.EF.DataServices
             }
         }
 
+        public IEnumerable<order> ReadAllActiveCKOrders()
+        {
+            try
+            {
+                _context = new CKEntities();
+                IEnumerable<order> objOrders = (from ckorders in _context.orders where ckorders.active == true orderby ckorders.Id ascending select ckorders);
+                return objOrders;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
 
         //***************************** Order Details ****************************************
 

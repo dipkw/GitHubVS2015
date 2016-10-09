@@ -22,27 +22,25 @@ namespace dipndipInventory.EF
         }
     
         public int Id { get; set; }
+        public string order_no { get; set; }
         public Nullable<System.DateTime> order_date { get; set; }
-        public Nullable<int> wh_item_id { get; set; }
-        public Nullable<int> wh_item_unit_id { get; set; }
         public Nullable<int> order_from_site_id { get; set; }
         public Nullable<int> order_to_site_id { get; set; }
+        public string order_status { get; set; }
         public Nullable<int> created_by { get; set; }
         public Nullable<System.DateTime> created_date { get; set; }
         public Nullable<int> modified_by { get; set; }
         public Nullable<System.DateTime> modified_date { get; set; }
         public Nullable<bool> active { get; set; }
-        public string order_no { get; set; }
-        public string wh_item_unit_description { get; set; }
+        public Nullable<System.DateTime> issue_date { get; set; }
+        public Nullable<System.DateTime> receipt_date { get; set; }
     
         public virtual ck_users ck_users { get; set; }
         public virtual ck_users ck_users1 { get; set; }
-        public virtual ckwh_items ckwh_items { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<order_details> order_details { get; set; }
         public virtual site site { get; set; }
         public virtual site site1 { get; set; }
-        public virtual wh_item_unit wh_item_unit { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<receipt> receipts { get; set; }
     }
