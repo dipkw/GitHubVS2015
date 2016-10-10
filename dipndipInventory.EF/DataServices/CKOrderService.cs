@@ -188,6 +188,20 @@ namespace dipndipInventory.EF.DataServices
             }
         }
 
+        public IEnumerable<order> ReadAllActiveSiteOrders(int site_id)
+        {
+            try
+            {
+                _context = new CKEntities();
+                IEnumerable<order> objOrders = (from ckorders in _context.orders where (ckorders.active == true && (ckorders.order_from_site_id == site_id || ckorders.order_to_site_id == site_id)) orderby ckorders.Id ascending select ckorders);
+                return objOrders;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
 
         //***************************** Order Details ****************************************
 
@@ -338,6 +352,20 @@ namespace dipndipInventory.EF.DataServices
             }
 
             return result;
+        }
+
+        public IEnumerable<order_details> ReadCKOrderDetails(int order_id)
+        {
+            try
+            {
+                _context = new CKEntities();
+                IEnumerable<order_details> objCKOrderDetails = (from ckorderdetails in _context.order_details where ckorderdetails.order_id == order_id orderby ckorderdetails.Id ascending select ckorderdetails);
+                return objCKOrderDetails;
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         //***************************** Order Return ****************************************

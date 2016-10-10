@@ -159,6 +159,9 @@
     <Compile Include="Views\Stock\warehouseitemsView.xaml.cs">
       <DependentUpon>warehouseitemsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Stock\whitemissueView.xaml.cs">
+      <DependentUpon>whitemissueView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Stock\whitemunitsetupView.xaml.cs">
       <DependentUpon>whitemunitsetupView.xaml</DependentUpon>
     </Compile>
@@ -222,6 +225,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Stock\warehouseitemsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Stock\whitemissueView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

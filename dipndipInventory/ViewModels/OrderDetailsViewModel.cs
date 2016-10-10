@@ -15,6 +15,8 @@ namespace dipndipInventory.ViewModels
         public int unitId { get; set; }
         public string unitDescription { get; set; }
         public decimal qty { get; set; }
+        public decimal qty_issued { get; set; }
+        public decimal qty_received { get; set; }
         public int rowIndex { get; set; }
     }
 }

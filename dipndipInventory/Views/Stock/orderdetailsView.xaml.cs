@@ -40,6 +40,31 @@ namespace dipndipInventory.Views.Stock
             txtOrderNo.Value = order_no;
         }
 
+        public orderdetailsView(long order_id, string order_no, DateTime order_date)
+        {
+            InitializeComponent();
+            ShowTaskBar.ShowInTaskbar(this, "Order Details");
+            txtOrderNo.Value = order_no.ToString();
+            dtpDate.SelectedDate = order_date;
+            CKOrderService _ocontext = new CKOrderService();
+            IEnumerable<order_details> selected_order = _ocontext.ReadCKOrderDetailsByMasterId(order_id);
+            List<OrderDetailsViewModel> order_detail_list = new List<OrderDetailsViewModel>();
+            foreach(order_details order_detail in selected_order)
+            {
+                OrderDetailsViewModel order_detail_vm = new OrderDetailsViewModel();
+                order_detail_vm.id = order_detail.Id;
+                order_detail_vm.itemId = (int)order_detail.ckwh_item_id;
+                order_detail_vm.itemCode = order_detail.ckwh_items.wh_item_code;
+                order_detail_vm.itemDescription = order_detail.ckwh_items.wh_item_description;
+                order_detail_vm.unitId = (int)order_detail.wh_item_unit_id;
+                order_detail_vm.unitDescription = order_detail.wh_item_unit.ck_units.unit_description;
+                order_detail_vm.qty = (decimal)order_detail.qty;
+                order_detail_list.Add(order_detail_vm);
+            }
+            dgCKOrderDetails.ItemsSource = null;
+            dgCKOrderDetails.ItemsSource = order_detail_list;
+        }
+
         private void SetDate()
         {
             this.dtpDate.Culture = new System.Globalization.CultureInfo("en-US");

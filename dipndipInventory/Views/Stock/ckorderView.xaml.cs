@@ -36,11 +36,45 @@ namespace dipndipInventory.Views.Stock
 
         private void ReadAllCKOrders()
         {
-            IEnumerable<order> objOrders = _context.ReadAllActiveCKOrders();
+            //IEnumerable<order> objOrders = _context.ReadAllActiveCKOrders();
+            IEnumerable<order> objOrders = _context.ReadAllActiveSiteOrders(GlobalVariables.ActiveSite.Id);
             dgCKOrders.ItemsSource = objOrders;
         }
 
         private void btnEdit_Click(object sender, RoutedEventArgs e)
+        {
+            if(dgCKOrders.SelectedItem == null)
+            {
+                RadWindow.Alert("Please select an order to edit");
+                return;
+            }
+
+            order objOrder = (dgCKOrders.SelectedItem) as order;
+            if((GlobalVariables.ActiveSite.Id == objOrder.order_from_site_id) && objOrder.order_status == "Pending")
+            {
+                //Open Edit Window For From_Site (CK) to update the order
+                orderdetailsView odv = new orderdetailsView(objOrder.Id, objOrder.order_no, (DateTime)objOrder.order_date);
+                odv.Show();
+            }
+            else if ((GlobalVariables.ActiveSite.Id == objOrder.order_from_site_id) && objOrder.order_status == "Issued")
+            {
+                //Open Receive Window For From_Site (CK) to receive the items
+            }
+            else if((GlobalVariables.ActiveSite.Id == objOrder.order_to_site_id) && objOrder.order_status == "Pending")
+            {
+                //Open Order Issue Window For To_Site(Warehouse) to issue the items
+                whitemissueView itmissueView = new whitemissueView(objOrder.Id, objOrder.order_no, (DateTime)objOrder.order_date);
+                itmissueView.Show();
+                return;
+            }
+            else if ((GlobalVariables.ActiveSite.Id == objOrder.order_to_site_id) && objOrder.order_status == "Received")
+            {
+                //Open Receipt Confirmation Window For To_Site(Warehouse) to confirm the receipt
+                return;
+            }
+        }
+
+        private void btnView_Click(object sender, RoutedEventArgs e)
         {
 
         }

@@ -99,10 +99,10 @@
                             <TextBlock Text="Orders" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </telerik:RadRibbonButton>
-                    <telerik:RadRibbonButton   Width="70"  HorizontalContentAlignment="Center" x:Name="NewOrder" Click="Order_Click">
+                    <telerik:RadRibbonButton   Width="85"  HorizontalContentAlignment="Center" x:Name="NewOrder" Click="Order_Click">
                         <StackPanel>
                             <Image Source="/dipndipInventory;component/images/menu_icons/fast-food-icon.png" Width="32" Height="32"/>
-                            <TextBlock Text="New Order" HorizontalAlignment="Center"/>
+                            <TextBlock Text="New WH Order" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </telerik:RadRibbonButton>
                     <telerik:RadRibbonButton   Width="70"  HorizontalContentAlignment="Center" x:Name="Receive">
