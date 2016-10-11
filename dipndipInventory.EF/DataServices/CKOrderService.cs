@@ -202,6 +202,52 @@ namespace dipndipInventory.EF.DataServices
             }
         }
 
+        public int UpdateCKOrderStatus(long order_id, string order_status, DateTime issue_date, int user_id)
+        {
+            try
+            {
+                _context = new CKEntities();
+                //ck_users objUserToUpdate = new ck_users();
+                order objCKOrderToUpdate = (from ckorder in _context.orders where ckorder.Id == order_id select ckorder).SingleOrDefault();
+                objCKOrderToUpdate.issue_date = issue_date;
+                objCKOrderToUpdate.order_status = order_status;
+                objCKOrderToUpdate.modified_by = user_id;
+                objCKOrderToUpdate.modified_date = DateTime.Now;
+                _context.SaveChanges();
+
+                _context.Dispose();
+                return 1;
+            }
+            catch (Exception e)
+            {
+                _context.Dispose();
+                return 0;
+            }
+        }
+
+        public int UpdateCKOrderReceiveStatus(long order_id, string order_status, DateTime receipt_date, int user_id)
+        {
+            try
+            {
+                _context = new CKEntities();
+                //ck_users objUserToUpdate = new ck_users();
+                order objCKOrderToUpdate = (from ckorder in _context.orders where ckorder.Id == order_id select ckorder).SingleOrDefault();
+                objCKOrderToUpdate.receipt_date = receipt_date;
+                objCKOrderToUpdate.order_status = order_status;
+                objCKOrderToUpdate.modified_by = user_id;
+                objCKOrderToUpdate.modified_date = DateTime.Now;
+                _context.SaveChanges();
+
+                _context.Dispose();
+                return 1;
+            }
+            catch (Exception e)
+            {
+                _context.Dispose();
+                return 0;
+            }
+        }
+
 
         //***************************** Order Details ****************************************
 
@@ -298,6 +344,44 @@ namespace dipndipInventory.EF.DataServices
             }
         }
 
+        public int UpdateIssuedQty(long order_id, decimal qty_issued)
+        {
+            try
+            {
+                _context = new CKEntities();
+                order_details objCKOrderDetailsToUpdate = (from ckorderdetails in _context.order_details where ckorderdetails.order_id == order_id select ckorderdetails).SingleOrDefault();
+                objCKOrderDetailsToUpdate.qty_issued = qty_issued;
+                _context.SaveChanges();
+
+                _context.Dispose();
+                return 1;
+            }
+            catch
+            {
+                _context.Dispose();
+                return 0;
+            }
+        }
+
+        public int UpdateReceivedQty(long order_id, decimal qty_received)
+        {
+            try
+            {
+                _context = new CKEntities();
+                order_details objCKOrderDetailsToUpdate = (from ckorderdetails in _context.order_details where ckorderdetails.order_id == order_id select ckorderdetails).SingleOrDefault();
+                objCKOrderDetailsToUpdate.qty_received = qty_received;
+                _context.SaveChanges();
+
+                _context.Dispose();
+                return 1;
+            }
+            catch
+            {
+                _context.Dispose();
+                return 0;
+            }
+        }
+
         //***************************** Order Details ****************************************
 
 
@@ -366,6 +450,18 @@ namespace dipndipInventory.EF.DataServices
             {
                 return null;
             }
+        }
+
+        public int UpdateOrderStatus(long order_id, decimal qty_issued, string order_status, DateTime issue_date, int user_id)
+        {
+            int result = 0;
+
+            if (UpdateIssuedQty(order_id,qty_issued) > 0)
+            {
+                result = UpdateCKOrderStatus(order_id, order_status, issue_date, user_id);
+            }
+
+            return result;
         }
 
         //***************************** Order Return ****************************************

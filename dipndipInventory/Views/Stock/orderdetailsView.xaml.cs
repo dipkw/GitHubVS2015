@@ -59,6 +59,10 @@ namespace dipndipInventory.Views.Stock
                 order_detail_vm.unitId = (int)order_detail.wh_item_unit_id;
                 order_detail_vm.unitDescription = order_detail.wh_item_unit.ck_units.unit_description;
                 order_detail_vm.qty = (decimal)order_detail.qty;
+                if (order_detail.qty_issued != null)
+                {
+                    order_detail_vm.qty_issued = (decimal)order_detail.qty_issued;
+                }
                 order_detail_list.Add(order_detail_vm);
             }
             dgCKOrderDetails.ItemsSource = null;
@@ -149,6 +153,8 @@ namespace dipndipInventory.Views.Stock
                             OrderDetailsList[indx].unitId = base_unit_id;
                             OrderDetailsList[indx].unitDescription = txtUnit.Value;
                             OrderDetailsList[indx].qty = (decimal)txtQty.Value;
+                            OrderDetailsList[indx].qty_issued = 0;
+                            OrderDetailsList[indx].qty_received = 0;
                             dgCKOrderDetails.ItemsSource = null;
                             dgCKOrderDetails.ItemsSource = OrderDetailsList;
                         }

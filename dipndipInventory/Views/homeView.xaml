@@ -168,6 +168,12 @@
                             <TextBlock Text="Sites" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </telerik:RadRibbonButton>
+                    <telerik:RadRibbonButton x:Name="UpdateGPItemsMenu"  Width="65"  HorizontalContentAlignment="Center" >
+                        <StackPanel>
+                            <Image Source="/dipndipInventory;component/images/menu_icons/sites-2-icon.png" Width="32" Height="32"/>
+                            <TextBlock Text="Update GP Items" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </telerik:RadRibbonButton>
                     <telerik:RadRibbonButton x:Name="UpdateWHCost"  Width="95"  HorizontalContentAlignment="Center" Click="UpdateWHCost_Click">
                         <StackPanel>
                             <Image Source="/dipndipInventory;component/images/menu_icons/sites-2-icon.png" Width="32" Height="32"/>

@@ -162,6 +162,9 @@
     <Compile Include="Views\Stock\whitemissueView.xaml.cs">
       <DependentUpon>whitemissueView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Stock\whitemreceiveView.xaml.cs">
+      <DependentUpon>whitemreceiveView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Stock\whitemunitsetupView.xaml.cs">
       <DependentUpon>whitemunitsetupView.xaml</DependentUpon>
     </Compile>
@@ -229,6 +232,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Stock\whitemissueView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Stock\whitemreceiveView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

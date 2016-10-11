@@ -23,7 +23,7 @@
                     <telerik:GridViewDataColumn x:Name="OrderNo" DataMemberBinding="{Binding order_no}" Width="*" Header="Order No"/>
 
                     
-                    <telerik:GridViewDataColumn x:Name="OrderDate" DataMemberBinding="{Binding order_date}" Width="*" Header="Date"/>
+                    <telerik:GridViewDataColumn x:Name="OrderDate" DataMemberBinding="{Binding order_date}" Width="*" Header="Order Date"/>
                     <telerik:GridViewDataColumn x:Name="OrderFrom" DataMemberBinding="{Binding site.site_name}" Width="*" Header="Order From"/>
                     <telerik:GridViewDataColumn x:Name="OrderTo" DataMemberBinding="{Binding site1.site_name}" Width="*" Header="Order To"/>
                     <telerik:GridViewDataColumn x:Name="OrderStatus" DataMemberBinding="{Binding order_status}" Width="*" Header="Order Status"/>

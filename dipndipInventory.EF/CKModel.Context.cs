@@ -40,6 +40,7 @@ namespace dipndipInventory.EF
         public virtual DbSet<site> sites { get; set; }
         public virtual DbSet<wh_item_unit> wh_item_unit { get; set; }
         public virtual DbSet<order> orders { get; set; }
+        public virtual DbSet<transaction_details> transaction_details { get; set; }
     
         public virtual ObjectResult<ReadWarehouseItems_Result> ReadWarehouseItems()
         {

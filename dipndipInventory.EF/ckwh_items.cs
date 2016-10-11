@@ -21,6 +21,7 @@ namespace dipndipInventory.EF
             this.ckwh_item_unit = new HashSet<ckwh_item_unit>();
             this.order_details = new HashSet<order_details>();
             this.receipt_details = new HashSet<receipt_details>();
+            this.transaction_details = new HashSet<transaction_details>();
         }
     
         public int Id { get; set; }
@@ -37,6 +38,7 @@ namespace dipndipInventory.EF
         public Nullable<System.DateTime> created_date { get; set; }
         public Nullable<int> modified_by { get; set; }
         public Nullable<System.DateTime> modified_date { get; set; }
+        public Nullable<decimal> ck_qty { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ck_item_details> ck_item_details { get; set; }
@@ -50,5 +52,7 @@ namespace dipndipInventory.EF
         public virtual ICollection<order_details> order_details { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<receipt_details> receipt_details { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<transaction_details> transaction_details { get; set; }
     }
 }

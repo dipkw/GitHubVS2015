@@ -69,6 +69,13 @@
         <AssociationConnector Association="dipckModel.FK_orders_sites" />
         <AssociationConnector Association="dipckModel.FK_orders_sites1" />
         <AssociationConnector Association="dipckModel.FK_receipts_orders" />
+        <EntityTypeShape EntityType="dipckModel.transaction_details" Width="1.5" PointX="13.5" PointY="21.25" />
+        <AssociationConnector Association="dipckModel.FK_transaction_details_ck_users_created" />
+        <AssociationConnector Association="dipckModel.FK_transaction_details_ck_users_modified" />
+        <AssociationConnector Association="dipckModel.FK_transaction_details_ckwh_items" />
+        <AssociationConnector Association="dipckModel.FK_transaction_details_sites_from" />
+        <AssociationConnector Association="dipckModel.FK_transaction_details_sites_to" />
+        <AssociationConnector Association="dipckModel.FK_transaction_details_wh_item_unit" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

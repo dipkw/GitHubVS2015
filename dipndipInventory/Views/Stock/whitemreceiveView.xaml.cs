@@ -21,23 +21,24 @@ using Telerik.Windows.Controls.GridView;
 namespace dipndipInventory.Views.Stock
 {
     /// <summary>
-    /// Interaction logic for whitemissueView.xaml
+    /// Interaction logic for whitemreceiveView.xaml
     /// </summary>
-    public partial class whitemissueView : RadWindow
+    public partial class whitemreceiveView : RadWindow
     {
         long active_order_id;
-        public whitemissueView()
+        public whitemreceiveView()
         {
             InitializeComponent();
-            dgCKOrderDetails.BeginInsert();
         }
 
-        public whitemissueView(long order_id, string order_no, DateTime order_date)
+        public whitemreceiveView(long order_id, string order_no, DateTime order_date, DateTime issue_date)
         {
             InitializeComponent();
-            ShowTaskBar.ShowInTaskbar(this, "Item Issue Details");
-            dtpIssueDate.SelectedDate = DateTime.Now.Date;
-            dtpIssueDate.SelectedTime = DateTime.Now.TimeOfDay;
+            ShowTaskBar.ShowInTaskbar(this, "Item Receiving Details");
+            dtpIssueDate.SelectedDate = issue_date.Date;
+            dtpIssueDate.SelectedTime = issue_date.TimeOfDay;
+            dtpReceiptDate.SelectedDate = DateTime.Now.Date;
+            dtpReceiptDate.SelectedTime = DateTime.Now.TimeOfDay;
             active_order_id = order_id;
             txtOrderNo.Value = order_no.ToString();
             dtpDate.SelectedDate = order_date;
@@ -58,6 +59,10 @@ namespace dipndipInventory.Views.Stock
                 {
                     order_detail_vm.qty_issued = (decimal)order_detail.qty_issued;
                 }
+                if (order_detail.qty_received != null)
+                {
+                    order_detail_vm.qty_received = (decimal)order_detail.qty_received;
+                }
                 order_detail_list.Add(order_detail_vm);
             }
             dgCKOrderDetails.ItemsSource = null;
@@ -66,7 +71,7 @@ namespace dipndipInventory.Views.Stock
 
         private void dgCKOrderDetails_CellValidating(object sender, GridViewCellValidatingEventArgs e)
         {
-            if (e.Cell.Column.UniqueName == "qty_issued")
+            if (e.Cell.Column.UniqueName == "qty_received")
             {
                 if ((Convert.ToDecimal(e.NewValue.ToString())) >= 0)
                 {
@@ -80,32 +85,6 @@ namespace dipndipInventory.Views.Stock
             }
         }
 
-        private void btnAddItem_Click(object sender, RoutedEventArgs e)
-        {
-            //var rows = this.dgCKOrderDetails.ChildrenOfType<GridViewRow>();
-
-            //foreach (var row in rows)
-            //{
-            //    if (row is GridViewNewRow)
-            //        continue;
-
-            //    foreach (var cell in row.Cells)
-            //    {
-            //        MessageBox.Show(cell.ToString());
-            //    }
-            //}
-
-
-            //var rows = this.dgCKOrderDetails.ChildrenOfType<GridViewRow>();
-            //foreach (var row in rows)
-            //{
-            //    if (row is GridViewNewRow)
-            //        continue;
-
-            //    OrderDetailsViewModel objOrderDetails = row.Item as OrderDetailsViewModel;
-            //}
-        }
-
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             var rows = this.dgCKOrderDetails.ChildrenOfType<GridViewRow>();
@@ -117,16 +96,55 @@ namespace dipndipInventory.Views.Stock
                     continue;
 
                 OrderDetailsViewModel objOrderDetails = row.Item as OrderDetailsViewModel;
-                
-                result = _ocontext.UpdateIssuedQty(active_order_id, objOrderDetails.qty_issued);
+
+                result = _ocontext.UpdateReceivedQty(active_order_id, objOrderDetails.qty_received);
+                if(result<=0)
+                {
+                    break;
+                }
+                result = SaveTransaction(objOrderDetails);
+                if(result<=0)
+                {
+                    break;
+                }
             }
             if (result > 0)
             {
-                result = _ocontext.UpdateCKOrderStatus(active_order_id, "Issued", (DateTime)(dtpIssueDate.SelectedDate+DateTime.Now.TimeOfDay),GlobalVariables.ActiveUser.Id);
+                result = _ocontext.UpdateCKOrderReceiveStatus(active_order_id, "Received", (DateTime)(dtpReceiptDate.SelectedDate + DateTime.Now.TimeOfDay), GlobalVariables.ActiveUser.Id);
             }
-            string response = result > 0 ? "Items Issued Successfully" : "Unable to issue the Items";
+            string response = result > 0 ? "Items Received Successfully" : "Unable to receive the Items";
+
+            
 
             RadWindow.Alert(response);
+        }
+
+        private int SaveTransaction(OrderDetailsViewModel objOrderDetails)
+        {
+            int result = 0;
+
+            WHItemService _wcontext = new WHItemService();
+            SiteService _scontext = new SiteService();
+            TransactionService _tcontext = new TransactionService();
+            transaction_details objTransactionDetail = new transaction_details();
+            objTransactionDetail.wh_item_id = objOrderDetails.itemId;
+            objTransactionDetail.wh_item_code = objOrderDetails.itemCode;
+            objTransactionDetail.wh_item_description = objOrderDetails.itemDescription;
+            objTransactionDetail.trans_date = dtpReceiptDate.SelectedDate + DateTime.Now.TimeOfDay;
+            objTransactionDetail.wh_item_unit_id = objOrderDetails.unitId;
+            objTransactionDetail.ck_unit_description = objOrderDetails.unitDescription;
+            objTransactionDetail.qty = objOrderDetails.qty_received;
+            objTransactionDetail.unit_cost = _wcontext.GetCurrentCost(objOrderDetails.itemId);
+            objTransactionDetail.total_cost = (objTransactionDetail.qty * objTransactionDetail.unit_cost);
+            objTransactionDetail.order_from_site_id = _scontext.GetSiteIDBySiteName("Central Warehouse");
+            objTransactionDetail.order_to_site_id = _scontext.GetSiteIDBySiteName("Central Kitchen");
+            objTransactionDetail.trans_type = "Receipt";
+            objTransactionDetail.active = true;
+            objTransactionDetail.created_by = GlobalVariables.ActiveUser.Id;
+            objTransactionDetail.created_date = DateTime.Now;
+            result = _tcontext.CreateTransaction(objTransactionDetail);
+
+            return result;
         }
     }
 }

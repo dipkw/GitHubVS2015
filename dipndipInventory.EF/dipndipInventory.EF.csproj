@@ -92,7 +92,9 @@
     <Compile Include="DataServices\CKItemDetailService.cs" />
     <Compile Include="DataServices\CKItemService.cs" />
     <Compile Include="DataServices\CKOrderService.cs" />
+    <Compile Include="DataServices\CKReceiptService.cs" />
     <Compile Include="DataServices\SiteService.cs" />
+    <Compile Include="DataServices\TransactionService.cs" />
     <Compile Include="DataServices\UnitService.cs" />
     <Compile Include="DataServices\UserService.cs" />
     <Compile Include="DataServices\WHItemService.cs" />
@@ -114,6 +116,9 @@
       <DependentUpon>CKModel.tt</DependentUpon>
     </Compile>
     <Compile Include="site.cs">
+      <DependentUpon>CKModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="transaction_details.cs">
       <DependentUpon>CKModel.tt</DependentUpon>
     </Compile>
     <Compile Include="wh_item_unit.cs">
