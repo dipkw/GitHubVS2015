@@ -312,6 +312,30 @@ namespace dipndipInventory.EF.DataServices
             }
         }
 
+        //***************************** Receipt Details ****************************************
 
+
+        //***************************** Receipt ************************************************
+
+        public int CreateReceipt(receipt receipt_master, List<receipt_details> receipt_detail_list)
+        {
+            int result = 0;
+
+            if (CreateCKReceipt(receipt_master) > 0)
+            {
+                foreach (var receipt_detail in receipt_detail_list)
+                {
+                    receipt_detail.receipt_id = receipt_master.Id;
+                    receipt_detail.receipt_no = receipt_master.receipt_no;
+                    result = CreateCKReceiptDetails(receipt_detail);
+                }
+            }
+
+            // if result of create ck receipt details not >0 then
+            // delete all items in receipt_details_list from receipt_details
+            // then delete order with receipt_master.id
+
+            return result;
+        }
     }
 }

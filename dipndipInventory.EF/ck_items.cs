@@ -14,6 +14,12 @@ namespace dipndipInventory.EF
     
     public partial class ck_items
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public ck_items()
+        {
+            this.ck_item_cost_history = new HashSet<ck_item_cost_history>();
+        }
+    
         public int Id { get; set; }
         public string ck_item_code { get; set; }
         public string ck_item_description { get; set; }
@@ -32,5 +38,7 @@ namespace dipndipInventory.EF
         public virtual ck_units ck_units { get; set; }
         public virtual ck_users ck_users { get; set; }
         public virtual ck_users ck_users1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ck_item_cost_history> ck_item_cost_history { get; set; }
     }
 }

@@ -117,6 +117,23 @@ namespace dipndipInventory.EF.DataServices
             return curr_cost;
         }
 
+        public decimal? GetCurrentCKQty(int wh_item_id)
+        {
+            decimal? curr_ck_qty = 0.0m;
+
+            try
+            {
+                _context = new CKEntities();
+                curr_ck_qty = (from whitems in _context.ckwh_items where whitems.Id == wh_item_id select whitems.ck_qty).FirstOrDefault();
+            }
+            catch { return 0; }
+            if(curr_ck_qty==null)
+            {
+                curr_ck_qty = 0.0m;
+            }
+            return curr_ck_qty;
+        }
+
         public string GetItemCode(int id)
         {
             string item_code = string.Empty;
@@ -161,6 +178,25 @@ namespace dipndipInventory.EF.DataServices
                 _context = new CKEntities();
                 ckwh_items objCKWHItemToUpdate = (from ckwhitem in _context.ckwh_items where ckwhitem.Id == item_id select ckwhitem).SingleOrDefault();
                 objCKWHItemToUpdate.ck_qty += qty_received;
+                _context.SaveChanges();
+
+                _context.Dispose();
+                return 1;
+            }
+            catch
+            {
+                _context.Dispose();
+                return 0;
+            }
+        }
+
+        public int UpdateCKItemAvgUnitCost(int item_id, decimal avg_unit_cost)
+        {
+            try
+            {
+                _context = new CKEntities();
+                ckwh_items objCKWHItemToUpdate = (from ckwhitem in _context.ckwh_items where ckwhitem.Id == item_id select ckwhitem).SingleOrDefault();
+                objCKWHItemToUpdate.ck_avg_unit_cost = avg_unit_cost;
                 _context.SaveChanges();
 
                 _context.Dispose();

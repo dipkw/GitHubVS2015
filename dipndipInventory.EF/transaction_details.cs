@@ -22,6 +22,8 @@ namespace dipndipInventory.EF
         public Nullable<int> wh_item_unit_id { get; set; }
         public string ck_unit_description { get; set; }
         public Nullable<decimal> qty { get; set; }
+        public Nullable<decimal> unit_cost { get; set; }
+        public Nullable<decimal> total_cost { get; set; }
         public Nullable<int> order_from_site_id { get; set; }
         public Nullable<int> order_to_site_id { get; set; }
         public string trans_type { get; set; }
@@ -30,8 +32,7 @@ namespace dipndipInventory.EF
         public Nullable<System.DateTime> created_date { get; set; }
         public Nullable<int> modified_by { get; set; }
         public Nullable<System.DateTime> modified_date { get; set; }
-        public Nullable<decimal> unit_cost { get; set; }
-        public Nullable<decimal> total_cost { get; set; }
+        public string trans_ref_no { get; set; }
     
         public virtual ck_users ck_users { get; set; }
         public virtual ck_users ck_users1 { get; set; }

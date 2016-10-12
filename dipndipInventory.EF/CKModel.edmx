@@ -5,6 +5,20 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="dipckModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ck_item_cost_history">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ck_item_id" Type="int" />
+          <Property Name="ck_item_code" Type="nvarchar" MaxLength="50" />
+          <Property Name="ck_item_description" Type="nvarchar" MaxLength="150" />
+          <Property Name="ord" Type="int" />
+          <Property Name="prev_cost" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="curr_cost" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="created_by" Type="int" />
+          <Property Name="created_date" Type="datetime" />
+        </EntityType>
         <EntityType Name="ck_item_details">
           <Key>
             <PropertyRef Name="Id" />
@@ -103,6 +117,7 @@
           <Property Name="quantity" Type="decimal" Precision="18" Scale="3" />
           <Property Name="unit_cost" Type="decimal" Precision="18" Scale="3" />
           <Property Name="ck_qty" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="ck_avg_unit_cost" Type="decimal" Precision="18" Scale="3" />
           <Property Name="site_id" Type="int" />
           <Property Name="created_by" Type="int" />
           <Property Name="created_date" Type="datetime" />
@@ -114,7 +129,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="order_id" Type="int" />
+          <Property Name="order_id" Type="bigint" />
           <Property Name="order_no" Type="nvarchar" MaxLength="50" />
           <Property Name="ckwh_item_id" Type="int" />
           <Property Name="wh_item_unit_id" Type="int" />
@@ -131,7 +146,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="order_no" Type="nvarchar" MaxLength="50" />
           <Property Name="order_date" Type="datetime" />
           <Property Name="order_from_site_id" Type="int" />
@@ -153,7 +168,10 @@
           <Property Name="receipt_id" Type="int" />
           <Property Name="receipt_no" Type="nvarchar" MaxLength="50" />
           <Property Name="wh_item_id" Type="int" />
+          <Property Name="wh_item_code" Type="nvarchar" MaxLength="50" />
+          <Property Name="wh_item_description" Type="nvarchar" MaxLength="150" />
           <Property Name="wh_item_unit_id" Type="int" />
+          <Property Name="ck_unit_description" Type="nvarchar" MaxLength="50" />
           <Property Name="qty_ordered" Type="decimal" Precision="18" Scale="3" />
           <Property Name="qty_received" Type="decimal" Precision="18" Scale="3" />
           <Property Name="qyt_returned" Type="decimal" Precision="18" Scale="3" />
@@ -173,7 +191,8 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="receipt_no" Type="nvarchar" MaxLength="50" />
           <Property Name="receipt_date" Type="datetime" />
-          <Property Name="order_id" Type="int" />
+          <Property Name="order_id" Type="bigint" />
+          <Property Name="order_no" Type="nvarchar" MaxLength="50" />
           <Property Name="issued_site" Type="int" />
           <Property Name="received_site" Type="int" />
           <Property Name="created_by" Type="int" />
@@ -200,6 +219,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="trans_ref_no" Type="nvarchar" MaxLength="50" />
           <Property Name="wh_item_id" Type="int" />
           <Property Name="wh_item_code" Type="nvarchar" MaxLength="50" />
           <Property Name="wh_item_description" Type="nvarchar" MaxLength="150" />
@@ -231,6 +251,20 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
           <Property Name="CHANGEBY_I" Type="varchar" MaxLength="15" />
           <Property Name="DEX_ROW_ID" Type="int" />
         </EntityType>-->
+        <EntityType Name="wh_item_cost_history">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="wh_item_id" Type="int" />
+          <Property Name="wh_item_code" Type="nvarchar" MaxLength="50" />
+          <Property Name="wh_item_description" Type="nvarchar" MaxLength="150" />
+          <Property Name="ord" Type="int" />
+          <Property Name="prev_cost" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="curr_cost" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="created_by" Type="int" />
+          <Property Name="created_date" Type="datetime" />
+        </EntityType>
         <EntityType Name="wh_item_unit">
           <Key>
             <PropertyRef Name="Id" />
@@ -245,6 +279,30 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
           <Property Name="modified_date" Type="datetime" />
           <Property Name="active" Type="bit" />
         </EntityType>
+        <Association Name="FK_ck_item_cost_history_ck_items">
+          <End Role="ck_items" Type="Self.ck_items" Multiplicity="0..1" />
+          <End Role="ck_item_cost_history" Type="Self.ck_item_cost_history" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ck_items">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ck_item_cost_history">
+              <PropertyRef Name="ck_item_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ck_item_cost_history_ck_users_created">
+          <End Role="ck_users" Type="Self.ck_users" Multiplicity="0..1" />
+          <End Role="ck_item_cost_history" Type="Self.ck_item_cost_history" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ck_users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ck_item_cost_history">
+              <PropertyRef Name="created_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ck_item_details_ck_users">
           <End Role="ck_users" Type="Self.ck_users" Multiplicity="0..1" />
           <End Role="ck_item_details" Type="Self.ck_item_details" Multiplicity="*" />
@@ -797,6 +855,30 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_wh_item_cost_history_ck_users_created">
+          <End Role="ck_users" Type="Self.ck_users" Multiplicity="0..1" />
+          <End Role="wh_item_cost_history" Type="Self.wh_item_cost_history" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ck_users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="wh_item_cost_history">
+              <PropertyRef Name="created_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_wh_item_cost_history_ckwh_items">
+          <End Role="ckwh_items" Type="Self.ckwh_items" Multiplicity="0..1" />
+          <End Role="wh_item_cost_history" Type="Self.wh_item_cost_history" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ckwh_items">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="wh_item_cost_history">
+              <PropertyRef Name="wh_item_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_wh_item_unit_ck_units">
           <End Role="ck_units" Type="Self.ck_units" Multiplicity="0..1" />
           <End Role="wh_item_unit" Type="Self.wh_item_unit" Multiplicity="*" />
@@ -847,6 +929,7 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
         </Association>
         <Function Name="ReadWarehouseItems" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="dipckModelStoreContainer">
+          <EntitySet Name="ck_item_cost_history" EntityType="Self.ck_item_cost_history" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ck_item_details" EntityType="Self.ck_item_details" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ck_items" EntityType="Self.ck_items" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ck_units" EntityType="Self.ck_units" Schema="dbo" store:Type="Tables" />
@@ -860,7 +943,16 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
           <EntitySet Name="receipts" EntityType="Self.receipts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sites" EntityType="Self.sites" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="transaction_details" EntityType="Self.transaction_details" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="wh_item_cost_history" EntityType="Self.wh_item_cost_history" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="wh_item_unit" EntityType="Self.wh_item_unit" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ck_item_cost_history_ck_items" Association="Self.FK_ck_item_cost_history_ck_items">
+            <End Role="ck_items" EntitySet="ck_items" />
+            <End Role="ck_item_cost_history" EntitySet="ck_item_cost_history" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ck_item_cost_history_ck_users_created" Association="Self.FK_ck_item_cost_history_ck_users_created">
+            <End Role="ck_users" EntitySet="ck_users" />
+            <End Role="ck_item_cost_history" EntitySet="ck_item_cost_history" />
+          </AssociationSet>
           <AssociationSet Name="FK_ck_item_details_ck_users" Association="Self.FK_ck_item_details_ck_users">
             <End Role="ck_users" EntitySet="ck_users" />
             <End Role="ck_item_details" EntitySet="ck_item_details" />
@@ -1045,6 +1137,14 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
             <End Role="wh_item_unit" EntitySet="wh_item_unit" />
             <End Role="transaction_details" EntitySet="transaction_details" />
           </AssociationSet>
+          <AssociationSet Name="FK_wh_item_cost_history_ck_users_created" Association="Self.FK_wh_item_cost_history_ck_users_created">
+            <End Role="ck_users" EntitySet="ck_users" />
+            <End Role="wh_item_cost_history" EntitySet="wh_item_cost_history" />
+          </AssociationSet>
+          <AssociationSet Name="FK_wh_item_cost_history_ckwh_items" Association="Self.FK_wh_item_cost_history_ckwh_items">
+            <End Role="ckwh_items" EntitySet="ckwh_items" />
+            <End Role="wh_item_cost_history" EntitySet="wh_item_cost_history" />
+          </AssociationSet>
           <AssociationSet Name="FK_wh_item_unit_ck_units" Association="Self.FK_wh_item_unit_ck_units">
             <End Role="ck_units" EntitySet="ck_units" />
             <End Role="wh_item_unit" EntitySet="wh_item_unit" />
@@ -1075,9 +1175,6 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
           <EntitySet Name="ckwh_category" EntityType="dipckModel.ckwh_category" />
           <EntitySet Name="ckwh_item_unit" EntityType="dipckModel.ckwh_item_unit" />
           <EntitySet Name="ckwh_items" EntityType="dipckModel.ckwh_items" />
-          <EntitySet Name="order_details" EntityType="dipckModel.order_details" />
-          <EntitySet Name="receipt_details" EntityType="dipckModel.receipt_details" />
-          <EntitySet Name="receipts" EntityType="dipckModel.receipt" />
           <EntitySet Name="sites" EntityType="dipckModel.site" />
           <EntitySet Name="wh_item_unit" EntityType="dipckModel.wh_item_unit" />
           <AssociationSet Name="FK_ck_item_details_ck_users" Association="dipckModel.FK_ck_item_details_ck_users">
@@ -1148,30 +1245,6 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
             <End Role="ck_users" EntitySet="ck_users" />
             <End Role="ckwh_items" EntitySet="ckwh_items" />
           </AssociationSet>
-          <AssociationSet Name="FK_order_details_ck_users" Association="dipckModel.FK_order_details_ck_users">
-            <End Role="ck_users" EntitySet="ck_users" />
-            <End Role="order_details" EntitySet="order_details" />
-          </AssociationSet>
-          <AssociationSet Name="FK_order_details_ck_users1" Association="dipckModel.FK_order_details_ck_users1">
-            <End Role="ck_users" EntitySet="ck_users" />
-            <End Role="order_details" EntitySet="order_details" />
-          </AssociationSet>
-          <AssociationSet Name="FK_receipt_details_ck_users" Association="dipckModel.FK_receipt_details_ck_users">
-            <End Role="ck_users" EntitySet="ck_users" />
-            <End Role="receipt_details" EntitySet="receipt_details" />
-          </AssociationSet>
-          <AssociationSet Name="FK_receipt_details_ck_users1" Association="dipckModel.FK_receipt_details_ck_users1">
-            <End Role="ck_users" EntitySet="ck_users" />
-            <End Role="receipt_details" EntitySet="receipt_details" />
-          </AssociationSet>
-          <AssociationSet Name="FK_receipts_ck_users" Association="dipckModel.FK_receipts_ck_users">
-            <End Role="ck_users" EntitySet="ck_users" />
-            <End Role="receipt" EntitySet="receipts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_receipts_ck_users1" Association="dipckModel.FK_receipts_ck_users1">
-            <End Role="ck_users" EntitySet="ck_users" />
-            <End Role="receipt" EntitySet="receipts" />
-          </AssociationSet>
           <AssociationSet Name="FK_sites_ck_users" Association="dipckModel.FK_sites_ck_users">
             <End Role="ck_users" EntitySet="ck_users" />
             <End Role="site" EntitySet="sites" />
@@ -1200,6 +1273,55 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
             <End Role="site" EntitySet="sites" />
             <End Role="ckwh_items" EntitySet="ckwh_items" />
           </AssociationSet>
+          <AssociationSet Name="FK_wh_item_unit_wh_item_unit" Association="dipckModel.FK_wh_item_unit_wh_item_unit">
+            <End Role="wh_item_unit" EntitySet="wh_item_unit" />
+            <End Role="wh_item_unit1" EntitySet="wh_item_unit" />
+          </AssociationSet>
+          <EntitySet Name="order_details" EntityType="dipckModel.order_details" />
+          <EntitySet Name="orders" EntityType="dipckModel.order" />
+          <EntitySet Name="receipt_details" EntityType="dipckModel.receipt_details" />
+          <EntitySet Name="receipts" EntityType="dipckModel.receipt" />
+          <EntitySet Name="transaction_details" EntityType="dipckModel.transaction_details" />
+          <AssociationSet Name="FK_order_details_ck_users" Association="dipckModel.FK_order_details_ck_users">
+            <End Role="ck_users" EntitySet="ck_users" />
+            <End Role="order_details" EntitySet="order_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_order_details_ck_users1" Association="dipckModel.FK_order_details_ck_users1">
+            <End Role="ck_users" EntitySet="ck_users" />
+            <End Role="order_details" EntitySet="order_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_orders_ck_users" Association="dipckModel.FK_orders_ck_users">
+            <End Role="ck_users" EntitySet="ck_users" />
+            <End Role="order" EntitySet="orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_orders_ck_users1" Association="dipckModel.FK_orders_ck_users1">
+            <End Role="ck_users" EntitySet="ck_users" />
+            <End Role="order" EntitySet="orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_receipt_details_ck_users" Association="dipckModel.FK_receipt_details_ck_users">
+            <End Role="ck_users" EntitySet="ck_users" />
+            <End Role="receipt_details" EntitySet="receipt_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_receipt_details_ck_users1" Association="dipckModel.FK_receipt_details_ck_users1">
+            <End Role="ck_users" EntitySet="ck_users" />
+            <End Role="receipt_details" EntitySet="receipt_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_receipts_ck_users" Association="dipckModel.FK_receipts_ck_users">
+            <End Role="ck_users" EntitySet="ck_users" />
+            <End Role="receipt" EntitySet="receipts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_receipts_ck_users1" Association="dipckModel.FK_receipts_ck_users1">
+            <End Role="ck_users" EntitySet="ck_users" />
+            <End Role="receipt" EntitySet="receipts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_transaction_details_ck_users_created" Association="dipckModel.FK_transaction_details_ck_users_created">
+            <End Role="ck_users" EntitySet="ck_users" />
+            <End Role="transaction_details" EntitySet="transaction_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_transaction_details_ck_users_modified" Association="dipckModel.FK_transaction_details_ck_users_modified">
+            <End Role="ck_users" EntitySet="ck_users" />
+            <End Role="transaction_details" EntitySet="transaction_details" />
+          </AssociationSet>
           <AssociationSet Name="FK_order_details_ckwh_items" Association="dipckModel.FK_order_details_ckwh_items">
             <End Role="ckwh_items" EntitySet="ckwh_items" />
             <End Role="order_details" EntitySet="order_details" />
@@ -1208,9 +1330,29 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
             <End Role="ckwh_items" EntitySet="ckwh_items" />
             <End Role="receipt_details" EntitySet="receipt_details" />
           </AssociationSet>
+          <AssociationSet Name="FK_transaction_details_ckwh_items" Association="dipckModel.FK_transaction_details_ckwh_items">
+            <End Role="ckwh_items" EntitySet="ckwh_items" />
+            <End Role="transaction_details" EntitySet="transaction_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_order_details_orders" Association="dipckModel.FK_order_details_orders">
+            <End Role="order" EntitySet="orders" />
+            <End Role="order_details" EntitySet="order_details" />
+          </AssociationSet>
           <AssociationSet Name="FK_order_details_wh_item_unit" Association="dipckModel.FK_order_details_wh_item_unit">
             <End Role="wh_item_unit" EntitySet="wh_item_unit" />
             <End Role="order_details" EntitySet="order_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_orders_sites" Association="dipckModel.FK_orders_sites">
+            <End Role="site" EntitySet="sites" />
+            <End Role="order" EntitySet="orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_orders_sites1" Association="dipckModel.FK_orders_sites1">
+            <End Role="site" EntitySet="sites" />
+            <End Role="order" EntitySet="orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_receipts_orders" Association="dipckModel.FK_receipts_orders">
+            <End Role="order" EntitySet="orders" />
+            <End Role="receipt" EntitySet="receipts" />
           </AssociationSet>
           <AssociationSet Name="FK_receipt_details_receipts" Association="dipckModel.FK_receipt_details_receipts">
             <End Role="receipt" EntitySet="receipts" />
@@ -1228,48 +1370,6 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
             <End Role="site" EntitySet="sites" />
             <End Role="receipt" EntitySet="receipts" />
           </AssociationSet>
-          <AssociationSet Name="FK_wh_item_unit_wh_item_unit" Association="dipckModel.FK_wh_item_unit_wh_item_unit">
-            <End Role="wh_item_unit" EntitySet="wh_item_unit" />
-            <End Role="wh_item_unit1" EntitySet="wh_item_unit" />
-          </AssociationSet>
-          <EntitySet Name="orders" EntityType="dipckModel.order" />
-          <AssociationSet Name="FK_orders_ck_users" Association="dipckModel.FK_orders_ck_users">
-            <End Role="ck_users" EntitySet="ck_users" />
-            <End Role="order" EntitySet="orders" />
-          </AssociationSet>
-          <AssociationSet Name="FK_orders_ck_users1" Association="dipckModel.FK_orders_ck_users1">
-            <End Role="ck_users" EntitySet="ck_users" />
-            <End Role="order" EntitySet="orders" />
-          </AssociationSet>
-          <AssociationSet Name="FK_order_details_orders" Association="dipckModel.FK_order_details_orders">
-            <End Role="order" EntitySet="orders" />
-            <End Role="order_details" EntitySet="order_details" />
-          </AssociationSet>
-          <AssociationSet Name="FK_orders_sites" Association="dipckModel.FK_orders_sites">
-            <End Role="site" EntitySet="sites" />
-            <End Role="order" EntitySet="orders" />
-          </AssociationSet>
-          <AssociationSet Name="FK_orders_sites1" Association="dipckModel.FK_orders_sites1">
-            <End Role="site" EntitySet="sites" />
-            <End Role="order" EntitySet="orders" />
-          </AssociationSet>
-          <AssociationSet Name="FK_receipts_orders" Association="dipckModel.FK_receipts_orders">
-            <End Role="order" EntitySet="orders" />
-            <End Role="receipt" EntitySet="receipts" />
-          </AssociationSet>
-          <EntitySet Name="transaction_details" EntityType="dipckModel.transaction_details" />
-          <AssociationSet Name="FK_transaction_details_ck_users_created" Association="dipckModel.FK_transaction_details_ck_users_created">
-            <End Role="ck_users" EntitySet="ck_users" />
-            <End Role="transaction_details" EntitySet="transaction_details" />
-          </AssociationSet>
-          <AssociationSet Name="FK_transaction_details_ck_users_modified" Association="dipckModel.FK_transaction_details_ck_users_modified">
-            <End Role="ck_users" EntitySet="ck_users" />
-            <End Role="transaction_details" EntitySet="transaction_details" />
-          </AssociationSet>
-          <AssociationSet Name="FK_transaction_details_ckwh_items" Association="dipckModel.FK_transaction_details_ckwh_items">
-            <End Role="ckwh_items" EntitySet="ckwh_items" />
-            <End Role="transaction_details" EntitySet="transaction_details" />
-          </AssociationSet>
           <AssociationSet Name="FK_transaction_details_sites_from" Association="dipckModel.FK_transaction_details_sites_from">
             <End Role="site" EntitySet="sites" />
             <End Role="transaction_details" EntitySet="transaction_details" />
@@ -1281,6 +1381,24 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
           <AssociationSet Name="FK_transaction_details_wh_item_unit" Association="dipckModel.FK_transaction_details_wh_item_unit">
             <End Role="wh_item_unit" EntitySet="wh_item_unit" />
             <End Role="transaction_details" EntitySet="transaction_details" />
+          </AssociationSet>
+          <EntitySet Name="ck_item_cost_history" EntityType="dipckModel.ck_item_cost_history" />
+          <EntitySet Name="wh_item_cost_history" EntityType="dipckModel.wh_item_cost_history" />
+          <AssociationSet Name="FK_ck_item_cost_history_ck_items" Association="dipckModel.FK_ck_item_cost_history_ck_items">
+            <End Role="ck_items" EntitySet="ck_items" />
+            <End Role="ck_item_cost_history" EntitySet="ck_item_cost_history" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ck_item_cost_history_ck_users_created" Association="dipckModel.FK_ck_item_cost_history_ck_users_created">
+            <End Role="ck_users" EntitySet="ck_users" />
+            <End Role="ck_item_cost_history" EntitySet="ck_item_cost_history" />
+          </AssociationSet>
+          <AssociationSet Name="FK_wh_item_cost_history_ck_users_created" Association="dipckModel.FK_wh_item_cost_history_ck_users_created">
+            <End Role="ck_users" EntitySet="ck_users" />
+            <End Role="wh_item_cost_history" EntitySet="wh_item_cost_history" />
+          </AssociationSet>
+          <AssociationSet Name="FK_wh_item_cost_history_ckwh_items" Association="dipckModel.FK_wh_item_cost_history_ckwh_items">
+            <End Role="ckwh_items" EntitySet="ckwh_items" />
+            <End Role="wh_item_cost_history" EntitySet="wh_item_cost_history" />
           </AssociationSet>
           </EntityContainer>
         <ComplexType Name="ReadWarehouseItems_Result">
@@ -1339,6 +1457,7 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
           <NavigationProperty Name="ck_units" Relationship="dipckModel.FK_ck_items_ck_units" FromRole="ck_items" ToRole="ck_units" />
           <NavigationProperty Name="ck_users" Relationship="dipckModel.FK_ck_items_ck_users" FromRole="ck_items" ToRole="ck_users" />
           <NavigationProperty Name="ck_users1" Relationship="dipckModel.FK_ck_items_ck_users1" FromRole="ck_items" ToRole="ck_users" />
+          <NavigationProperty Name="ck_item_cost_history" Relationship="dipckModel.FK_ck_item_cost_history_ck_items" FromRole="ck_items" ToRole="ck_item_cost_history" />
         </EntityType>
         <EntityType Name="ck_units">
           <Key>
@@ -1379,21 +1498,23 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
           <NavigationProperty Name="ckwh_item_unit1" Relationship="dipckModel.FK_ckwh_item_unit_ck_users1" FromRole="ck_users" ToRole="ckwh_item_unit" />
           <NavigationProperty Name="ckwh_items" Relationship="dipckModel.FK_ckwh_items_ck_users" FromRole="ck_users" ToRole="ckwh_items" />
           <NavigationProperty Name="ckwh_items1" Relationship="dipckModel.FK_ckwh_items_ck_users1" FromRole="ck_users" ToRole="ckwh_items" />
-          <NavigationProperty Name="order_details" Relationship="dipckModel.FK_order_details_ck_users" FromRole="ck_users" ToRole="order_details" />
-          <NavigationProperty Name="order_details1" Relationship="dipckModel.FK_order_details_ck_users1" FromRole="ck_users" ToRole="order_details" />
-          <NavigationProperty Name="receipt_details" Relationship="dipckModel.FK_receipt_details_ck_users" FromRole="ck_users" ToRole="receipt_details" />
-          <NavigationProperty Name="receipt_details1" Relationship="dipckModel.FK_receipt_details_ck_users1" FromRole="ck_users" ToRole="receipt_details" />
-          <NavigationProperty Name="receipts" Relationship="dipckModel.FK_receipts_ck_users" FromRole="ck_users" ToRole="receipt" />
-          <NavigationProperty Name="receipts1" Relationship="dipckModel.FK_receipts_ck_users1" FromRole="ck_users" ToRole="receipt" />
           <NavigationProperty Name="sites" Relationship="dipckModel.FK_sites_ck_users" FromRole="ck_users" ToRole="site" />
           <NavigationProperty Name="sites1" Relationship="dipckModel.FK_sites_ck_users1" FromRole="ck_users" ToRole="site" />
           <NavigationProperty Name="wh_item_unit" Relationship="dipckModel.FK_wh_item_unit_ck_users" FromRole="ck_users" ToRole="wh_item_unit" />
           <NavigationProperty Name="wh_item_unit1" Relationship="dipckModel.FK_wh_item_unit_ck_users1" FromRole="ck_users" ToRole="wh_item_unit" />
+          <NavigationProperty Name="order_details" Relationship="dipckModel.FK_order_details_ck_users" FromRole="ck_users" ToRole="order_details" />
+          <NavigationProperty Name="order_details1" Relationship="dipckModel.FK_order_details_ck_users1" FromRole="ck_users" ToRole="order_details" />
           <NavigationProperty Name="orders" Relationship="dipckModel.FK_orders_ck_users" FromRole="ck_users" ToRole="order" />
           <NavigationProperty Name="orders1" Relationship="dipckModel.FK_orders_ck_users1" FromRole="ck_users" ToRole="order" />
+          <NavigationProperty Name="receipt_details" Relationship="dipckModel.FK_receipt_details_ck_users" FromRole="ck_users" ToRole="receipt_details" />
+          <NavigationProperty Name="receipt_details1" Relationship="dipckModel.FK_receipt_details_ck_users1" FromRole="ck_users" ToRole="receipt_details" />
+          <NavigationProperty Name="receipts" Relationship="dipckModel.FK_receipts_ck_users" FromRole="ck_users" ToRole="receipt" />
+          <NavigationProperty Name="receipts1" Relationship="dipckModel.FK_receipts_ck_users1" FromRole="ck_users" ToRole="receipt" />
           <NavigationProperty Name="transaction_details" Relationship="dipckModel.FK_transaction_details_ck_users_created" FromRole="ck_users" ToRole="transaction_details" />
           <NavigationProperty Name="transaction_details1" Relationship="dipckModel.FK_transaction_details_ck_users_modified" FromRole="ck_users" ToRole="transaction_details" />
-        </EntityType>
+          <NavigationProperty Name="ck_item_cost_history" Relationship="dipckModel.FK_ck_item_cost_history_ck_users_created" FromRole="ck_users" ToRole="ck_item_cost_history" />
+          <NavigationProperty Name="wh_item_cost_history" Relationship="dipckModel.FK_wh_item_cost_history_ck_users_created" FromRole="ck_users" ToRole="wh_item_cost_history" />
+          </EntityType>
         <EntityType Name="ckwh_category">
           <Key>
             <PropertyRef Name="Id" />
@@ -1452,81 +1573,12 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
           <NavigationProperty Name="ckwh_category" Relationship="dipckModel.FK_ckwh_items_ckwh_category" FromRole="ckwh_items" ToRole="ckwh_category" />
           <NavigationProperty Name="ckwh_item_unit" Relationship="dipckModel.FK_ckwh_item_unit_ckwh_items" FromRole="ckwh_items" ToRole="ckwh_item_unit" />
           <NavigationProperty Name="site" Relationship="dipckModel.FK_ckwh_items_sites" FromRole="ckwh_items" ToRole="site" />
+          <Property Name="ck_qty" Type="Decimal" Precision="18" Scale="3" />
           <NavigationProperty Name="order_details" Relationship="dipckModel.FK_order_details_ckwh_items" FromRole="ckwh_items" ToRole="order_details" />
           <NavigationProperty Name="receipt_details" Relationship="dipckModel.FK_receipt_details_ckwh_items" FromRole="ckwh_items" ToRole="receipt_details" />
           <NavigationProperty Name="transaction_details" Relationship="dipckModel.FK_transaction_details_ckwh_items" FromRole="ckwh_items" ToRole="transaction_details" />
-          <Property Name="ck_qty" Type="Decimal" Precision="18" Scale="3" />
-        </EntityType>
-        <EntityType Name="order_details">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="order_id" Type="Int32" />
-          <Property Name="ckwh_item_id" Type="Int32" />
-          <Property Name="wh_item_unit_id" Type="Int32" />
-          <Property Name="qty" Type="Decimal" Precision="18" Scale="3" />
-          <Property Name="created_by" Type="Int32" />
-          <Property Name="created_date" Type="DateTime" Precision="3" />
-          <Property Name="modified_by" Type="Int32" />
-          <Property Name="modified_date" Type="DateTime" Precision="3" />
-          <Property Name="active" Type="Boolean" />
-          <NavigationProperty Name="ck_users" Relationship="dipckModel.FK_order_details_ck_users" FromRole="order_details" ToRole="ck_users" />
-          <NavigationProperty Name="ck_users1" Relationship="dipckModel.FK_order_details_ck_users1" FromRole="order_details" ToRole="ck_users" />
-          <NavigationProperty Name="ckwh_items" Relationship="dipckModel.FK_order_details_ckwh_items" FromRole="order_details" ToRole="ckwh_items" />
-          <NavigationProperty Name="wh_item_unit" Relationship="dipckModel.FK_order_details_wh_item_unit" FromRole="order_details" ToRole="wh_item_unit" />
-          <Property Name="order_no" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="order" Relationship="dipckModel.FK_order_details_orders" FromRole="order_details" ToRole="order" />
-          <Property Name="qty_issued" Type="Decimal" Precision="18" Scale="3" />
-          <Property Name="qty_received" Type="Decimal" Precision="18" Scale="3" />
-        </EntityType>
-        <EntityType Name="receipt_details">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="receipt_id" Type="Int32" />
-          <Property Name="wh_item_id" Type="Int32" />
-          <Property Name="wh_item_unit_id" Type="Int32" />
-          <Property Name="qty_ordered" Type="Decimal" />
-          <Property Name="qty_received" Type="Decimal" />
-          <Property Name="qyt_returned" Type="Decimal" />
-          <Property Name="wh_item_unit_cost" Type="Decimal" Precision="18" Scale="3" />
-          <Property Name="wh_item_ext_cost" Type="Decimal" Precision="18" Scale="3" />
-          <Property Name="remarks" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="created_by" Type="Int32" />
-          <Property Name="created_date" Type="DateTime" Precision="3" />
-          <Property Name="modified_by" Type="Int32" />
-          <Property Name="modified_date" Type="DateTime" Precision="3" />
-          <Property Name="active" Type="Boolean" />
-          <NavigationProperty Name="ck_users" Relationship="dipckModel.FK_receipt_details_ck_users" FromRole="receipt_details" ToRole="ck_users" />
-          <NavigationProperty Name="ck_users1" Relationship="dipckModel.FK_receipt_details_ck_users1" FromRole="receipt_details" ToRole="ck_users" />
-          <NavigationProperty Name="ckwh_items" Relationship="dipckModel.FK_receipt_details_ckwh_items" FromRole="receipt_details" ToRole="ckwh_items" />
-          <NavigationProperty Name="receipt" Relationship="dipckModel.FK_receipt_details_receipts" FromRole="receipt_details" ToRole="receipt" />
-          <NavigationProperty Name="wh_item_unit" Relationship="dipckModel.FK_receipt_details_wh_item_unit" FromRole="receipt_details" ToRole="wh_item_unit" />
-          <Property Name="receipt_no" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="receipt">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="receipt_date" Type="DateTime" Precision="3" />
-          <Property Name="order_id" Type="Int32" />
-          <Property Name="issued_site" Type="Int32" />
-          <Property Name="received_site" Type="Int32" />
-          <Property Name="created_by" Type="Int32" />
-          <Property Name="created_date" Type="DateTime" Precision="3" />
-          <Property Name="modified_by" Type="Int32" />
-          <Property Name="modified_date" Type="DateTime" Precision="3" />
-          <Property Name="active" Type="Boolean" />
-          <NavigationProperty Name="ck_users" Relationship="dipckModel.FK_receipts_ck_users" FromRole="receipt" ToRole="ck_users" />
-          <NavigationProperty Name="ck_users1" Relationship="dipckModel.FK_receipts_ck_users1" FromRole="receipt" ToRole="ck_users" />
-          <NavigationProperty Name="receipt_details" Relationship="dipckModel.FK_receipt_details_receipts" FromRole="receipt" ToRole="receipt_details" />
-          <NavigationProperty Name="site" Relationship="dipckModel.FK_receipts_sites" FromRole="receipt" ToRole="site" />
-          <NavigationProperty Name="site1" Relationship="dipckModel.FK_receipts_sites1" FromRole="receipt" ToRole="site" />
-          <NavigationProperty Name="order" Relationship="dipckModel.FK_receipts_orders" FromRole="receipt" ToRole="order" />
-          <Property Name="receipt_no" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ck_avg_unit_cost" Type="Decimal" Precision="18" Scale="3" />
+          <NavigationProperty Name="wh_item_cost_history" Relationship="dipckModel.FK_wh_item_cost_history_ckwh_items" FromRole="ckwh_items" ToRole="wh_item_cost_history" />
         </EntityType>
         <EntityType Name="site">
           <Key>
@@ -1543,13 +1595,13 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
           <NavigationProperty Name="ck_users" Relationship="dipckModel.FK_sites_ck_users" FromRole="site" ToRole="ck_users" />
           <NavigationProperty Name="ck_users1" Relationship="dipckModel.FK_sites_ck_users1" FromRole="site" ToRole="ck_users" />
           <NavigationProperty Name="ckwh_items" Relationship="dipckModel.FK_ckwh_items_sites" FromRole="site" ToRole="ckwh_items" />
-          <NavigationProperty Name="receipts" Relationship="dipckModel.FK_receipts_sites" FromRole="site" ToRole="receipt" />
-          <NavigationProperty Name="receipts1" Relationship="dipckModel.FK_receipts_sites1" FromRole="site" ToRole="receipt" />
           <NavigationProperty Name="orders" Relationship="dipckModel.FK_orders_sites" FromRole="site" ToRole="order" />
           <NavigationProperty Name="orders1" Relationship="dipckModel.FK_orders_sites1" FromRole="site" ToRole="order" />
+          <NavigationProperty Name="receipts" Relationship="dipckModel.FK_receipts_sites" FromRole="site" ToRole="receipt" />
+          <NavigationProperty Name="receipts1" Relationship="dipckModel.FK_receipts_sites1" FromRole="site" ToRole="receipt" />
           <NavigationProperty Name="transaction_details" Relationship="dipckModel.FK_transaction_details_sites_from" FromRole="site" ToRole="transaction_details" />
           <NavigationProperty Name="transaction_details1" Relationship="dipckModel.FK_transaction_details_sites_to" FromRole="site" ToRole="transaction_details" />
-        </EntityType>
+          </EntityType>
         <EntityType Name="wh_item_unit">
           <Key>
             <PropertyRef Name="Id" />
@@ -1567,10 +1619,10 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
           <NavigationProperty Name="ck_units" Relationship="dipckModel.FK_wh_item_unit_ck_units" FromRole="wh_item_unit" ToRole="ck_units" />
           <NavigationProperty Name="ck_users" Relationship="dipckModel.FK_wh_item_unit_ck_users" FromRole="wh_item_unit" ToRole="ck_users" />
           <NavigationProperty Name="ck_users1" Relationship="dipckModel.FK_wh_item_unit_ck_users1" FromRole="wh_item_unit" ToRole="ck_users" />
-          <NavigationProperty Name="order_details" Relationship="dipckModel.FK_order_details_wh_item_unit" FromRole="wh_item_unit" ToRole="order_details" />
-          <NavigationProperty Name="receipt_details" Relationship="dipckModel.FK_receipt_details_wh_item_unit" FromRole="wh_item_unit" ToRole="receipt_details" />
           <NavigationProperty Name="wh_item_unit1" Relationship="dipckModel.FK_wh_item_unit_wh_item_unit" FromRole="wh_item_unit" ToRole="wh_item_unit1" />
           <NavigationProperty Name="wh_item_unit2" Relationship="dipckModel.FK_wh_item_unit_wh_item_unit" FromRole="wh_item_unit1" ToRole="wh_item_unit" />
+          <NavigationProperty Name="order_details" Relationship="dipckModel.FK_order_details_wh_item_unit" FromRole="wh_item_unit" ToRole="order_details" />
+          <NavigationProperty Name="receipt_details" Relationship="dipckModel.FK_receipt_details_wh_item_unit" FromRole="wh_item_unit" ToRole="receipt_details" />
           <NavigationProperty Name="transaction_details" Relationship="dipckModel.FK_transaction_details_wh_item_unit" FromRole="wh_item_unit" ToRole="transaction_details" />
         </EntityType>
         <Association Name="FK_ck_item_details_ck_users">
@@ -1777,78 +1829,6 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_order_details_ck_users">
-          <End Type="dipckModel.ck_users" Role="ck_users" Multiplicity="0..1" />
-          <End Type="dipckModel.order_details" Role="order_details" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ck_users">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="order_details">
-              <PropertyRef Name="created_by" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_order_details_ck_users1">
-          <End Type="dipckModel.ck_users" Role="ck_users" Multiplicity="0..1" />
-          <End Type="dipckModel.order_details" Role="order_details" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ck_users">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="order_details">
-              <PropertyRef Name="modified_by" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_receipt_details_ck_users">
-          <End Type="dipckModel.ck_users" Role="ck_users" Multiplicity="0..1" />
-          <End Type="dipckModel.receipt_details" Role="receipt_details" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ck_users">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="receipt_details">
-              <PropertyRef Name="created_by" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_receipt_details_ck_users1">
-          <End Type="dipckModel.ck_users" Role="ck_users" Multiplicity="0..1" />
-          <End Type="dipckModel.receipt_details" Role="receipt_details" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ck_users">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="receipt_details">
-              <PropertyRef Name="modified_by" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_receipts_ck_users">
-          <End Type="dipckModel.ck_users" Role="ck_users" Multiplicity="0..1" />
-          <End Type="dipckModel.receipt" Role="receipt" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ck_users">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="receipt">
-              <PropertyRef Name="created_by" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_receipts_ck_users1">
-          <End Type="dipckModel.ck_users" Role="ck_users" Multiplicity="0..1" />
-          <End Type="dipckModel.receipt" Role="receipt" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ck_users">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="receipt">
-              <PropertyRef Name="modified_by" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_sites_ck_users">
           <End Type="dipckModel.ck_users" Role="ck_users" Multiplicity="0..1" />
           <End Type="dipckModel.site" Role="site" Multiplicity="*" />
@@ -1933,6 +1913,267 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_wh_item_unit_wh_item_unit">
+          <End Type="dipckModel.wh_item_unit" Role="wh_item_unit" Multiplicity="1" />
+          <End Type="dipckModel.wh_item_unit" Role="wh_item_unit1" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="wh_item_unit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="wh_item_unit1">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="order_details">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="order_id" Type="Int64" />
+          <Property Name="order_no" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ckwh_item_id" Type="Int32" />
+          <Property Name="wh_item_unit_id" Type="Int32" />
+          <Property Name="qty" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="qty_issued" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="qty_received" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="created_by" Type="Int32" />
+          <Property Name="created_date" Type="DateTime" Precision="3" />
+          <Property Name="modified_by" Type="Int32" />
+          <Property Name="modified_date" Type="DateTime" Precision="3" />
+          <Property Name="active" Type="Boolean" />
+          <NavigationProperty Name="ck_users" Relationship="dipckModel.FK_order_details_ck_users" FromRole="order_details" ToRole="ck_users" />
+          <NavigationProperty Name="ck_users1" Relationship="dipckModel.FK_order_details_ck_users1" FromRole="order_details" ToRole="ck_users" />
+          <NavigationProperty Name="ckwh_items" Relationship="dipckModel.FK_order_details_ckwh_items" FromRole="order_details" ToRole="ckwh_items" />
+          <NavigationProperty Name="order" Relationship="dipckModel.FK_order_details_orders" FromRole="order_details" ToRole="order" />
+          <NavigationProperty Name="wh_item_unit" Relationship="dipckModel.FK_order_details_wh_item_unit" FromRole="order_details" ToRole="wh_item_unit" />
+        </EntityType>
+        <EntityType Name="order">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="order_no" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="order_date" Type="DateTime" Precision="3" />
+          <Property Name="order_from_site_id" Type="Int32" />
+          <Property Name="order_to_site_id" Type="Int32" />
+          <Property Name="order_status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="issue_date" Type="DateTime" Precision="3" />
+          <Property Name="receipt_date" Type="DateTime" Precision="3" />
+          <Property Name="created_by" Type="Int32" />
+          <Property Name="created_date" Type="DateTime" Precision="3" />
+          <Property Name="modified_by" Type="Int32" />
+          <Property Name="modified_date" Type="DateTime" Precision="3" />
+          <Property Name="active" Type="Boolean" />
+          <NavigationProperty Name="ck_users" Relationship="dipckModel.FK_orders_ck_users" FromRole="order" ToRole="ck_users" />
+          <NavigationProperty Name="ck_users1" Relationship="dipckModel.FK_orders_ck_users1" FromRole="order" ToRole="ck_users" />
+          <NavigationProperty Name="order_details" Relationship="dipckModel.FK_order_details_orders" FromRole="order" ToRole="order_details" />
+          <NavigationProperty Name="site" Relationship="dipckModel.FK_orders_sites" FromRole="order" ToRole="site" />
+          <NavigationProperty Name="site1" Relationship="dipckModel.FK_orders_sites1" FromRole="order" ToRole="site" />
+          <NavigationProperty Name="receipts" Relationship="dipckModel.FK_receipts_orders" FromRole="order" ToRole="receipt" />
+        </EntityType>
+        <EntityType Name="receipt_details">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="receipt_id" Type="Int32" />
+          <Property Name="receipt_no" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="wh_item_id" Type="Int32" />
+          <Property Name="wh_item_unit_id" Type="Int32" />
+          <Property Name="qty_ordered" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="qty_received" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="qyt_returned" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="wh_item_unit_cost" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="wh_item_ext_cost" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="remarks" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="created_by" Type="Int32" />
+          <Property Name="created_date" Type="DateTime" Precision="3" />
+          <Property Name="modified_by" Type="Int32" />
+          <Property Name="modified_date" Type="DateTime" Precision="3" />
+          <Property Name="active" Type="Boolean" />
+          <NavigationProperty Name="ck_users" Relationship="dipckModel.FK_receipt_details_ck_users" FromRole="receipt_details" ToRole="ck_users" />
+          <NavigationProperty Name="ck_users1" Relationship="dipckModel.FK_receipt_details_ck_users1" FromRole="receipt_details" ToRole="ck_users" />
+          <NavigationProperty Name="ckwh_items" Relationship="dipckModel.FK_receipt_details_ckwh_items" FromRole="receipt_details" ToRole="ckwh_items" />
+          <NavigationProperty Name="receipt" Relationship="dipckModel.FK_receipt_details_receipts" FromRole="receipt_details" ToRole="receipt" />
+          <NavigationProperty Name="wh_item_unit" Relationship="dipckModel.FK_receipt_details_wh_item_unit" FromRole="receipt_details" ToRole="wh_item_unit" />
+          <Property Name="wh_item_code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="wh_item_description" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="ck_unit_description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="receipt">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="receipt_no" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="receipt_date" Type="DateTime" Precision="3" />
+          <Property Name="order_id" Type="Int64" />
+          <Property Name="order_no" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="issued_site" Type="Int32" />
+          <Property Name="received_site" Type="Int32" />
+          <Property Name="created_by" Type="Int32" />
+          <Property Name="created_date" Type="DateTime" Precision="3" />
+          <Property Name="modified_by" Type="Int32" />
+          <Property Name="modified_date" Type="DateTime" Precision="3" />
+          <Property Name="active" Type="Boolean" />
+          <NavigationProperty Name="ck_users" Relationship="dipckModel.FK_receipts_ck_users" FromRole="receipt" ToRole="ck_users" />
+          <NavigationProperty Name="ck_users1" Relationship="dipckModel.FK_receipts_ck_users1" FromRole="receipt" ToRole="ck_users" />
+          <NavigationProperty Name="order" Relationship="dipckModel.FK_receipts_orders" FromRole="receipt" ToRole="order" />
+          <NavigationProperty Name="receipt_details" Relationship="dipckModel.FK_receipt_details_receipts" FromRole="receipt" ToRole="receipt_details" />
+          <NavigationProperty Name="site" Relationship="dipckModel.FK_receipts_sites" FromRole="receipt" ToRole="site" />
+          <NavigationProperty Name="site1" Relationship="dipckModel.FK_receipts_sites1" FromRole="receipt" ToRole="site" />
+        </EntityType>
+        <EntityType Name="transaction_details">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="wh_item_id" Type="Int32" />
+          <Property Name="wh_item_code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="wh_item_description" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="trans_date" Type="DateTime" Precision="3" />
+          <Property Name="wh_item_unit_id" Type="Int32" />
+          <Property Name="ck_unit_description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="qty" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="unit_cost" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="total_cost" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="order_from_site_id" Type="Int32" />
+          <Property Name="order_to_site_id" Type="Int32" />
+          <Property Name="trans_type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="active" Type="Boolean" />
+          <Property Name="created_by" Type="Int32" />
+          <Property Name="created_date" Type="DateTime" Precision="3" />
+          <Property Name="modified_by" Type="Int32" />
+          <Property Name="modified_date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ck_users" Relationship="dipckModel.FK_transaction_details_ck_users_created" FromRole="transaction_details" ToRole="ck_users" />
+          <NavigationProperty Name="ck_users1" Relationship="dipckModel.FK_transaction_details_ck_users_modified" FromRole="transaction_details" ToRole="ck_users" />
+          <NavigationProperty Name="ckwh_items" Relationship="dipckModel.FK_transaction_details_ckwh_items" FromRole="transaction_details" ToRole="ckwh_items" />
+          <NavigationProperty Name="site" Relationship="dipckModel.FK_transaction_details_sites_from" FromRole="transaction_details" ToRole="site" />
+          <NavigationProperty Name="site1" Relationship="dipckModel.FK_transaction_details_sites_to" FromRole="transaction_details" ToRole="site" />
+          <NavigationProperty Name="wh_item_unit" Relationship="dipckModel.FK_transaction_details_wh_item_unit" FromRole="transaction_details" ToRole="wh_item_unit" />
+          <Property Name="trans_ref_no" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_order_details_ck_users">
+          <End Type="dipckModel.ck_users" Role="ck_users" Multiplicity="0..1" />
+          <End Type="dipckModel.order_details" Role="order_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ck_users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="order_details">
+              <PropertyRef Name="created_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_order_details_ck_users1">
+          <End Type="dipckModel.ck_users" Role="ck_users" Multiplicity="0..1" />
+          <End Type="dipckModel.order_details" Role="order_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ck_users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="order_details">
+              <PropertyRef Name="modified_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_orders_ck_users">
+          <End Type="dipckModel.ck_users" Role="ck_users" Multiplicity="0..1" />
+          <End Type="dipckModel.order" Role="order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ck_users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="order">
+              <PropertyRef Name="created_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_orders_ck_users1">
+          <End Type="dipckModel.ck_users" Role="ck_users" Multiplicity="0..1" />
+          <End Type="dipckModel.order" Role="order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ck_users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="order">
+              <PropertyRef Name="modified_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_receipt_details_ck_users">
+          <End Type="dipckModel.ck_users" Role="ck_users" Multiplicity="0..1" />
+          <End Type="dipckModel.receipt_details" Role="receipt_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ck_users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="receipt_details">
+              <PropertyRef Name="created_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_receipt_details_ck_users1">
+          <End Type="dipckModel.ck_users" Role="ck_users" Multiplicity="0..1" />
+          <End Type="dipckModel.receipt_details" Role="receipt_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ck_users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="receipt_details">
+              <PropertyRef Name="modified_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_receipts_ck_users">
+          <End Type="dipckModel.ck_users" Role="ck_users" Multiplicity="0..1" />
+          <End Type="dipckModel.receipt" Role="receipt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ck_users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="receipt">
+              <PropertyRef Name="created_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_receipts_ck_users1">
+          <End Type="dipckModel.ck_users" Role="ck_users" Multiplicity="0..1" />
+          <End Type="dipckModel.receipt" Role="receipt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ck_users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="receipt">
+              <PropertyRef Name="modified_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_transaction_details_ck_users_created">
+          <End Type="dipckModel.ck_users" Role="ck_users" Multiplicity="0..1" />
+          <End Type="dipckModel.transaction_details" Role="transaction_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ck_users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="transaction_details">
+              <PropertyRef Name="created_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_transaction_details_ck_users_modified">
+          <End Type="dipckModel.ck_users" Role="ck_users" Multiplicity="0..1" />
+          <End Type="dipckModel.transaction_details" Role="transaction_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ck_users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="transaction_details">
+              <PropertyRef Name="modified_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_order_details_ckwh_items">
           <End Type="dipckModel.ckwh_items" Role="ckwh_items" Multiplicity="0..1" />
           <End Type="dipckModel.order_details" Role="order_details" Multiplicity="*" />
@@ -1957,6 +2198,30 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_transaction_details_ckwh_items">
+          <End Type="dipckModel.ckwh_items" Role="ckwh_items" Multiplicity="0..1" />
+          <End Type="dipckModel.transaction_details" Role="transaction_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ckwh_items">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="transaction_details">
+              <PropertyRef Name="wh_item_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_order_details_orders">
+          <End Type="dipckModel.order" Role="order" Multiplicity="0..1" />
+          <End Type="dipckModel.order_details" Role="order_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="order">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="order_details">
+              <PropertyRef Name="order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_order_details_wh_item_unit">
           <End Type="dipckModel.wh_item_unit" Role="wh_item_unit" Multiplicity="0..1" />
           <End Type="dipckModel.order_details" Role="order_details" Multiplicity="*" />
@@ -1966,6 +2231,42 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
             </Principal>
             <Dependent Role="order_details">
               <PropertyRef Name="wh_item_unit_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_orders_sites">
+          <End Type="dipckModel.site" Role="site" Multiplicity="0..1" />
+          <End Type="dipckModel.order" Role="order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="site">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="order">
+              <PropertyRef Name="order_from_site_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_orders_sites1">
+          <End Type="dipckModel.site" Role="site" Multiplicity="0..1" />
+          <End Type="dipckModel.order" Role="order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="site">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="order">
+              <PropertyRef Name="order_to_site_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_receipts_orders">
+          <End Type="dipckModel.order" Role="order" Multiplicity="0..1" />
+          <End Type="dipckModel.receipt" Role="receipt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="order">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="receipt">
+              <PropertyRef Name="order_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2017,179 +2318,6 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_wh_item_unit_wh_item_unit">
-          <End Type="dipckModel.wh_item_unit" Role="wh_item_unit" Multiplicity="1" />
-          <End Type="dipckModel.wh_item_unit" Role="wh_item_unit1" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="wh_item_unit">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="wh_item_unit1">
-              <PropertyRef Name="Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="order">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="order_no" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="order_date" Type="DateTime" Precision="3" />
-          <Property Name="order_from_site_id" Type="Int32" />
-          <Property Name="order_to_site_id" Type="Int32" />
-          <Property Name="order_status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="created_by" Type="Int32" />
-          <Property Name="created_date" Type="DateTime" Precision="3" />
-          <Property Name="modified_by" Type="Int32" />
-          <Property Name="modified_date" Type="DateTime" Precision="3" />
-          <Property Name="active" Type="Boolean" />
-          <NavigationProperty Name="ck_users" Relationship="dipckModel.FK_orders_ck_users" FromRole="order" ToRole="ck_users" />
-          <NavigationProperty Name="ck_users1" Relationship="dipckModel.FK_orders_ck_users1" FromRole="order" ToRole="ck_users" />
-          <NavigationProperty Name="order_details" Relationship="dipckModel.FK_order_details_orders" FromRole="order" ToRole="order_details" />
-          <NavigationProperty Name="site" Relationship="dipckModel.FK_orders_sites" FromRole="order" ToRole="site" />
-          <NavigationProperty Name="site1" Relationship="dipckModel.FK_orders_sites1" FromRole="order" ToRole="site" />
-          <NavigationProperty Name="receipts" Relationship="dipckModel.FK_receipts_orders" FromRole="order" ToRole="receipt" />
-          <Property Name="issue_date" Type="DateTime" Precision="3" />
-          <Property Name="receipt_date" Type="DateTime" Precision="3" />
-        </EntityType>
-        <Association Name="FK_orders_ck_users">
-          <End Type="dipckModel.ck_users" Role="ck_users" Multiplicity="0..1" />
-          <End Type="dipckModel.order" Role="order" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ck_users">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="order">
-              <PropertyRef Name="created_by" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_orders_ck_users1">
-          <End Type="dipckModel.ck_users" Role="ck_users" Multiplicity="0..1" />
-          <End Type="dipckModel.order" Role="order" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ck_users">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="order">
-              <PropertyRef Name="modified_by" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_order_details_orders">
-          <End Type="dipckModel.order" Role="order" Multiplicity="0..1" />
-          <End Type="dipckModel.order_details" Role="order_details" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="order">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="order_details">
-              <PropertyRef Name="order_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_orders_sites">
-          <End Type="dipckModel.site" Role="site" Multiplicity="0..1" />
-          <End Type="dipckModel.order" Role="order" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="site">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="order">
-              <PropertyRef Name="order_from_site_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_orders_sites1">
-          <End Type="dipckModel.site" Role="site" Multiplicity="0..1" />
-          <End Type="dipckModel.order" Role="order" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="site">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="order">
-              <PropertyRef Name="order_to_site_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_receipts_orders">
-          <End Type="dipckModel.order" Role="order" Multiplicity="0..1" />
-          <End Type="dipckModel.receipt" Role="receipt" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="order">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="receipt">
-              <PropertyRef Name="order_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="transaction_details">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="wh_item_id" Type="Int32" />
-          <Property Name="wh_item_code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="wh_item_description" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="trans_date" Type="DateTime" Precision="3" />
-          <Property Name="wh_item_unit_id" Type="Int32" />
-          <Property Name="ck_unit_description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="qty" Type="Decimal" Precision="18" Scale="3" />
-          <Property Name="order_from_site_id" Type="Int32" />
-          <Property Name="order_to_site_id" Type="Int32" />
-          <Property Name="trans_type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="active" Type="Boolean" />
-          <Property Name="created_by" Type="Int32" />
-          <Property Name="created_date" Type="DateTime" Precision="3" />
-          <Property Name="modified_by" Type="Int32" />
-          <Property Name="modified_date" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="ck_users" Relationship="dipckModel.FK_transaction_details_ck_users_created" FromRole="transaction_details" ToRole="ck_users" />
-          <NavigationProperty Name="ck_users1" Relationship="dipckModel.FK_transaction_details_ck_users_modified" FromRole="transaction_details" ToRole="ck_users" />
-          <NavigationProperty Name="ckwh_items" Relationship="dipckModel.FK_transaction_details_ckwh_items" FromRole="transaction_details" ToRole="ckwh_items" />
-          <NavigationProperty Name="site" Relationship="dipckModel.FK_transaction_details_sites_from" FromRole="transaction_details" ToRole="site" />
-          <NavigationProperty Name="site1" Relationship="dipckModel.FK_transaction_details_sites_to" FromRole="transaction_details" ToRole="site" />
-          <NavigationProperty Name="wh_item_unit" Relationship="dipckModel.FK_transaction_details_wh_item_unit" FromRole="transaction_details" ToRole="wh_item_unit" />
-          <Property Name="unit_cost" Type="Decimal" Precision="18" Scale="3" />
-          <Property Name="total_cost" Type="Decimal" Precision="18" Scale="3" />
-        </EntityType>
-        <Association Name="FK_transaction_details_ck_users_created">
-          <End Type="dipckModel.ck_users" Role="ck_users" Multiplicity="0..1" />
-          <End Type="dipckModel.transaction_details" Role="transaction_details" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ck_users">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="transaction_details">
-              <PropertyRef Name="created_by" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_transaction_details_ck_users_modified">
-          <End Type="dipckModel.ck_users" Role="ck_users" Multiplicity="0..1" />
-          <End Type="dipckModel.transaction_details" Role="transaction_details" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ck_users">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="transaction_details">
-              <PropertyRef Name="modified_by" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_transaction_details_ckwh_items">
-          <End Type="dipckModel.ckwh_items" Role="ckwh_items" Multiplicity="0..1" />
-          <End Type="dipckModel.transaction_details" Role="transaction_details" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ckwh_items">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="transaction_details">
-              <PropertyRef Name="wh_item_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_transaction_details_sites_from">
           <End Type="dipckModel.site" Role="site" Multiplicity="0..1" />
           <End Type="dipckModel.transaction_details" Role="transaction_details" Multiplicity="*" />
@@ -2223,6 +2351,86 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
             </Principal>
             <Dependent Role="transaction_details">
               <PropertyRef Name="wh_item_unit_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ck_item_cost_history">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ck_item_id" Type="Int32" />
+          <Property Name="ck_item_code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ck_item_description" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="ord" Type="Int32" />
+          <Property Name="prev_cost" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="curr_cost" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="created_by" Type="Int32" />
+          <Property Name="created_date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ck_items" Relationship="dipckModel.FK_ck_item_cost_history_ck_items" FromRole="ck_item_cost_history" ToRole="ck_items" />
+          <NavigationProperty Name="ck_users" Relationship="dipckModel.FK_ck_item_cost_history_ck_users_created" FromRole="ck_item_cost_history" ToRole="ck_users" />
+        </EntityType>
+        <EntityType Name="wh_item_cost_history">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="wh_item_id" Type="Int32" />
+          <Property Name="wh_item_code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="wh_item_description" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="ord" Type="Int32" />
+          <Property Name="prev_cost" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="curr_cost" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="created_by" Type="Int32" />
+          <Property Name="created_date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ck_users" Relationship="dipckModel.FK_wh_item_cost_history_ck_users_created" FromRole="wh_item_cost_history" ToRole="ck_users" />
+          <NavigationProperty Name="ckwh_items" Relationship="dipckModel.FK_wh_item_cost_history_ckwh_items" FromRole="wh_item_cost_history" ToRole="ckwh_items" />
+        </EntityType>
+        <Association Name="FK_ck_item_cost_history_ck_items">
+          <End Type="dipckModel.ck_items" Role="ck_items" Multiplicity="0..1" />
+          <End Type="dipckModel.ck_item_cost_history" Role="ck_item_cost_history" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ck_items">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ck_item_cost_history">
+              <PropertyRef Name="ck_item_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ck_item_cost_history_ck_users_created">
+          <End Type="dipckModel.ck_users" Role="ck_users" Multiplicity="0..1" />
+          <End Type="dipckModel.ck_item_cost_history" Role="ck_item_cost_history" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ck_users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ck_item_cost_history">
+              <PropertyRef Name="created_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_wh_item_cost_history_ck_users_created">
+          <End Type="dipckModel.ck_users" Role="ck_users" Multiplicity="0..1" />
+          <End Type="dipckModel.wh_item_cost_history" Role="wh_item_cost_history" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ck_users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="wh_item_cost_history">
+              <PropertyRef Name="created_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_wh_item_cost_history_ckwh_items">
+          <End Type="dipckModel.ckwh_items" Role="ckwh_items" Multiplicity="0..1" />
+          <End Type="dipckModel.wh_item_cost_history" Role="wh_item_cost_history" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ckwh_items">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="wh_item_cost_history">
+              <PropertyRef Name="wh_item_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2345,6 +2553,7 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
           <EntitySetMapping Name="ckwh_items">
             <EntityTypeMapping TypeName="dipckModel.ckwh_items">
               <MappingFragment StoreEntitySet="ckwh_items">
+                <ScalarProperty Name="ck_avg_unit_cost" ColumnName="ck_avg_unit_cost" />
                 <ScalarProperty Name="ck_qty" ColumnName="ck_qty" />
                 <ScalarProperty Name="modified_date" ColumnName="modified_date" />
                 <ScalarProperty Name="modified_by" ColumnName="modified_by" />
@@ -2359,64 +2568,6 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
                 <ScalarProperty Name="wh_category_id" ColumnName="wh_category_id" />
                 <ScalarProperty Name="wh_item_description" ColumnName="wh_item_description" />
                 <ScalarProperty Name="wh_item_code" ColumnName="wh_item_code" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="order_details">
-            <EntityTypeMapping TypeName="dipckModel.order_details">
-              <MappingFragment StoreEntitySet="order_details">
-                <ScalarProperty Name="qty_received" ColumnName="qty_received" />
-                <ScalarProperty Name="qty_issued" ColumnName="qty_issued" />
-                <ScalarProperty Name="order_no" ColumnName="order_no" />
-                <ScalarProperty Name="active" ColumnName="active" />
-                <ScalarProperty Name="modified_date" ColumnName="modified_date" />
-                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
-                <ScalarProperty Name="created_date" ColumnName="created_date" />
-                <ScalarProperty Name="created_by" ColumnName="created_by" />
-                <ScalarProperty Name="qty" ColumnName="qty" />
-                <ScalarProperty Name="wh_item_unit_id" ColumnName="wh_item_unit_id" />
-                <ScalarProperty Name="ckwh_item_id" ColumnName="ckwh_item_id" />
-                <ScalarProperty Name="order_id" ColumnName="order_id" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="receipt_details">
-            <EntityTypeMapping TypeName="dipckModel.receipt_details">
-              <MappingFragment StoreEntitySet="receipt_details">
-                <ScalarProperty Name="receipt_no" ColumnName="receipt_no" />
-                <ScalarProperty Name="active" ColumnName="active" />
-                <ScalarProperty Name="modified_date" ColumnName="modified_date" />
-                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
-                <ScalarProperty Name="created_date" ColumnName="created_date" />
-                <ScalarProperty Name="created_by" ColumnName="created_by" />
-                <ScalarProperty Name="remarks" ColumnName="remarks" />
-                <ScalarProperty Name="wh_item_ext_cost" ColumnName="wh_item_ext_cost" />
-                <ScalarProperty Name="wh_item_unit_cost" ColumnName="wh_item_unit_cost" />
-                <ScalarProperty Name="qyt_returned" ColumnName="qyt_returned" />
-                <ScalarProperty Name="qty_received" ColumnName="qty_received" />
-                <ScalarProperty Name="qty_ordered" ColumnName="qty_ordered" />
-                <ScalarProperty Name="wh_item_unit_id" ColumnName="wh_item_unit_id" />
-                <ScalarProperty Name="wh_item_id" ColumnName="wh_item_id" />
-                <ScalarProperty Name="receipt_id" ColumnName="receipt_id" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="receipts">
-            <EntityTypeMapping TypeName="dipckModel.receipt">
-              <MappingFragment StoreEntitySet="receipts">
-                <ScalarProperty Name="receipt_no" ColumnName="receipt_no" />
-                <ScalarProperty Name="active" ColumnName="active" />
-                <ScalarProperty Name="modified_date" ColumnName="modified_date" />
-                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
-                <ScalarProperty Name="created_date" ColumnName="created_date" />
-                <ScalarProperty Name="created_by" ColumnName="created_by" />
-                <ScalarProperty Name="received_site" ColumnName="received_site" />
-                <ScalarProperty Name="issued_site" ColumnName="issued_site" />
-                <ScalarProperty Name="order_id" ColumnName="order_id" />
-                <ScalarProperty Name="receipt_date" ColumnName="receipt_date" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -2450,16 +2601,35 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="orders">
-            <EntityTypeMapping TypeName="dipckModel.order">
-              <MappingFragment StoreEntitySet="orders">
-                <ScalarProperty Name="receipt_date" ColumnName="receipt_date" />
-                <ScalarProperty Name="issue_date" ColumnName="issue_date" />
+          <EntitySetMapping Name="order_details">
+            <EntityTypeMapping TypeName="dipckModel.order_details">
+              <MappingFragment StoreEntitySet="order_details">
                 <ScalarProperty Name="active" ColumnName="active" />
                 <ScalarProperty Name="modified_date" ColumnName="modified_date" />
                 <ScalarProperty Name="modified_by" ColumnName="modified_by" />
                 <ScalarProperty Name="created_date" ColumnName="created_date" />
                 <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="qty_received" ColumnName="qty_received" />
+                <ScalarProperty Name="qty_issued" ColumnName="qty_issued" />
+                <ScalarProperty Name="qty" ColumnName="qty" />
+                <ScalarProperty Name="wh_item_unit_id" ColumnName="wh_item_unit_id" />
+                <ScalarProperty Name="ckwh_item_id" ColumnName="ckwh_item_id" />
+                <ScalarProperty Name="order_no" ColumnName="order_no" />
+                <ScalarProperty Name="order_id" ColumnName="order_id" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="orders">
+            <EntityTypeMapping TypeName="dipckModel.order">
+              <MappingFragment StoreEntitySet="orders">
+                <ScalarProperty Name="active" ColumnName="active" />
+                <ScalarProperty Name="modified_date" ColumnName="modified_date" />
+                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="receipt_date" ColumnName="receipt_date" />
+                <ScalarProperty Name="issue_date" ColumnName="issue_date" />
                 <ScalarProperty Name="order_status" ColumnName="order_status" />
                 <ScalarProperty Name="order_to_site_id" ColumnName="order_to_site_id" />
                 <ScalarProperty Name="order_from_site_id" ColumnName="order_from_site_id" />
@@ -2469,11 +2639,53 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="receipt_details">
+            <EntityTypeMapping TypeName="dipckModel.receipt_details">
+              <MappingFragment StoreEntitySet="receipt_details">
+                <ScalarProperty Name="ck_unit_description" ColumnName="ck_unit_description" />
+                <ScalarProperty Name="wh_item_description" ColumnName="wh_item_description" />
+                <ScalarProperty Name="wh_item_code" ColumnName="wh_item_code" />
+                <ScalarProperty Name="active" ColumnName="active" />
+                <ScalarProperty Name="modified_date" ColumnName="modified_date" />
+                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="remarks" ColumnName="remarks" />
+                <ScalarProperty Name="wh_item_ext_cost" ColumnName="wh_item_ext_cost" />
+                <ScalarProperty Name="wh_item_unit_cost" ColumnName="wh_item_unit_cost" />
+                <ScalarProperty Name="qyt_returned" ColumnName="qyt_returned" />
+                <ScalarProperty Name="qty_received" ColumnName="qty_received" />
+                <ScalarProperty Name="qty_ordered" ColumnName="qty_ordered" />
+                <ScalarProperty Name="wh_item_unit_id" ColumnName="wh_item_unit_id" />
+                <ScalarProperty Name="wh_item_id" ColumnName="wh_item_id" />
+                <ScalarProperty Name="receipt_no" ColumnName="receipt_no" />
+                <ScalarProperty Name="receipt_id" ColumnName="receipt_id" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="receipts">
+            <EntityTypeMapping TypeName="dipckModel.receipt">
+              <MappingFragment StoreEntitySet="receipts">
+                <ScalarProperty Name="active" ColumnName="active" />
+                <ScalarProperty Name="modified_date" ColumnName="modified_date" />
+                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="received_site" ColumnName="received_site" />
+                <ScalarProperty Name="issued_site" ColumnName="issued_site" />
+                <ScalarProperty Name="order_no" ColumnName="order_no" />
+                <ScalarProperty Name="order_id" ColumnName="order_id" />
+                <ScalarProperty Name="receipt_date" ColumnName="receipt_date" />
+                <ScalarProperty Name="receipt_no" ColumnName="receipt_no" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="transaction_details">
             <EntityTypeMapping TypeName="dipckModel.transaction_details">
               <MappingFragment StoreEntitySet="transaction_details">
-                <ScalarProperty Name="total_cost" ColumnName="total_cost" />
-                <ScalarProperty Name="unit_cost" ColumnName="unit_cost" />
+                <ScalarProperty Name="trans_ref_no" ColumnName="trans_ref_no" />
                 <ScalarProperty Name="modified_date" ColumnName="modified_date" />
                 <ScalarProperty Name="modified_by" ColumnName="modified_by" />
                 <ScalarProperty Name="created_date" ColumnName="created_date" />
@@ -2482,10 +2694,42 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
                 <ScalarProperty Name="trans_type" ColumnName="trans_type" />
                 <ScalarProperty Name="order_to_site_id" ColumnName="order_to_site_id" />
                 <ScalarProperty Name="order_from_site_id" ColumnName="order_from_site_id" />
+                <ScalarProperty Name="total_cost" ColumnName="total_cost" />
+                <ScalarProperty Name="unit_cost" ColumnName="unit_cost" />
                 <ScalarProperty Name="qty" ColumnName="qty" />
                 <ScalarProperty Name="ck_unit_description" ColumnName="ck_unit_description" />
                 <ScalarProperty Name="wh_item_unit_id" ColumnName="wh_item_unit_id" />
                 <ScalarProperty Name="trans_date" ColumnName="trans_date" />
+                <ScalarProperty Name="wh_item_description" ColumnName="wh_item_description" />
+                <ScalarProperty Name="wh_item_code" ColumnName="wh_item_code" />
+                <ScalarProperty Name="wh_item_id" ColumnName="wh_item_id" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ck_item_cost_history">
+            <EntityTypeMapping TypeName="dipckModel.ck_item_cost_history">
+              <MappingFragment StoreEntitySet="ck_item_cost_history">
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="curr_cost" ColumnName="curr_cost" />
+                <ScalarProperty Name="prev_cost" ColumnName="prev_cost" />
+                <ScalarProperty Name="ord" ColumnName="ord" />
+                <ScalarProperty Name="ck_item_description" ColumnName="ck_item_description" />
+                <ScalarProperty Name="ck_item_code" ColumnName="ck_item_code" />
+                <ScalarProperty Name="ck_item_id" ColumnName="ck_item_id" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="wh_item_cost_history">
+            <EntityTypeMapping TypeName="dipckModel.wh_item_cost_history">
+              <MappingFragment StoreEntitySet="wh_item_cost_history">
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="curr_cost" ColumnName="curr_cost" />
+                <ScalarProperty Name="prev_cost" ColumnName="prev_cost" />
+                <ScalarProperty Name="ord" ColumnName="ord" />
                 <ScalarProperty Name="wh_item_description" ColumnName="wh_item_description" />
                 <ScalarProperty Name="wh_item_code" ColumnName="wh_item_code" />
                 <ScalarProperty Name="wh_item_id" ColumnName="wh_item_id" />

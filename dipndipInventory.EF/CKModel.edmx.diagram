@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="1fc9027473044785a37b377854d9960c" Name="Diagram1" ZoomLevel="100">
+      <Diagram DiagramId="1fc9027473044785a37b377854d9960c" Name="Diagram1" ZoomLevel="99">
         <EntityTypeShape EntityType="dipckModel.ck_item_recipe" Width="1.5" PointX="10.25" PointY="7.125" />
         <AssociationConnector Association="dipckModel.FK_ck_item_details_ck_users2" />
         <AssociationConnector Association="dipckModel.FK_ck_item_details_ck_users11" />
@@ -19,9 +19,6 @@
         <EntityTypeShape EntityType="dipckModel.ckwh_category" Width="1.5" PointX="3" PointY="31.875" />
         <EntityTypeShape EntityType="dipckModel.ckwh_item_unit" Width="1.5" PointX="5.25" PointY="22.875" />
         <EntityTypeShape EntityType="dipckModel.ckwh_items" Width="1.5" PointX="8.25" PointY="23.875" />
-        <EntityTypeShape EntityType="dipckModel.order_details" Width="1.5" PointX="10.5" PointY="22.875" />
-        <EntityTypeShape EntityType="dipckModel.receipt_details" Width="1.5" PointX="18" PointY="20.375" />
-        <EntityTypeShape EntityType="dipckModel.receipt" Width="1.5" PointX="15.75" PointY="21.625" />
         <EntityTypeShape EntityType="dipckModel.site" Width="1.5" PointX="3" PointY="27.25" />
         <EntityTypeShape EntityType="dipckModel.wh_item_unit" Width="1.5" PointX="8.25" PointY="17.375" />
         <AssociationConnector Association="dipckModel.FK_ck_item_details_ck_users" />
@@ -41,12 +38,6 @@
         <AssociationConnector Association="dipckModel.FK_ckwh_item_unit_ck_users1" />
         <AssociationConnector Association="dipckModel.FK_ckwh_items_ck_users" />
         <AssociationConnector Association="dipckModel.FK_ckwh_items_ck_users1" />
-        <AssociationConnector Association="dipckModel.FK_order_details_ck_users" />
-        <AssociationConnector Association="dipckModel.FK_order_details_ck_users1" />
-        <AssociationConnector Association="dipckModel.FK_receipt_details_ck_users" />
-        <AssociationConnector Association="dipckModel.FK_receipt_details_ck_users1" />
-        <AssociationConnector Association="dipckModel.FK_receipts_ck_users" />
-        <AssociationConnector Association="dipckModel.FK_receipts_ck_users1" />
         <AssociationConnector Association="dipckModel.FK_sites_ck_users" />
         <AssociationConnector Association="dipckModel.FK_sites_ck_users1" />
         <AssociationConnector Association="dipckModel.FK_wh_item_unit_ck_users" />
@@ -54,28 +45,43 @@
         <AssociationConnector Association="dipckModel.FK_ckwh_items_ckwh_category" />
         <AssociationConnector Association="dipckModel.FK_ckwh_item_unit_ckwh_items" />
         <AssociationConnector Association="dipckModel.FK_ckwh_items_sites" />
+        <AssociationConnector Association="dipckModel.FK_wh_item_unit_wh_item_unit" />
+        <EntityTypeShape EntityType="dipckModel.order_details" Width="1.5" PointX="13.5" PointY="20.625" />
+        <EntityTypeShape EntityType="dipckModel.order" Width="1.5" PointX="5.25" PointY="27.5" />
+        <EntityTypeShape EntityType="dipckModel.receipt_details" Width="1.5" PointX="10.5" PointY="22.375" />
+        <EntityTypeShape EntityType="dipckModel.receipt" Width="1.5" PointX="10.5" PointY="29" />
+        <EntityTypeShape EntityType="dipckModel.transaction_details" Width="1.5" PointX="13.5" PointY="26.125" />
+        <AssociationConnector Association="dipckModel.FK_order_details_ck_users" />
+        <AssociationConnector Association="dipckModel.FK_order_details_ck_users1" />
+        <AssociationConnector Association="dipckModel.FK_orders_ck_users" />
+        <AssociationConnector Association="dipckModel.FK_orders_ck_users1" />
+        <AssociationConnector Association="dipckModel.FK_receipt_details_ck_users" />
+        <AssociationConnector Association="dipckModel.FK_receipt_details_ck_users1" />
+        <AssociationConnector Association="dipckModel.FK_receipts_ck_users" />
+        <AssociationConnector Association="dipckModel.FK_receipts_ck_users1" />
+        <AssociationConnector Association="dipckModel.FK_transaction_details_ck_users_created" />
+        <AssociationConnector Association="dipckModel.FK_transaction_details_ck_users_modified" />
         <AssociationConnector Association="dipckModel.FK_order_details_ckwh_items" />
         <AssociationConnector Association="dipckModel.FK_receipt_details_ckwh_items" />
+        <AssociationConnector Association="dipckModel.FK_transaction_details_ckwh_items" />
+        <AssociationConnector Association="dipckModel.FK_order_details_orders" />
         <AssociationConnector Association="dipckModel.FK_order_details_wh_item_unit" />
+        <AssociationConnector Association="dipckModel.FK_orders_sites" />
+        <AssociationConnector Association="dipckModel.FK_orders_sites1" />
+        <AssociationConnector Association="dipckModel.FK_receipts_orders" />
         <AssociationConnector Association="dipckModel.FK_receipt_details_receipts" />
         <AssociationConnector Association="dipckModel.FK_receipt_details_wh_item_unit" />
         <AssociationConnector Association="dipckModel.FK_receipts_sites" />
         <AssociationConnector Association="dipckModel.FK_receipts_sites1" />
-        <AssociationConnector Association="dipckModel.FK_wh_item_unit_wh_item_unit" />
-        <EntityTypeShape EntityType="dipckModel.order" Width="1.5" PointX="5.25" PointY="27.5" />
-        <AssociationConnector Association="dipckModel.FK_orders_ck_users" />
-        <AssociationConnector Association="dipckModel.FK_orders_ck_users1" />
-        <AssociationConnector Association="dipckModel.FK_order_details_orders" />
-        <AssociationConnector Association="dipckModel.FK_orders_sites" />
-        <AssociationConnector Association="dipckModel.FK_orders_sites1" />
-        <AssociationConnector Association="dipckModel.FK_receipts_orders" />
-        <EntityTypeShape EntityType="dipckModel.transaction_details" Width="1.5" PointX="13.5" PointY="21.25" />
-        <AssociationConnector Association="dipckModel.FK_transaction_details_ck_users_created" />
-        <AssociationConnector Association="dipckModel.FK_transaction_details_ck_users_modified" />
-        <AssociationConnector Association="dipckModel.FK_transaction_details_ckwh_items" />
         <AssociationConnector Association="dipckModel.FK_transaction_details_sites_from" />
         <AssociationConnector Association="dipckModel.FK_transaction_details_sites_to" />
         <AssociationConnector Association="dipckModel.FK_transaction_details_wh_item_unit" />
+        <EntityTypeShape EntityType="dipckModel.ck_item_cost_history" Width="1.5" PointX="7.5" PointY="13.5" />
+        <EntityTypeShape EntityType="dipckModel.wh_item_cost_history" Width="1.5" PointX="13.5" PointY="16.5" />
+        <AssociationConnector Association="dipckModel.FK_ck_item_cost_history_ck_items" />
+        <AssociationConnector Association="dipckModel.FK_ck_item_cost_history_ck_users_created" />
+        <AssociationConnector Association="dipckModel.FK_wh_item_cost_history_ck_users_created" />
+        <AssociationConnector Association="dipckModel.FK_wh_item_cost_history_ckwh_items" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

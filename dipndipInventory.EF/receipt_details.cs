@@ -16,6 +16,7 @@ namespace dipndipInventory.EF
     {
         public int Id { get; set; }
         public Nullable<int> receipt_id { get; set; }
+        public string receipt_no { get; set; }
         public Nullable<int> wh_item_id { get; set; }
         public Nullable<int> wh_item_unit_id { get; set; }
         public Nullable<decimal> qty_ordered { get; set; }
@@ -29,7 +30,9 @@ namespace dipndipInventory.EF
         public Nullable<int> modified_by { get; set; }
         public Nullable<System.DateTime> modified_date { get; set; }
         public Nullable<bool> active { get; set; }
-        public string receipt_no { get; set; }
+        public string wh_item_code { get; set; }
+        public string wh_item_description { get; set; }
+        public string ck_unit_description { get; set; }
     
         public virtual ck_users ck_users { get; set; }
         public virtual ck_users ck_users1 { get; set; }
