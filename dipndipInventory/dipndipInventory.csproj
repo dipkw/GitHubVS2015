@@ -144,6 +144,9 @@
     <Compile Include="Views\Stock\ckorderView.xaml.cs">
       <DependentUpon>ckorderView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Stock\ckwhstockadjView.xaml.cs">
+      <DependentUpon>ckwhstockadjView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Stock\itemcategoryView.xaml.cs">
       <DependentUpon>itemcategoryView.xaml</DependentUpon>
     </Compile>
@@ -208,6 +211,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Stock\ckorderView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Stock\ckwhstockadjView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

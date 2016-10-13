@@ -157,5 +157,11 @@ namespace dipndipInventory.Views
             ckorderView cko = new ckorderView();
             cko.Show();
         }
+
+        private void Adjustment_Click(object sender, RoutedEventArgs e)
+        {
+            ckwhstockadjView sta = new ckwhstockadjView();
+            sta.Show();
+        }
     }
 }

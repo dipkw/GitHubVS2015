@@ -171,13 +171,15 @@ namespace dipndipInventory.EF.DataServices
             catch { return null; }
         }
 
-        public int UpdateCKItemQty(int item_id, decimal qty_received)
+        public int UpdateCKItemQty(int item_id, decimal updated_ck_qty, int modified_by)
         {
             try
             {
                 _context = new CKEntities();
                 ckwh_items objCKWHItemToUpdate = (from ckwhitem in _context.ckwh_items where ckwhitem.Id == item_id select ckwhitem).SingleOrDefault();
-                objCKWHItemToUpdate.ck_qty += qty_received;
+                objCKWHItemToUpdate.ck_qty = updated_ck_qty;
+                objCKWHItemToUpdate.modified_by = modified_by;
+                objCKWHItemToUpdate.modified_date = DateTime.Now;
                 _context.SaveChanges();
 
                 _context.Dispose();

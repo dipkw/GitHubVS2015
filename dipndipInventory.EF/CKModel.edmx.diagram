@@ -47,7 +47,7 @@
         <AssociationConnector Association="dipckModel.FK_ckwh_items_sites" />
         <AssociationConnector Association="dipckModel.FK_wh_item_unit_wh_item_unit" />
         <EntityTypeShape EntityType="dipckModel.order_details" Width="1.5" PointX="13.5" PointY="20.625" />
-        <EntityTypeShape EntityType="dipckModel.order" Width="1.5" PointX="5.25" PointY="27.5" />
+        <EntityTypeShape EntityType="dipckModel.order" Width="1.5" PointX="5.375" PointY="27.25" />
         <EntityTypeShape EntityType="dipckModel.receipt_details" Width="1.5" PointX="10.5" PointY="22.375" />
         <EntityTypeShape EntityType="dipckModel.receipt" Width="1.5" PointX="10.5" PointY="29" />
         <EntityTypeShape EntityType="dipckModel.transaction_details" Width="1.5" PointX="13.5" PointY="26.125" />

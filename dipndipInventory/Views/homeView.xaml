@@ -105,10 +105,10 @@
                             <TextBlock Text="New WH Order" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </telerik:RadRibbonButton>
-                    <telerik:RadRibbonButton   Width="70"  HorizontalContentAlignment="Center" x:Name="Receive">
+                    <telerik:RadRibbonButton   Width="70"  HorizontalContentAlignment="Center" x:Name="Adjustment" Click="Adjustment_Click">
                         <StackPanel>
                             <Image Source="/dipndipInventory;component/images/menu_icons/Icon-Tickets.png" Width="32" Height="32"/>
-                            <TextBlock Text="Receive" HorizontalAlignment="Center"/>
+                            <TextBlock Text="Adjustmen" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </telerik:RadRibbonButton>
                     <telerik:RadRibbonButton   Width="70"  HorizontalContentAlignment="Center" x:Name="Issue">

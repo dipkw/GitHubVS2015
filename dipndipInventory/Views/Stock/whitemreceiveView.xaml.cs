@@ -130,13 +130,22 @@ namespace dipndipInventory.Views.Stock
             else
             {
                 previous_cost = (decimal)lastWHItemCost.curr_cost;
+                //previous_cost = current_cost;
             }
-            decimal previous_qty = (decimal)_wicontext.GetCurrentCKQty((int)wh_item_id);
+            decimal previous_qty = 0.0m;
+            if (_wicontext.GetCurrentCKQty((int)wh_item_id) != null)
+            {
+                previous_qty = (decimal)_wicontext.GetCurrentCKQty((int)wh_item_id);
+            }
             if (lastWHItemCost != null)
             {
                 if (lastWHItemCost.curr_cost != current_cost)
                 {
                     current_average_cost = CalculateAverageCost(previous_cost, previous_qty, current_cost, current_qty);
+                }
+                else
+                {
+                    current_average_cost = current_cost;
                 }
             }
             else
@@ -185,6 +194,10 @@ namespace dipndipInventory.Views.Stock
                             MessageBox.Show("Warehouse Item Cost Updation Failed");
                             return result;
                         }
+                    }
+                    else
+                    {
+                        return 1;
                     }
                 }
                 else 
@@ -267,6 +280,19 @@ namespace dipndipInventory.Views.Stock
 
                 result = SaveTransaction(objOrderDetails, receipt_date_time, item_unit_cost);
 
+
+                if(result<=0)
+                {
+                    break;
+                }
+                decimal current_item_qty = 0.0m;
+                if(_wcontext.GetCurrentCKQty(objOrderDetails.itemId)!=null)
+                {
+                    current_item_qty = (decimal)_wcontext.GetCurrentCKQty(objOrderDetails.itemId);
+                }
+                
+                decimal ck_updated_qty =  current_item_qty + objOrderDetails.qty_received;
+                result = _wcontext.UpdateCKItemQty(objOrderDetails.itemId, ck_updated_qty, GlobalVariables.ActiveUser.Id);
 
                 if(result<=0)
                 {

@@ -19,26 +19,25 @@ using Telerik.Windows.Controls;
 namespace dipndipInventory.Views.Stock
 {
     /// <summary>
-    /// Interaction logic for warehouseitemsView.xaml
+    /// Interaction logic for ckwhstockadjView.xaml
     /// </summary>
-    public partial class warehouseitemsView : RadWindow
+    public partial class ckwhstockadjView : RadWindow
     {
         WHItemService _context = new WHItemService();
         bool edit_mode = false;
         //string username = string.Empty;
         int id = 0;
-        public warehouseitemsView()
+        public ckwhstockadjView()
         {
             InitializeComponent();
-            ShowTaskBar.ShowInTaskbar(this, "Warehouse Items");
+            ShowTaskBar.ShowInTaskbar(this, "Stock Adjustment");
             ReadAllWHItems();
         }
 
         private void ReadAllWHItems()
         {
             IEnumerable<ckwh_items> objItems = _context.ReadAllWHItems();
-            dgWHItems.ItemsSource = objItems;
-            txtDescription.Focus();
+            dgCKWHItems.ItemsSource = objItems;
         }
     }
 }
