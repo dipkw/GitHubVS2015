@@ -20,12 +20,12 @@
         
 
         <Border Grid.ColumnSpan="2" Margin="10" BorderBrush="Black" BorderThickness="0.5" Grid.Row="0">
-            <telerik:RadGridView x:Name="dgCKWHItems" AutoGenerateColumns="False" IsReadOnly="True" RowIndicatorVisibility="Collapsed" IsSynchronizedWithCurrentItem="False" FocusManager.FocusedElement="{Binding ElementName=dgCKWHItems}" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <telerik:RadGridView x:Name="dgCKWHItems" AutoGenerateColumns="False" IsReadOnly="True" RowIndicatorVisibility="Collapsed" IsSynchronizedWithCurrentItem="False" FocusManager.FocusedElement="{Binding ElementName=dgCKWHItems}" HorizontalAlignment="Left" VerticalAlignment="Top" SelectionChanged="dgCKWHItems_SelectionChanged">
                 <telerik:RadGridView.Columns>
                     <telerik:GridViewDataColumn x:Name="ItemCode" DataMemberBinding="{Binding wh_item_code}" Width="*" Header="Item Code"/>
-                    <telerik:GridViewDataColumn x:Name="ItemDesc" DataMemberBinding="{Binding wh_item_description}" Width="*" Header="Item Description"/>
-                    <telerik:GridViewDataColumn x:Name="Unit" DataMemberBinding="{Binding wh_unit_description}" Width="*" Header="Unit"/>
-                    <telerik:GridViewDataColumn x:Name="Quantity" DataMemberBinding="{Binding ck_qty}" Width="*" Header="Quantity"/>
+                    <telerik:GridViewDataColumn x:Name="ItemDesc" DataMemberBinding="{Binding wh_item_description}" Width="2*" Header="Item Description"/>
+                    <telerik:GridViewDataColumn x:Name="WHUnit" DataMemberBinding="{Binding wh_unit_description}" Width="0.5*" Header="WH Unit"/>
+                    <telerik:GridViewDataColumn x:Name="Quantity" DataMemberBinding="{Binding adj_qty}" Width=".25*" Header="Quantity"/>
 
                     <telerik:GridViewDataColumn x:Name="ItemId" DataMemberBinding="{Binding wh_item_id}" Width="*" Header="Item Id" IsVisible="False"/>
                     <telerik:GridViewDataColumn x:Name="UnitId" DataMemberBinding="{Binding wh_unit_id}" Width="*" Header="Unit Id" IsVisible="False"/>
@@ -76,7 +76,8 @@
                 <StackPanel Orientation="Horizontal">
                     <telerik:Label Content="Unit" Height="25" Width="150"/>
                     <!--<telerik:RadComboBox x:Name="cmbUnit" Width="250" Margin="3" TabIndex="2"/>-->
-                    <telerik:RadMaskedTextInput Name="txtUnit" Width="250" Margin="3" TabIndex="1" Placeholder="_" TextMode="MaskedText" Mask="" IsEnabled="False" IsReadOnly="True"/>
+                    <!--<telerik:RadMaskedTextInput Name="txtUnit" Width="250" Margin="3" TabIndex="1" Placeholder="_" TextMode="MaskedText" Mask="" IsEnabled="False" IsReadOnly="True"/>-->
+                    <telerik:RadComboBox x:Name="cmbUnit" Width="250" Margin="3" TabIndex="2"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" >
