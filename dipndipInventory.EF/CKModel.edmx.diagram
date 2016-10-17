@@ -82,6 +82,14 @@
         <AssociationConnector Association="dipckModel.FK_ck_item_cost_history_ck_users_created" />
         <AssociationConnector Association="dipckModel.FK_wh_item_cost_history_ck_users_created" />
         <AssociationConnector Association="dipckModel.FK_wh_item_cost_history_ckwh_items" />
+        <EntityTypeShape EntityType="dipckModel.control_table" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="dipckModel.reason_codes" Width="1.5" PointX="2.75" PointY="0.75" />
+        <AssociationConnector Association="dipckModel.FK_transaction_details_reason_codes" />
+        <EntityTypeShape EntityType="dipckModel.ckwh_items_adj" Width="1.5" PointX="16.5" PointY="20.75" />
+        <AssociationConnector Association="dipckModel.FK_ckwh_items_adj_ck_users" />
+        <AssociationConnector Association="dipckModel.FK_ckwh_items_adj_ck_users1" />
+        <AssociationConnector Association="dipckModel.FK_ckwh_items_adj_ckwh_items" />
+        <AssociationConnector Association="dipckModel.FK_ckwh_items_adj_wh_item_unit" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

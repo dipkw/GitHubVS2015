@@ -147,6 +147,19 @@ namespace dipndipInventory.EF.DataServices
             return item_code;
         }
 
+        public int GetItemId(string item_code)
+        {
+            int item_id = 0;
+
+            try
+            {
+                _context = new CKEntities();
+                item_id = (from whitems in _context.ckwh_items where whitems.wh_item_code == item_code select whitems.Id).FirstOrDefault();
+            }
+            catch { return 0; }
+            return item_id;
+        }
+
         public string GetItemDescription(int id)
         {
             string item_description = string.Empty;

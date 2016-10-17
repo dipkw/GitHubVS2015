@@ -25,7 +25,7 @@
                     <telerik:GridViewDataColumn x:Name="ItemCode" DataMemberBinding="{Binding wh_item_code}" Width="*" Header="Item Code"/>
                     <telerik:GridViewDataColumn x:Name="ItemDesc" DataMemberBinding="{Binding wh_item_description}" Width="2*" Header="Item Description"/>
                     <telerik:GridViewDataColumn x:Name="WHUnit" DataMemberBinding="{Binding wh_unit_description}" Width="0.5*" Header="WH Unit"/>
-                    <telerik:GridViewDataColumn x:Name="Quantity" DataMemberBinding="{Binding adj_qty}" Width=".25*" Header="Quantity"/>
+                    <telerik:GridViewDataColumn x:Name="Qty" DataMemberBinding="{Binding ck_qty}" Width=".25*" Header="Qty"/>
 
                     <telerik:GridViewDataColumn x:Name="ItemId" DataMemberBinding="{Binding wh_item_id}" Width="*" Header="Item Id" IsVisible="False"/>
                     <telerik:GridViewDataColumn x:Name="UnitId" DataMemberBinding="{Binding wh_unit_id}" Width="*" Header="Unit Id" IsVisible="False"/>
@@ -38,13 +38,7 @@
                             </DataTemplate>
                         </telerik:GridViewColumn.CellTemplate>
                     </telerik:GridViewColumn>
-                    <telerik:GridViewColumn Width="80">
-                        <telerik:GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <telerik:RadButton Content="Delete" x:Name="btnDeleteItem" Margin="5"/>
-                            </DataTemplate>
-                        </telerik:GridViewColumn.CellTemplate>
-                    </telerik:GridViewColumn>
+                    
                 </telerik:RadGridView.Columns>
             </telerik:RadGridView>
         </Border>
@@ -64,25 +58,30 @@
                 <StackPanel Orientation="Horizontal" >
                     <telerik:Label Content="Item Code" Height="25" Width="150"/>
                     <!--<telerik:RadMaskedTextInput Name="txtSiteName" Width="250" Margin="3" TabIndex="0" Placeholder=" " TextMode="MaskedText"/>-->
-                    <telerik:RadMaskedTextInput Name="txtItemCode" Width="250" Margin="3" TabIndex="0" Placeholder="_" TextMode="MaskedText" Mask="" InputBehavior="Insert" AcceptsReturn="False"/>
+                    <telerik:RadMaskedTextInput Name="txtItemCode" Width="250" Margin="3" TabIndex="0" Placeholder="_" TextMode="MaskedText" Mask="" InputBehavior="Insert" AcceptsReturn="False" IsReadOnly="True"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" >
                     <telerik:Label Content="Description" Height="25" Width="150"/>
                     <!--<telerik:RadMaskedTextInput Name="txtDescription" Width="250" Margin="3" TabIndex="1" Placeholder="_" TextMode="MaskedText" Mask="" InputBehavior="Insert"/>-->
-                    <telerik:RadMaskedTextInput Name="txtDescription" Width="250" Margin="3" TabIndex="1" Placeholder="_" TextMode="MaskedText" Mask="" IsEnabled="False" IsReadOnly="True"/>
+                    <telerik:RadMaskedTextInput Name="txtDescription" Width="250" Margin="3" TabIndex="1" Placeholder="_" TextMode="MaskedText" Mask="" IsReadOnly="True"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal">
                     <telerik:Label Content="Unit" Height="25" Width="150"/>
                     <!--<telerik:RadComboBox x:Name="cmbUnit" Width="250" Margin="3" TabIndex="2"/>-->
                     <!--<telerik:RadMaskedTextInput Name="txtUnit" Width="250" Margin="3" TabIndex="1" Placeholder="_" TextMode="MaskedText" Mask="" IsEnabled="False" IsReadOnly="True"/>-->
-                    <telerik:RadComboBox x:Name="cmbUnit" Width="250" Margin="3" TabIndex="2"/>
+                    <telerik:RadComboBox x:Name="cmbUnit" Width="250" Margin="3" TabIndex="2" SelectionChanged="cmbUnit_SelectionChanged"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" >
                     <telerik:Label Content="Quantity" Height="25" Width="150"/>
                     <telerik:RadMaskedNumericInput Name="txtQty" Width="250" Margin="3" TabIndex="3" Placeholder="_" TextMode="MaskedText" Mask="" InputBehavior="Insert" FormatString="0"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" >
+                    <telerik:Label Content="Reason" Height="25" Width="150"/>
+                    <telerik:RadComboBox x:Name="cmbReason" Width="250" Margin="3" TabIndex="2"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,0" HorizontalAlignment="Right">
@@ -96,7 +95,7 @@
         </StackPanel>
 
         <StackPanel Orientation="Horizontal"  HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row="2" Margin="0,0,5,5" Grid.ColumnSpan="2">
-            <telerik:RadButton Content="Save" Margin="3" Width="50" Name="btnSave"  TabIndex="4"/>
+            <telerik:RadButton Content="Save" Margin="3" Width="50" Name="btnSave"  TabIndex="4" Click="btnSave_Click"/>
             <telerik:RadButton Content="New" Margin="3" Width="50" Name="btnNew"  TabIndex="5"/>
             <telerik:RadButton Content="Delete" Margin="3" Width="50" x:Name="btnDelete" TabIndex="6"/>
             <telerik:RadButton Content="Close" Margin="3" Width="50" Name="btnClose"   TabIndex="7"/>

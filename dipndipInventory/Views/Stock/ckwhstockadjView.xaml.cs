@@ -28,6 +28,10 @@ namespace dipndipInventory.Views.Stock
         bool edit_mode = false;
         //string username = string.Empty;
         int id = 0;
+
+        int selected_item_id = 0;
+        decimal selected_ck_qty = 0.00000000m;
+        decimal conversion_factor = 0.00000000m;
         public ckwhstockadjView()
         {
             InitializeComponent();
@@ -66,12 +70,21 @@ namespace dipndipInventory.Views.Stock
             WHItemUnitService unitContext = new WHItemUnitService();
             IEnumerable<wh_item_unit> objUnits = unitContext.ReadAllWHItemUnitsByWHItemId(wh_item_id);
             cmbUnit.DisplayMemberPath = "ck_units.unit_description";
-            cmbUnit.SelectedValuePath = "ck_unit_d";
+            cmbUnit.SelectedValuePath = "ck_unit_id";
             cmbUnit.ItemsSource = objUnits.ToList();
             if(objUnits.Count()<1)
             {
                 MessageBox.Show("Please assign unit to make any Stock Adustment for this item");
             }
+        }
+
+        private void FillAllReasons()
+        {
+            ReasonService _rcontext = new ReasonService();
+            IEnumerable<reason_codes> objReasons = _rcontext.ReadAllActiveReasons();
+            cmbReason.DisplayMemberPath = "description";
+            cmbReason.SelectedValuePath = "Id";
+            cmbReason.ItemsSource = objReasons.ToList();
         }
 
         private void dgCKWHItems_SelectionChanged(object sender, SelectionChangeEventArgs e)
@@ -89,9 +102,33 @@ namespace dipndipInventory.Views.Stock
             int wh_item_id = objItem.Id;
 
             FillAllUnits(wh_item_id);
+            FillAllReasons();
             txtItemCode.Value = objItem.wh_item_code;
             txtDescription.Value = objItem.wh_item_description;
-            txtQty.Focus();
+            WHItemService _wicontext = new WHItemService();
+            selected_item_id = _wicontext.GetItemId(txtItemCode.Value);
+            if (objItem.ck_qty != null)
+            {
+                selected_ck_qty = (decimal)objItem.ck_qty;
+            }
+            cmbUnit.Focus();
+        }
+
+        private void btnSave_Click(object sender, RoutedEventArgs e)
+        {
+            decimal updated_ck_qty = 0.00000000m;
+            updated_ck_qty = selected_ck_qty + ((decimal)(txtQty.Value)*conversion_factor);
+            MessageBox.Show(updated_ck_qty.ToString());
+        }
+
+        private void cmbUnit_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            WHItemUnitService _wucontext = new WHItemUnitService();
+            if(cmbUnit.SelectedValue==null)
+            {
+                return;
+            }
+            conversion_factor = (decimal)_wucontext.GetConversionFactorByWHItemId(selected_item_id, Convert.ToInt32(cmbUnit.SelectedValue.ToString()));
         }
     }
 }
