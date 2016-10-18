@@ -32,11 +32,13 @@ namespace dipndipInventory.Views.Stock
         int selected_item_id = 0;
         decimal selected_ck_qty = 0.00000000m;
         decimal conversion_factor = 0.00000000m;
+        string adj_code = string.Empty;
         public ckwhstockadjView()
         {
             InitializeComponent();
             ShowTaskBar.ShowInTaskbar(this, "Stock Adjustment");
-
+            WHAdjService _adcontext = new WHAdjService();
+            adj_code = _adcontext.GetNewWHAdjCode();
             ReadAllWHItems();
         }
 
@@ -116,9 +118,72 @@ namespace dipndipInventory.Views.Stock
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
+            WHItemService _wcontext = new WHItemService();
+            //decimal current_ck_qty = 0.00000000m;
             decimal updated_ck_qty = 0.00000000m;
             updated_ck_qty = selected_ck_qty + ((decimal)(txtQty.Value)*conversion_factor);
+            if(((decimal)txtQty.Value)>0)
+            {
+                CalcAdjAvgCost(((decimal)txtQty.Value));
+            }
+            else
+            {
+                //Update ck_qty
+                _wcontext.UpdateCKItemQty(Convert.ToInt32(txtItemID.Value), updated_ck_qty, GlobalVariables.ActiveUser.Id);
+                //update transaction
+
+            }
             MessageBox.Show(updated_ck_qty.ToString());
+        }
+
+        private int SaveTransaction(OrderDetailsViewModel objOrderDetails, DateTime receipt_date_time, decimal item_unit_cost)
+        {
+            int result = 0;
+
+            SiteService _scontext = new SiteService();
+            TransactionService _tcontext = new TransactionService();
+            transaction_details objTransactionDetail = new transaction_details();
+            objTransactionDetail.trans_ref_no = adj_code;
+            objTransactionDetail.wh_item_id = objOrderDetails.itemId;
+            objTransactionDetail.wh_item_code = objOrderDetails.itemCode;
+            objTransactionDetail.wh_item_description = objOrderDetails.itemDescription;
+            //objTransactionDetail.trans_date = dtpReceiptDate.SelectedDate + DateTime.Now.TimeOfDay;
+            objTransactionDetail.trans_date = DateTime.Now.Date + DateTime.Now.TimeOfDay;
+            objTransactionDetail.wh_item_unit_id = objOrderDetails.unitId;
+            objTransactionDetail.ck_unit_description = objOrderDetails.unitDescription;
+            objTransactionDetail.qty = objOrderDetails.qty_received;
+            objTransactionDetail.unit_cost = item_unit_cost;
+            objTransactionDetail.total_cost = (objTransactionDetail.qty * objTransactionDetail.unit_cost);
+            objTransactionDetail.order_from_site_id = _scontext.GetSiteIDBySiteName("Central Kitchen");
+            objTransactionDetail.order_to_site_id = _scontext.GetSiteIDBySiteName("Central Kitchen");
+            objTransactionDetail.trans_type = "Adjustment";
+            objTransactionDetail.active = true;
+            objTransactionDetail.created_by = GlobalVariables.ActiveUser.Id;
+            objTransactionDetail.created_date = receipt_date_time;
+            result = _tcontext.CreateTransaction(objTransactionDetail);
+
+            return result;
+        }
+
+        private void CalcAdjAvgCost(decimal qty)
+        {
+            WHItemService _wcontext = new WHItemService();
+            TransactionService _tcontext = new TransactionService();
+            decimal current_item_qty = (decimal)_wcontext.GetCurrentCKQty(selected_item_id);
+            decimal qty_sum = 0.000m;
+            decimal avg_unit_cost = 0.000m;
+            decimal total_ext_cost = 0.000m;
+            
+            IEnumerable<transaction_details> rcpt_transactions = _tcontext.ReadReceiptTransactions();
+            foreach(var rcpt in rcpt_transactions)
+            {
+                qty_sum += (decimal)rcpt.qty;
+
+                if(qty_sum>=qty)
+                {
+                    break;
+                }
+            }
         }
 
         private void cmbUnit_SelectionChanged(object sender, SelectionChangedEventArgs e)

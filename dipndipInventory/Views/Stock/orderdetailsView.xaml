@@ -21,12 +21,12 @@
         <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="10,0,0,0">
             <telerik:Label Content="Order No" Height="25" Width="150"/>
             <!--<telerik:RadMaskedTextInput Name="txtSiteName" Width="250" Margin="3" TabIndex="0" Placeholder=" " TextMode="MaskedText"/>-->
-            <telerik:RadMaskedTextInput Name="txtOrderNo" Width="250" Margin="3" TabIndex="0" Placeholder="_" TextMode="MaskedText" Mask="" InputBehavior="Insert" AcceptsReturn="False"/>
+            <telerik:RadMaskedTextInput Name="txtOrderNo" Width="250" Margin="3" TabIndex="7" Placeholder="_" TextMode="MaskedText" Mask="" InputBehavior="Insert" AcceptsReturn="False"/>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" Margin="10,0,0,0">
             <telerik:Label Content="Order Date" Height="25" Width="150"/>
-            <telerik:RadDatePicker x:Name="dtpDate" Width="175" Margin="3" TabIndex="1" DisplayFormat="Short" Culture="en-US" />
+            <telerik:RadDatePicker x:Name="dtpDate" Width="175" Margin="3" TabIndex="8" DisplayFormat="Short" Culture="en-US" />
             <!--<telerik:RadDateTimePicker x:Name="dtpDate" Width="175" Margin="3" TabIndex="1" DisplayFormat="Short" Culture="en-US" DateTimeWatermarkContent="Enter Date" />-->
         </StackPanel>
 

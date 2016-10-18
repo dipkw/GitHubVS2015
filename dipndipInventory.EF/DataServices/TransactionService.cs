@@ -91,5 +91,37 @@ namespace dipndipInventory.EF.DataServices
                 return 0;
             }
         }
+
+        public IEnumerable<transaction_details> ReadReceiptTransactions()
+        {
+            try
+            {
+                _context = new CKEntities();
+                IEnumerable<transaction_details> objTransactionDetails = (from transaction_detail in _context.transaction_details where transaction_detail.trans_type=="Receipt" orderby transaction_detail.Id descending select transaction_detail);
+                return objTransactionDetails;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public IEnumerable<transaction_details> NewFunc(int qty)
+        {
+            decimal sum = 0.000m;
+            //var query = col.TakeWhile(x => { var temp = sum; sum += x.Quantity; return temp < 500; });
+            try
+            {
+                _context = new CKEntities();
+                IEnumerable<transaction_details> objTransactionDetails = (from transaction_detail in _context.transaction_details where transaction_detail.trans_type == "Receipt" orderby transaction_detail.Id descending select transaction_detail);
+                //IEnumerable<transaction_details> objTransactionDetails = _context.transaction_details.TakeWhile(x => { decimal temp = sum; sum += (x.qty); return temp <= qty; });
+                //IEnumerable<transaction_details> objTransactionDetails = _context.transaction_details.TakeWhile(x => { decimal temp = sum; sum += (x.qty); return temp <= qty; });
+                return objTransactionDetails;
+            }
+            catch
+            {
+                return null;
+            }
+        }
     }
 }

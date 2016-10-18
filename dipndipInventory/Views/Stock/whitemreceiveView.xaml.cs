@@ -251,6 +251,7 @@ namespace dipndipInventory.Views.Stock
 
                 OrderDetailsViewModel objOrderDetails = row.Item as OrderDetailsViewModel;
 
+                // Update order_details table with received qty
                 result = _ocontext.UpdateReceivedQty(active_order_id, objOrderDetails.qty_received);
                 if(result<=0)
                 {
@@ -258,7 +259,7 @@ namespace dipndipInventory.Views.Stock
                 }
 
 
-
+                //Retreive current unit cost from ckwh_items table
                 decimal item_unit_cost = (decimal)_wcontext.GetCurrentCost(objOrderDetails.itemId);
                 //decimal item_unit_cost = CurrentAverageCost(objOrderDetails.itemId, (decimal)_wcontext.GetCurrentCost(objOrderDetails.itemId), objOrderDetails.qty_received);
                 receipt_details objReceiptDetail = new receipt_details();
@@ -278,6 +279,7 @@ namespace dipndipInventory.Views.Stock
 
                 receipt_detail_list.Add(objReceiptDetail);
 
+                //Update new transaction in Transaction Table with current warehouse item cost as item_unit_cost
                 result = SaveTransaction(objOrderDetails, receipt_date_time, item_unit_cost);
 
 
@@ -286,12 +288,16 @@ namespace dipndipInventory.Views.Stock
                     break;
                 }
                 decimal current_item_qty = 0.0m;
+
+                //Get current ck_qty from ckwh_items to update with the received qty
                 if(_wcontext.GetCurrentCKQty(objOrderDetails.itemId)!=null)
                 {
                     current_item_qty = (decimal)_wcontext.GetCurrentCKQty(objOrderDetails.itemId);
                 }
                 
                 decimal ck_updated_qty =  current_item_qty + objOrderDetails.qty_received;
+
+                //Update ck_qty with ck_updated_qty in ckwh_items table
                 result = _wcontext.UpdateCKItemQty(objOrderDetails.itemId, ck_updated_qty, GlobalVariables.ActiveUser.Id);
 
                 if(result<=0)

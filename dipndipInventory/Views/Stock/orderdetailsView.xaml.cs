@@ -420,5 +420,6 @@ namespace dipndipInventory.Views.Stock
 
             
         }
+
     }
 }
