@@ -18,7 +18,7 @@ namespace dipndipInventory.EF.DataServices
                 _context.SaveChanges();
                 _context.Dispose();
             }
-            catch
+            catch(Exception e)
             {
                 _context.Dispose();
                 return 0;
@@ -99,6 +99,20 @@ namespace dipndipInventory.EF.DataServices
                 _context = new CKEntities();
                 IEnumerable<transaction_details> objTransactionDetails = (from transaction_detail in _context.transaction_details where transaction_detail.trans_type=="Receipt" orderby transaction_detail.Id descending select transaction_detail);
                 return objTransactionDetails;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public transaction_details ReadNReceiptTransaction(int skip_no)
+        {
+            try
+            {
+                _context = new CKEntities();
+                transaction_details objTransactionDetail = (from transaction_detail in _context.transaction_details where transaction_detail.trans_type == "Receipt" orderby transaction_detail.Id descending select transaction_detail).Skip(skip_no).Take(1).FirstOrDefault();
+                return objTransactionDetail;
             }
             catch
             {

@@ -188,7 +188,7 @@ namespace dipndipInventory.Views.Stock
 
                         objWHItemCost.created_by = GlobalVariables.ActiveUser.Id;
                         objWHItemCost.created_date = DateTime.Now;
-                        result = _hcontext.UpdateWHItemCost(objWHItemCost);
+                        result = _hcontext.UpdateWHItemCost(objWHItemCost);//_hcontext.CreateWHItemCost(objWHItemCost);
                         if (result <= 0)
                         {
                             MessageBox.Show("Warehouse Item Cost Updation Failed");

@@ -119,6 +119,7 @@
     <Compile Include="Helpers\ToWord.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="Validations\Validation.cs" />
+    <Compile Include="ViewModels\AdjustmentDetailsViewModel.cs" />
     <Compile Include="ViewModels\CKItemRecipeViewModel.cs" />
     <Compile Include="ViewModels\ItemUnitViewModel.cs" />
     <Compile Include="ViewModels\OrderDetailsViewModel.cs" />

@@ -194,5 +194,19 @@ namespace dipndipInventory.EF.DataServices
 
             return base_unit_id;
         }
+
+        public int? GetCKUnitID(int wh_item_unit_id)
+        {
+            int? ck_unit_id = 0;
+
+            try
+            {
+                _context = new CKEntities();
+                ck_unit_id = (from whitemunit in _context.wh_item_unit where (whitemunit.Id == wh_item_unit_id) select whitemunit.ck_unit_id).FirstOrDefault();
+            }
+            catch { return null; }
+
+            return ck_unit_id;
+        }
     }
 }
