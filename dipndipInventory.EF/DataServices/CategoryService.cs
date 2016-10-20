@@ -9,7 +9,7 @@ namespace dipndipInventory.EF.DataServices
     public class CategoryService
     {
         CKEntities _context;
-        public int CreateCategory(ckwh_category objCategory)
+        public int CreateCategory1(ckwh_category objCategory)
         {
             try
             {
@@ -22,6 +22,28 @@ namespace dipndipInventory.EF.DataServices
             {
                 _context.Dispose();
                 return 0;
+            }
+            return 1;
+        }
+
+        public int CreateCategory(ckwh_category objCategory)
+        {
+            using (var context = new CKEntities())
+            {
+                using (var dbcxtrx = context.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        _context.ckwh_category.Add(objCategory);
+                        _context.SaveChanges();
+                        dbcxtrx.Commit();
+                    }
+                    catch
+                    {
+                        dbcxtrx.Rollback();
+                        return 0;
+                    }
+                }
             }
             return 1;
         }
@@ -40,7 +62,7 @@ namespace dipndipInventory.EF.DataServices
             }
         }
 
-        public int UpdateCategory(ckwh_category objCategory)
+        public int UpdateCategory1(ckwh_category objCategory)
         {
             try
             {
@@ -63,7 +85,32 @@ namespace dipndipInventory.EF.DataServices
             }
         }
 
-        public int DeleteCategory(ckwh_category objCategory)
+        public int UpdateCategory(ckwh_category objCategory)
+        {
+            using (var context = new CKEntities())
+            {
+                using (var dbcxtrx = context.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        ckwh_category objCategoryToUpdate = (from category in context.ckwh_category where category.Id == objCategory.Id select category).SingleOrDefault();
+                        objCategoryToUpdate.category_name = objCategory.category_name;
+                        objCategoryToUpdate.modified_date = objCategory.modified_date;
+                        objCategoryToUpdate.modified_by = objCategory.modified_by;
+                        objCategoryToUpdate.active = objCategory.active;
+                        context.SaveChanges();
+                        dbcxtrx.Commit();
+                        return 1;
+                    }
+                    catch
+                    {
+                        dbcxtrx.Rollback();
+                        return 0;
+                    }
+                }
+            }
+        }
+        public int DeleteCategory1(ckwh_category objCategory)
         {
             try
             {
@@ -81,6 +128,28 @@ namespace dipndipInventory.EF.DataServices
             }
         }
 
+        public int DeleteCategory(ckwh_category objCategory)
+        {
+            using (var context = new CKEntities())
+            {
+                using (var dbcxtrx = context.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        ckwh_category objCategoryToDelete = (from category in context.ckwh_category where category.Id == objCategory.Id select category).Single();
+                        context.ckwh_category.Remove(objCategoryToDelete);
+                        context.SaveChanges();
+                        dbcxtrx.Commit();
+                        return 1;
+                    }
+                    catch
+                    {
+                        dbcxtrx.Rollback();
+                        return 0;
+                    }
+                }
+            }
+        }
         public bool IsExistingCategory(int category_id)
         {
             bool _result = false;

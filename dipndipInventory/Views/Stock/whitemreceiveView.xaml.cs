@@ -188,7 +188,8 @@ namespace dipndipInventory.Views.Stock
 
                         objWHItemCost.created_by = GlobalVariables.ActiveUser.Id;
                         objWHItemCost.created_date = DateTime.Now;
-                        result = _hcontext.UpdateWHItemCost(objWHItemCost);//_hcontext.CreateWHItemCost(objWHItemCost);
+                        //result = _hcontext.UpdateWHItemCost(objWHItemCost);//_hcontext.CreateWHItemCost(objWHItemCost);
+                        _hcontext.CreateWHItemCost(objWHItemCost);
                         if (result <= 0)
                         {
                             MessageBox.Show("Warehouse Item Cost Updation Failed");
@@ -252,8 +253,9 @@ namespace dipndipInventory.Views.Stock
                 OrderDetailsViewModel objOrderDetails = row.Item as OrderDetailsViewModel;
 
                 // Update order_details table with received qty
-                result = _ocontext.UpdateReceivedQty(active_order_id, objOrderDetails.qty_received);
-                if(result<=0)
+                //result = _ocontext.UpdateReceivedQty(active_order_id, objOrderDetails.qty_received);
+                result = _ocontext.UpdateReceivedQty(objOrderDetails.id, objOrderDetails.qty_received);
+                if (result<=0)
                 {
                     break;
                 }
@@ -268,7 +270,7 @@ namespace dipndipInventory.Views.Stock
                 objReceiptDetail.wh_item_code = objOrderDetails.itemCode;
                 objReceiptDetail.wh_item_description = objOrderDetails.itemDescription;
                 objReceiptDetail.wh_item_unit_id = objOrderDetails.unitId;
-                objReceiptDetail.wh_item_description = objOrderDetails.unitDescription;
+                objReceiptDetail.ck_unit_description = objOrderDetails.unitDescription;
                 objReceiptDetail.qty_ordered = objOrderDetails.qty;
                 objReceiptDetail.qty_received = objOrderDetails.qty_received;
                 objReceiptDetail.wh_item_unit_cost = item_unit_cost;

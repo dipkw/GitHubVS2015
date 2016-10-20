@@ -115,8 +115,16 @@ namespace dipndipInventory.Views.Stock
             txtDescription.Value = objItem.wh_item_description;
             WHItemService _wicontext = new WHItemService();
             selected_item_id = _wicontext.GetItemId(txtItemCode.Value);
-            selected_item_unit_cost = (decimal)objItem.unit_cost;
-            
+            //selected_item_unit_cost = (decimal)objItem.unit_cost;
+            if (objItem.ck_avg_unit_cost == null)
+            {
+                selected_item_unit_cost = 0.000m;
+            }
+            else
+            {
+                selected_item_unit_cost = (decimal)objItem.ck_avg_unit_cost;
+            }
+
             if (objItem.ck_qty != null)
             {
                 selected_ck_qty = (decimal)objItem.ck_qty;
@@ -128,6 +136,7 @@ namespace dipndipInventory.Views.Stock
         {
             WHItemService _wcontext = new WHItemService();
             WHItemUnitService _wiucontext = new WHItemUnitService();
+            WHItemService _wicontext = new WHItemService();
             decimal conv_factor = 0.000m;
             decimal item_unit_cost = 0.000m;
             decimal updated_average_cost = 0.000m;
@@ -143,29 +152,39 @@ namespace dipndipInventory.Views.Stock
             //decimal current_ck_qty = 0.00000000m;
             decimal updated_ck_qty = 0.00000000m;
             decimal adj_qty = (decimal)(txtQty.Value)*conv_factor;
+            string trans_type = string.Empty;
             updated_ck_qty = selected_ck_qty + (adj_qty*conversion_factor);
             if(((decimal)txtQty.Value)>0)
             {
                 updated_average_cost = GetAdjAvgCost(adj_qty);
                 item_unit_cost = updated_average_cost;
+                trans_type = "AdjIn";
                 if(updated_average_cost != selected_item_unit_cost)
                 {
                     //Create new record in wh_item_cost_history
-                    
+                    //UpdateCostHistory(updated_average_cost);
+                    CreateCost(updated_average_cost);
                 }
             }
             else
             {
                 item_unit_cost = selected_item_unit_cost * conv_factor;
                 updated_average_cost = item_unit_cost;
+                trans_type = "AdjOut";
                 //Update ck_qty
-                _wcontext.UpdateCKItemQty(Convert.ToInt32(selected_item_id), updated_ck_qty, GlobalVariables.ActiveUser.Id);
+                
                 //update transaction
                 
             }
 
+            //Update CK Quantity
+            _wcontext.UpdateCKItemQty(Convert.ToInt32(selected_item_id), updated_ck_qty, GlobalVariables.ActiveUser.Id);
+
+            //Update Item CK Item Avg Unit Cost
+            _wicontext.UpdateCKItemAvgUnitCost(selected_item_id, updated_average_cost);
+
             //Update Transaction
-            SaveTransaction(DateTime.Now, item_unit_cost, adj_qty);
+            SaveTransaction(DateTime.Now, item_unit_cost, adj_qty, trans_type);
 
             SaveStockAdj(conv_factor,item_unit_cost);
 
@@ -176,6 +195,37 @@ namespace dipndipInventory.Views.Stock
             MessageBox.Show(updated_ck_qty.ToString());
         }
 
+        private int CreateCost(decimal updated_average_cost)
+        {
+            WHItemCostService _hcontext = new WHItemCostService();
+            wh_item_cost_history objWHItemCost = new wh_item_cost_history();
+            wh_item_cost_history lastWHItemCost = _hcontext.GetLastCost((int)(selected_item_id));
+            int result = 0;
+            //If item cost is in history table
+            if (lastWHItemCost != null)
+            {
+                objWHItemCost.prev_cost = lastWHItemCost.curr_cost;
+                objWHItemCost.ord = lastWHItemCost.ord + 1;
+            }
+            else
+            {
+                objWHItemCost.prev_cost = 0;
+                objWHItemCost.ord = 1;
+            }
+            objWHItemCost.wh_item_id = selected_item_id;
+            objWHItemCost.wh_item_code = txtItemCode.Value;
+            objWHItemCost.wh_item_description = txtDescription.Value;
+            objWHItemCost.curr_cost = updated_average_cost;
+            objWHItemCost.created_by = GlobalVariables.ActiveUser.Id;
+            objWHItemCost.created_date = DateTime.Now;
+            //result = _hcontext.UpdateWHItemCost(objWHItemCost);//_hcontext.CreateWHItemCost(objWHItemCost);
+            result = _hcontext.CreateWHItemCost(objWHItemCost);
+            if (result <= 0)
+            {
+                 MessageBox.Show("Warehouse Item Cost Updation Failed");
+            }
+            return result;
+        }
         private void SaveStockAdj(decimal conv_factor, decimal item_unit_cost)
         {
             WHAdjService _adcontext = new WHAdjService();
@@ -276,7 +326,7 @@ namespace dipndipInventory.Views.Stock
             }
             return result;
         }
-        private int SaveTransaction(DateTime adj_date_time, decimal item_unit_cost, decimal qty_adjusted)
+        private int SaveTransaction(DateTime adj_date_time, decimal item_unit_cost, decimal qty_adjusted, string trans_type)
         {
             int result = 0;
 
@@ -296,7 +346,7 @@ namespace dipndipInventory.Views.Stock
             objTransactionDetail.total_cost = Math.Abs(qty_adjusted) * item_unit_cost;
             objTransactionDetail.order_from_site_id = _scontext.GetSiteIDBySiteName("Central Kitchen");
             objTransactionDetail.order_to_site_id = _scontext.GetSiteIDBySiteName("Central Kitchen");
-            objTransactionDetail.trans_type = "Adjustment";
+            objTransactionDetail.trans_type = trans_type;
             objTransactionDetail.active = true;
             objTransactionDetail.created_by = GlobalVariables.ActiveUser.Id;
             objTransactionDetail.created_date = adj_date_time;

@@ -344,38 +344,40 @@ namespace dipndipInventory.EF.DataServices
             }
         }
 
-        public int UpdateIssuedQty(long order_id, decimal qty_issued)
+        public int UpdateIssuedQty(long order_detail_id, decimal qty_issued)
         {
             try
             {
                 _context = new CKEntities();
-                order_details objCKOrderDetailsToUpdate = (from ckorderdetails in _context.order_details where ckorderdetails.order_id == order_id select ckorderdetails).SingleOrDefault();
+                //order_details objCKOrderDetailsToUpdate = (from ckorderdetails in _context.order_details where ckorderdetails.order_id == order_id select ckorderdetails).FirstOrDefault();
+                order_details objCKOrderDetailsToUpdate = (from ckorderdetails in _context.order_details where ckorderdetails.Id == order_detail_id select ckorderdetails).FirstOrDefault();
                 objCKOrderDetailsToUpdate.qty_issued = qty_issued;
                 _context.SaveChanges();
 
                 _context.Dispose();
                 return 1;
             }
-            catch
+            catch(Exception ex)
             {
                 _context.Dispose();
                 return 0;
             }
         }
 
-        public int UpdateReceivedQty(long order_id, decimal qty_received)
+        public int UpdateReceivedQty(long order_detail_id, decimal qty_received)
         {
             try
             {
                 _context = new CKEntities();
-                order_details objCKOrderDetailsToUpdate = (from ckorderdetails in _context.order_details where ckorderdetails.order_id == order_id select ckorderdetails).SingleOrDefault();
+                //order_details objCKOrderDetailsToUpdate = (from ckorderdetails in _context.order_details where ckorderdetails.order_id == order_id select ckorderdetails).SingleOrDefault();
+                order_details objCKOrderDetailsToUpdate = (from ckorderdetails in _context.order_details where ckorderdetails.Id == order_detail_id select ckorderdetails).FirstOrDefault();
                 objCKOrderDetailsToUpdate.qty_received = qty_received;
                 _context.SaveChanges();
 
                 _context.Dispose();
                 return 1;
             }
-            catch
+            catch(Exception Ex)
             {
                 _context.Dispose();
                 return 0;
@@ -388,6 +390,37 @@ namespace dipndipInventory.EF.DataServices
         //***************************** Order ************************************************
 
         public int CreateOrder(order order_master, List<order_details> order_detail_list)
+        {
+            //int result = 0;
+
+            using (var context = new CKEntities())
+            {
+                using (var dbcxtrx = context.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        context.orders.Add(order_master);
+                        foreach (var order_detail in order_detail_list)
+                        {
+                            order_detail.order_id = order_master.Id;
+                            order_detail.order_no = order_master.order_no;
+                            context.order_details.Add(order_detail);
+                        }
+                        context.SaveChanges();
+                        dbcxtrx.Commit();
+                        return 1;
+                    }
+                    catch
+                    {
+                        dbcxtrx.Rollback();
+                        return 0;
+                    }
+                }
+            }
+            //return result;
+        }
+
+        public int CreateOrder1(order order_master, List<order_details> order_detail_list)
         {
             int result = 0;
 
@@ -409,6 +442,49 @@ namespace dipndipInventory.EF.DataServices
         }
 
         public int UpdateOrder(order order_master, List<order_details> order_detail_list)
+        {
+            using (var context = new CKEntities())
+            {
+                using (var dbcxtrx = context.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        order objCKOrderToUpdate = (from ckorder in context.orders where ckorder.Id == order_master.Id select ckorder).SingleOrDefault();
+                        objCKOrderToUpdate.order_date = order_master.order_date;
+                        objCKOrderToUpdate.order_from_site_id = order_master.order_from_site_id;
+                        objCKOrderToUpdate.order_to_site_id = order_master.order_to_site_id;
+                        objCKOrderToUpdate.modified_date = order_master.modified_date;
+                        objCKOrderToUpdate.modified_by = order_master.modified_by;
+                        objCKOrderToUpdate.active = order_master.active;
+                        //context.SaveChanges();
+                        foreach (var order_detail in order_detail_list)
+                        {
+                            order_details objCKOrderDetailsToUpdate = (from ckorderdetails in context.order_details where ckorderdetails.Id == order_detail.Id select ckorderdetails).SingleOrDefault();
+                            objCKOrderDetailsToUpdate.order_id = order_detail.order_id;
+                            objCKOrderDetailsToUpdate.order_no = order_detail.order_no;
+                            objCKOrderDetailsToUpdate.ckwh_item_id = order_detail.ckwh_item_id;
+                            objCKOrderDetailsToUpdate.wh_item_unit_id = order_detail.wh_item_unit_id;
+                            objCKOrderDetailsToUpdate.qty = order_detail.qty;
+                            objCKOrderDetailsToUpdate.active = order_detail.active;
+                            objCKOrderDetailsToUpdate.modified_date = order_detail.modified_date;
+                            objCKOrderDetailsToUpdate.modified_by = order_detail.modified_by;
+                            objCKOrderDetailsToUpdate.active = order_detail.active;
+                            //context.SaveChanges();
+                        }
+                        context.SaveChanges();
+                        dbcxtrx.Commit();
+                        return 1;
+                    }
+                    catch(Exception Ex)
+                    {
+                        dbcxtrx.Rollback();
+                        return 0;
+                    }
+                }
+            }
+        }
+
+        public int UpdateOrder1(order order_master, List<order_details> order_detail_list)
         {
             int result = 0;
 

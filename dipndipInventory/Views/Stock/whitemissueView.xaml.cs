@@ -118,7 +118,8 @@ namespace dipndipInventory.Views.Stock
 
                 OrderDetailsViewModel objOrderDetails = row.Item as OrderDetailsViewModel;
                 
-                result = _ocontext.UpdateIssuedQty(active_order_id, objOrderDetails.qty_issued);
+                //result = _ocontext.UpdateIssuedQty(active_order_id, objOrderDetails.qty_issued);
+                result = _ocontext.UpdateIssuedQty(objOrderDetails.id, objOrderDetails.qty_issued);
             }
             if (result > 0)
             {

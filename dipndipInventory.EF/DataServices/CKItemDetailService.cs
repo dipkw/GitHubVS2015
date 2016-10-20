@@ -12,6 +12,29 @@ namespace dipndipInventory.EF.DataServices
 
         public int CreateCKItemDetails(ck_item_details objCKItemDetails)
         {
+            using (var context = new CKEntities())
+            {
+                using (var dbcxtrx = context.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        context.ck_item_details.Add(objCKItemDetails);
+                        context.SaveChanges();
+                        dbcxtrx.Commit();
+                        return 1;
+                    }
+                    catch
+                    {
+                        dbcxtrx.Rollback();
+                        return 0;
+                    }
+                }
+            }
+        }
+
+
+        public int CreateCKItemDetails1(ck_item_details objCKItemDetails)
+        {
             try
             {
                 _context = new CKEntities();
@@ -19,7 +42,7 @@ namespace dipndipInventory.EF.DataServices
                 _context.SaveChanges();
                 _context.Dispose();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _context.Dispose();
                 return 0;
@@ -42,6 +65,34 @@ namespace dipndipInventory.EF.DataServices
         }
 
         public int UpdateCKItemDetails(ck_item_details objCKItemDetails)
+        {
+            using (var context = new CKEntities())
+            {
+                using (var dbcxtrx = context.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        ck_item_details objCKItemDetailsToUpdate = (from ckitemdetails in context.ck_item_details where ckitemdetails.Id == objCKItemDetails.Id select ckitemdetails).SingleOrDefault();
+                        objCKItemDetailsToUpdate.ckwh_item_qty = objCKItemDetails.ckwh_item_qty;
+                        //objCKItemDetailsToUpdate.ckwh_item_unit = objCKItemDetails.ckwh_item_unit;
+                        objCKItemDetailsToUpdate.ckwh_item_unit_id = objCKItemDetails.ckwh_item_unit_id;
+                        objCKItemDetailsToUpdate.modified_date = objCKItemDetails.modified_date;
+                        objCKItemDetailsToUpdate.modified_by = objCKItemDetails.modified_by;
+                        //objWHItemToUpdate.active = objWHItem.active;
+                        context.SaveChanges();
+                        dbcxtrx.Commit();
+                        return 1;
+                    }
+                    catch
+                    {
+                        dbcxtrx.Rollback();
+                        return 0;
+                    }
+                }
+            }
+        }
+
+        public int UpdateCKItemDetails1(ck_item_details objCKItemDetails)
         {
             try
             {
@@ -67,6 +118,34 @@ namespace dipndipInventory.EF.DataServices
         }
 
         public int UpdateCKItemRecipe(ck_item_details objCKItemDetails)
+        {
+            using (var context = new CKEntities())
+            {
+                using (var dbcxtrx = context.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        ck_item_details objCKItemDetailsToUpdate = (from ckitemdetails in context.ck_item_details where ckitemdetails.Id == objCKItemDetails.Id select ckitemdetails).SingleOrDefault();
+                        objCKItemDetailsToUpdate.ckwh_item_qty = objCKItemDetails.ckwh_item_qty;
+                        //objCKItemDetailsToUpdate.ckwh_item_unit = objCKItemDetails.ckwh_item_unit;
+                        objCKItemDetailsToUpdate.ckwh_item_unit_id = objCKItemDetails.ckwh_item_unit_id;
+                        objCKItemDetailsToUpdate.modified_date = objCKItemDetails.modified_date;
+                        objCKItemDetailsToUpdate.modified_by = objCKItemDetails.modified_by;
+                        //objWHItemToUpdate.active = objWHItem.active;
+                        context.SaveChanges();
+                        dbcxtrx.Commit();
+                        return 1;
+                    }
+                    catch
+                    {
+                        dbcxtrx.Rollback();
+                        return 0;
+                    }
+                }
+            }
+        }
+
+        public int UpdateCKItemRecipe1(ck_item_details objCKItemDetails)
         {
             try
             {
@@ -137,6 +216,35 @@ namespace dipndipInventory.EF.DataServices
         }
 
         public int DeleteCKItemRecipeByCKItemId(int ck_item_id)
+        {
+            using (var context = new CKEntities())
+            {
+                using (var dbcxtrx = context.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        //wh_item_unit objWHItemUnitToDelete = (from whitemunit in _context.wh_item_unit where whitemunit.wh_item_id == wh_item_id select whitemunit).Single();
+                        IEnumerable<ck_item_details> objCKItemRecipesToDelete = (from ckitemrecipe in context.ck_item_details where ckitemrecipe.ck_item_id == ck_item_id select ckitemrecipe);
+
+                        foreach (ck_item_details objCKItemRecipeToDelete in objCKItemRecipesToDelete)
+                        {
+                            context.ck_item_details.Remove(objCKItemRecipeToDelete);
+
+                        }
+                        context.SaveChanges();
+                        dbcxtrx.Commit();
+                        return 1;
+                    }
+                    catch
+                    {
+                        dbcxtrx.Rollback();
+                        return 0;
+                    }
+                }
+            }
+        }
+
+        public int DeleteCKItemRecipeByCKItemId1(int ck_item_id)
         {
             try
             {

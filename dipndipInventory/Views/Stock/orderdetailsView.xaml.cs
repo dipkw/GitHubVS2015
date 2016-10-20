@@ -29,7 +29,7 @@ namespace dipndipInventory.Views.Stock
         bool edit_mode = false;
         bool item_edit_mode = false;
         //string username = string.Empty;
-        int id = 0;
+        long id = 0;
         List<OrderDetailsViewModel> OrderDetailsList = new List<OrderDetailsViewModel>();
         public orderdetailsView()
         {
@@ -49,6 +49,8 @@ namespace dipndipInventory.Views.Stock
             CKOrderService _ocontext = new CKOrderService();
             IEnumerable<order_details> selected_order = _ocontext.ReadCKOrderDetailsByMasterId(order_id);
             List<OrderDetailsViewModel> order_detail_list = new List<OrderDetailsViewModel>();
+            int row_index = 0;
+            id = order_id;
             foreach(order_details order_detail in selected_order)
             {
                 OrderDetailsViewModel order_detail_vm = new OrderDetailsViewModel();
@@ -59,6 +61,7 @@ namespace dipndipInventory.Views.Stock
                 order_detail_vm.unitId = (int)order_detail.wh_item_unit_id;
                 order_detail_vm.unitDescription = order_detail.wh_item_unit.ck_units.unit_description;
                 order_detail_vm.qty = (decimal)order_detail.qty;
+                order_detail_vm.rowIndex = ++row_index;
                 if (order_detail.qty_issued != null)
                 {
                     order_detail_vm.qty_issued = (decimal)order_detail.qty_issued;
@@ -67,6 +70,8 @@ namespace dipndipInventory.Views.Stock
             }
             dgCKOrderDetails.ItemsSource = null;
             dgCKOrderDetails.ItemsSource = order_detail_list;
+            OrderDetailsList = order_detail_list;
+            edit_mode = true;
         }
 
         private void SetDate()
@@ -176,7 +181,7 @@ namespace dipndipInventory.Views.Stock
                     txtItemCode.Focus();
                 }
             }
-            catch { }
+            catch(Exception Ex) { }
         }
 
         private void ClearItem()
@@ -324,6 +329,7 @@ namespace dipndipInventory.Views.Stock
 
         private void ClearOrder()
         {
+            edit_mode = false;
             btnSave.IsEnabled = true;
             string order_no = _context.GetNewCKOrderNo();
             txtOrderNo.Value = order_no;
@@ -376,6 +382,7 @@ namespace dipndipInventory.Views.Stock
                 return;
             }
             order order_master = new order();
+            order_master.Id = id;
             order_master.order_no = txtOrderNo.Value;
             order_master.order_date = dtpDate.SelectedDate + DateTime.Now.TimeOfDay;
             order_master.order_from_site_id = GlobalVariables.ActiveSite.Id;
@@ -387,6 +394,8 @@ namespace dipndipInventory.Views.Stock
             foreach(var odetail in OrderDetailsList)
             {
                 order_details objOrderDetail = new order_details();
+                objOrderDetail.order_id = id;
+                objOrderDetail.Id = odetail.id;
                 objOrderDetail.order_no = txtOrderNo.Value;
                 objOrderDetail.ckwh_item_id = odetail.itemId;
                 objOrderDetail.wh_item_unit_id = odetail.unitId;
@@ -402,7 +411,10 @@ namespace dipndipInventory.Views.Stock
             {
                 if(edit_mode)
                 {
-
+                    order_master.modified_by = GlobalVariables.ActiveUser.Id;
+                    order_master.modified_date = DateTime.Now;
+                    _result = _ocontext.UpdateOrder(order_master, order_detail_list) > 0 ? "Order Details Updated Successfully" : "Unable to Update Order Details";
+                    MessageBox.Show(_result);
                 }
                 else
                 {

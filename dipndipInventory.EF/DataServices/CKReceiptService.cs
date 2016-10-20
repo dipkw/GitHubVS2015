@@ -319,6 +319,34 @@ namespace dipndipInventory.EF.DataServices
 
         public int CreateReceipt(receipt receipt_master, List<receipt_details> receipt_detail_list)
         {
+            using (var context = new CKEntities())
+            {
+                using (var dbcxtrx = context.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        context.receipts.Add(receipt_master);
+                        foreach (var receipt_detail in receipt_detail_list)
+                        {
+                            receipt_detail.receipt_id = receipt_master.Id;
+                            receipt_detail.receipt_no = receipt_master.receipt_no;
+                            context.receipt_details.Add(receipt_detail);
+                        }
+                        context.SaveChanges();
+                        dbcxtrx.Commit();
+                        return 1;
+                    }
+                    catch(Exception Ex)
+                    {
+                        dbcxtrx.Rollback();
+                        return 0;
+                    }
+                }
+            }
+        }
+
+        public int CreateReceipt1(receipt receipt_master, List<receipt_details> receipt_detail_list)
+        {
             int result = 0;
 
             if (CreateCKReceipt(receipt_master) > 0)

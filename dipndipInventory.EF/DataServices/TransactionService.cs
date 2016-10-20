@@ -111,7 +111,7 @@ namespace dipndipInventory.EF.DataServices
             try
             {
                 _context = new CKEntities();
-                transaction_details objTransactionDetail = (from transaction_detail in _context.transaction_details where transaction_detail.trans_type == "Receipt" orderby transaction_detail.Id descending select transaction_detail).Skip(skip_no).Take(1).FirstOrDefault();
+                transaction_details objTransactionDetail = (from transaction_detail in _context.transaction_details where (transaction_detail.trans_type == "Receipt" || transaction_detail.trans_type == "AdjIn") orderby transaction_detail.Id descending select transaction_detail).Skip(skip_no).Take(1).FirstOrDefault();
                 return objTransactionDetail;
             }
             catch
