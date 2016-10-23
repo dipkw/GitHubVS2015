@@ -111,10 +111,10 @@
                             <TextBlock Text="Adjustment" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </telerik:RadRibbonButton>
-                    <telerik:RadRibbonButton   Width="70"  HorizontalContentAlignment="Center" x:Name="Issue">
+                    <telerik:RadRibbonButton   Width="70"  HorizontalContentAlignment="Center" x:Name="Wastage">
                         <StackPanel>
                             <Image Source="/dipndipInventory;component/images/menu_icons/9_exit_641.png" Width="32" Height="32"/>
-                            <TextBlock Text="Issue" HorizontalAlignment="Center"/>
+                            <TextBlock Text="Wastage" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </telerik:RadRibbonButton>
                     <telerik:RadRibbonButton x:Name="CategoryMenu"   Width="70"  HorizontalContentAlignment="Center" Click="CategoryMenu_Click">

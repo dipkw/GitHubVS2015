@@ -32,7 +32,7 @@ namespace dipndipInventory.Views.Stock
             InitializeComponent();
         }
 
-        public whitemreceiveView(long order_id, string order_no, DateTime order_date, DateTime issue_date)
+        public whitemreceiveView(long order_id, string order_no, DateTime order_date, DateTime issue_date) 
         {
             InitializeComponent();
             ShowTaskBar.ShowInTaskbar(this, "Item Receiving Details");

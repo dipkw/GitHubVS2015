@@ -93,6 +93,12 @@
     <Compile Include="ck_users.cs">
       <DependentUpon>CKModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ck_wastage_details.cs">
+      <DependentUpon>CKModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ck_wastage_master.cs">
+      <DependentUpon>CKModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="control_table.cs">
       <DependentUpon>CKModel.tt</DependentUpon>
     </Compile>
@@ -102,6 +108,7 @@
     <Compile Include="DataServices\CKItemService.cs" />
     <Compile Include="DataServices\CKOrderService.cs" />
     <Compile Include="DataServices\CKReceiptService.cs" />
+    <Compile Include="DataServices\CKWastageService.cs" />
     <Compile Include="DataServices\ReasonService.cs" />
     <Compile Include="DataServices\SiteService.cs" />
     <Compile Include="DataServices\TransactionService.cs" />
@@ -111,6 +118,9 @@
     <Compile Include="DataServices\WHItemCostService.cs" />
     <Compile Include="DataServices\WHItemService.cs" />
     <Compile Include="DataServices\WHItemUnitService.cs" />
+    <Compile Include="item_site.cs">
+      <DependentUpon>CKModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="order.cs">
       <DependentUpon>CKModel.tt</DependentUpon>
     </Compile>
