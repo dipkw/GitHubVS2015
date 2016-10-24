@@ -312,6 +312,8 @@ namespace dipndipInventory.Views.Stock
                     }
                 }
             }
+
+            //Delete items if not in the new recipe list
             IEnumerable<ck_item_details> objCKItemDetails = _dtcontext.ReadAllCKItemRecipeByCKItemId(id);
             foreach(ck_item_details itemDetail in objCKItemDetails)
             {

@@ -20,7 +20,7 @@ namespace dipndipInventory.EF.DataServices
                 _context.SaveChanges();
                 _context.Dispose();
             }
-            catch
+            catch(Exception Ex)
             {
                 _context.Dispose();
                 return 0;
@@ -99,7 +99,22 @@ namespace dipndipInventory.EF.DataServices
             }
         }
 
-        public bool IsExistingWHItemUnit(int wh_item_unit_id)
+        public bool IsExistingWHItemUnit(int wh_item_id, int ck_unit_id)
+        {
+            bool _result = false;
+            _context = new CKEntities();
+
+            wh_item_unit objUnit = (from whitemunit in _context.wh_item_unit where (whitemunit.wh_item_id == wh_item_id && whitemunit.ck_unit_id == ck_unit_id) select whitemunit).FirstOrDefault();
+
+            if (objUnit != null)
+            {
+                _result = true;
+            }
+
+            return _result;
+        }
+
+        public bool IsExistingWHItemUnit1(int wh_item_unit_id)
         {
             bool _result = false;
             _context = new CKEntities();
@@ -147,6 +162,29 @@ namespace dipndipInventory.EF.DataServices
                 return 1;
             }
             catch(Exception e)
+            {
+                _context.Dispose();
+                return 0;
+            }
+        }
+
+        public int DeleteWHItemUnitById(int id)
+        {
+            try
+            {
+                _context = new CKEntities();
+                IEnumerable<wh_item_unit> objWHItemUnitsToDelete = (from whitemunit in _context.wh_item_unit where whitemunit.Id == id select whitemunit);
+
+                foreach (wh_item_unit objWHItemUnitToDelete in objWHItemUnitsToDelete)
+                {
+                    _context.wh_item_unit.Remove(objWHItemUnitToDelete);
+
+                }
+                _context.SaveChanges();
+                _context.Dispose();
+                return 1;
+            }
+            catch (Exception e)
             {
                 _context.Dispose();
                 return 0;

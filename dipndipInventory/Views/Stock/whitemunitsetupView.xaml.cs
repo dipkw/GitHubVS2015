@@ -226,12 +226,63 @@ namespace dipndipInventory.Views.Stock
             //itemUnits.RemoveAll(x => x.unitId == selected_unit_id);
             itemUnits.RemoveAll(x => x.id == selected_unit_id);
             dgWHItemUnits.ItemsSource = itemUnits;
-            selected_unit_id = 0;
-            selected_unit_cost = 0.000m;
+            //selected_unit_id = 0;
+            //selected_unit_cost = 0.000m;
             btnDeleteUnit.IsEnabled = false;
         }
 
+
         private void SaveItemUnit()
+        {
+            string _dbresponse = string.Empty;
+            foreach(ItemUnitViewModel  itemUnit in itemUnits)
+            {
+                wh_item_unit objWHItemUnit = new wh_item_unit();
+                objWHItemUnit.wh_item_id = id;
+                objWHItemUnit.ck_unit_id = itemUnit.unitId;
+                objWHItemUnit.cnv_factor = itemUnit.conversionFactor;
+                if(_ucontext.IsExistingWHItemUnit(id, itemUnit.unitId))
+                {
+                    objWHItemUnit.Id = itemUnit.id;
+                    objWHItemUnit.modified_by = GlobalVariables.ActiveUser.Id;
+                    objWHItemUnit.modified_date = DateTime.Now;
+                    _dbresponse = _ucontext.UpdateWHItemUnit(objWHItemUnit) > 0 ? "Warehouse Item Unit Updated Successfully" : "Unable to Update Warehouse Item Unit Details";
+                    if (_dbresponse == "Unable to Update Warehouse Item Unit Details")
+                    {
+                        break;
+                    }
+                }
+                else
+                {
+                    objWHItemUnit.created_by = GlobalVariables.ActiveUser.Id;
+                    objWHItemUnit.created_date = DateTime.Now;
+                    _dbresponse = _ucontext.CreateWHItemUnit(objWHItemUnit) > 0 ? "Warehouse Item Unit Details Updated Successfully" : "Unable to Update Warehouse Item Unit Details";
+                    if (_dbresponse == "Unable to Update Warehouse Item Unit Details")
+                    {
+                        break;
+                    }
+                }
+            }
+            //Delete item units if not in the new unit list
+            IEnumerable<wh_item_unit> objCKItemUnitDetails = _ucontext.ReadAllWHItemUnitsByWHItemId(id);
+            foreach (wh_item_unit itemUnitDetail in objCKItemUnitDetails)
+            {
+                //search_result = itemRecipeList.FirstOrDefault(item => item.wh_item_id == itemDetail.ckwh_item_id).ToString();
+                //var search_result = itemUnits.Where(item => item.itemId == itemUnitDetail.wh_item_id);
+                //var search_result = itemUnits.Where(item => item.id == itemUnitDetail.Id);
+                var search_result = itemUnits.Where(item => ((item.itemId == itemUnitDetail.wh_item_id || item.itemId == 0) && item.unitId==itemUnitDetail.ck_unit_id));
+                if (search_result.Count() == 0)
+                {
+                    _dbresponse = _ucontext.DeleteWHItemUnitById((int)itemUnitDetail.Id) > 0 ? "Warehouse Item Unit Details Updated Successfully" : "Unable to Update Warehouse Item Unit Details";
+                    if (_dbresponse == "Unable to Update Warehouse Item Unit Details")
+                    {
+                        break;
+                    }
+                }
+            }
+            RadWindow.Alert(_dbresponse);
+        }
+        private void SaveItemUnit1()
         {
             //Update previous related records id with new id
             if(_ucontext.IsExistingWHItemUnitByWHItemId(id))
@@ -266,12 +317,15 @@ namespace dipndipInventory.Views.Stock
         {
             //Read units from database for the selected item and update the 'itemUnits' List
             IEnumerable<wh_item_unit> item_units = _ucontext.ReadAllWHItemUnitsByWHItemId(id);
+            WHItemService _icontext = new WHItemService();
             itemUnits.Clear();
             //MessageBox.Show(item_units.Count().ToString());
             foreach (wh_item_unit item_unit in item_units)
             {
                 ItemUnitViewModel objItemUnitViewModel = new ItemUnitViewModel();
                 objItemUnitViewModel.id = item_unit.Id;
+                objItemUnitViewModel.itemId = (int)item_unit.wh_item_id;
+                objItemUnitViewModel.itemCode = _icontext.GetItemCode(objItemUnitViewModel.itemId);
                 objItemUnitViewModel.unitId = (int)item_unit.ck_unit_id;
                 objItemUnitViewModel.unitText = item_unit.ck_units.unit_description;
                 objItemUnitViewModel.conversionFactor = (decimal)item_unit.cnv_factor;

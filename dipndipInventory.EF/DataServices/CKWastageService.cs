@@ -44,7 +44,6 @@ namespace dipndipInventory.EF.DataServices
             try
             {
                 _context = new CKEntities();
-                //IEnumerable<Purchase_detail> objPurchaseDetails = (from purchasedetail in _rcontext.Purchase_details where purchasedetail.Purchase_master_id == purchaseMasterId orderby purchasedetail.Purchase_details_id descending select purchasedetail);
                 IEnumerable<ck_wastage_details> objCKWastageDetails = (from ckwastagedetail in _context.ck_wastage_details where ckwastagedetail.wastage_master_id == ckWastageMasterId orderby ckwastagedetail.Id ascending select ckwastagedetail);
                 return objCKWastageDetails;
             }
