@@ -37,6 +37,7 @@ namespace dipndipInventory.Views.Users
             InitializeComponent();
             ShowTaskBar.ShowInTaskbar(this, "Users");
             ReadAllUsers();
+            FillAllActiveSites();
         }
 
         private void ReadAllUsers()
@@ -48,6 +49,14 @@ namespace dipndipInventory.Views.Users
             txtName.Focus();
         }
 
+        private void FillAllActiveSites()
+        {
+            SiteService _scontext = new SiteService();
+            IEnumerable<site> objActiveSites = _scontext.ReadAllActiveSites();
+            cmbSite.DisplayMemberPath = "site_name";
+            cmbSite.SelectedValuePath = "Id";
+            cmbSite.ItemsSource = objActiveSites.ToList();
+        }
         private void SelectUser()
         {
             try
@@ -77,6 +86,13 @@ namespace dipndipInventory.Views.Users
                 cmbRole.Text = objUser.role;
                 cmbRole.IsReadOnly = true;
                 cmbRole.IsHitTestVisible = false;
+
+                cmbSite.Text = objUser.site.site_name;
+                cmbSite.IsReadOnly = true;
+                cmbSite.IsHitTestVisible = false;
+
+                chkActive.IsChecked = objUser.active;
+                chkActive.IsEnabled = false;
 
                 btnSave.IsEnabled = false;
             }
@@ -110,6 +126,8 @@ namespace dipndipInventory.Views.Users
             //txtUsername.IsReadOnly = false;
             txtPassword.IsReadOnly = false;
             cmbRole.IsHitTestVisible = true;
+            cmbSite.IsHitTestVisible = true;
+            chkActive.IsEnabled = true;
 
             edit_mode = true;
             btnSave.IsEnabled = true;
@@ -126,6 +144,7 @@ namespace dipndipInventory.Views.Users
             txtUsername.Value = string.Empty;
             txtPassword.Value = string.Empty;
             cmbRole.IsHitTestVisible = true;
+            cmbSite.IsHitTestVisible = true;
 
             id = 0;
             //username = string.Empty;
@@ -191,6 +210,8 @@ namespace dipndipInventory.Views.Users
             //objStaff.Password = Crypto.EncryptStringAES(txtPassword.MaskedText, txtUsername.MaskedText);
             objUser.password = Crypto.CalculateHash(txtPassword.Value, txtUsername.Value);
             objUser.role = cmbRole.Text;
+            objUser.site_id = Convert.ToInt32(cmbSite.SelectedValue.ToString());
+            objUser.active = chkActive.IsChecked;
 
             string _dbresponse = string.Empty;
 

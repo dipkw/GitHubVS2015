@@ -17,7 +17,7 @@ namespace dipndipInventory.EF
         public int Id { get; set; }
         public Nullable<long> wastage_master_id { get; set; }
         public Nullable<int> ck_item_id { get; set; }
-        public Nullable<int> ck_unit_id { get; set; }
+        public Nullable<int> ck_item_unit_id { get; set; }
         public Nullable<decimal> wastage_qty { get; set; }
         public Nullable<int> created_by { get; set; }
         public Nullable<System.DateTime> created_date { get; set; }
@@ -25,8 +25,8 @@ namespace dipndipInventory.EF
         public Nullable<System.DateTime> modified_date { get; set; }
         public Nullable<bool> active { get; set; }
     
+        public virtual ck_item_unit ck_item_unit { get; set; }
         public virtual ck_items ck_items { get; set; }
-        public virtual ck_units ck_units { get; set; }
         public virtual ck_users ck_users { get; set; }
         public virtual ck_users ck_users1 { get; set; }
         public virtual ck_wastage_master ck_wastage_master { get; set; }

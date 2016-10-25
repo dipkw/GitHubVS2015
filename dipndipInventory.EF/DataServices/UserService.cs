@@ -52,6 +52,8 @@ namespace dipndipInventory.EF.DataServices
                 objUserToUpdate.uname = objUser.uname;
                 objUserToUpdate.password = objUser.password;
                 objUserToUpdate.role = objUser.role;
+                objUserToUpdate.site_id = objUser.site_id;
+                objUserToUpdate.active = objUser.active;
 
                 _context.SaveChanges();
 

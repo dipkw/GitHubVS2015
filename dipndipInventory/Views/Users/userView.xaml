@@ -57,6 +57,14 @@
                         <Label Content="User"/>
                     </telerik:RadComboBox>
                 </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <telerik:Label Content="Site" Height="25" Width="150"/>
+                    <telerik:RadComboBox Name="cmbSite" Width="250" Margin="5" TabIndex="5"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <telerik:Label Content="Active" Height="25" Width="150"/>
+                    <CheckBox Name="chkActive" Width="250" Margin="5" TabIndex="5" IsChecked="True"/>
+                </StackPanel>
 
 
             </StackPanel>

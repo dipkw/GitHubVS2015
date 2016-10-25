@@ -123,5 +123,29 @@ namespace dipndipInventory.EF.DataServices
             catch (Exception e) { return string.Empty; }
         }
 
+        public string GetItemCode(int id)
+        {
+            string item_code = string.Empty;
+
+            try
+            {
+                _context = new CKEntities();
+                item_code = (from ckitems in _context.ck_items where ckitems.Id == id select ckitems.ck_item_code).FirstOrDefault();
+            }
+            catch { return null; }
+            return item_code;
+        }
+
+        public ck_items GetItemByCode(string item_code)
+        {
+            try
+            {
+                _context = new CKEntities();
+                ck_items item_details = (from ckitems in _context.ck_items where ckitems.ck_item_code == item_code select ckitems).FirstOrDefault();
+                return item_details;
+            }
+            catch { return null; }
+        }
+
     }
 }

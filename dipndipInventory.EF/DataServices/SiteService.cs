@@ -40,6 +40,20 @@ namespace dipndipInventory.EF.DataServices
             }
         }
 
+        public IEnumerable<site> ReadAllActiveSites()
+        {
+            try
+            {
+                _context = new CKEntities();
+                IEnumerable<site> objSite = (from tmpsite in _context.sites where tmpsite.active==true orderby tmpsite.site_name ascending select tmpsite);
+                return objSite;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         public IEnumerable<site> ReadAllSitesSortByIdDesc()
         {
             try

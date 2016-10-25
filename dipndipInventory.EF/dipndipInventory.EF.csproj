@@ -87,6 +87,12 @@
     <Compile Include="ck_item_details.cs">
       <DependentUpon>CKModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ck_item_unit.cs">
+      <DependentUpon>CKModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ck_stock_trans.cs">
+      <DependentUpon>CKModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="ck_units.cs">
       <DependentUpon>CKModel.tt</DependentUpon>
     </Compile>
@@ -106,6 +112,7 @@
     <Compile Include="DataServices\CategoryService.cs" />
     <Compile Include="DataServices\CKItemDetailService.cs" />
     <Compile Include="DataServices\CKItemService.cs" />
+    <Compile Include="DataServices\CKItemUnitService.cs" />
     <Compile Include="DataServices\CKOrderService.cs" />
     <Compile Include="DataServices\CKReceiptService.cs" />
     <Compile Include="DataServices\CKWastageService.cs" />

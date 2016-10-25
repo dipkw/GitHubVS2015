@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:dipndipInventory.Views"
         xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
         mc:Ignorable="d"
-        Title="dipndipHome" Height="760" Width="1360" WindowState="Maximized">
+        Title="dipndip" Height="760" Width="1360" WindowState="Maximized">
     <Grid x:Name="LayoutRoot" >
 
         <Grid.RowDefinitions>
@@ -52,7 +52,7 @@
                 </telerik:RadRibbonGroup>
 
             </telerik:RadRibbonTab>-->
-            <telerik:RadRibbonTab Header="dipndip" Visibility="Visible">
+            <telerik:RadRibbonTab Header="Home" Visibility="Visible">
 
                 <!--<telerik:RadRibbonGroup Header="Sales">
                     <telerik:RadRibbonButton   Width="70"  HorizontalContentAlignment="Center" x:Name="Sales" Click="Sales_Click" >
@@ -92,7 +92,7 @@
 
                 
 
-                <telerik:RadRibbonGroup Header="Items">
+                <telerik:RadRibbonGroup Header="Warehouse">
                     <telerik:RadRibbonButton   Width="70"  HorizontalContentAlignment="Center" x:Name="CKOrders" Click="CKOrders_Click">
                         <StackPanel>
                             <Image Source="/dipndipInventory;component/images/menu_icons/fast-food-icon.png" Width="32" Height="32"/>
@@ -123,12 +123,7 @@
                             <TextBlock Text="Categories" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </telerik:RadRibbonButton>
-                    <telerik:RadRibbonButton x:Name="UnitsMenu"  Width="70"  HorizontalContentAlignment="Center" Click="UnitsMenu_Click">
-                        <StackPanel>
-                            <Image Source="/dipndipInventory;component/Images/menu_icons/Icon-Tickets.png" Width="32" Height="32"/>
-                            <TextBlock Text="Units" HorizontalAlignment="Center"/>
-                        </StackPanel>
-                    </telerik:RadRibbonButton>
+                    
                     <telerik:RadRibbonButton x:Name="WHItemsMenu"  Width="70"  HorizontalContentAlignment="Center" Click="WHItemsMenu_Click">
                         <StackPanel>
                             <Image Source="/dipndipInventory;component/Images/menu_icons/Icon-Tickets.png" Width="32" Height="32"/>
@@ -141,6 +136,10 @@
                             <TextBlock Text="Item Units" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </telerik:RadRibbonButton>
+                    
+                </telerik:RadRibbonGroup>
+
+                <telerik:RadRibbonGroup Header="Central Kitchen">
                     <telerik:RadRibbonButton x:Name="CKItemsMenu"  Width="70"  HorizontalContentAlignment="Center" Click="CKItemsMenu_Click">
                         <StackPanel>
                             <Image Source="/dipndipInventory;component/Images/menu_icons/fast-food-icon.png" Width="32" Height="32"/>
@@ -153,8 +152,29 @@
                             <TextBlock Text="CK Item Recipe" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </telerik:RadRibbonButton>
+                    <telerik:RadRibbonButton x:Name="CKItemUnitsMenu"  Width="85"  HorizontalContentAlignment="Center" Click="CKItemUnitsMenu_Click">
+                        <StackPanel>
+                            <Image Source="/dipndipInventory;component/Images/menu_icons/fast-food-icon.png" Width="32" Height="32"/>
+                            <TextBlock Text="CK Item Units" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </telerik:RadRibbonButton>
+                    <telerik:RadRibbonButton x:Name="CKProductionMenu"  Width="85"  HorizontalContentAlignment="Center">
+                        <StackPanel>
+                            <Image Source="/dipndipInventory;component/Images/menu_icons/fast-food-icon.png" Width="32" Height="32"/>
+                            <TextBlock Text="Production" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </telerik:RadRibbonButton>
                 </telerik:RadRibbonGroup>
 
+                <telerik:RadRibbonGroup Header="General">
+                    <telerik:RadRibbonButton x:Name="UnitsMenu"  Width="70"  HorizontalContentAlignment="Center" Click="UnitsMenu_Click">
+                        <StackPanel>
+                            <Image Source="/dipndipInventory;component/Images/menu_icons/Icon-Tickets.png" Width="32" Height="32"/>
+                            <TextBlock Text="Units" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </telerik:RadRibbonButton>
+                </telerik:RadRibbonGroup>
+                
                 <telerik:RadRibbonGroup Header="Setup">
                     <telerik:RadRibbonButton x:Name="UsersMenu"  Width="65"  HorizontalContentAlignment="Center" Click="UsersMenu_Click">
                         <StackPanel>
@@ -199,14 +219,9 @@
                     </StackPanel>
                 </telerik:RadRibbonGroup>-->
             </telerik:RadRibbonTab>
-
-            <telerik:RadRibbonTab Header="Optical Shop" ContextualGroupName="xHidden">
-                <telerik:RadRibbonGroup Header="Sales">
-                    <telerik:RadRibbonButton Content="Customers"/>
-
-                </telerik:RadRibbonGroup>
-
-            </telerik:RadRibbonTab>
+            <telerik:RadRibbonTab Header="Reports"></telerik:RadRibbonTab>
+            <telerik:RadRibbonTab Header="Admin"></telerik:RadRibbonTab>
+            
         </telerik:RadRibbonView>
         <StackPanel Margin="0,145,0,0" x:Name="stkGrid" VerticalAlignment="Stretch" >
 

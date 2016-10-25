@@ -163,5 +163,11 @@ namespace dipndipInventory.Views
             ckwhstockadjView sta = new ckwhstockadjView();
             sta.Show();
         }
+
+        private void CKItemUnitsMenu_Click(object sender, RoutedEventArgs e)
+        {
+            ckitemunitsetupView csv = new ckitemunitsetupView();
+            csv.Show();
+        }
     }
 }
