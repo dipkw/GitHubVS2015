@@ -33,6 +33,7 @@ namespace dipndipInventory.Views.Stock
         decimal selected_unit_cost = 0.000m;
         string base_unit = string.Empty;
         List<ItemUnitViewModel> itemUnits = new List<ItemUnitViewModel>();
+        List<ck_units> cmbUnitList = new List<ck_units>();
         public ckitemunitsetupView()
         {
             InitializeComponent();
@@ -53,11 +54,42 @@ namespace dipndipInventory.Views.Stock
             UnitService unitContext = new UnitService();
             IEnumerable<ck_units> objUnits = unitContext.ReadAllUnits();
             //cmbSupplier.DisplayMemberPath = "Supplier_code";
+            cmbBaseUnit.DisplayMemberPath = "unit_description";
+            cmbBaseUnit.SelectedValuePath = "Id";
             cmbUnit.DisplayMemberPath = "unit_description";
             cmbUnit.SelectedValuePath = "Id";
-            cmbUnit.ItemsSource = objUnits.ToList();
+            //cmbUnit.ItemsSource = objUnits.ToList();
+            cmbUnitList = objUnits.ToList();
+            cmbBaseUnit.ItemsSource = cmbUnitList;
+            cmbUnit.ItemsSource = cmbUnitList;
         }
 
+        public void UpdateUnitList()
+        {
+            var updated_unit_list = cmbUnitList.Where(x => x.Id != Convert.ToInt32(cmbBaseUnit.SelectedValue.ToString())).ToList();
+            cmbUnit.ItemsSource = null;
+            cmbUnit.ItemsSource = updated_unit_list.ToList();
+            UpdateGridWithBaseUnit();
+            cmbBaseUnit.IsHitTestVisible = false;
+        }
+
+        public void UpdateGridWithBaseUnit()
+        {
+            itemUnits.Clear();
+            ItemUnitViewModel objItemUnitViewModel = new ItemUnitViewModel();
+            //objItemUnitViewModel.id = item_unit.Id;
+            //objItemUnitViewModel.itemId = (int)item_unit.ck_item_id;
+            objItemUnitViewModel.itemCode = txtItemCode.Value;
+            objItemUnitViewModel.unitId = Convert.ToInt32(cmbBaseUnit.SelectedValue.ToString());
+            objItemUnitViewModel.unitText = cmbBaseUnit.Text;
+            objItemUnitViewModel.conversionFactor = 1;
+            objItemUnitViewModel.baseUnit = cmbBaseUnit.Text;
+            base_unit = cmbBaseUnit.Text;
+            //objItemUnitViewModel.unitCost = objItemUnitViewModel.conversionFactor * selected_unit_cost;
+            itemUnits.Add(objItemUnitViewModel);
+            dgCKItemUnits.ItemsSource = null;
+            dgCKItemUnits.ItemsSource = itemUnits;
+        }
         private void SelectItem()
         {
             try
@@ -87,7 +119,7 @@ namespace dipndipInventory.Views.Stock
                 btnSaveItem.IsEnabled = false;
                 btnSave.IsEnabled = false;
 
-                selected_unit_cost = (decimal)objCKItems.ck_item_unit_cost;
+                //selected_unit_cost = (decimal)objCKItems.ck_item_unit_cost;
                 base_unit = objCKItems.ck_units.unit_description;
 
                 UpdateItemUnitList();
@@ -215,7 +247,7 @@ namespace dipndipInventory.Views.Stock
             return true;
         }
 
-        private void dgWHItemUnits_SelectionChanged(object sender, SelectionChangeEventArgs e)
+        private void dgCKItemUnits_SelectionChanged(object sender, SelectionChangeEventArgs e)
         {
             SelectUnit();
             btnDeleteUnit.IsEnabled = true;
@@ -286,7 +318,7 @@ namespace dipndipInventory.Views.Stock
                 //search_result = itemRecipeList.FirstOrDefault(item => item.wh_item_id == itemDetail.ckwh_item_id).ToString();
                 //var search_result = itemUnits.Where(item => item.itemId == itemUnitDetail.wh_item_id);
                 //var search_result = itemUnits.Where(item => item.id == itemUnitDetail.Id);
-                var search_result = itemUnits.Where(item => ((item.itemId == itemUnitDetail.wh_item_id || item.itemId == 0) && item.unitId == itemUnitDetail.ck_unit_id));
+                var search_result = itemUnits.Where(item => ((item.itemId == itemUnitDetail.ck_item_id || item.itemId == 0) && item.unitId == itemUnitDetail.ck_unit_id));
                 if (search_result.Count() == 0)
                 {
                     _dbresponse = _ucontext.DeleteCKItemUnitById((int)itemUnitDetail.Id) > 0 ? "Central Kitchen Item Unit Details Updated Successfully" : "Unable to Update Central Kitchen Item Unit Details";
@@ -297,6 +329,55 @@ namespace dipndipInventory.Views.Stock
                 }
             }
             RadWindow.Alert(_dbresponse);
+        }
+
+        private void SaveItemUnit1()
+        {
+            //Update previous related records id with new id
+            if (_ucontext.IsExistingCKItemUnitByCKItemId(id))
+            {
+                _ucontext.DeleteCKItemUnitByCKItemId(id);
+                CreateItemUnits();
+            }
+            else
+            {
+                CreateItemUnits();
+            }
+        }
+
+        public void CreateItemUnits()
+        {
+            int itemCount = 0;
+            itemCount = itemUnits.Count();
+            string _dbresponse = string.Empty;
+            for (int i = 0; i < itemCount; i++)
+            {
+                ck_item_unit objCKItemUnit = new ck_item_unit();
+                //objWHItemUnit.wh_item_id = itemUnits[i].itemId;
+                objCKItemUnit.ck_item_id = id;
+                objCKItemUnit.ck_unit_id = itemUnits[i].unitId;
+                objCKItemUnit.cnv_factor = itemUnits[i].conversionFactor;
+                _dbresponse = _ucontext.CreateCKItemUnit(objCKItemUnit) > 0 ? "Item Unit Details Updated Successfully" : "Unable to Update Item Unit Details"; ;
+                RadWindow.Alert(_dbresponse);
+            }
+        }
+
+        private void btnSaveItem_Click(object sender, RoutedEventArgs e)
+        {
+            RadWindow.Confirm("Do you want to Continue ?", this.onSave);
+        }
+
+        private void onSave(object sender, WindowClosedEventArgs e)
+        {
+            if (e.DialogResult == true)
+            {
+                SaveItemUnit();
+            }
+        }
+
+        private void cmbBaseUnit_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            UpdateUnitList();
         }
     }
 }

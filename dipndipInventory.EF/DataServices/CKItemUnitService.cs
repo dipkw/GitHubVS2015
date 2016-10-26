@@ -49,11 +49,26 @@ namespace dipndipInventory.EF.DataServices
 
         public IEnumerable<ck_item_unit> ReadAllCKItemUnitsByCKItemId(int ck_item_id)
         {
+            try
+            {
+                CKEntities _context = new CKEntities();
+                IEnumerable<ck_item_unit> objCKItemUnits = (from ckitemunits in _context.ck_item_unit where ckitemunits.ck_item_id == ck_item_id orderby ckitemunits.Id descending select ckitemunits);
+                return objCKItemUnits;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public IEnumerable<ck_item_unit> ReadAllCKItemUnitsByCKItemId1(int ck_item_id)
+        {
+            IEnumerable<ck_item_unit> objCKItemUnits;
             using (var context = new CKEntities())
             {
                 try
                 {
-                    IEnumerable<ck_item_unit> objCKItemUnits = (from ckitemunits in context.ck_item_unit where ckitemunits.ck_item_id == ck_item_id orderby ckitemunits.Id descending select ckitemunits);
+                    objCKItemUnits = (from ckitemunits in context.ck_item_unit where ckitemunits.ck_item_id == ck_item_id orderby ckitemunits.Id descending select ckitemunits);
                     return objCKItemUnits;
                 }
                 catch
@@ -136,7 +151,7 @@ namespace dipndipInventory.EF.DataServices
             return result; 
         }
 
-        public bool IsExistingCKItemUnitByWHItemId(int ck_item__id)
+        public bool IsExistingCKItemUnitByCKItemId(int ck_item__id)
         {
             bool result = false;
             using (var context = new CKEntities())
@@ -158,7 +173,7 @@ namespace dipndipInventory.EF.DataServices
             return result;
         }
 
-        public int DeleteCKItemUnitByWHItemId(int ck_item_id)
+        public int DeleteCKItemUnitByCKItemId(int ck_item_id)
         {
             using (var context = new CKEntities())
             {
