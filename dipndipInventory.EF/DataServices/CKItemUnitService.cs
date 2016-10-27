@@ -129,7 +129,7 @@ namespace dipndipInventory.EF.DataServices
             }
         }
 
-        public bool IsExistingWHItemUnit(int ck_item_id, int ck_unit_id)
+        public bool IsExistingCKItemUnit(int ck_item_id, int ck_unit_id)
         {
             bool result = false;
             using (var context = new CKEntities())
@@ -152,6 +152,24 @@ namespace dipndipInventory.EF.DataServices
         }
 
         public bool IsExistingCKItemUnitByCKItemId(int ck_item__id)
+        {
+            bool result = false;
+            try
+            {
+                CKEntities context = new CKEntities();
+                ck_item_unit objckitemUnit = (from ckitemunit in context.ck_item_unit where ckitemunit.ck_item_id == ck_item__id select ckitemunit).FirstOrDefault();
+                if (objckitemUnit != null)
+                {
+                    result = true;
+                }
+            }
+            catch
+            {
+                result = false;
+            }
+            return result;
+        }
+        public bool IsExistingCKItemUnitByCKItemId1(int ck_item__id)
         {
             bool result = false;
             using (var context = new CKEntities())
@@ -231,6 +249,20 @@ namespace dipndipInventory.EF.DataServices
 
         public decimal? GetConversionFactor(int id)
         {
+            decimal? conv_factor = 0.000m;
+            try
+            {
+                CKEntities context = new CKEntities();
+                conv_factor = (from ckitemunit in context.ck_item_unit where ckitemunit.Id == id select ckitemunit.cnv_factor).FirstOrDefault();
+            }
+            catch
+            {
+                return null;
+            }
+            return conv_factor;
+        }
+        public decimal? GetConversionFactor1(int id)
+        {
             decimal? conv_factor = 0.0m;
             using (var context = new CKEntities())
             {
@@ -247,6 +279,20 @@ namespace dipndipInventory.EF.DataServices
         }
 
         public decimal? GetConversionFactorByCKItemId(int ck_item_id, int ck_unit_id)
+        {
+            decimal? conv_factor = 0.000m;
+            try
+            {
+                CKEntities context = new CKEntities();
+                conv_factor = (from ckitemunit in context.ck_item_unit where (ckitemunit.ck_item_id == ck_item_id && ckitemunit.ck_unit_id == ck_unit_id) select ckitemunit.cnv_factor).FirstOrDefault();
+            }
+            catch
+            {
+                return null;
+            }
+            return conv_factor;
+        }
+        public decimal? GetConversionFactorByCKItemId1(int ck_item_id, int ck_unit_id)
         {
             decimal? conv_factor = 0.0m;
             using (var context = new CKEntities())
@@ -266,6 +312,20 @@ namespace dipndipInventory.EF.DataServices
         public int? GetIdOfBaseUnit(int ck_item_id)
         {
             int? base_unit_id = 0;
+            try
+            {
+                CKEntities context = new CKEntities();
+                base_unit_id = (from ckitemunit in context.ck_item_unit where (ckitemunit.cnv_factor == 1 && ckitemunit.ck_item_id == ck_item_id) select ckitemunit.Id).FirstOrDefault();
+            }
+            catch
+            {
+                return null;
+            }
+            return base_unit_id;
+        }
+        public int? GetIdOfBaseUnit1(int ck_item_id)
+        {
+            int? base_unit_id = 0;
             using (var context = new CKEntities())
             {
                 try
@@ -281,6 +341,21 @@ namespace dipndipInventory.EF.DataServices
         }
 
         public int? GetCKUnitID(int ck_item_unit_id)
+        {
+            int? ck_unit_id = 0;
+            try
+            {
+                CKEntities context = new CKEntities();
+                ck_unit_id = (from ckitemunit in context.ck_item_unit where (ckitemunit.Id == ck_item_unit_id) select ckitemunit.ck_unit_id).FirstOrDefault();
+            }
+            catch
+            {
+                return null;
+            }
+            return ck_unit_id;
+        }
+
+        public int? GetCKUnitID1(int ck_item_unit_id)
         {
             int? ck_unit_id = 0;
             using (var context = new CKEntities())

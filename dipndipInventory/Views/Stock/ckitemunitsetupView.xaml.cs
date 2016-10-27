@@ -85,7 +85,20 @@ namespace dipndipInventory.Views.Stock
             objItemUnitViewModel.conversionFactor = 1;
             objItemUnitViewModel.baseUnit = cmbBaseUnit.Text;
             base_unit = cmbBaseUnit.Text;
+            //objItemUnitViewModel.defaultUnit = (bool)chkDefaultUnit.IsChecked;
             //objItemUnitViewModel.unitCost = objItemUnitViewModel.conversionFactor * selected_unit_cost;
+            if (MessageBox.Show("Do you want to set as default unit?", "Default Unit?", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+            {
+                objItemUnitViewModel.defaultUnit = true;
+                if ((bool)chkDefaultUnit.IsChecked)
+                {
+                    itemUnits.Select(u => { u.defaultUnit = false; return u; }).ToList();
+                }
+            }
+            else
+            {
+                objItemUnitViewModel.defaultUnit = false;
+            }
             itemUnits.Add(objItemUnitViewModel);
             dgCKItemUnits.ItemsSource = null;
             dgCKItemUnits.ItemsSource = itemUnits;
@@ -215,11 +228,24 @@ namespace dipndipInventory.Views.Stock
             objItemUnitViewModel.conversionFactor = (decimal)txtConvFactor.Value;
             objItemUnitViewModel.baseUnit = base_unit;
             objItemUnitViewModel.unitCost = objItemUnitViewModel.conversionFactor * selected_unit_cost;
+            objItemUnitViewModel.defaultUnit = (bool)chkDefaultUnit.IsChecked;
+            if ((bool)chkDefaultUnit.IsChecked)
+            {
+                itemUnits.Select(u => { u.defaultUnit = false; return u; }).ToList();
+            }
             itemUnits.Add(objItemUnitViewModel);
             dgCKItemUnits.ItemsSource = itemUnits.ToList();
+            //UpdateCmbUnitList();
             cmbUnit.SelectedIndex = -1;
             txtConvFactor.Value = 0.000;
             cmbUnit.Focus();
+        }
+
+        private void UpdateCmbUnitList()
+        {
+            var updated_unit_list = cmbUnitList.Where(x => x.Id != Convert.ToInt32(cmbUnit.SelectedValue.ToString())).ToList();
+            cmbUnit.ItemsSource = null;
+            cmbUnit.ItemsSource = updated_unit_list.ToList();
         }
 
         private bool UnitExistForItem(int unitId)
@@ -289,7 +315,8 @@ namespace dipndipInventory.Views.Stock
                 objCKItemUnit.ck_item_id = id;
                 objCKItemUnit.ck_unit_id = itemUnit.unitId;
                 objCKItemUnit.cnv_factor = itemUnit.conversionFactor;
-                if (_ucontext.IsExistingWHItemUnit(id, itemUnit.unitId))
+                objCKItemUnit.default_unit = itemUnit.defaultUnit;
+                if (_ucontext.IsExistingCKItemUnit(id, itemUnit.unitId))
                 {
                     objCKItemUnit.Id = itemUnit.id;
                     objCKItemUnit.modified_by = GlobalVariables.ActiveUser.Id;

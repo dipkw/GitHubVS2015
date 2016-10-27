@@ -25,10 +25,10 @@ namespace dipndipInventory.EF
         public Nullable<System.DateTime> modified_date { get; set; }
         public Nullable<bool> active { get; set; }
     
-        public virtual ck_item_unit ck_item_unit { get; set; }
         public virtual ck_items ck_items { get; set; }
         public virtual ck_users ck_users { get; set; }
         public virtual ck_users ck_users1 { get; set; }
         public virtual ck_wastage_master ck_wastage_master { get; set; }
+        public virtual ck_item_unit ck_item_unit { get; set; }
     }
 }

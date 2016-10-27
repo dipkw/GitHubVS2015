@@ -49,8 +49,8 @@ namespace dipndipInventory.EF
         public virtual DbSet<ck_wastage_master> ck_wastage_master { get; set; }
         public virtual DbSet<item_site> item_site { get; set; }
         public virtual DbSet<ck_stock_trans> ck_stock_trans { get; set; }
-        public virtual DbSet<ck_item_unit> ck_item_unit { get; set; }
         public virtual DbSet<ck_wastage_details> ck_wastage_details { get; set; }
+        public virtual DbSet<ck_item_unit> ck_item_unit { get; set; }
     
         public virtual ObjectResult<ReadWarehouseItems_Result> ReadWarehouseItems()
         {

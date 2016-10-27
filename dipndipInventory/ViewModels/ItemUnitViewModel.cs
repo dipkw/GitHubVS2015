@@ -16,5 +16,6 @@ namespace dipndipInventory.ViewModels
         public decimal conversionFactor { get; set; }
         public string baseUnit { get; set; }
         public decimal unitCost { get; set; }
+        public bool defaultUnit { get; set; }
     }
 }

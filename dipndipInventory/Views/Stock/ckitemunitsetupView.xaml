@@ -80,7 +80,7 @@
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" >
                             <telerik:Label Content="Default Unit" Height="25" Width="150"/>
-                            <telerik:DataFormCheckBoxField Name="chkDefaultUnit" Width="250" Margin="3" TabIndex="6" />
+                            <CheckBox x:Name="chkDefaultUnit" Margin="3,7,3,3"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="0,30,0,0" HorizontalAlignment="Right">
                             <telerik:RadButton Content="Add Unit" Margin="3" Width="70" Name="btnAddUnit" Click="btnAddUnit_Click"/>

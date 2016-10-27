@@ -24,6 +24,7 @@ namespace dipndipInventory.EF
         public Nullable<int> ck_item_id { get; set; }
         public Nullable<int> ck_unit_id { get; set; }
         public Nullable<decimal> cnv_factor { get; set; }
+        public Nullable<bool> default_unit { get; set; }
         public Nullable<int> created_by { get; set; }
         public Nullable<System.DateTime> created_date { get; set; }
         public Nullable<int> modified_by { get; set; }
