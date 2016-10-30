@@ -24,7 +24,7 @@ namespace dipndipInventory.EF
         public Nullable<int> created_by { get; set; }
         public Nullable<System.DateTime> created_date { get; set; }
     
-        public virtual ck_items ck_items { get; set; }
         public virtual ck_users ck_users { get; set; }
+        public virtual ck_items ck_items { get; set; }
     }
 }

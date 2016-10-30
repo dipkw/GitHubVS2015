@@ -158,7 +158,7 @@
                             <TextBlock Text="CK Item Units" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </telerik:RadRibbonButton>
-                    <telerik:RadRibbonButton x:Name="CKProductionMenu"  Width="85"  HorizontalContentAlignment="Center">
+                    <telerik:RadRibbonButton x:Name="CKProductionMenu"  Width="85"  HorizontalContentAlignment="Center" Click="CKProductionMenu_Click">
                         <StackPanel>
                             <Image Source="/dipndipInventory;component/Images/menu_icons/fast-food-icon.png" Width="32" Height="32"/>
                             <TextBlock Text="Production" HorizontalAlignment="Center"/>

@@ -19,8 +19,6 @@ namespace dipndipInventory.EF
         {
             this.ck_item_details = new HashSet<ck_item_details>();
             this.ck_item_details1 = new HashSet<ck_item_details>();
-            this.ck_items = new HashSet<ck_items>();
-            this.ck_items1 = new HashSet<ck_items>();
             this.ck_units = new HashSet<ck_units>();
             this.ck_units1 = new HashSet<ck_units>();
             this.ckwh_category = new HashSet<ckwh_category>();
@@ -53,6 +51,10 @@ namespace dipndipInventory.EF
             this.ck_wastage_details1 = new HashSet<ck_wastage_details>();
             this.ck_item_unit = new HashSet<ck_item_unit>();
             this.ck_item_unit1 = new HashSet<ck_item_unit>();
+            this.ck_prod = new HashSet<ck_prod>();
+            this.ck_prod1 = new HashSet<ck_prod>();
+            this.ck_items = new HashSet<ck_items>();
+            this.ck_items1 = new HashSet<ck_items>();
         }
     
         public int Id { get; set; }
@@ -67,10 +69,6 @@ namespace dipndipInventory.EF
         public virtual ICollection<ck_item_details> ck_item_details { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ck_item_details> ck_item_details1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ck_items> ck_items { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ck_items> ck_items1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ck_units> ck_units { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -136,5 +134,13 @@ namespace dipndipInventory.EF
         public virtual ICollection<ck_item_unit> ck_item_unit { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ck_item_unit> ck_item_unit1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ck_prod> ck_prod { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ck_prod> ck_prod1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ck_items> ck_items { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ck_items> ck_items1 { get; set; }
     }
 }

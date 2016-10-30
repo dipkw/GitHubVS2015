@@ -169,5 +169,11 @@ namespace dipndipInventory.Views
             ckitemunitsetupView csv = new ckitemunitsetupView();
             csv.Show();
         }
+
+        private void CKProductionMenu_Click(object sender, RoutedEventArgs e)
+        {
+            ckproductionView cpv = new ckproductionView();
+            cpv.Show();
+        }
     }
 }

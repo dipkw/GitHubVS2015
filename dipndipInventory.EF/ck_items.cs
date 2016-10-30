@@ -18,17 +18,18 @@ namespace dipndipInventory.EF
         public ck_items()
         {
             this.ck_item_cost_history = new HashSet<ck_item_cost_history>();
-            this.ck_wastage_details = new HashSet<ck_wastage_details>();
             this.ck_item_unit = new HashSet<ck_item_unit>();
+            this.ck_prod = new HashSet<ck_prod>();
+            this.ck_wastage_details = new HashSet<ck_wastage_details>();
         }
     
         public int Id { get; set; }
         public string ck_item_code { get; set; }
         public string ck_item_description { get; set; }
-        public Nullable<int> ck_desired_qty { get; set; }
+        public Nullable<decimal> ck_design_qty { get; set; }
         public Nullable<int> ck_unit_id { get; set; }
         public Nullable<decimal> ck_item_unit_cost { get; set; }
-        public Nullable<int> qty_on_hand { get; set; }
+        public Nullable<decimal> qty_on_hand { get; set; }
         public Nullable<System.DateTime> production_date { get; set; }
         public Nullable<System.DateTime> expiry_date { get; set; }
         public Nullable<int> created_by { get; set; }
@@ -37,14 +38,16 @@ namespace dipndipInventory.EF
         public Nullable<System.DateTime> modified_date { get; set; }
         public Nullable<bool> active { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ck_item_cost_history> ck_item_cost_history { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ck_item_unit> ck_item_unit { get; set; }
         public virtual ck_units ck_units { get; set; }
         public virtual ck_users ck_users { get; set; }
         public virtual ck_users ck_users1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ck_item_cost_history> ck_item_cost_history { get; set; }
+        public virtual ICollection<ck_prod> ck_prod { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ck_wastage_details> ck_wastage_details { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ck_item_unit> ck_item_unit { get; set; }
     }
 }

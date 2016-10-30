@@ -36,5 +36,10 @@ namespace dipndipInventory.EF
         public Nullable<System.DateTime> created_date { get; set; }
         public Nullable<int> modified_by { get; set; }
         public Nullable<System.DateTime> modified_date { get; set; }
+    
+        public virtual reason_codes reason_codes { get; set; }
+        public virtual ck_units ck_units { get; set; }
+        public virtual site site { get; set; }
+        public virtual site site1 { get; set; }
     }
 }

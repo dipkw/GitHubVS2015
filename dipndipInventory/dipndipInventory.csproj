@@ -121,6 +121,7 @@
     <Compile Include="Validations\Validation.cs" />
     <Compile Include="ViewModels\AdjustmentDetailsViewModel.cs" />
     <Compile Include="ViewModels\CKItemRecipeViewModel.cs" />
+    <Compile Include="ViewModels\CKProductionViewModel.cs" />
     <Compile Include="ViewModels\ItemUnitViewModel.cs" />
     <Compile Include="ViewModels\OrderDetailsViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
@@ -145,6 +146,9 @@
     </Compile>
     <Compile Include="Views\Stock\ckorderView.xaml.cs">
       <DependentUpon>ckorderView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Stock\ckproductionView.xaml.cs">
+      <DependentUpon>ckproductionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Stock\ckwhstockadjView.xaml.cs">
       <DependentUpon>ckwhstockadjView.xaml</DependentUpon>
@@ -213,6 +217,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Stock\ckorderView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Stock\ckproductionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

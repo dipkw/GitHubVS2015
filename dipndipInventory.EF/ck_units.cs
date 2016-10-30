@@ -17,10 +17,11 @@ namespace dipndipInventory.EF
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public ck_units()
         {
-            this.ck_items = new HashSet<ck_items>();
             this.ckwh_item_unit = new HashSet<ckwh_item_unit>();
             this.wh_item_unit = new HashSet<wh_item_unit>();
             this.ck_item_unit = new HashSet<ck_item_unit>();
+            this.ck_stock_trans = new HashSet<ck_stock_trans>();
+            this.ck_items = new HashSet<ck_items>();
         }
     
         public int Id { get; set; }
@@ -31,8 +32,6 @@ namespace dipndipInventory.EF
         public Nullable<System.DateTime> modified_date { get; set; }
         public Nullable<bool> active { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ck_items> ck_items { get; set; }
         public virtual ck_users ck_users { get; set; }
         public virtual ck_users ck_users1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -41,5 +40,9 @@ namespace dipndipInventory.EF
         public virtual ICollection<wh_item_unit> wh_item_unit { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ck_item_unit> ck_item_unit { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ck_stock_trans> ck_stock_trans { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ck_items> ck_items { get; set; }
     }
 }

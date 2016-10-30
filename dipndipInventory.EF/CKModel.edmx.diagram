@@ -13,7 +13,6 @@
         <AssociationConnector Association="dipckModel.FK_ck_item_details_ck_users11" />
         <AssociationConnector Association="dipckModel.FK_ck_item_details_ckwh_item_unit1" />
         <EntityTypeShape EntityType="dipckModel.ck_item_details" Width="1.5" PointX="10.5" PointY="17.75" />
-        <EntityTypeShape EntityType="dipckModel.ck_items" Width="1.5" PointX="5.25" PointY="17.5" />
         <EntityTypeShape EntityType="dipckModel.ck_units" Width="1.5" PointX="3" PointY="18.75" />
         <EntityTypeShape EntityType="dipckModel.ck_users" Width="1.5" PointX="0.75" PointY="16.25" />
         <EntityTypeShape EntityType="dipckModel.ckwh_category" Width="1.5" PointX="3" PointY="31.875" />
@@ -25,9 +24,6 @@
         <AssociationConnector Association="dipckModel.FK_ck_item_details_ck_users1" />
         <AssociationConnector Association="dipckModel.FK_ck_item_details_ckwh_items" />
         <AssociationConnector Association="dipckModel.FK_ck_item_details_wh_item_unit" />
-        <AssociationConnector Association="dipckModel.FK_ck_items_ck_units" />
-        <AssociationConnector Association="dipckModel.FK_ck_items_ck_users" />
-        <AssociationConnector Association="dipckModel.FK_ck_items_ck_users1" />
         <AssociationConnector Association="dipckModel.FK_ck_units_ck_users" />
         <AssociationConnector Association="dipckModel.FK_ck_units_ck_users1" />
         <AssociationConnector Association="dipckModel.FK_ckwh_item_unit_ck_units" />
@@ -78,7 +74,6 @@
         <AssociationConnector Association="dipckModel.FK_transaction_details_wh_item_unit" />
         <EntityTypeShape EntityType="dipckModel.ck_item_cost_history" Width="1.5" PointX="7.5" PointY="13.5" />
         <EntityTypeShape EntityType="dipckModel.wh_item_cost_history" Width="1.5" PointX="13.5" PointY="16.5" />
-        <AssociationConnector Association="dipckModel.FK_ck_item_cost_history_ck_items" />
         <AssociationConnector Association="dipckModel.FK_ck_item_cost_history_ck_users_created" />
         <AssociationConnector Association="dipckModel.FK_wh_item_cost_history_ck_users_created" />
         <AssociationConnector Association="dipckModel.FK_wh_item_cost_history_ckwh_items" />
@@ -100,16 +95,29 @@
         <EntityTypeShape EntityType="dipckModel.ck_stock_trans" Width="1.5" PointX="0.75" PointY="3.75" />
         <AssociationConnector Association="dipckModel.FK_ck_users_sites" />
         <EntityTypeShape EntityType="dipckModel.ck_wastage_details" Width="1.5" PointX="18.75" PointY="21.5" />
-        <AssociationConnector Association="dipckModel.FK_ck_wastage_details_ck_items" />
         <AssociationConnector Association="dipckModel.FK_ck_wastage_details_ck_users_created" />
         <AssociationConnector Association="dipckModel.FK_ck_wastage_details_ck_users_modified" />
         <AssociationConnector Association="dipckModel.FK_ck_wastage_details_ck_wastage_details" />
         <EntityTypeShape EntityType="dipckModel.ck_item_unit" Width="1.5" PointX="10.5" PointY="13" />
-        <AssociationConnector Association="dipckModel.FK_ck_item_unit_ck_items" />
         <AssociationConnector Association="dipckModel.FK_ck_item_unit_ck_units" />
         <AssociationConnector Association="dipckModel.FK_ck_item_unit_ck_users" />
         <AssociationConnector Association="dipckModel.FK_ck_item_unit_ck_users_created" />
         <AssociationConnector Association="dipckModel.FK_ck_wastage_details_ck_item_unit" />
+        <EntityTypeShape EntityType="dipckModel.ck_prod" Width="1.5" PointX="13.5" PointY="10.75" />
+        <AssociationConnector Association="dipckModel.FK_ck_prod_ck_item_unit_created" />
+        <AssociationConnector Association="dipckModel.FK_ck_prod_ck_users_modified" />
+        <AssociationConnector Association="dipckModel.FK_ck_stock_trans_ck_items" />
+        <AssociationConnector Association="dipckModel.FK_ck_stock_trans_ck_units" />
+        <AssociationConnector Association="dipckModel.FK_ck_stock_trans_sites" />
+        <AssociationConnector Association="dipckModel.FK_ck_stock_trans_sites_from" />
+        <EntityTypeShape EntityType="dipckModel.ck_items" Width="1.5" PointX="5.25" PointY="16.625" />
+        <AssociationConnector Association="dipckModel.FK_ck_item_cost_history_ck_items" />
+        <AssociationConnector Association="dipckModel.FK_ck_item_unit_ck_items" />
+        <AssociationConnector Association="dipckModel.FK_ck_items_ck_units" />
+        <AssociationConnector Association="dipckModel.FK_ck_items_ck_users" />
+        <AssociationConnector Association="dipckModel.FK_ck_items_ck_users1" />
+        <AssociationConnector Association="dipckModel.FK_ck_prod_ck_items" />
+        <AssociationConnector Association="dipckModel.FK_ck_wastage_details_ck_items" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

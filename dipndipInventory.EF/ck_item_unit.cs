@@ -31,11 +31,11 @@ namespace dipndipInventory.EF
         public Nullable<System.DateTime> modified_date { get; set; }
         public Nullable<bool> active { get; set; }
     
-        public virtual ck_items ck_items { get; set; }
         public virtual ck_units ck_units { get; set; }
         public virtual ck_users ck_users { get; set; }
         public virtual ck_users ck_users1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ck_wastage_details> ck_wastage_details { get; set; }
+        public virtual ck_items ck_items { get; set; }
     }
 }

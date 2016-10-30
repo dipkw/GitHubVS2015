@@ -85,8 +85,8 @@ namespace dipndipInventory.Views.Stock
                 cmbUnit.IsReadOnly = true;
                 cmbUnit.IsHitTestVisible = false;
 
-                txtDesiredQty.Value = (int)objCKItem.ck_desired_qty;
-                txtDesiredQty.IsReadOnly = true;
+                txtDesignQty.Value = (double)objCKItem.ck_design_qty;
+                txtDesignQty.IsReadOnly = true;
 
                 btnSave.IsEnabled = false;
             }
@@ -119,7 +119,7 @@ namespace dipndipInventory.Views.Stock
             txtDescription.IsReadOnly = false;
             cmbUnit.IsReadOnly = false;
             cmbUnit.IsHitTestVisible = true;
-            txtDesiredQty.IsReadOnly = false;
+            txtDesignQty.IsReadOnly = false;
             //txtUsername.IsReadOnly = false;
             edit_mode = true;
             btnSave.IsEnabled = true;
@@ -142,8 +142,8 @@ namespace dipndipInventory.Views.Stock
             cmbUnit.IsReadOnly = false;
             cmbUnit.IsHitTestVisible = true;
 
-            txtDesiredQty.Value = 0;
-            txtDesiredQty.IsReadOnly = false;
+            txtDesignQty.Value = 0;
+            txtDesignQty.IsReadOnly = false;
 
             id = 0;
             //username = string.Empty;
@@ -180,7 +180,7 @@ namespace dipndipInventory.Views.Stock
                 return false;
             }
 
-            if (Validate.TxtMaskNumericBlankCheck(txtDesiredQty, "Desired Quantity"))
+            if (Validate.TxtMaskNumericBlankCheck(txtDesignQty, "Design Quantity"))
             {
                 return false;
             }
@@ -209,7 +209,7 @@ namespace dipndipInventory.Views.Stock
             ck_items objCKItem = new ck_items();
             objCKItem.ck_item_description = txtDescription.Value;
             objCKItem.ck_unit_id = (int)cmbUnit.SelectedValue;
-            objCKItem.ck_desired_qty = (int)txtDesiredQty.Value;
+            objCKItem.ck_design_qty = (decimal)txtDesignQty.Value;
             //objUnit.category_name = txtCategoryName.Value;
 
 

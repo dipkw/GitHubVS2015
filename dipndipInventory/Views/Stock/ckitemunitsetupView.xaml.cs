@@ -133,7 +133,7 @@ namespace dipndipInventory.Views.Stock
                 btnSave.IsEnabled = false;
 
                 //selected_unit_cost = (decimal)objCKItems.ck_item_unit_cost;
-                base_unit = objCKItems.ck_units.unit_description;
+                //base_unit = objCKItems.ck_units.unit_description;
 
                 UpdateItemUnitList();
             }
@@ -144,6 +144,17 @@ namespace dipndipInventory.Views.Stock
         {
             //Read units from database for the selected item and update the 'itemUnits' List
             IEnumerable<ck_item_unit> item_units = _ucontext.ReadAllCKItemUnitsByCKItemId(id);
+            int tmpck_unit_id = 0;
+            try
+            {
+                tmpck_unit_id = (int)(from bunit in item_units where bunit.cnv_factor == 1 select bunit.ck_unit_id).FirstOrDefault();
+            }
+            catch
+            {
+                
+            }
+            UnitService _uscontext = new UnitService();
+            base_unit = _uscontext.GetUnitDescription(tmpck_unit_id);
             CKItemService _icontext = new CKItemService();
             itemUnits.Clear();
             //MessageBox.Show(item_units.Count().ToString());
@@ -297,10 +308,15 @@ namespace dipndipInventory.Views.Stock
 
         private void btnDeleteUnit_Click(object sender, RoutedEventArgs e)
         {
+            if(MessageBox.Show("Are you sure to delete this unit", "Delete Unit?", MessageBoxButton.YesNo)==MessageBoxResult.No)
+            {
+                return;
+            }
             dgCKItemUnits.ItemsSource = null;
             //itemUnits.RemoveAll(x => x.unitId == selected_unit_id);
             itemUnits.RemoveAll(x => x.id == selected_unit_id);
             dgCKItemUnits.ItemsSource = itemUnits;
+            SaveItemUnit();
             //selected_unit_id = 0;
             //selected_unit_cost = 0.000m;
             btnDeleteUnit.IsEnabled = false;

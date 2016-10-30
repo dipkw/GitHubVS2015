@@ -18,6 +18,7 @@ namespace dipndipInventory.EF
         public reason_codes()
         {
             this.transaction_details = new HashSet<transaction_details>();
+            this.ck_stock_trans = new HashSet<ck_stock_trans>();
         }
     
         public int Id { get; set; }
@@ -26,5 +27,7 @@ namespace dipndipInventory.EF
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<transaction_details> transaction_details { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ck_stock_trans> ck_stock_trans { get; set; }
     }
 }

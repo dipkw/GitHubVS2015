@@ -12,23 +12,28 @@ namespace dipndipInventory.EF
     using System;
     using System.Collections.Generic;
     
-    public partial class ck_wastage_details
+    public partial class ck_prod
     {
         public int Id { get; set; }
-        public Nullable<long> wastage_master_id { get; set; }
+        public string prod_code { get; set; }
+        public Nullable<System.DateTime> prod_date { get; set; }
         public Nullable<int> ck_item_id { get; set; }
+        public string ck_item_code { get; set; }
+        public string ck_item_desc { get; set; }
         public Nullable<int> ck_item_unit_id { get; set; }
-        public Nullable<decimal> wastage_qty { get; set; }
+        public string ck_item_unit_desc { get; set; }
+        public Nullable<decimal> conv_factor { get; set; }
+        public Nullable<decimal> prod_qty { get; set; }
+        public Nullable<decimal> unit_cost { get; set; }
+        public Nullable<decimal> total_cost { get; set; }
         public Nullable<int> created_by { get; set; }
         public Nullable<System.DateTime> created_date { get; set; }
         public Nullable<int> modified_by { get; set; }
         public Nullable<System.DateTime> modified_date { get; set; }
-        public Nullable<bool> active { get; set; }
+        public Nullable<int> active { get; set; }
     
         public virtual ck_users ck_users { get; set; }
         public virtual ck_users ck_users1 { get; set; }
-        public virtual ck_wastage_master ck_wastage_master { get; set; }
-        public virtual ck_item_unit ck_item_unit { get; set; }
         public virtual ck_items ck_items { get; set; }
     }
 }
