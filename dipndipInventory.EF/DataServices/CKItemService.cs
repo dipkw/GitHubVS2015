@@ -50,6 +50,7 @@ namespace dipndipInventory.EF.DataServices
                 ck_items objCKItemToUpdate = (from ckitem in _context.ck_items where ckitem.Id == objCKItem.Id select ckitem).SingleOrDefault();
                 objCKItemToUpdate.ck_item_description = objCKItem.ck_item_description;
                 objCKItemToUpdate.ck_design_qty = objCKItem.ck_design_qty;
+                objCKItemToUpdate.ck_unit_id = objCKItem.ck_unit_id;
                 objCKItemToUpdate.ck_item_unit_cost = objCKItem.ck_item_unit_cost;
                 objCKItemToUpdate.modified_date = objCKItem.modified_date;
                 objCKItemToUpdate.modified_by = objCKItem.modified_by;

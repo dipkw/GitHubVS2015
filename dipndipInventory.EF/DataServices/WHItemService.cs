@@ -223,5 +223,19 @@ namespace dipndipInventory.EF.DataServices
                 return 0;
             }
         }
+
+        public decimal? GetCKAvgCost(int wh_item_id)
+        {
+            decimal? avg_cost = 0.0m;
+
+            try
+            {
+                _context = new CKEntities();
+                avg_cost = (from whitems in _context.ckwh_items where whitems.Id == wh_item_id select whitems.ck_avg_unit_cost).FirstOrDefault();
+            }
+            catch { return null; }
+
+            return avg_cost;
+        }
     }
 }

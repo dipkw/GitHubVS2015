@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:dipndipInventory.Views.Stock"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
         mc:Ignorable="d"
         Header="Cental Kitchen Item Production" Height="700" Width="1024" WindowStartupLocation="CenterScreen">
@@ -18,18 +19,39 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Border Grid.ColumnSpan="2" Margin="10" BorderBrush="Black" BorderThickness="0.5" >
-            <telerik:RadGridView x:Name="dgCKProduction" AutoGenerateColumns="False" IsReadOnly="True" RowIndicatorVisibility="Collapsed" IsSynchronizedWithCurrentItem="False" FocusManager.FocusedElement="{Binding ElementName=dgCKProduction}" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <telerik:RadGridView x:Name="dgCKProduction" AutoGenerateColumns="False" RowIndicatorVisibility="Collapsed" IsSynchronizedWithCurrentItem="False" FocusManager.FocusedElement="{Binding ElementName=dgCKProduction}" HorizontalAlignment="Left" VerticalAlignment="Top" ShowSearchPanel="True">
                 <telerik:RadGridView.Columns>
-                    <telerik:GridViewDataColumn x:Name="ItemCode" DataMemberBinding="{Binding itemCode}" Width="*" Header="Item Code"/>
+                    <telerik:GridViewDataColumn x:Name="ItemCode" DataMemberBinding="{Binding itemCode}" Width="*" Header="Item Code" IsReadOnly="True"/>
 
 
-                    <telerik:GridViewDataColumn x:Name="ItemDescription" DataMemberBinding="{Binding itemDescription}" Width="*" Header="Description"/>
-                    <telerik:GridViewDataColumn x:Name="DesignQty" DataMemberBinding="{Binding designQty}" Width="*" Header="Design Qty"/>
+                    <telerik:GridViewDataColumn x:Name="ItemDescription" DataMemberBinding="{Binding itemDescription}" Width="3*" Header="Description" IsReadOnly="True"/>
+                    <telerik:GridViewDataColumn x:Name="DesignQty" DataMemberBinding="{Binding designQty}" Width="*" Header="Design Qty" IsReadOnly="True"/>
                     <telerik:GridViewDataColumn x:Name="ProductionQty" DataMemberBinding="{Binding prodQty}" Width="*" Header="Production Qty"/>
-                    <telerik:GridViewDataColumn x:Name="ProductionDate" DataMemberBinding="{Binding prodDate}" Width="*" Header="Production Date"/>
-                    <telerik:GridViewDataColumn x:Name="ExpiryDate" DataMemberBinding="{Binding expDate}" Width="*" Header="Expiry Date"/>
-                    <telerik:GridViewDataColumn x:Name="QOH" DataMemberBinding="{Binding qtyonHand}" Width="*" Header="Quantity On Hand"/>
+                    <!--<telerik:GridViewDataColumn x:Name="ProductionDate" DataMemberBinding="{Binding prodDate}" Width="*" Header="Production Date"/>
+                    <telerik:GridViewDataColumn x:Name="ExpiryDate" DataMemberBinding="{Binding expDate}" Width="*" Header="Expiry Date"/>-->
+                    <telerik:GridViewDataColumn x:Name="ProductionDate" DataMemberBinding="{Binding prodDate}" Width="*" Header="Production Date">
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate>
+                                <telerik:RadDatePicker x:Name="dtpProductionDate" DisplayFormat="Short" Culture="en-US" SelectedValue="{Binding prodDate, Mode=TwoWay}"></telerik:RadDatePicker>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                        <!--<telerik:GridViewDataColumn.CellEditTemplate>
+                            <DataTemplate>
+                                <telerik:RadDatePicker SelectedValue="{Binding prodDate, Mode=TwoWay}" DisplayFormat="Short" Culture="en-US"></telerik:RadDatePicker>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellEditTemplate>-->
+                    </telerik:GridViewDataColumn>
 
+                    <telerik:GridViewDataColumn x:Name="ExpiryDate" DataMemberBinding="{Binding expDate}" Width="*" Header="Expiry Date">
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate>
+                                <!--<telerik:RadDatePicker SelectedValue="{Binding expDate, Mode=TwoWay}" SelectedDate="{x:Static sys:DateTime.Now}"></telerik:RadDatePicker>-->
+                                <telerik:RadDatePicker x:Name="dtpExpiryDate" DisplayFormat="Short" Culture="en-US" SelectedValue="{Binding expDate, Mode=TwoWay}" ></telerik:RadDatePicker>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+                    <telerik:GridViewDataColumn x:Name="QOH" DataMemberBinding="{Binding qtyonHand}" Width="*" Header="Quantity On Hand" IsReadOnly="True"/>
+                    <telerik:GridViewDataColumn x:Name="CKUnit" DataMemberBinding="{Binding ckUnit}" Width="*" Header="Unit"/>
                     <!--<telerik:GridViewColumn Width="80">
                         <telerik:GridViewColumn.CellTemplate>
                             <DataTemplate>
@@ -51,8 +73,8 @@
 
 
         <StackPanel Orientation="Horizontal"  HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row="2" Margin="0,0,5,5" Grid.ColumnSpan="2">
-            <!--<telerik:RadButton Content="Save" Margin="3" Width="50" Name="btnSave"  TabIndex="4" Click="btnSave_Click"/>
-            <telerik:RadButton Content="New" Margin="3" Width="50" Name="btnNew"  TabIndex="5" Click="btnNew_Click"/>
+            <telerik:RadButton Content="Process" Margin="3" Width="50" Name="btnProcess"  TabIndex="4" Click="btnProcess_Click"/>
+            <!--<telerik:RadButton Content="New" Margin="3" Width="50" Name="btnNew"  TabIndex="5" Click="btnNew_Click"/>
             <telerik:RadButton Content="Delete" Margin="3" Width="50" x:Name="btnDelete" TabIndex="6" Click="btnDelete_Click"/>-->
             <telerik:RadButton Content="Close" Margin="3" Width="50" Name="btnClose"   TabIndex="7"/>
         </StackPanel>

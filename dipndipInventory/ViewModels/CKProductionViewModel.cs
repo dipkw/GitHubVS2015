@@ -9,6 +9,7 @@ namespace dipndipInventory.ViewModels
     public class CKProductionViewModel
     {
         public int id { get; set; }
+        public string prodCode { get; set; }
         public int itemId { get; set; }
         public string itemCode { get; set; }
         public string itemDescription { get; set; }
@@ -17,6 +18,8 @@ namespace dipndipInventory.ViewModels
         public DateTime prodDate { get; set; }
         public DateTime expDate { get; set; }
         public decimal qtyonHand { get; set; }
+        public string ckUnit { get; set; }
+        public decimal prodItemCost { get; set; }
         public int rowIndex { get; set; }
     }
 }

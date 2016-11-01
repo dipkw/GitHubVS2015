@@ -219,6 +219,20 @@ namespace dipndipInventory.EF.DataServices
             return conv_factor;
         }
 
+        public decimal? GetConversionFactorByWHItemUnitId(int item_id, int wh_unit_id)
+        {
+            decimal? conv_factor = 0.0m;
+
+            try
+            {
+                _context = new CKEntities();
+                conv_factor = (from whitemunit in _context.wh_item_unit where (whitemunit.wh_item_id == item_id && whitemunit.Id == wh_unit_id) select whitemunit.cnv_factor).FirstOrDefault();
+            }
+            catch { return null; }
+
+            return conv_factor;
+        }
+
         public int? GetIdOfBaseUnit(int wh_item_id)
         {
             int? base_unit_id = 0;

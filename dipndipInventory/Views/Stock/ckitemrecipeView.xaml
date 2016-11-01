@@ -15,7 +15,7 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="500"/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="450*"/>
         </Grid.ColumnDefinitions>
         <Border Grid.ColumnSpan="2" Margin="10" BorderBrush="Black" BorderThickness="0.5" >
             <telerik:RadGridView x:Name="dgCKItems" AutoGenerateColumns="False" IsReadOnly="True" RowIndicatorVisibility="Collapsed" IsSynchronizedWithCurrentItem="False" FocusManager.FocusedElement="{Binding ElementName=dgCKItems}" HorizontalAlignment="Left" VerticalAlignment="Top" SelectionChanged="dgCKItems_SelectionChanged">
@@ -31,7 +31,7 @@
                     </telerik:GridViewColumn>-->
                     <telerik:GridViewDataColumn x:Name="ItemDesc" DataMemberBinding="{Binding ck_item_description}" Width="*" Header="Item Description"/>
                     <telerik:GridViewDataColumn x:Name="Unit" DataMemberBinding="{Binding ck_units.unit_description}" Width="*" Header="Unit"/>
-                    <telerik:GridViewDataColumn x:Name="DesiredQty" DataMemberBinding="{Binding ck_desired_qty}" Width="*" Header="Desired Qty" TextAlignment="Right"/>
+                    <telerik:GridViewDataColumn x:Name="DesiredQty" DataMemberBinding="{Binding ck_design_qty}" Width="*" Header="Design Qty" TextAlignment="Right"/>
                     <telerik:GridViewDataColumn x:Name="CurCost" DataMemberBinding="{Binding ck_item_unit_cost, StringFormat={}{0:N3}}" Width="*" Header="Current Cost" TextAlignment="Right"/>
                     <!--<telerik:GridViewDataColumn x:Name="QtyOnHand" DataMemberBinding="{Binding quantity}" Width="*" Header="Qty on Hand" TextAlignment="Right"/>
                     <telerik:GridViewDataColumn x:Name="UnitCost" DataMemberBinding="{Binding unit_cost}" Width="*" Header="Unit Cost" TextAlignment="Right"/>-->
@@ -111,20 +111,18 @@
 
             </StackPanel>
         </StackPanel>
-        <Border Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="1" Margin="10" BorderBrush="Black" BorderThickness="0.5" >
-            <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Horizontal" Grid.ColumnSpan="1">
-                <telerik:RadGridView x:Name="dgCKItemRecipe" AutoGenerateColumns="False" IsReadOnly="True" RowIndicatorVisibility="Collapsed" IsSynchronizedWithCurrentItem="False" FocusManager.FocusedElement="{Binding ElementName=dgCKItemRecipe}" HorizontalAlignment="Left" VerticalAlignment="Top"  CanUserSortGroups="False" ShowGroupPanel="False" SelectionChanged="dgCKItemRecipe_SelectionChanged">
-                    <telerik:RadGridView.Columns>
-                        <telerik:GridViewDataColumn x:Name="Id" DataMemberBinding="{Binding wh_item_Id}" Width="100" Header="Item Unit Id" IsVisible="False"/>
-                        <telerik:GridViewDataColumn x:Name="ItemUnit" DataMemberBinding="{Binding wh_item_code}" Width="100" Header="Item Code"/>
-                        <!--<telerik:GridViewDataColumn x:Name="ConvFact" DataMemberBinding="{Binding ckwh_items.ck_item_description}" Width="150" Header="Description" />-->
-                        <telerik:GridViewDataColumn x:Name="ConvFact" DataMemberBinding="{Binding wh_item_description}" Width="150" Header="Description" />
-                        <telerik:GridViewDataColumn x:Name="BaseUnit" DataMemberBinding="{Binding quantity}" Width="50" Header="Qty" />
-                        <telerik:GridViewDataColumn x:Name="UnitOfMeasurement" DataMemberBinding="{Binding uom}" Width="70" Header="U of M" />
-                        <telerik:GridViewDataColumn x:Name="RecipeUnitCost" DataMemberBinding="{Binding unit_cost}" Width="2*" Header="Unit Cost" />
-                    </telerik:RadGridView.Columns>
-                </telerik:RadGridView>
-            </StackPanel>
+        <Border Grid.Row="1" Grid.Column="1" Margin="10" BorderBrush="Black" BorderThickness="0.5" >
+            <telerik:RadGridView x:Name="dgCKItemRecipe" AutoGenerateColumns="False" IsReadOnly="True" RowIndicatorVisibility="Collapsed" IsSynchronizedWithCurrentItem="False" FocusManager.FocusedElement="{Binding ElementName=dgCKItemRecipe}" HorizontalAlignment="Left" VerticalAlignment="Top"  CanUserSortGroups="False" ShowGroupPanel="False" SelectionChanged="dgCKItemRecipe_SelectionChanged">
+                <telerik:RadGridView.Columns>
+                    <telerik:GridViewDataColumn x:Name="Id" DataMemberBinding="{Binding wh_item_Id}" Width="100" Header="Item Unit Id" IsVisible="False"/>
+                    <telerik:GridViewDataColumn x:Name="ItemUnit" DataMemberBinding="{Binding wh_item_code}" Width="100" Header="Item Code"/>
+                    <!--<telerik:GridViewDataColumn x:Name="ConvFact" DataMemberBinding="{Binding ckwh_items.ck_item_description}" Width="150" Header="Description" />-->
+                    <telerik:GridViewDataColumn x:Name="ConvFact" DataMemberBinding="{Binding wh_item_description}" Width="150" Header="Description" />
+                    <telerik:GridViewDataColumn x:Name="BaseUnit" DataMemberBinding="{Binding quantity}" Width="50" Header="Qty" />
+                    <telerik:GridViewDataColumn x:Name="UnitOfMeasurement" DataMemberBinding="{Binding uom}" Width="70" Header="U of M" />
+                    <telerik:GridViewDataColumn x:Name="RecipeUnitCost" DataMemberBinding="{Binding unit_cost}" Width="2*" Header="Unit Cost" />
+                </telerik:RadGridView.Columns>
+            </telerik:RadGridView>
         </Border>
 
         <StackPanel Orientation="Horizontal"  HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row="2" Margin="0,0,5,5" Grid.ColumnSpan="2">
