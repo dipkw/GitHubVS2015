@@ -25,14 +25,23 @@ namespace dipndipInventory.Views.Stock
     /// </summary>
     public partial class ckproductionView : RadWindow
     {
-        List<CKProductionViewModel> ProductionList = new List<CKProductionViewModel>();
+        List<CKProductionViewModel> ProductionVMList = new List<CKProductionViewModel>();
+        CKProductionService cpcontext = new CKProductionService();
+        List<ck_items> ck_items_list = new List<ck_items>();
+        List<ckwh_items> warehouse_items_list = new List<ckwh_items>();
+        List<ck_prod> production_list = new List<ck_prod>();
         public ckproductionView()
         {
             InitializeComponent();
+
+            string prod_code = cpcontext.GetNewProductionCode();
+            txtProductionCode.Value = prod_code;
+            SetDate();
             ShowTaskBar.ShowInTaskbar(this, "Central Kitchen Item Production");
             CKItemService _cicontext = new CKItemService();
             IEnumerable<ck_items> objCKItems = _cicontext.ReadAllCKItems();
             List<CKProductionViewModel> objCKProductionViewModel = new List<CKProductionViewModel>();
+            
             foreach(ck_items ckitem in objCKItems)
             {
                 CKProductionViewModel ckpvm = new CKProductionViewModel();
@@ -79,9 +88,23 @@ namespace dipndipInventory.Views.Stock
             dgCKProduction.ItemsSource = objCKProductionViewModel.ToList();
         }
 
+        private void SetDate()
+        {
+            this.dtpProductionDate.Culture = new System.Globalization.CultureInfo("en-US");
+            this.dtpProductionDate.Culture.DateTimeFormat.ShortDatePattern = "dd/MM/yyyy";
+            this.dtpProductionDate.SelectedDate = DateTime.Now.Date;
+            this.dtpProductionDate.SelectedTime = DateTime.Now.TimeOfDay;
+        }
         private void btnProcess_Click(object sender, RoutedEventArgs e)
         {
             ReadProductionGrid();
+            if (MessageBox.Show("Do you want to save?", "Confirm", MessageBoxButton.YesNo) == MessageBoxResult.No)
+            {
+                return;
+            }
+            CKProductionService pscontext = new CKProductionService();
+            pscontext.SaveCKItemProduction(production_list, ck_items_list, warehouse_items_list, GlobalVariables.ActiveUser.Id);
+            production_list.Clear();
         }
 
         private void ReadProductionGrid()
@@ -96,13 +119,75 @@ namespace dipndipInventory.Views.Stock
                     continue;
 
                 CKProductionViewModel objCKProductionViewModel = row.Item as CKProductionViewModel;
+                
                 if (objCKProductionViewModel.prodQty > 0)
                 {
-                    objCKProductionViewModel.prodItemCost = GetCKItemProdCost(objCKProductionViewModel.itemId, objCKProductionViewModel.prodQty, objCKProductionViewModel.designQty);
-                    MessageBox.Show(objCKProductionViewModel.itemCode + " " + objCKProductionViewModel.itemDescription + " " + objCKProductionViewModel.prodItemCost);
-                    ProductionList.Add(objCKProductionViewModel);
+
+                    ck_prod objProduction = new ck_prod();
+                    objProduction.prod_code = txtProductionCode.Value;
+                    objProduction.prod_date = dtpProductionDate.SelectedDate;
+                    objProduction.exp_date = objCKProductionViewModel.expDate;
+                    objProduction.ck_item_id = objCKProductionViewModel.itemId;
+                    objProduction.ck_item_code = objCKProductionViewModel.itemCode;
+                    objProduction.ck_item_desc = objCKProductionViewModel.itemDescription;
+                    objProduction.batch_no = GetBatchNo(objCKProductionViewModel.itemCode);
+                    objProduction.ck_item_unit_desc = objCKProductionViewModel.ckUnit;
+                    objProduction.prod_qty = objCKProductionViewModel.prodQty;
+                    decimal cur_ck_item_prod_cost = GetCKItemProdCost(objCKProductionViewModel.itemId, objCKProductionViewModel.prodQty, objCKProductionViewModel.designQty);
+                    decimal cur_ck_item_cost = cur_ck_item_prod_cost / objCKProductionViewModel.prodQty;
+                    objProduction.unit_cost = GetCKItemAvgCost(objCKProductionViewModel.itemId,cur_ck_item_cost,objCKProductionViewModel.prodQty);
+                    objProduction.total_cost = objProduction.prod_qty * objProduction.unit_cost;
+                    objProduction.created_by = GlobalVariables.ActiveUser.Id;
+                    objProduction.created_date = DateTime.Now;
+                    objProduction.active = 1;
+                    production_list.Add(objProduction);
+
+                    ck_items objCKItem = new ck_items();
+                    CKItemService cicontext = new CKItemService();
+                    decimal? ck_item_current_qty = cicontext.GetCurrentCKItemQty(objCKProductionViewModel.itemId);
+                    if(ck_item_current_qty == null)
+                    {
+                        ck_item_current_qty = 0.000m;
+                    }
+                    objCKItem.Id = objCKProductionViewModel.itemId;
+                    objCKItem.ck_item_unit_cost = objProduction.unit_cost;
+                    objCKItem.qty_on_hand = objCKProductionViewModel.prodQty + ck_item_current_qty;
+                    ck_items_list.Add(objCKItem);
+
+                    objCKProductionViewModel.prodCode = txtProductionCode.Value;
+                    objCKProductionViewModel.batchNo = GetBatchNo(objCKProductionViewModel.itemCode);
+                    //objCKProductionViewModel.prodItemCost = GetCKItemProdCost(objCKProductionViewModel.itemId, objCKProductionViewModel.prodQty, objCKProductionViewModel.designQty);
+                    objCKProductionViewModel.prodItemCost = cur_ck_item_prod_cost;
+                    //MessageBox.Show(objCKProductionViewModel.itemCode + " " + objCKProductionViewModel.itemDescription + " " + objCKProductionViewModel.prodItemCost);
+                    ProductionVMList.Add(objCKProductionViewModel);
+
+                   
+
+                    //production_list.Clear();
                 }
             }
+        }
+
+        private decimal GetCKItemAvgCost(int ck_item_id, decimal current_cost, decimal current_qty)
+        {
+            decimal ck_item_avg_cost = 0.000m;
+
+            CKItemService cicontext = new CKItemService();
+            decimal previous_ck_item_qty = cicontext.GetCurrentCKItemQty(ck_item_id);
+            decimal previous_ck_item_cost = cicontext.GetCurrentCKItemCost(ck_item_id);
+
+            ck_item_avg_cost = ((previous_ck_item_cost * previous_ck_item_qty) + (current_cost * current_qty)) / (previous_ck_item_qty+current_qty);
+
+            return ck_item_avg_cost;
+        }
+        private string GetBatchNo(string itemCode)
+        {
+            string[] tmpItemCode = itemCode.Split('-');
+            DateTime curr_date = DateTime.Now.Date;
+            
+            string batch_no = tmpItemCode[0] + tmpItemCode[1] + DateTime.Today.Date.ToString("dd") + DateTime.Today.Month + DateTime.Now.Date.ToString("yy");
+
+            return batch_no;
         }
 
         private decimal GetCKItemProdCost(int ck_item_id, decimal prodQty, decimal design_qty)
@@ -121,24 +206,33 @@ namespace dipndipInventory.Views.Stock
                     int wh_unit_id = (int)item_recipe.ckwh_item_unit_id;
                     decimal? avg_wh_item_cost = _wicontext.GetCKAvgCost(ckwh_item_id);
                     decimal? recipe_wh_item_qty = item_recipe.ckwh_item_qty;
-                    decimal? used_wh_item_qty = item_recipe.ckwh_item_qty * prodQty;
-                    
-
+                    decimal? conv_factor = _wucontext.GetConversionFactorByWHItemUnitId(ckwh_item_id, wh_unit_id);
+                    if (conv_factor == null)
+                    {
+                        conv_factor = 0.000m;
+                    }
+                    decimal? used_wh_item_qty = ((item_recipe.ckwh_item_qty * conv_factor)* prodQty);
+                    decimal? current_wh_item_qty = _wicontext.GetCurrentCKQty(ckwh_item_id);
+                    if(current_wh_item_qty == null)
+                    {
+                        current_wh_item_qty = 0.000m;
+                    }
                     //MessageBox.Show(item_recipe.ckwh_item_id + " " + used_wh_item_qty);
-                    
+
+                    ckwh_items objCKWHItem = new ckwh_items();
+                    objCKWHItem.Id = ckwh_item_id;
+                    objCKWHItem.ck_qty = current_wh_item_qty - used_wh_item_qty;
+
+                    warehouse_items_list.Add(objCKWHItem);
 
                     if (avg_wh_item_cost == null)
                     {
                         avg_wh_item_cost = 0.000m;
                     }
-                    decimal? conv_factor = _wucontext.GetConversionFactorByWHItemUnitId(ckwh_item_id, wh_unit_id);
-                    if(conv_factor == null)
-                    {
-                        conv_factor = 0.000m;
-                    }
+                    
                     production_item_cost += (decimal)(avg_wh_item_cost * conv_factor * recipe_wh_item_qty * prodQty);
                 }
-                MessageBox.Show(ck_item_prod_qty.ToString());
+                //MessageBox.Show(ck_item_prod_qty.ToString());
             }
             catch
             {
@@ -146,6 +240,14 @@ namespace dipndipInventory.Views.Stock
             }
 
             return production_item_cost;
+        }
+
+        private void btnView_Click(object sender, RoutedEventArgs e)
+        {
+            ReadProductionGrid();
+            ckproductionlistView cpv = new ckproductionlistView(txtProductionCode.Value, (DateTime)dtpProductionDate.SelectedDate, production_list);
+            cpv.Show();
+            production_list.Clear();
         }
     }
 }

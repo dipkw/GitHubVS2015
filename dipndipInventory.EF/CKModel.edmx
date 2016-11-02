@@ -62,6 +62,7 @@
           <Property Name="qty_on_hand" Type="decimal" Precision="18" Scale="3" />
           <Property Name="production_date" Type="datetime" />
           <Property Name="expiry_date" Type="datetime" />
+          <Property Name="wastage_limit" Type="decimal" Precision="18" Scale="3" />
           <Property Name="created_by" Type="int" />
           <Property Name="created_date" Type="datetime" />
           <Property Name="modified_by" Type="int" />
@@ -75,9 +76,11 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="prod_code" Type="nvarchar" MaxLength="50" />
           <Property Name="prod_date" Type="datetime" />
+          <Property Name="exp_date" Type="datetime" />
           <Property Name="ck_item_id" Type="int" />
           <Property Name="ck_item_code" Type="nvarchar" MaxLength="50" />
           <Property Name="ck_item_desc" Type="nvarchar" MaxLength="150" />
+          <Property Name="batch_no" Type="nvarchar" MaxLength="50" />
           <Property Name="ck_item_unit_id" Type="int" />
           <Property Name="ck_item_unit_desc" Type="nvarchar" MaxLength="50" />
           <Property Name="conv_factor" Type="decimal" Precision="18" Scale="3" />
@@ -3483,6 +3486,8 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
           <NavigationProperty Name="ck_users" Relationship="dipckModel.FK_ck_prod_ck_item_unit_created" FromRole="ck_prod" ToRole="ck_users" />
           <NavigationProperty Name="ck_users1" Relationship="dipckModel.FK_ck_prod_ck_users_modified" FromRole="ck_prod" ToRole="ck_users" />
           <NavigationProperty Name="ck_items" Relationship="dipckModel.FK_ck_prod_ck_items" FromRole="ck_prod" ToRole="ck_items" />
+          <Property Name="batch_no" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="exp_date" Type="DateTime" Precision="3" />
         </EntityType>
         <Association Name="FK_ck_prod_ck_item_unit_created">
           <End Type="dipckModel.ck_users" Role="ck_users" Multiplicity="0..1" />
@@ -3581,6 +3586,7 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
           <NavigationProperty Name="ck_users1" Relationship="dipckModel.FK_ck_items_ck_users1" FromRole="ck_items" ToRole="ck_users" />
           <NavigationProperty Name="ck_prod" Relationship="dipckModel.FK_ck_prod_ck_items" FromRole="ck_items" ToRole="ck_prod" />
           <NavigationProperty Name="ck_wastage_details" Relationship="dipckModel.FK_ck_wastage_details_ck_items" FromRole="ck_items" ToRole="ck_wastage_details" />
+          <Property Name="wastage_limit" Type="Decimal" Precision="18" Scale="3" />
         </EntityType>
         <Association Name="FK_ck_item_cost_history_ck_items">
           <End Type="dipckModel.ck_items" Role="ck_items" Multiplicity="0..1" />
@@ -4078,6 +4084,8 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
           <EntitySetMapping Name="ck_prod">
             <EntityTypeMapping TypeName="dipckModel.ck_prod">
               <MappingFragment StoreEntitySet="ck_prod">
+                <ScalarProperty Name="exp_date" ColumnName="exp_date" />
+                <ScalarProperty Name="batch_no" ColumnName="batch_no" />
                 <ScalarProperty Name="active" ColumnName="active" />
                 <ScalarProperty Name="modified_date" ColumnName="modified_date" />
                 <ScalarProperty Name="modified_by" ColumnName="modified_by" />
@@ -4101,6 +4109,7 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
           <EntitySetMapping Name="ck_items">
             <EntityTypeMapping TypeName="dipckModel.ck_items">
               <MappingFragment StoreEntitySet="ck_items">
+                <ScalarProperty Name="wastage_limit" ColumnName="wastage_limit" />
                 <ScalarProperty Name="active" ColumnName="active" />
                 <ScalarProperty Name="modified_date" ColumnName="modified_date" />
                 <ScalarProperty Name="modified_by" ColumnName="modified_by" />

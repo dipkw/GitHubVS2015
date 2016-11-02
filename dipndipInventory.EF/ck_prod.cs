@@ -31,6 +31,8 @@ namespace dipndipInventory.EF
         public Nullable<int> modified_by { get; set; }
         public Nullable<System.DateTime> modified_date { get; set; }
         public Nullable<int> active { get; set; }
+        public string batch_no { get; set; }
+        public Nullable<System.DateTime> exp_date { get; set; }
     
         public virtual ck_users ck_users { get; set; }
         public virtual ck_users ck_users1 { get; set; }

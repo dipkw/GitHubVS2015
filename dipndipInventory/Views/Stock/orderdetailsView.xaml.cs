@@ -51,7 +51,7 @@ namespace dipndipInventory.Views.Stock
             List<OrderDetailsViewModel> order_detail_list = new List<OrderDetailsViewModel>();
             int row_index = 0;
             id = order_id;
-            foreach(order_details order_detail in selected_order)
+            foreach (order_details order_detail in selected_order)
             {
                 OrderDetailsViewModel order_detail_vm = new OrderDetailsViewModel();
                 order_detail_vm.id = order_detail.Id;
@@ -91,7 +91,7 @@ namespace dipndipInventory.Views.Stock
                 whs.Show();
             }
 
-            if (e.Key == Key.Enter) 
+            if (e.Key == Key.Enter)
             {
                 UpdateItems();
             }
@@ -132,25 +132,25 @@ namespace dipndipInventory.Views.Stock
             try
             {
                 OrderDetailsViewModel odv = new OrderDetailsViewModel();
-                if(ValidateOrderItem())
+                if (ValidateOrderItem())
                 {
-                    if(txtQty.Value<=0)
+                    if (txtQty.Value <= 0)
                     {
                         RadWindow.Alert("Invalid Quantity");
                         txtQty.Focus();
                         return;
                     }
-                    if(item_edit_mode)
+                    if (item_edit_mode)
                     {
-                        if(dgCKOrderDetails.SelectedItem != null)
+                        if (dgCKOrderDetails.SelectedItem != null)
                         {
                             OrderDetailsViewModel objOrderDetailsViewModel = (dgCKOrderDetails.SelectedItem) as OrderDetailsViewModel;
-                            int indx = objOrderDetailsViewModel.rowIndex-1;
+                            int indx = objOrderDetailsViewModel.rowIndex - 1;
                             OrderDetailsList[indx].itemCode = txtItemCode.Value;
                             OrderDetailsList[indx].itemDescription = txtDescription.Value;
                             OrderDetailsList[indx].itemId = Convert.ToInt32(txtItemID.Value);
                             int base_unit_id = (int)(_wucontext.GetIdOfBaseUnit(OrderDetailsList[indx].itemId));
-                            if(base_unit_id==0)
+                            if (base_unit_id == 0)
                             {
                                 RadWindow.Alert("Please configure Unit for Item Code: " + txtItemCode.Value);
                                 return;
@@ -181,7 +181,7 @@ namespace dipndipInventory.Views.Stock
                     txtItemCode.Focus();
                 }
             }
-            catch(Exception Ex) { }
+            catch (Exception Ex) { }
         }
 
         private void ClearItem()
@@ -228,7 +228,7 @@ namespace dipndipInventory.Views.Stock
 
         private void btnDeleteItem_Click(object sender, RoutedEventArgs e)
         {
-            if(dgCKOrderDetails.SelectedItem == null)
+            if (dgCKOrderDetails.SelectedItem == null)
             {
                 return;
             }
@@ -253,7 +253,7 @@ namespace dipndipInventory.Views.Stock
 
         private void SelectOrderItem()
         {
-            if(dgCKOrderDetails.SelectedItem == null)
+            if (dgCKOrderDetails.SelectedItem == null)
             {
                 return;
             }
@@ -288,7 +288,7 @@ namespace dipndipInventory.Views.Stock
 
         private void btnEdit_Click(object sender, RoutedEventArgs e)
         {
-            if(dgCKOrderDetails.SelectedItem == null)
+            if (dgCKOrderDetails.SelectedItem == null)
             {
                 return;
             }
@@ -356,7 +356,7 @@ namespace dipndipInventory.Views.Stock
                 return false;
             }
 
-            if(OrderDetailsList.Count<1)
+            if (OrderDetailsList.Count < 1)
             {
                 RadWindow.Alert("Please add at least one item in the order");
                 return false;
@@ -376,7 +376,7 @@ namespace dipndipInventory.Views.Stock
         private void saveOrder()
         {
             SiteService _scontext = new SiteService();
-            if(OrderDetailsList.Count<1)
+            if (OrderDetailsList.Count < 1)
             {
                 RadWindow.Alert("Please add at least one item in the order");
                 return;
@@ -391,7 +391,7 @@ namespace dipndipInventory.Views.Stock
             order_master.active = true;
 
             List<order_details> order_detail_list = new List<order_details>();
-            foreach(var odetail in OrderDetailsList)
+            foreach (var odetail in OrderDetailsList)
             {
                 order_details objOrderDetail = new order_details();
                 objOrderDetail.order_id = id;
@@ -409,7 +409,7 @@ namespace dipndipInventory.Views.Stock
 
             try
             {
-                if(edit_mode)
+                if (edit_mode)
                 {
                     order_master.modified_by = GlobalVariables.ActiveUser.Id;
                     order_master.modified_date = DateTime.Now;
@@ -422,7 +422,7 @@ namespace dipndipInventory.Views.Stock
                     order_master.created_date = DateTime.Now;
                     _result = _ocontext.CreateOrder(order_master, order_detail_list) > 0 ? "Order Details Created Successfully" : "Unable to Create Order Details";
                     RadWindow.Alert(_result);
-                    if(_result == "Order Details Created Successfully")
+                    if (_result == "Order Details Created Successfully")
                     {
                         ClearOrder();
                     }
@@ -430,8 +430,28 @@ namespace dipndipInventory.Views.Stock
             }
             catch { }
 
-            
+
         }
 
+        private void btnMail_Click(object sender, RoutedEventArgs e)
+        {
+            SendMail();
+        }
+
+        private void SendMail()
+        {
+            Microsoft.Office.Interop.Outlook.Application app = new Microsoft.Office.Interop.Outlook.Application();
+            Microsoft.Office.Interop.Outlook.MailItem mailItem = app.CreateItem(Microsoft.Office.Interop.Outlook.OlItemType.olMailItem);
+            mailItem.Subject = "This is the subject";
+            mailItem.To = "jolly@dipndipkw.com";
+            mailItem.Body = "This is the message.";
+            string logPath = @"D:\items.pdf";
+            mailItem.Attachments.Add(logPath);//logPath is a string holding path to the log.txt file
+            mailItem.Importance = Microsoft.Office.Interop.Outlook.OlImportance.olImportanceHigh;
+            mailItem.ReadReceiptRequested = true;
+            mailItem.Send();
+            //mailItem.Display(false);
+            
+        }
     }
 }

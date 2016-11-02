@@ -148,5 +148,34 @@ namespace dipndipInventory.EF.DataServices
             catch { return null; }
         }
 
+        public decimal GetCurrentCKItemQty(int ck_item_id)
+        {
+            decimal ck_item_current_qty = 0.000m;
+
+            try
+            {
+                _context = new CKEntities();
+                ck_item_current_qty = (decimal)(from ckitems in _context.ck_items where ckitems.Id == ck_item_id select ckitems.qty_on_hand).FirstOrDefault();
+            }
+            catch { return 0.000m; }
+
+            return ck_item_current_qty;
+        }
+
+        public decimal GetCurrentCKItemCost(int ck_item_id)
+        {
+            decimal ck_item_current_cost = 0.000m;
+
+            try
+            {
+                _context = new CKEntities();
+                ck_item_current_cost = (decimal)(from ckitems in _context.ck_items where ckitems.Id == ck_item_id select ckitems.ck_item_unit_cost).FirstOrDefault();
+            }
+            catch
+            {
+                return 0.000m;
+            }
+            return ck_item_current_cost;
+        }
     }
 }
