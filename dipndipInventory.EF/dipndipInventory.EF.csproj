@@ -113,6 +113,7 @@
     </Compile>
     <Compile Include="CustomModels\UserCustomModel.cs" />
     <Compile Include="DataServices\CategoryService.cs" />
+    <Compile Include="DataServices\CKItemCostService.cs" />
     <Compile Include="DataServices\CKItemDetailService.cs" />
     <Compile Include="DataServices\CKItemService.cs" />
     <Compile Include="DataServices\CKItemUnitService.cs" />

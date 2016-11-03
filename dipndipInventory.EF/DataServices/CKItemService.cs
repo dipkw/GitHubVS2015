@@ -177,5 +177,22 @@ namespace dipndipInventory.EF.DataServices
             }
             return ck_item_current_cost;
         }
+
+        public int GetLastOrd(int ck_item_id)
+        {
+            int last_ord = 0;
+
+            try
+            {
+                _context = new CKEntities();
+                last_ord = (int)(from ckitemscost in _context.ck_item_cost_history where ckitemscost.Id == ck_item_id orderby ckitemscost.ord descending select ckitemscost.ord).FirstOrDefault();
+            }
+            catch
+            {
+                return 0;
+            }
+
+            return last_ord;
+        }
     }
 }

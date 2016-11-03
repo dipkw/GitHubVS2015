@@ -63,7 +63,7 @@ namespace dipndipInventory.EF.DataServices
         }
         
         //Save Item Production (List<ck_prod>)
-        public int SaveCKItemProduction(List<ck_prod> production_list, List<ck_items> ck_items_list, List<ckwh_items> warehouse_items_list, int active_user)
+        public int SaveCKItemProduction(List<ck_prod> production_list, List<ck_items> ck_items_list, List<ckwh_items> warehouse_items_list, List<ck_item_cost_history> ck_item_cost_list, int active_user)
         {
             using (var context = new CKEntities())
             {
@@ -96,6 +96,16 @@ namespace dipndipInventory.EF.DataServices
                             ckwh_item_to_update.modified_date = DateTime.Now;
                             context.SaveChanges();
                         }
+
+                        if(ck_item_cost_list.Count>0)
+                        {
+                            foreach(ck_item_cost_history ck_item_cost in ck_item_cost_list)
+                            {
+                                context.ck_item_cost_history.Add(ck_item_cost);
+                                context.SaveChanges();
+                            }
+                        }
+
                         dbcxtrx.Commit();
                         return 1;
                     }

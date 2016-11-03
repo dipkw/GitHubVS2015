@@ -85,6 +85,7 @@
           <Property Name="ck_item_unit_desc" Type="nvarchar" MaxLength="50" />
           <Property Name="conv_factor" Type="decimal" Precision="18" Scale="3" />
           <Property Name="prod_qty" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="bal_qty" Type="decimal" Precision="18" Scale="3" />
           <Property Name="unit_cost" Type="decimal" Precision="18" Scale="3" />
           <Property Name="total_cost" Type="decimal" Precision="18" Scale="3" />
           <Property Name="created_by" Type="int" />
@@ -3488,6 +3489,7 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
           <NavigationProperty Name="ck_items" Relationship="dipckModel.FK_ck_prod_ck_items" FromRole="ck_prod" ToRole="ck_items" />
           <Property Name="batch_no" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="exp_date" Type="DateTime" Precision="3" />
+          <Property Name="bal_qty" Type="Decimal" Precision="18" Scale="3" />
         </EntityType>
         <Association Name="FK_ck_prod_ck_item_unit_created">
           <End Type="dipckModel.ck_users" Role="ck_users" Multiplicity="0..1" />
@@ -4084,6 +4086,7 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
           <EntitySetMapping Name="ck_prod">
             <EntityTypeMapping TypeName="dipckModel.ck_prod">
               <MappingFragment StoreEntitySet="ck_prod">
+                <ScalarProperty Name="bal_qty" ColumnName="bal_qty" />
                 <ScalarProperty Name="exp_date" ColumnName="exp_date" />
                 <ScalarProperty Name="batch_no" ColumnName="batch_no" />
                 <ScalarProperty Name="active" ColumnName="active" />

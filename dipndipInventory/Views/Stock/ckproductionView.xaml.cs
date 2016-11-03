@@ -30,6 +30,7 @@ namespace dipndipInventory.Views.Stock
         List<ck_items> ck_items_list = new List<ck_items>();
         List<ckwh_items> warehouse_items_list = new List<ckwh_items>();
         List<ck_prod> production_list = new List<ck_prod>();
+        List<ck_item_cost_history> ck_item_cost_list = new List<ck_item_cost_history>();
         public ckproductionView()
         {
             InitializeComponent();
@@ -102,9 +103,43 @@ namespace dipndipInventory.Views.Stock
             {
                 return;
             }
+            GenerateCKItemCostList();
             CKProductionService pscontext = new CKProductionService();
-            pscontext.SaveCKItemProduction(production_list, ck_items_list, warehouse_items_list, GlobalVariables.ActiveUser.Id);
+            pscontext.SaveCKItemProduction(production_list, ck_items_list, warehouse_items_list, ck_item_cost_list, GlobalVariables.ActiveUser.Id);
             production_list.Clear();
+        }
+
+        private void GenerateCKItemCostList()
+        {
+            foreach(ck_prod ckproduction in production_list)
+            {
+                CKItemCostService cscontext = new CKItemCostService();
+                int ck_item_id = (int)ckproduction.ck_item_id;
+                decimal ck_item_current_cost = cscontext.GetCurrentCKItemCost(ck_item_id);
+
+                ck_item_cost_history ck_item_cost = new ck_item_cost_history();
+                ck_item_cost.ck_item_id = ck_item_id;
+                ck_item_cost.ck_item_code = ckproduction.ck_item_code;
+                ck_item_cost.ck_item_description = ckproduction.ck_item_desc;
+
+                ck_item_cost.created_by = GlobalVariables.ActiveUser.Id;
+                ck_item_cost.created_date = DateTime.Now;
+
+                if (ck_item_current_cost == 0.000m)
+                {
+                    ck_item_cost.ord = 1;
+                    ck_item_cost.prev_cost = 0.000m;
+                    ck_item_cost.curr_cost = ckproduction.unit_cost;
+                    ck_item_cost_list.Add(ck_item_cost);
+                }
+                else if(ck_item_current_cost != Math.Truncate((decimal)(ckproduction.unit_cost)*1000m)/1000m)
+                {
+                    ck_item_cost.ord = (cscontext.GetLastOrd(ck_item_id)) + 1;
+                    ck_item_cost.prev_cost = ck_item_current_cost;
+                    ck_item_cost.curr_cost = ckproduction.unit_cost;
+                    ck_item_cost_list.Add(ck_item_cost);
+                }
+            }
         }
 
         private void ReadProductionGrid()
@@ -133,6 +168,7 @@ namespace dipndipInventory.Views.Stock
                     objProduction.batch_no = GetBatchNo(objCKProductionViewModel.itemCode);
                     objProduction.ck_item_unit_desc = objCKProductionViewModel.ckUnit;
                     objProduction.prod_qty = objCKProductionViewModel.prodQty;
+                    objProduction.bal_qty = objCKProductionViewModel.prodQty;
                     decimal cur_ck_item_prod_cost = GetCKItemProdCost(objCKProductionViewModel.itemId, objCKProductionViewModel.prodQty, objCKProductionViewModel.designQty);
                     decimal cur_ck_item_cost = cur_ck_item_prod_cost / objCKProductionViewModel.prodQty;
                     objProduction.unit_cost = GetCKItemAvgCost(objCKProductionViewModel.itemId,cur_ck_item_cost,objCKProductionViewModel.prodQty);
@@ -183,9 +219,10 @@ namespace dipndipInventory.Views.Stock
         private string GetBatchNo(string itemCode)
         {
             string[] tmpItemCode = itemCode.Split('-');
-            DateTime curr_date = DateTime.Now.Date;
-            
-            string batch_no = tmpItemCode[0] + tmpItemCode[1] + DateTime.Today.Date.ToString("dd") + DateTime.Today.Month + DateTime.Now.Date.ToString("yy");
+            //DateTime curr_date = DateTime.Now.Date;
+            DateTime curr_date = (DateTime)dtpProductionDate.SelectedDate;
+            //string batch_no = tmpItemCode[0] + tmpItemCode[1] + DateTime.Today.Date.ToString("dd") + DateTime.Today.Month + DateTime.Now.Date.ToString("yy");
+            string batch_no = tmpItemCode[0] + tmpItemCode[1] + curr_date.Date.ToString("dd") + curr_date.Month + curr_date.ToString("yy");
 
             return batch_no;
         }
@@ -248,6 +285,11 @@ namespace dipndipInventory.Views.Stock
             ckproductionlistView cpv = new ckproductionlistView(txtProductionCode.Value, (DateTime)dtpProductionDate.SelectedDate, production_list);
             cpv.Show();
             production_list.Clear();
+        }
+
+        private void btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }
