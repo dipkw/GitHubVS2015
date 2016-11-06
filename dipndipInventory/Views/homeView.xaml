@@ -105,19 +105,19 @@
                             <TextBlock Text="New WH Order" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </telerik:RadRibbonButton>
-                    <telerik:RadRibbonButton   Width="70"  HorizontalContentAlignment="Center" x:Name="Adjustment" Click="Adjustment_Click">
+                    <telerik:RadRibbonButton   Width="70"  HorizontalContentAlignment="Center" x:Name="Adjustment" Click="Adjustment_Click" Visibility="Collapsed">
                         <StackPanel>
                             <Image Source="/dipndipInventory;component/images/menu_icons/Icon-Tickets.png" Width="32" Height="32"/>
                             <TextBlock Text="Adjustment" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </telerik:RadRibbonButton>
-                    <telerik:RadRibbonButton   Width="70"  HorizontalContentAlignment="Center" x:Name="Wastage">
+                    <telerik:RadRibbonButton   Width="70"  HorizontalContentAlignment="Center" x:Name="Wastage" Visibility="Collapsed">
                         <StackPanel>
                             <Image Source="/dipndipInventory;component/images/menu_icons/9_exit_641.png" Width="32" Height="32"/>
                             <TextBlock Text="Wastage" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </telerik:RadRibbonButton>
-                    <telerik:RadRibbonButton x:Name="CategoryMenu"   Width="70"  HorizontalContentAlignment="Center" Click="CategoryMenu_Click">
+                    <telerik:RadRibbonButton x:Name="CategoryMenu"   Width="70"  HorizontalContentAlignment="Center" Click="CategoryMenu_Click" Visibility="Collapsed">
                         <StackPanel>
                             <Image Source="/dipndipInventory;component/Images/menu_icons/Icon-Tickets.png" Width="32" Height="32"/>
                             <TextBlock Text="Categories" HorizontalAlignment="Center"/>
@@ -158,10 +158,16 @@
                             <TextBlock Text="CK Item Units" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </telerik:RadRibbonButton>
-                    <telerik:RadRibbonButton x:Name="CKProductionMenu"  Width="85"  HorizontalContentAlignment="Center" Click="CKProductionMenu_Click">
+                    <telerik:RadRibbonButton x:Name="CKProductionMenu"  Width="85"  HorizontalContentAlignment="Center" Click="CKProductionMenu_Click" Visibility="Collapsed">
                         <StackPanel>
                             <Image Source="/dipndipInventory;component/Images/menu_icons/fast-food-icon.png" Width="32" Height="32"/>
                             <TextBlock Text="Production" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </telerik:RadRibbonButton>
+                    <telerik:RadRibbonButton x:Name="CKIssueMenu"  Width="85"  HorizontalContentAlignment="Center" Click="CKIssueMenu_Click" Visibility="Collapsed">
+                        <StackPanel>
+                            <Image Source="/dipndipInventory;component/Images/menu_icons/fast-food-icon.png" Width="32" Height="32"/>
+                            <TextBlock Text="Issue" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </telerik:RadRibbonButton>
                 </telerik:RadRibbonGroup>
@@ -188,13 +194,13 @@
                             <TextBlock Text="Sites" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </telerik:RadRibbonButton>
-                    <telerik:RadRibbonButton x:Name="UpdateGPItemsMenu"  Width="65"  HorizontalContentAlignment="Center" >
+                    <telerik:RadRibbonButton x:Name="UpdateGPItemsMenu"  Width="65"  HorizontalContentAlignment="Center" Visibility="Collapsed">
                         <StackPanel>
                             <Image Source="/dipndipInventory;component/images/menu_icons/sites-2-icon.png" Width="32" Height="32"/>
                             <TextBlock Text="Update GP Items" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </telerik:RadRibbonButton>
-                    <telerik:RadRibbonButton x:Name="UpdateWHCost"  Width="95"  HorizontalContentAlignment="Center" Click="UpdateWHCost_Click">
+                    <telerik:RadRibbonButton x:Name="UpdateWHCost"  Width="95"  HorizontalContentAlignment="Center" Click="UpdateWHCost_Click" Visibility="Collapsed">
                         <StackPanel>
                             <Image Source="/dipndipInventory;component/images/menu_icons/sites-2-icon.png" Width="32" Height="32"/>
                             <TextBlock Text="Update WH Cost" HorizontalAlignment="Center"/>

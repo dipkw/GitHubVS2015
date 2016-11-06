@@ -10,7 +10,8 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="350*"/>
-            <RowDefinition Height="250"/>
+            <!--<RowDefinition Height="250"/>-->
+            <RowDefinition Height="0"/>
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -18,7 +19,7 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Border Grid.ColumnSpan="2" Margin="10" BorderBrush="Black" BorderThickness="0.5" >
-            <telerik:RadGridView x:Name="dgWHItems" AutoGenerateColumns="False" IsReadOnly="True" RowIndicatorVisibility="Collapsed" IsSynchronizedWithCurrentItem="False" FocusManager.FocusedElement="{Binding ElementName=dgWHItems}" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <telerik:RadGridView x:Name="dgWHItems" AutoGenerateColumns="False" IsReadOnly="True" RowIndicatorVisibility="Collapsed" IsSynchronizedWithCurrentItem="False" FocusManager.FocusedElement="{Binding ElementName=dgWHItems}" HorizontalAlignment="Left" VerticalAlignment="Top" ShowSearchPanel="True">
                 <telerik:RadGridView.Columns>
                     <telerik:GridViewDataColumn x:Name="ItemCode" DataMemberBinding="{Binding wh_item_code}" Width="*" Header="Item Code"/>
 
@@ -53,7 +54,7 @@
                     <!--<telerik:RadMaskedTextInput Name="txtSiteName" Width="250" Margin="3" TabIndex="0" Placeholder=" " TextMode="MaskedText"/>-->
                     <telerik:RadMaskedTextInput Name="txtUnitID" Width="250" Margin="3" TabIndex="0" Placeholder="_" TextMode="MaskedText" Mask="" InputBehavior="Insert" IsReadOnly="False"/>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" >
+                <StackPanel Orientation="Horizontal" Visibility="Collapsed" >
                     <telerik:Label Content="Description" Height="25" Width="150"/>
                     <!--<telerik:RadMaskedTextInput Name="txtSiteName" Width="250" Margin="3" TabIndex="0" Placeholder=" " TextMode="MaskedText"/>-->
                     <telerik:RadMaskedTextInput Name="txtDescription" Width="250" Margin="3" TabIndex="0" Placeholder="_" TextMode="MaskedText" Mask="" InputBehavior="Insert"/>
@@ -85,10 +86,10 @@
         </StackPanel>
 
         <StackPanel Orientation="Horizontal"  HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row="2" Margin="0,0,5,5" Grid.ColumnSpan="2">
-            <telerik:RadButton Content="Save" Margin="3" Width="50" Name="btnSave"  TabIndex="6"/>
+            <!--<telerik:RadButton Content="Save" Margin="3" Width="50" Name="btnSave"  TabIndex="6"/>
             <telerik:RadButton Content="New" Margin="3" Width="50" Name="btnNew"  TabIndex="7"/>
-            <telerik:RadButton Content="Delete" Margin="3" Width="50" x:Name="btnDelete" TabIndex="8"/>
-            <telerik:RadButton Content="Close" Margin="3" Width="50" Name="btnClose"   TabIndex="9"/>
+            <telerik:RadButton Content="Delete" Margin="3" Width="50" x:Name="btnDelete" TabIndex="8"/>-->
+            <telerik:RadButton Content="Close" Margin="3" Width="50" Name="btnClose"   TabIndex="9" Click="btnClose_Click"/>
         </StackPanel>
     </Grid>
 </telerik:RadWindow>

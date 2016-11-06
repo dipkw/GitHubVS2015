@@ -40,5 +40,10 @@ namespace dipndipInventory.Views.Stock
             dgWHItems.ItemsSource = objItems;
             txtDescription.Focus();
         }
+
+        private void btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

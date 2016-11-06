@@ -175,5 +175,11 @@ namespace dipndipInventory.Views
             ckproductionView cpv = new ckproductionView();
             cpv.Show();
         }
+
+        private void CKIssueMenu_Click(object sender, RoutedEventArgs e)
+        {
+            ckitemissueView civ = new ckitemissueView();
+            civ.Show();
+        }
     }
 }

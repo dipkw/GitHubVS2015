@@ -97,7 +97,7 @@
 
 
             </StackPanel>
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="10,15">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="10,15" Visibility="Collapsed">
                 <telerik:RadBarcode39 x:Name="ck_item_barcode" Height="95" Width="150" Text="CK-0001" ShowText="False"/>    
             </StackPanel>
         </StackPanel>

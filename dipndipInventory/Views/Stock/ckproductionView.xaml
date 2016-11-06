@@ -38,18 +38,18 @@
                     <telerik:GridViewDataColumn x:Name="ProductionQty" DataMemberBinding="{Binding prodQty}" Width="*" Header="Production Qty"/>
                     <!--<telerik:GridViewDataColumn x:Name="ProductionDate" DataMemberBinding="{Binding prodDate}" Width="*" Header="Production Date"/>
                     <telerik:GridViewDataColumn x:Name="ExpiryDate" DataMemberBinding="{Binding expDate}" Width="*" Header="Expiry Date"/>-->
-                    <telerik:GridViewDataColumn x:Name="ProductionDate" DataMemberBinding="{Binding prodDate}" Width="*" Header="Production Date">
+                    <!--<telerik:GridViewDataColumn x:Name="ProductionDate" DataMemberBinding="{Binding prodDate}" Width="*" Header="Production Date">
                         <telerik:GridViewDataColumn.CellTemplate>
                             <DataTemplate>
                                 <telerik:RadDatePicker x:Name="dtpProductionDate" DisplayFormat="Short" Culture="en-US" SelectedValue="{Binding prodDate, Mode=TwoWay}"></telerik:RadDatePicker>
                             </DataTemplate>
                         </telerik:GridViewDataColumn.CellTemplate>
-                        <!--<telerik:GridViewDataColumn.CellEditTemplate>
+                        --><!--<telerik:GridViewDataColumn.CellEditTemplate>
                             <DataTemplate>
                                 <telerik:RadDatePicker SelectedValue="{Binding prodDate, Mode=TwoWay}" DisplayFormat="Short" Culture="en-US"></telerik:RadDatePicker>
                             </DataTemplate>
-                        </telerik:GridViewDataColumn.CellEditTemplate>-->
-                    </telerik:GridViewDataColumn>
+                        </telerik:GridViewDataColumn.CellEditTemplate>--><!--
+                    </telerik:GridViewDataColumn>-->
 
                     <telerik:GridViewDataColumn x:Name="ExpiryDate" DataMemberBinding="{Binding expDate}" Width="*" Header="Expiry Date">
                         <telerik:GridViewDataColumn.CellTemplate>

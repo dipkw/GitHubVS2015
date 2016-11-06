@@ -90,7 +90,7 @@ namespace dipndipInventory.EF.DataServices
                         foreach(ckwh_items ckwh_item in warehouse_items_list)
                         {
                             ckwh_items ckwh_item_to_update = (from ckwhitem in context.ckwh_items where ckwhitem.Id == ckwh_item.Id select ckwhitem).SingleOrDefault();
-                            ckwh_item_to_update.wh_item_code = ckwh_item.wh_item_code;
+                            //ckwh_item_to_update.wh_item_code = ckwh_item.wh_item_code;
                             ckwh_item_to_update.ck_qty = ckwh_item.ck_qty;
                             ckwh_item_to_update.modified_by = active_user;
                             ckwh_item_to_update.modified_date = DateTime.Now;

@@ -139,6 +139,9 @@
     <Compile Include="Views\Site\siteView.xaml.cs">
       <DependentUpon>siteView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Stock\ckitemissueView.xaml.cs">
+      <DependentUpon>ckitemissueView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Stock\ckitemrecipeView.xaml.cs">
       <DependentUpon>ckitemrecipeView.xaml</DependentUpon>
     </Compile>
@@ -208,6 +211,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Site\siteView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Stock\ckitemissueView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

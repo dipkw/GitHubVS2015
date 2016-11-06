@@ -118,6 +118,10 @@
         <AssociationConnector Association="dipckModel.FK_ck_items_ck_users1" />
         <AssociationConnector Association="dipckModel.FK_ck_prod_ck_items" />
         <AssociationConnector Association="dipckModel.FK_ck_wastage_details_ck_items" />
+        <EntityTypeShape EntityType="dipckModel.ck_issue_master" Width="1.5" PointX="5.25" PointY="33.625" />
+        <AssociationConnector Association="dipckModel.FK_ck_issue_master_ck_users_created" />
+        <AssociationConnector Association="dipckModel.FK_ck_issue_master_ck_users_modified" />
+        <AssociationConnector Association="dipckModel.FK_ck_issue_master_sites" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

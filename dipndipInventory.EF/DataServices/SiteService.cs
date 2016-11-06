@@ -54,6 +54,20 @@ namespace dipndipInventory.EF.DataServices
             }
         }
 
+        public IEnumerable<site> ReadAllActiveSitesWOActiveSite(int active_site_id)
+        {
+            try
+            {
+                _context = new CKEntities();
+                IEnumerable<site> objSite = (from tmpsite in _context.sites where (tmpsite.active == true && tmpsite.Id!=active_site_id) orderby tmpsite.site_name ascending select tmpsite);
+                return objSite;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         public IEnumerable<site> ReadAllSitesSortByIdDesc()
         {
             try
@@ -133,6 +147,17 @@ namespace dipndipInventory.EF.DataServices
             site_id = (from tmpsite in _context.sites where tmpsite.site_name == site_name select tmpsite.Id).FirstOrDefault();
 
             return site_id;
+        }
+
+        public string GetSiteCodeBySiteId(int id)
+        {
+            string site_code = string.Empty;
+
+            _context = new CKEntities();
+
+            site_code = (from tmpsite in _context.sites where tmpsite.Id == id select tmpsite.site_id).FirstOrDefault();
+
+            return site_code;
         }
     }
 }
