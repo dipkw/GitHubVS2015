@@ -124,6 +124,8 @@
     <Compile Include="Product.cs" />
     <Compile Include="Validations\Validation.cs" />
     <Compile Include="ViewModels\AdjustmentDetailsViewModel.cs" />
+    <Compile Include="ViewModels\CKIssueViewModel.cs" />
+    <Compile Include="ViewModels\CKItemBatchViewModel.cs" />
     <Compile Include="ViewModels\CKItemRecipeViewModel.cs" />
     <Compile Include="ViewModels\CKProductionViewModel.cs" />
     <Compile Include="ViewModels\ItemUnitViewModel.cs" />
@@ -138,6 +140,9 @@
     </Compile>
     <Compile Include="Views\Site\siteView.xaml.cs">
       <DependentUpon>siteView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Stock\ckitembatchView.xaml.cs">
+      <DependentUpon>ckitembatchView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Stock\ckitemissueView.xaml.cs">
       <DependentUpon>ckitemissueView.xaml</DependentUpon>
@@ -211,6 +216,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Site\siteView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Stock\ckitembatchView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

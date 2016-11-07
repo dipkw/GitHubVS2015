@@ -8,6 +8,7 @@ namespace dipndipInventory.EF.DataServices
 {
     public class CKProductionService
     {
+        CKEntities _context;
         public int CreateCKProduction(ck_prod objCKProd)
         {
             using (var context = new CKEntities())
@@ -115,6 +116,20 @@ namespace dipndipInventory.EF.DataServices
                         return 0;
                     }
                 }
+            }
+        }
+
+        public IEnumerable<ck_prod> GetAvailableBatchItems(string ck_item_code)
+        {
+            try
+            {
+                _context = new CKEntities();
+                IEnumerable<ck_prod> ck_batch_items = (from ckprod in _context.ck_prod where (ckprod.ck_item_code == ck_item_code && ckprod.bal_qty>0) orderby ckprod.exp_date ascending select ckprod);
+                return ck_batch_items;
+            }
+            catch
+            {
+                return null;
             }
         }
         

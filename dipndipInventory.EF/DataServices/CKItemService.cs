@@ -85,6 +85,21 @@ namespace dipndipInventory.EF.DataServices
             }
         }
 
+
+        public IEnumerable<ck_items> ReadAllActiveCKItems()
+        {
+            try
+            {
+                _context = new CKEntities();
+                IEnumerable<ck_items> objCKItems = (from ckitems in _context.ck_items where ckitems.active==true orderby ckitems.Id ascending select ckitems);
+                return objCKItems;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         public bool IsExistingCKItem(int ck_item_id)
         {
             bool _result = false;

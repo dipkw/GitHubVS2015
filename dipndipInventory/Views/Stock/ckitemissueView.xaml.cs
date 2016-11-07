@@ -1,6 +1,7 @@
 ﻿using dipndipInventory.EF;
 using dipndipInventory.EF.DataServices;
 using dipndipInventory.Helpers;
+using dipndipInventory.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Telerik.Windows.Controls;
+using Telerik.Windows.Controls.GridView;
 
 namespace dipndipInventory.Views.Stock
 {
@@ -23,11 +25,41 @@ namespace dipndipInventory.Views.Stock
     /// </summary>
     public partial class ckitemissueView : RadWindow
     {
+        private static TimeSpan DoubleClickThreshold = TimeSpan.FromMilliseconds(450);
+        private DateTime _lastClick;
         public ckitemissueView()
         {
             InitializeComponent();
+            this.AddHandler(GridViewRow.MouseLeftButtonUpEvent, new MouseButtonEventHandler(this.GridViewRow_OnMouseLeftButtonUp), true);
+            this._lastClick = DateTime.Now;
             dtpOrderDate.SelectedDate = DateTime.Now.Date;
             FillAllSites();
+            CKIssueService cicontext = new CKIssueService();
+            string issue_code = cicontext.GetNewCKIssueCode();
+            txtIssueCode.Value = issue_code;
+            FillAllCKItems();
+        }
+
+        private void GridViewRow_OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (DateTime.Now - this._lastClick <= DoubleClickThreshold)
+            {
+                ck_items ckitems = dgCKIssueDetails.SelectedItem as ck_items;
+                CKIssueViewModel ck_issue_vm = new CKIssueViewModel();
+                //List<CKItemBatchViewModel> ck_item_batches = new List<CKItemBatchViewModel>();
+                ck_issue_vm.itemCode = ckitems.ck_item_code;
+                //ck_issue_vm.rowIndex = 
+                //ckitembatchView ckitembatch = new ckitembatchView(ck_issue_vm, ck_item_batches);
+                ckitembatchView ckitembatch = new ckitembatchView(ck_issue_vm, this);
+                ckitembatch.Show();
+                //MessageBox.Show("You have double clicked!");
+            }
+            this._lastClick = DateTime.Now;
+        }
+        private void FillAllCKItems()
+        {
+            CKItemService citcontext = new CKItemService();
+            dgCKIssueDetails.ItemsSource = citcontext.ReadAllActiveCKItems();
         }
 
         private void FillAllSites()

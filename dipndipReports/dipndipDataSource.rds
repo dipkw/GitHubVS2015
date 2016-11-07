@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RptDataSource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="dipndipDataSource">
+  <ConnectionProperties>
+    <Extension>SQL</Extension>
+    <ConnectString>Data Source=JOLLY\MSSQLSERVER14;Initial Catalog=dipck</ConnectString>
+  </ConnectionProperties>
+  <DataSourceID>ab76b8dd-3642-4106-a219-956310ba02ca</DataSourceID>
+</RptDataSource>
