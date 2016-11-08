@@ -78,6 +78,9 @@
     <Compile Include="ckwh_item_unit.cs">
       <DependentUpon>CKModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ck_issue_detais.cs">
+      <DependentUpon>CKModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="ck_issue_master.cs">
       <DependentUpon>CKModel.tt</DependentUpon>
     </Compile>

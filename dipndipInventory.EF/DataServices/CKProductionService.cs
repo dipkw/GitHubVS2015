@@ -132,7 +132,23 @@ namespace dipndipInventory.EF.DataServices
                 return null;
             }
         }
-        
+
+        public decimal GetCurrentCKItemBatchQty(string prod_code, string batch_no)
+        {
+            decimal ck_item_batch_qty = 0.000m;
+
+            try
+            {
+                _context = new CKEntities();
+                ck_item_batch_qty = (decimal)(from ckprod in _context.ck_prod where (ckprod.prod_code == prod_code && ckprod.batch_no == batch_no)select ckprod.bal_qty).FirstOrDefault();
+            }
+            catch (Exception e)
+            {
+                return 0.000m;
+            }
+            return ck_item_batch_qty;
+        }
+
         //Update CK_Item (ck_item_code, ck_item_unit_cost, ck_item_qty_on_hand)
 
         //Update ckwh_item (wh_item_code/wh_item_id, ck_qty)

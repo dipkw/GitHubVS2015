@@ -22,7 +22,15 @@ namespace dipndipInventory.ViewModels
         public string ckUnit { get; set; }
         public decimal qtyIssued { get; set; }
         public decimal unit_cost { get; set; }
+        public decimal total_cost { get; set; }
         public decimal prodItemCost { get; set; }
         public int rowIndex { get; set; }
+        public List<ckUnitVM> ckunitVM { get; set; }
+
+    }
+    public class ckUnitVM
+    {
+        public int ckunitId { get; set; }
+        public string ckunitDesc { get; set; }
     }
 }

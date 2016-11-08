@@ -122,6 +122,11 @@
         <AssociationConnector Association="dipckModel.FK_ck_issue_master_ck_users_created" />
         <AssociationConnector Association="dipckModel.FK_ck_issue_master_ck_users_modified" />
         <AssociationConnector Association="dipckModel.FK_ck_issue_master_sites" />
+        <EntityTypeShape EntityType="dipckModel.ck_issue_detais" Width="1.5" PointX="15.75" PointY="14.75" />
+        <AssociationConnector Association="dipckModel.FK_ck_issue_detais_ck_item_unit" />
+        <AssociationConnector Association="dipckModel.FK_ck_issue_detais_ck_items" />
+        <AssociationConnector Association="dipckModel.FK_ck_issue_detais_ck_users_created" />
+        <AssociationConnector Association="dipckModel.FK_ck_issue_detais_ck_users_modified" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

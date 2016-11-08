@@ -21,6 +21,7 @@ namespace dipndipInventory.EF
             this.ck_item_unit = new HashSet<ck_item_unit>();
             this.ck_prod = new HashSet<ck_prod>();
             this.ck_wastage_details = new HashSet<ck_wastage_details>();
+            this.ck_issue_detais = new HashSet<ck_issue_detais>();
         }
     
         public int Id { get; set; }
@@ -50,5 +51,7 @@ namespace dipndipInventory.EF
         public virtual ICollection<ck_prod> ck_prod { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ck_wastage_details> ck_wastage_details { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ck_issue_detais> ck_issue_detais { get; set; }
     }
 }
