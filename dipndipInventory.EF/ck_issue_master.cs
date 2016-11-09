@@ -14,6 +14,12 @@ namespace dipndipInventory.EF
     
     public partial class ck_issue_master
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public ck_issue_master()
+        {
+            this.ck_issue_detais = new HashSet<ck_issue_detais>();
+        }
+    
         public long Id { get; set; }
         public string ck_issue_code { get; set; }
         public Nullable<System.DateTime> ck_issue_date { get; set; }
@@ -25,9 +31,12 @@ namespace dipndipInventory.EF
         public Nullable<System.DateTime> created_date { get; set; }
         public Nullable<int> modified_by { get; set; }
         public Nullable<System.DateTime> modified_date { get; set; }
+        public string ck_prod_code { get; set; }
     
         public virtual ck_users ck_users { get; set; }
         public virtual ck_users ck_users1 { get; set; }
         public virtual site site { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ck_issue_detais> ck_issue_detais { get; set; }
     }
 }

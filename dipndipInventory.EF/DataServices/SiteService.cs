@@ -54,6 +54,33 @@ namespace dipndipInventory.EF.DataServices
             }
         }
 
+        public IEnumerable<site> ReadAllActiveOutletSites()
+        {
+            try
+            {
+                _context = new CKEntities();
+                IEnumerable<site> objSite = (from tmpsite in _context.sites where (tmpsite.active == true && tmpsite.is_outlet == true) orderby tmpsite.site_name ascending select tmpsite);
+                return objSite;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public IEnumerable<site> ReadWHCKSites()
+        {
+            try
+            {
+                _context = new CKEntities();
+                IEnumerable<site> objSite = (from tmpsite in _context.sites where (tmpsite.site_id == "CK" || tmpsite.site_id == "CW") orderby tmpsite.site_name ascending select tmpsite);
+                return objSite;
+            }
+            catch
+            {
+                return null;
+            }
+        }
         public IEnumerable<site> ReadAllActiveSitesWOActiveSite(int active_site_id)
         {
             try
@@ -90,6 +117,8 @@ namespace dipndipInventory.EF.DataServices
                 //ck_users objUserToUpdate = new ck_users();
                 site objSiteToUpdate = (from tmpsite in _context.sites where tmpsite.Id == objSite.Id select tmpsite).SingleOrDefault();
                 objSiteToUpdate.site_name = objSite.site_name;
+                objSiteToUpdate.is_outlet = objSite.is_outlet;
+                objSiteToUpdate.active = objSite.active;
                 objSiteToUpdate.modified_date = objSite.modified_date;
                 objSiteToUpdate.modified_by = objSite.modified_by;
                 objSiteToUpdate.active = objSite.active;

@@ -22,7 +22,7 @@
             <!--<telerik:Label Content="Total Qty" Height="25" Width="83"/>
             <telerik:RadMaskedNumericInput Name="txtTotalIssuedQty" Width="150" Margin="3" TabIndex="0" Placeholder="_" TextMode="MaskedText" Mask="" InputBehavior="Insert" AcceptsReturn="False" IsReadOnly="True" IsEnabled="False" FontSize="16"/>-->
             <telerik:Label Content="Unit" Height="25" Width="83"/>
-            <telerik:RadComboBox Name="cmbUnit" Width="150" Margin="3" TabIndex="0"/>
+            <telerik:RadComboBox Name="cmbUnit" Width="150" Margin="3" TabIndex="0" SelectionChanged="cmbUnit_SelectionChanged"/>
         </StackPanel>
         <Border Grid.ColumnSpan="2" Margin="10" BorderBrush="Black" BorderThickness="0.5" Grid.Row="1">
             <telerik:RadGridView x:Name="dgCKIssueDetails" AutoGenerateColumns="False" RowIndicatorVisibility="Collapsed" IsSynchronizedWithCurrentItem="False" FocusManager.FocusedElement="{Binding ElementName=dgCKIssueDetails}" HorizontalAlignment="Left" VerticalAlignment="Top" CanUserInsertRows="False" >
@@ -30,16 +30,24 @@
                     <telerik:GridViewDataColumn x:Name="ItemCode" DataMemberBinding="{Binding ck_item_code}" Width="*" Header="Item Code" IsReadOnly="True"/>
                     <!--<telerik:GridViewDataColumn x:Name="ItemDesc" DataMemberBinding="{Binding ck_items.ck_item_description}" Width="*" Header="Item Description" IsReadOnly="True"/>-->
                     <telerik:GridViewDataColumn x:Name="ItemDesc" DataMemberBinding="{Binding ck_item_description}" Width="*" Header="Item Description" IsReadOnly="True"/>
+                    <telerik:GridViewDataColumn x:Name="ProdCode" DataMemberBinding="{Binding ck_prod_code}" Width="*" Header="Production Code" IsVisible="True"/>
+                    <telerik:GridViewDataColumn x:Name="BatchNo" DataMemberBinding="{Binding batch_no}" Width="*" Header="Batch No" IsVisible="True"/>
                     <!--<telerik:GridViewDataColumn x:Name="Unit" DataMemberBinding="{Binding ck_item_unit_desc}" Width="*" Header="Unit" IsReadOnly="True"/>-->
+                    <telerik:GridViewDataColumn x:Name="ProdDate" DataMemberBinding="{Binding prod_date}" Width="*" Header="Production Date" IsVisible="True"/>
                     <telerik:GridViewDataColumn x:Name="ExpiryDate" DataMemberBinding="{Binding exp_date}" Width="*" Header="Expiry Date" IsReadOnly="True"/>
                     <!--<telerik:GridViewDataColumn x:Name="QuantityOnHand" DataMemberBinding="{Binding bal_qty}" Width="*" Header="Quantity On Hand" IsReadOnly="True"/>-->
+                    <telerik:GridViewDataColumn x:Name="QuantityOnHand" DataMemberBinding="{Binding rem_qty}" Width="*" Header="Quantity On Hand" IsReadOnly="True"/>
                     <telerik:GridViewDataColumn x:Name="IssuedQuantity" DataMemberBinding="{Binding qty_issued}" Width="*" Header="Issued Quantity" />
 
                     <telerik:GridViewDataColumn x:Name="ItemId" DataMemberBinding="{Binding ck_item_id}" Width="*" Header="Item Id" IsVisible="False"/>
-                    <telerik:GridViewDataColumn x:Name="ProdCode" DataMemberBinding="{Binding ck_prod_code}" Width="*" Header="Production Code" IsVisible="False"/>
-                    <telerik:GridViewDataColumn x:Name="BatchNo" DataMemberBinding="{Binding batch_no}" Width="*" Header="Batch No" IsVisible="False"/>
-                    <telerik:GridViewDataColumn x:Name="UnitId" DataMemberBinding="{Binding ck_unit_id}" Width="*" Header="Unit Id" IsVisible="False"/>
-                    <telerik:GridViewDataColumn x:Name="RowIndex" DataMemberBinding="{Binding row_index}" Width="*" Header="Row Index" IsVisible="False"/>
+                    
+                    <!--<telerik:GridViewDataColumn x:Name="UnitId" DataMemberBinding="{Binding ck_unit_id}" Width="*" Header="Unit Id" IsVisible="True"/>-->
+                    
+                    <telerik:GridViewDataColumn x:Name="ExpDate" DataMemberBinding="{Binding exp_date}" Width="*" Header="Expiry Date" IsVisible="False"/>
+                    <telerik:GridViewDataColumn x:Name="UnitId" DataMemberBinding="{Binding ck_item_unit_id}" Width="*" Header="Unit Id" IsVisible="False"/>
+                    <telerik:GridViewDataColumn x:Name="UnitCost" DataMemberBinding="{Binding ck_unit_cost}" Width="*" Header="Unit Cost" IsVisible="False"/>
+                    <telerik:GridViewDataColumn x:Name="TotalCost" DataMemberBinding="{Binding ck_total_cost}" Width="*" Header="Total Cost" IsVisible="False"/>
+                    <telerik:GridViewDataColumn x:Name="RowIndex" DataMemberBinding="{Binding row_id}" Width="*" Header="Row Index" IsVisible="False"/>
 
                     <!--<telerik:GridViewColumn Width="80">
                         <telerik:GridViewColumn.CellTemplate>

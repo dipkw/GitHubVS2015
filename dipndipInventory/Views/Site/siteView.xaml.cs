@@ -64,6 +64,12 @@ namespace dipndipInventory.Views.Site
                 txtSiteName.Value = objSite.site_name;
                 txtSiteName.IsReadOnly = true;
 
+                chkOutlet.IsChecked = objSite.is_outlet;
+                chkOutlet.IsEnabled = false;
+
+                chkActive.IsChecked = objSite.active;
+                chkOutlet.IsEnabled = false;
+
                 btnSave.IsEnabled = false;
             }
             catch { }
@@ -94,6 +100,8 @@ namespace dipndipInventory.Views.Site
 
             txtSiteName.IsReadOnly = false;
             //txtUsername.IsReadOnly = false;
+            chkOutlet.IsEnabled = true;
+            chkActive.IsEnabled = true;
             edit_mode = true;
             btnSave.IsEnabled = true;
             txtSiteName.Focus();
@@ -107,6 +115,9 @@ namespace dipndipInventory.Views.Site
             txtSiteName.IsReadOnly = false;
 
             txtSiteName.Value = string.Empty;
+            chkOutlet.IsChecked = false;
+
+            chkActive.IsChecked = true;
 
             id = 0;
             //username = string.Empty;
@@ -151,8 +162,8 @@ namespace dipndipInventory.Views.Site
             site objSite = new site();
             objSite.site_id = txtSiteID.Value;
             objSite.site_name = txtSiteName.Value;
-            
-
+            objSite.is_outlet = chkOutlet.IsChecked;
+            objSite.active = chkActive.IsChecked;
             string _dbresponse = string.Empty;
 
             try
@@ -161,6 +172,7 @@ namespace dipndipInventory.Views.Site
                 {
                     objSite.Id = id;
                     // objUser.username = username;
+                    
                     objSite.modified_by = GlobalVariables.ActiveUser.Id;
                     objSite.modified_date = DateTime.Now;
                     _dbresponse = _context.UpdateSite(objSite) > 0 ? "Site Details Updated Successfully" : "Unable to Update Site Details";

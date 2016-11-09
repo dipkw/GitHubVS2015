@@ -10,7 +10,12 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ck_issue_master_id" Type="bigint" Nullable="false" />
           <Property Name="ck_issue_code" Type="nvarchar" MaxLength="50" />
+          <Property Name="ck_prod_code" Type="nvarchar" MaxLength="50" />
+          <Property Name="ck_batch_no" Type="nvarchar" MaxLength="50" />
+          <Property Name="ck_prod_date" Type="datetime" />
+          <Property Name="ck_exp_date" Type="datetime" />
           <Property Name="ck_item_id" Type="int" />
           <Property Name="ck_item_code" Type="nvarchar" MaxLength="50" />
           <Property Name="ck_item_desc" Type="nvarchar" MaxLength="150" />
@@ -31,6 +36,7 @@
           <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ck_issue_code" Type="nvarchar" MaxLength="50" />
           <Property Name="ck_issue_date" Type="datetime" />
+          <Property Name="ck_prod_code" Type="nvarchar" MaxLength="50" />
           <Property Name="branch_order_no" Type="nvarchar" MaxLength="50" />
           <Property Name="branch_order_date" Type="datetime" />
           <Property Name="issue_to_site_id" Type="int" />
@@ -139,6 +145,8 @@
           <Property Name="ck_item_desc" Type="nvarchar" MaxLength="150" />
           <Property Name="trans_ref_no" Type="nvarchar" MaxLength="50" />
           <Property Name="trans_date" Type="datetime" />
+          <Property Name="prod_code" Type="nvarchar" MaxLength="50" />
+          <Property Name="batch_no" Type="nvarchar" MaxLength="50" />
           <Property Name="prod_date" Type="datetime" />
           <Property Name="exp_date" Type="datetime" />
           <Property Name="ck_unit_id" Type="int" />
@@ -293,6 +301,7 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="wh_item_id" Type="int" />
           <Property Name="site_id" Type="int" />
+          <Property Name="is_outlet" Type="bit" />
         </EntityType>
         <EntityType Name="order_details">
           <Key>
@@ -386,6 +395,7 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="site_id" Type="nvarchar" MaxLength="50" />
           <Property Name="site_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="is_outlet" Type="bit" />
           <Property Name="created_by" Type="int" />
           <Property Name="created_date" Type="datetime" />
           <Property Name="modified_by" Type="int" />
@@ -458,6 +468,18 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
           <Property Name="modified_date" Type="datetime" />
           <Property Name="active" Type="bit" />
         </EntityType>
+        <Association Name="FK_ck_issue_detais_ck_issue_detais">
+          <End Role="ck_issue_master" Type="Self.ck_issue_master" Multiplicity="1" />
+          <End Role="ck_issue_detais" Type="Self.ck_issue_detais" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ck_issue_master">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ck_issue_detais">
+              <PropertyRef Name="ck_issue_master_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ck_issue_detais_ck_item_unit">
           <End Role="ck_item_unit" Type="Self.ck_item_unit" Multiplicity="0..1" />
           <End Role="ck_issue_detais" Type="Self.ck_issue_detais" Multiplicity="*" />
@@ -1555,6 +1577,10 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
           <EntitySet Name="transaction_details" EntityType="Self.transaction_details" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="wh_item_cost_history" EntityType="Self.wh_item_cost_history" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="wh_item_unit" EntityType="Self.wh_item_unit" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ck_issue_detais_ck_issue_detais" Association="Self.FK_ck_issue_detais_ck_issue_detais">
+            <End Role="ck_issue_master" EntitySet="ck_issue_master" />
+            <End Role="ck_issue_detais" EntitySet="ck_issue_detais" />
+          </AssociationSet>
           <AssociationSet Name="FK_ck_issue_detais_ck_item_unit" Association="Self.FK_ck_issue_detais_ck_item_unit">
             <End Role="ck_item_unit" EntitySet="ck_item_unit" />
             <End Role="ck_issue_detais" EntitySet="ck_issue_detais" />
@@ -2297,6 +2323,10 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
             <End Role="ck_users" EntitySet="ck_users" />
             <End Role="ck_issue_detais" EntitySet="ck_issue_detais" />
           </AssociationSet>
+          <AssociationSet Name="FK_ck_issue_detais_ck_issue_detais" Association="dipckModel.FK_ck_issue_detais_ck_issue_detais">
+            <End Role="ck_issue_master" EntitySet="ck_issue_master" />
+            <End Role="ck_issue_detais" EntitySet="ck_issue_detais" />
+          </AssociationSet>
           </EntityContainer>
         <ComplexType Name="ReadWarehouseItems_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
@@ -2501,6 +2531,7 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
           <NavigationProperty Name="ck_stock_trans" Relationship="dipckModel.FK_ck_stock_trans_sites" FromRole="site" ToRole="ck_stock_trans" />
           <NavigationProperty Name="ck_stock_trans1" Relationship="dipckModel.FK_ck_stock_trans_sites_from" FromRole="site" ToRole="ck_stock_trans" />
           <NavigationProperty Name="ck_issue_master" Relationship="dipckModel.FK_ck_issue_master_sites" FromRole="site" ToRole="ck_issue_master" />
+          <Property Name="is_outlet" Type="Boolean" />
           </EntityType>
         <EntityType Name="wh_item_unit">
           <Key>
@@ -3419,6 +3450,7 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
           <Property Name="site_id" Type="Int32" />
           <NavigationProperty Name="ckwh_items" Relationship="dipckModel.FK_item_site_ckwh_items" FromRole="item_site" ToRole="ckwh_items" />
           <NavigationProperty Name="site" Relationship="dipckModel.FK_item_site_sites" FromRole="item_site" ToRole="site" />
+          <Property Name="is_outlet" Type="Boolean" />
         </EntityType>
         <Association Name="FK_ck_wastage_master_ck_users_created">
           <End Type="dipckModel.ck_users" Role="ck_users" Multiplicity="0..1" />
@@ -3510,6 +3542,8 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
           <NavigationProperty Name="ck_units" Relationship="dipckModel.FK_ck_stock_trans_ck_units" FromRole="ck_stock_trans" ToRole="ck_units" />
           <NavigationProperty Name="site" Relationship="dipckModel.FK_ck_stock_trans_sites" FromRole="ck_stock_trans" ToRole="site" />
           <NavigationProperty Name="site1" Relationship="dipckModel.FK_ck_stock_trans_sites_from" FromRole="ck_stock_trans" ToRole="site" />
+          <Property Name="prod_code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="batch_no" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_ck_users_sites">
           <End Type="dipckModel.site" Role="site" Multiplicity="0..1" />
@@ -3878,6 +3912,8 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
           <NavigationProperty Name="ck_users" Relationship="dipckModel.FK_ck_issue_master_ck_users_created" FromRole="ck_issue_master" ToRole="ck_users" />
           <NavigationProperty Name="ck_users1" Relationship="dipckModel.FK_ck_issue_master_ck_users_modified" FromRole="ck_issue_master" ToRole="ck_users" />
           <NavigationProperty Name="site" Relationship="dipckModel.FK_ck_issue_master_sites" FromRole="ck_issue_master" ToRole="site" />
+          <Property Name="ck_prod_code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ck_issue_detais" Relationship="dipckModel.FK_ck_issue_detais_ck_issue_detais" FromRole="ck_issue_master" ToRole="ck_issue_detais" />
         </EntityType>
         <Association Name="FK_ck_issue_master_ck_users_created">
           <End Type="dipckModel.ck_users" Role="ck_users" Multiplicity="0..1" />
@@ -3937,6 +3973,12 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
           <NavigationProperty Name="ck_items" Relationship="dipckModel.FK_ck_issue_detais_ck_items" FromRole="ck_issue_detais" ToRole="ck_items" />
           <NavigationProperty Name="ck_users" Relationship="dipckModel.FK_ck_issue_detais_ck_users_created" FromRole="ck_issue_detais" ToRole="ck_users" />
           <NavigationProperty Name="ck_users1" Relationship="dipckModel.FK_ck_issue_detais_ck_users_modified" FromRole="ck_issue_detais" ToRole="ck_users" />
+          <Property Name="ck_prod_code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ck_batch_no" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ck_issue_master_id" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="ck_issue_master" Relationship="dipckModel.FK_ck_issue_detais_ck_issue_detais" FromRole="ck_issue_detais" ToRole="ck_issue_master" />
+          <Property Name="ck_prod_date" Type="DateTime" Precision="3" />
+          <Property Name="ck_exp_date" Type="DateTime" Precision="3" />
         </EntityType>
         <Association Name="FK_ck_issue_detais_ck_item_unit">
           <End Type="dipckModel.ck_item_unit" Role="ck_item_unit" Multiplicity="0..1" />
@@ -3983,6 +4025,18 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
             </Principal>
             <Dependent Role="ck_issue_detais">
               <PropertyRef Name="modified_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ck_issue_detais_ck_issue_detais">
+          <End Type="dipckModel.ck_issue_master" Role="ck_issue_master" Multiplicity="1" />
+          <End Type="dipckModel.ck_issue_detais" Role="ck_issue_detais" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ck_issue_master">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ck_issue_detais">
+              <PropertyRef Name="ck_issue_master_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4108,6 +4162,7 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
           <EntitySetMapping Name="sites">
             <EntityTypeMapping TypeName="dipckModel.site">
               <MappingFragment StoreEntitySet="sites">
+                <ScalarProperty Name="is_outlet" ColumnName="is_outlet" />
                 <ScalarProperty Name="active" ColumnName="active" />
                 <ScalarProperty Name="modified_date" ColumnName="modified_date" />
                 <ScalarProperty Name="modified_by" ColumnName="modified_by" />
@@ -4329,6 +4384,7 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
           <EntitySetMapping Name="item_site">
             <EntityTypeMapping TypeName="dipckModel.item_site">
               <MappingFragment StoreEntitySet="item_site">
+                <ScalarProperty Name="is_outlet" ColumnName="is_outlet" />
                 <ScalarProperty Name="site_id" ColumnName="site_id" />
                 <ScalarProperty Name="wh_item_id" ColumnName="wh_item_id" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -4338,6 +4394,8 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
           <EntitySetMapping Name="ck_stock_trans">
             <EntityTypeMapping TypeName="dipckModel.ck_stock_trans">
               <MappingFragment StoreEntitySet="ck_stock_trans">
+                <ScalarProperty Name="batch_no" ColumnName="batch_no" />
+                <ScalarProperty Name="prod_code" ColumnName="prod_code" />
                 <ScalarProperty Name="modified_date" ColumnName="modified_date" />
                 <ScalarProperty Name="modified_by" ColumnName="modified_by" />
                 <ScalarProperty Name="created_date" ColumnName="created_date" />
@@ -4445,6 +4503,7 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
           <EntitySetMapping Name="ck_issue_master">
             <EntityTypeMapping TypeName="dipckModel.ck_issue_master">
               <MappingFragment StoreEntitySet="ck_issue_master">
+                <ScalarProperty Name="ck_prod_code" ColumnName="ck_prod_code" />
                 <ScalarProperty Name="modified_date" ColumnName="modified_date" />
                 <ScalarProperty Name="modified_by" ColumnName="modified_by" />
                 <ScalarProperty Name="created_date" ColumnName="created_date" />
@@ -4462,6 +4521,11 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
           <EntitySetMapping Name="ck_issue_detais">
             <EntityTypeMapping TypeName="dipckModel.ck_issue_detais">
               <MappingFragment StoreEntitySet="ck_issue_detais">
+                <ScalarProperty Name="ck_exp_date" ColumnName="ck_exp_date" />
+                <ScalarProperty Name="ck_prod_date" ColumnName="ck_prod_date" />
+                <ScalarProperty Name="ck_issue_master_id" ColumnName="ck_issue_master_id" />
+                <ScalarProperty Name="ck_batch_no" ColumnName="ck_batch_no" />
+                <ScalarProperty Name="ck_prod_code" ColumnName="ck_prod_code" />
                 <ScalarProperty Name="modified_date" ColumnName="modified_date" />
                 <ScalarProperty Name="modified_by" ColumnName="modified_by" />
                 <ScalarProperty Name="created_date" ColumnName="created_date" />

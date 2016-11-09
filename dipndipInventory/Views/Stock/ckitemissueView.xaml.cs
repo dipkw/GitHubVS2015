@@ -27,6 +27,7 @@ namespace dipndipInventory.Views.Stock
     {
         private static TimeSpan DoubleClickThreshold = TimeSpan.FromMilliseconds(450);
         private DateTime _lastClick;
+        private string g_branch_order_no = "";
         List<CKIssueViewModel> g_ck_item_issue_list = new List<CKIssueViewModel>();
 
         List<CKProductionViewModel> g_ck_production_list = new List<CKProductionViewModel>();
@@ -35,8 +36,8 @@ namespace dipndipInventory.Views.Stock
         List<ck_prod> g_ck_prod_update_list = new List<ck_prod>(); // for bal_qty
         ck_issue_master g_ck_issue_master = new ck_issue_master();
         List<ck_issue_detais> g_ck_issue_details = new List<ck_issue_detais>();
-
         List<ck_stock_trans> g_ck_stock_trans_list = new List<ck_stock_trans>();
+        string result = string.Empty;
 
         public ckitemissueView()
         {
@@ -56,18 +57,22 @@ namespace dipndipInventory.Views.Stock
         {
             if (DateTime.Now - this._lastClick <= DoubleClickThreshold)
             {
-                //ck_items ckitems = dgCKIssueDetails.SelectedItem as ck_items;
-                CKIssueViewModel ckitems = dgCKIssueDetails.SelectedItem as CKIssueViewModel;
-                CKIssueViewModel ck_issue_vm = new CKIssueViewModel();
-                //List<CKItemBatchViewModel> ck_item_batches = new List<CKItemBatchViewModel>();
-                //ck_issue_vm.itemCode = ckitems.ck_item_code;
-                ck_issue_vm.itemId = ckitems.itemId;
-                ck_issue_vm.itemCode = ckitems.itemCode;
-                ck_issue_vm.rowIndex = ckitems.rowIndex;
-                //ckitembatchView ckitembatch = new ckitembatchView(ck_issue_vm, ck_item_batches);
-                ckitembatchView ckitembatch = new ckitembatchView(ck_issue_vm, g_ck_item_issue_list, g_ck_prod_update_list);
-                ckitembatch.Show();
-                //MessageBox.Show("You have double clicked!");
+                try
+                {
+                    //ck_items ckitems = dgCKIssueDetails.SelectedItem as ck_items;
+                    CKIssueViewModel ckitems = dgCKIssueDetails.SelectedItem as CKIssueViewModel;
+                    CKIssueViewModel ck_issue_vm = new CKIssueViewModel();
+                    //List<CKItemBatchViewModel> ck_item_batches = new List<CKItemBatchViewModel>();
+                    //ck_issue_vm.itemCode = ckitems.ck_item_code;
+                    ck_issue_vm.itemId = ckitems.itemId;
+                    ck_issue_vm.itemCode = ckitems.itemCode;
+                    ck_issue_vm.rowIndex = ckitems.rowIndex;
+                    //ckitembatchView ckitembatch = new ckitembatchView(ck_issue_vm, ck_item_batches);
+                    ckitembatchView ckitembatch = new ckitembatchView(ck_issue_vm, g_ck_item_issue_list, g_ck_prod_update_list, g_ck_issue_details, this);
+                    ckitembatch.Show();
+                    //MessageBox.Show("You have double clicked!");
+                }
+                catch { }
             }
             this._lastClick = DateTime.Now;
         }
@@ -117,7 +122,8 @@ namespace dipndipInventory.Views.Stock
         private void FillAllSites()
         {
             SiteService _scontext = new SiteService();
-            IEnumerable<site> activeSites = _scontext.ReadAllActiveSitesWOActiveSite(GlobalVariables.ActiveSite.Id);
+            //IEnumerable<site> activeSites = _scontext.ReadAllActiveSitesWOActiveSite(GlobalVariables.ActiveSite.Id);
+            IEnumerable<site> activeSites = _scontext.ReadAllActiveOutletSites(); 
             cmbBranch.DisplayMemberPath = "site_name";
             cmbBranch.SelectedValuePath = "Id";
             cmbBranch.ItemsSource = activeSites.ToList();
@@ -138,7 +144,7 @@ namespace dipndipInventory.Views.Stock
             SiteService _scontext = new SiteService();
             string site_code = _scontext.GetSiteCodeBySiteId((int)cmbBranch.SelectedValue);
             DateTime order_date = (DateTime)dtpOrderDate.SelectedDate;
-            string branch_order_no = site_code + order_date.Date.ToString("dd") + order_date.Month + order_date.ToString("yy");
+            g_branch_order_no = site_code + order_date.Date.ToString("dd") + order_date.Month + order_date.ToString("yy");
 
             txtIssueCode.Value = "";
         }
@@ -148,12 +154,76 @@ namespace dipndipInventory.Views.Stock
             SiteService _scontext = new SiteService();
             string site_code = _scontext.GetSiteCodeBySiteId((int)cmbBranch.SelectedValue);
             DateTime order_date = (DateTime)dtpOrderDate.SelectedDate;
-            string branch_order_no = site_code + order_date.Date.ToString("dd") + order_date.Month + order_date.ToString("yy");
+            g_branch_order_no = site_code + order_date.Date.ToString("dd") + order_date.Month + order_date.ToString("yy");
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("test");
+            int row_id = 0;
+            foreach(ck_issue_detais ckissuedetail in g_ck_issue_details)
+            {
+                try
+                {
+                    g_ck_issue_details[row_id].ck_issue_code = txtIssueCode.Value;
+                    row_id++;
+                }
+                catch { }
+            }
+
+            //Update for ck_stock_trans
+            foreach(ck_issue_detais tmpckissuedetail in g_ck_issue_details)
+            {
+                try
+                {
+                    ck_stock_trans ckstocktrans = new ck_stock_trans();
+                    ckstocktrans.ck_item_id = tmpckissuedetail.ck_item_id;
+                    ckstocktrans.ck_item_code = tmpckissuedetail.ck_item_code;
+                    ckstocktrans.ck_item_desc = tmpckissuedetail.ck_item_desc;
+                    ckstocktrans.trans_ref_no = txtIssueCode.Value;
+                    ckstocktrans.trans_date = dtpIssueDate.SelectedDate;
+                    ckstocktrans.prod_code = tmpckissuedetail.ck_prod_code;
+                    ckstocktrans.batch_no = tmpckissuedetail.ck_batch_no;
+                    ckstocktrans.prod_date = tmpckissuedetail.ck_prod_date;
+                    ckstocktrans.exp_date = tmpckissuedetail.ck_exp_date;
+                    ckstocktrans.ck_unit_id = tmpckissuedetail.ck_item_unit_id;
+                    //ckstocktrans.ck_unit_desc = tmpckissuedetail.
+                    ckstocktrans.qty = tmpckissuedetail.qty_issued;
+                    ckstocktrans.trans_type = "CKIssue";
+                    ckstocktrans.unit_cost = tmpckissuedetail.ck_item_unit_cost;
+                    ckstocktrans.total_cost = tmpckissuedetail.ck_item_total_cost;
+                    ckstocktrans.trans_from = GlobalVariables.ActiveSite.Id;
+                    ckstocktrans.trans_to = Convert.ToInt32(cmbBranch.SelectedValue);
+                    ckstocktrans.active = true;
+                    ckstocktrans.site.Id = Convert.ToInt32(cmbBranch.SelectedValue.ToString());
+                    ckstocktrans.created_by = GlobalVariables.ActiveUser.Id;
+                    ckstocktrans.created_date = DateTime.Now;
+                    g_ck_stock_trans_list.Add(ckstocktrans);
+                }
+                catch { }
+            }
+
+
+            UpdateAllList();
+            //update ck_issue_details.ck_issue_master_id in DataService
+            CKIssueService ciscontext = new CKIssueService();
+           
+            result = ciscontext.SaveCKBranchIssue(g_ck_items_update_list, g_ck_prod_update_list, g_ck_issue_master, g_ck_issue_details, g_ck_stock_trans_list, GlobalVariables.ActiveUser.Id) > 0 ? "CK Branch Item Issue Saved Successfully" : "Unable to Save CK Branch Item Issue";
+            MessageBox.Show(result);
+            //Clear All List after Save
+            g_ck_prod_update_list.Clear();
+            g_ck_issue_details.Clear();
+            g_ck_stock_trans_list.Clear();
+
+            //Clear Grid
+            g_ck_item_issue_list.Clear();
+            dgCKIssueDetails.ItemsSource = null;
+            FillAllCKItems();
+
+            //Generate new issue_code
+            CKIssueService cicontext = new CKIssueService();
+            string issue_code = cicontext.GetNewCKIssueCode();
+            txtIssueCode.Value = issue_code;
         }
 
         private void UpdateAllList()
@@ -162,7 +232,7 @@ namespace dipndipInventory.Views.Stock
             {
                 if(ck_issue_vm.qtyIssued>0)
                 {
-                    
+                    //CK Item List Updation
                     try
                     {
                         ck_items ckitem = new ck_items();
@@ -182,9 +252,27 @@ namespace dipndipInventory.Views.Stock
 
                     }
                     catch { }
+                    
                 }
             }
+            //Update for ck_issue_master
+            try
+            {
+                g_ck_issue_master.ck_issue_code = txtIssueCode.Value;
+                g_ck_issue_master.ck_issue_date = dtpIssueDate.SelectedDate;
+                g_ck_issue_master.branch_order_no = g_branch_order_no;
+                g_ck_issue_master.branch_order_date = dtpOrderDate.SelectedDate;
+                g_ck_issue_master.issue_to_site_id = Convert.ToInt32(cmbBranch.SelectedValue.ToString());
+                g_ck_issue_master.active = true;
+                g_ck_issue_master.created_by = GlobalVariables.ActiveUser.Id;
+                g_ck_issue_master.created_date = DateTime.Now;
+            }
+            catch { }
         }
+
+        
+
+
 
         //Generate Issue Code (Generate Code based on Site or not?)
     }

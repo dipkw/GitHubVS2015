@@ -43,7 +43,8 @@ namespace dipndipInventory.Views.Login
         private void FillAllSites()
         {
             SiteService _scontext = new SiteService();
-            IEnumerable<site> objSites = _scontext.ReadAllSites();
+            //IEnumerable<site> objSites = _scontext.ReadAllSites();
+            IEnumerable<site> objSites = _scontext.ReadWHCKSites();
             cmbSites.DisplayMemberPath = "site_name";
             cmbSites.SelectedValuePath = "Id";
             cmbSites.ItemsSource = objSites.ToList();

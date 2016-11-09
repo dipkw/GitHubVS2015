@@ -54,6 +54,14 @@
                     <!--<telerik:RadMaskedTextInput Name="txtSiteName" Width="250" Margin="3" TabIndex="0" Placeholder=" " TextMode="MaskedText"/>-->
                     <telerik:RadMaskedTextInput Name="txtSiteName" Width="250" Margin="3" TabIndex="0" Placeholder="_" TextMode="MaskedText" Mask="" InputBehavior="Insert"/>
                 </StackPanel>
+                <StackPanel Orientation="Horizontal" >
+                    <telerik:Label Content="Outlet" Height="25" Width="150"/>
+                    <CheckBox x:Name="chkOutlet" Margin="5"></CheckBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" >
+                    <telerik:Label Content="Active" Height="25" Width="150"/>
+                    <CheckBox x:Name="chkActive" Margin="5"></CheckBox>
+                </StackPanel>
 
 
 

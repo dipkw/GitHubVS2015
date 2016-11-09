@@ -166,6 +166,10 @@ namespace dipndipInventory.Views.Stock
                     objProduction.ck_item_code = objCKProductionViewModel.itemCode;
                     objProduction.ck_item_desc = objCKProductionViewModel.itemDescription;
                     objProduction.batch_no = GetBatchNo(objCKProductionViewModel.itemCode);
+                    CKItemUnitService cuscontext = new CKItemUnitService();
+                    int ck_unit_id = (int)cuscontext.GetIdOfBaseUnit((int)objProduction.ck_item_id);
+                    objProduction.ck_item_unit_id = ck_unit_id;
+                    objProduction.conv_factor = 1.000m;
                     objProduction.ck_item_unit_desc = objCKProductionViewModel.ckUnit;
                     objProduction.prod_qty = objCKProductionViewModel.prodQty;
                     objProduction.bal_qty = objCKProductionViewModel.prodQty;

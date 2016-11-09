@@ -28,10 +28,16 @@ namespace dipndipInventory.EF
         public Nullable<System.DateTime> created_date { get; set; }
         public Nullable<int> modified_by { get; set; }
         public Nullable<System.DateTime> modified_date { get; set; }
+        public string ck_prod_code { get; set; }
+        public string ck_batch_no { get; set; }
+        public long ck_issue_master_id { get; set; }
+        public Nullable<System.DateTime> ck_prod_date { get; set; }
+        public Nullable<System.DateTime> ck_exp_date { get; set; }
     
         public virtual ck_item_unit ck_item_unit { get; set; }
         public virtual ck_items ck_items { get; set; }
         public virtual ck_users ck_users { get; set; }
         public virtual ck_users ck_users1 { get; set; }
+        public virtual ck_issue_master ck_issue_master { get; set; }
     }
 }

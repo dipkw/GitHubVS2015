@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="1fc9027473044785a37b377854d9960c" Name="Diagram1" ZoomLevel="99">
+      <Diagram DiagramId="1fc9027473044785a37b377854d9960c" Name="Diagram1" ZoomLevel="74">
         <EntityTypeShape EntityType="dipckModel.ck_item_recipe" Width="1.5" PointX="10.25" PointY="7.125" />
         <AssociationConnector Association="dipckModel.FK_ck_item_details_ck_users2" />
         <AssociationConnector Association="dipckModel.FK_ck_item_details_ck_users11" />
@@ -127,6 +127,7 @@
         <AssociationConnector Association="dipckModel.FK_ck_issue_detais_ck_items" />
         <AssociationConnector Association="dipckModel.FK_ck_issue_detais_ck_users_created" />
         <AssociationConnector Association="dipckModel.FK_ck_issue_detais_ck_users_modified" />
+        <AssociationConnector Association="dipckModel.FK_ck_issue_detais_ck_issue_detais" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
