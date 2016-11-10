@@ -87,6 +87,9 @@
     <Compile Include="ck_items.cs">
       <DependentUpon>CKModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ck_items_adj.cs">
+      <DependentUpon>CKModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="ck_item_cost_history.cs">
       <DependentUpon>CKModel.tt</DependentUpon>
     </Compile>
@@ -119,6 +122,7 @@
     </Compile>
     <Compile Include="CustomModels\UserCustomModel.cs" />
     <Compile Include="DataServices\CategoryService.cs" />
+    <Compile Include="DataServices\CKAdjService.cs" />
     <Compile Include="DataServices\CKIssueService.cs" />
     <Compile Include="DataServices\CKItemCostService.cs" />
     <Compile Include="DataServices\CKItemDetailService.cs" />
@@ -127,6 +131,7 @@
     <Compile Include="DataServices\CKOrderService.cs" />
     <Compile Include="DataServices\CKProductionService.cs" />
     <Compile Include="DataServices\CKReceiptService.cs" />
+    <Compile Include="DataServices\CKStockTransactionService.cs" />
     <Compile Include="DataServices\CKWastageService.cs" />
     <Compile Include="DataServices\ReasonService.cs" />
     <Compile Include="DataServices\SiteService.cs" />

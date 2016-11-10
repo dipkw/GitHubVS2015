@@ -60,7 +60,7 @@ namespace dipndipInventory.EF.DataServices
                 _context.Dispose();
                 return 1;
             }
-            catch (Exception e)
+            catch
             {
                 _context.Dispose();
                 return 0;
@@ -136,7 +136,7 @@ namespace dipndipInventory.EF.DataServices
 
                 return new_item_code;
             }
-            catch (Exception e) { return string.Empty; }
+            catch { return string.Empty; }
         }
 
         public string GetItemCode(int id)

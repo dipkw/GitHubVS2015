@@ -42,7 +42,7 @@ namespace dipndipInventory.EF.DataServices
                 _context.SaveChanges();
                 _context.Dispose();
             }
-            catch (Exception ex)
+            catch
             {
                 _context.Dispose();
                 return 0;
@@ -261,7 +261,7 @@ namespace dipndipInventory.EF.DataServices
                 _context.Dispose();
                 return 1;
             }
-            catch (Exception e)
+            catch
             {
                 _context.Dispose();
                 return 0;
@@ -285,7 +285,7 @@ namespace dipndipInventory.EF.DataServices
                 _context.Dispose();
                 return 1;
             }
-            catch (Exception e)
+            catch
             {
                 _context.Dispose();
                 return 0;
@@ -308,7 +308,7 @@ namespace dipndipInventory.EF.DataServices
                 _context.Dispose();
                 return 1;
             }
-            catch (Exception e)
+            catch
             {
                 _context.Dispose();
                 return 0;

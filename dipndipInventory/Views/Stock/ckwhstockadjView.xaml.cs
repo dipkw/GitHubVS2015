@@ -49,6 +49,7 @@ namespace dipndipInventory.Views.Stock
         }
         private void ReadAllWHItems()
         {
+            dgCKWHItems.ItemsSource = null;
             IEnumerable<ckwh_items> objItems = _context.ReadAllWHItems();
             dgCKWHItems.ItemsSource = objItems;
             
@@ -105,31 +106,34 @@ namespace dipndipInventory.Views.Stock
             //    return;
             //}
             //int wh_item_id = objWHStkAdjVM.wh_item_id;
-
-            ckwh_items objItem = (dgCKWHItems.SelectedItem) as ckwh_items;
-            int wh_item_id = objItem.Id;
-
-            FillAllUnits(wh_item_id);
-            FillAllReasons();
-            txtItemCode.Value = objItem.wh_item_code;
-            txtDescription.Value = objItem.wh_item_description;
-            WHItemService _wicontext = new WHItemService();
-            selected_item_id = _wicontext.GetItemId(txtItemCode.Value);
-            //selected_item_unit_cost = (decimal)objItem.unit_cost;
-            if (objItem.ck_avg_unit_cost == null)
+            try
             {
-                selected_item_unit_cost = 0.000m;
-            }
-            else
-            {
-                selected_item_unit_cost = (decimal)objItem.ck_avg_unit_cost;
-            }
+                ckwh_items objItem = (dgCKWHItems.SelectedItem) as ckwh_items;
+                int wh_item_id = objItem.Id;
 
-            if (objItem.ck_qty != null)
-            {
-                selected_ck_qty = (decimal)objItem.ck_qty;
+                FillAllUnits(wh_item_id);
+                FillAllReasons();
+                txtItemCode.Value = objItem.wh_item_code;
+                txtDescription.Value = objItem.wh_item_description;
+                WHItemService _wicontext = new WHItemService();
+                selected_item_id = _wicontext.GetItemId(txtItemCode.Value);
+                //selected_item_unit_cost = (decimal)objItem.unit_cost;
+                if (objItem.ck_avg_unit_cost == null)
+                {
+                    selected_item_unit_cost = 0.000m;
+                }
+                else
+                {
+                    selected_item_unit_cost = (decimal)objItem.ck_avg_unit_cost;
+                }
+
+                if (objItem.ck_qty != null)
+                {
+                    selected_ck_qty = (decimal)objItem.ck_qty;
+                }
+                cmbUnit.Focus();
             }
-            cmbUnit.Focus();
+            catch { }
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
@@ -153,8 +157,9 @@ namespace dipndipInventory.Views.Stock
             decimal updated_ck_qty = 0.00000000m;
             decimal adj_qty = (decimal)(txtQty.Value)*conv_factor;
             string trans_type = string.Empty;
-            updated_ck_qty = selected_ck_qty + (adj_qty*conversion_factor);
-            if(((decimal)txtQty.Value)>0)
+            //updated_ck_qty = selected_ck_qty + (adj_qty*conversion_factor);
+            updated_ck_qty = selected_ck_qty + (adj_qty);
+            if (((decimal)txtQty.Value)>0)
             {
                 updated_average_cost = GetAdjAvgCost(adj_qty);
                 item_unit_cost = updated_average_cost;
@@ -192,7 +197,8 @@ namespace dipndipInventory.Views.Stock
 
             //Update adj_code after saving
             GetNewAdjCode();
-            MessageBox.Show(updated_ck_qty.ToString());
+            //MessageBox.Show(updated_ck_qty.ToString());
+            ReadAllWHItems();
         }
 
         private int CreateCost(decimal updated_average_cost)
@@ -405,6 +411,11 @@ namespace dipndipInventory.Views.Stock
             }
             //conversion_factor = (decimal)_wucontext.GetConversionFactorByWHItemId(selected_item_id, Convert.ToInt32(cmbUnit.SelectedValue.ToString()));
             conversion_factor = (decimal)_wucontext.GetConversionFactorByWHItemId(selected_item_id, (int)ck_unit_id);
+        }
+
+        private void btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

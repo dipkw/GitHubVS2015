@@ -31,6 +31,7 @@ namespace dipndipInventory.Views.Stock
         List<ckwh_items> warehouse_items_list = new List<ckwh_items>();
         List<ck_prod> production_list = new List<ck_prod>();
         List<ck_item_cost_history> ck_item_cost_list = new List<ck_item_cost_history>();
+        List<ck_stock_trans> ck_stock_trans_list = new List<ck_stock_trans>();
         public ckproductionView()
         {
             InitializeComponent();
@@ -104,9 +105,74 @@ namespace dipndipInventory.Views.Stock
                 return;
             }
             GenerateCKItemCostList();
+
+            GenerateCKStockTransList();
+
+
+            if(!CheckWarehouseItems())
+            {
+                return;
+            }
+
             CKProductionService pscontext = new CKProductionService();
-            pscontext.SaveCKItemProduction(production_list, ck_items_list, warehouse_items_list, ck_item_cost_list, GlobalVariables.ActiveUser.Id);
+            pscontext.SaveCKItemProduction(production_list, ck_items_list, warehouse_items_list, ck_item_cost_list, ck_stock_trans_list, GlobalVariables.ActiveUser.Id);
             production_list.Clear();
+        }
+
+        private bool CheckWarehouseItems()
+        {
+            foreach(ckwh_items ckwhitem in warehouse_items_list)
+            {
+                if(ckwhitem.ck_qty>=0)
+                {
+                    
+                }
+                else
+                {
+                    try
+                    {
+                        WHItemService whscontext = new WHItemService();
+
+                        string wh_item_code = whscontext.GetItemCode(ckwhitem.Id);
+                        string wh_item_desc = whscontext.GetItemDescription(ckwhitem.Id);
+                        string msg = "Item: " + wh_item_code.Trim() + "(" + wh_item_desc.Trim() + ") - Quantity not sufficient for production";
+                        MessageBox.Show(msg);
+                        return false;
+                    }
+                    catch { }
+                }
+            }
+            return true;
+        }
+
+        private void GenerateCKStockTransList()
+        {
+            ck_stock_trans_list.Clear();
+            foreach(ck_prod ckprod in production_list)
+            {
+                ck_stock_trans ckstocktrans = new ck_stock_trans();
+                ckstocktrans.ck_item_id = ckprod.ck_item_id;
+                ckstocktrans.ck_item_code = ckprod.ck_item_code;
+                ckstocktrans.ck_item_desc = ckprod.ck_item_desc;
+                ckstocktrans.trans_ref_no = ckprod.prod_code;
+                ckstocktrans.trans_date = ckprod.prod_date;
+                ckstocktrans.prod_code = ckprod.prod_code;
+                ckstocktrans.batch_no = ckprod.batch_no;
+                ckstocktrans.prod_date = ckprod.prod_date;
+                ckstocktrans.exp_date = ckprod.exp_date;
+                ckstocktrans.ck_unit_id = ckprod.ck_item_unit_id;
+                ckstocktrans.ck_unit_desc = ckprod.ck_item_unit_desc;
+                ckstocktrans.qty = ckprod.prod_qty;
+                ckstocktrans.trans_type = "Production";
+                ckstocktrans.unit_cost = ckprod.unit_cost;
+                ckstocktrans.total_cost = ckprod.total_cost;
+                ckstocktrans.trans_from = GlobalVariables.ActiveSite.Id;
+                ckstocktrans.trans_to = GlobalVariables.ActiveSite.Id;
+                ckstocktrans.active = true;
+                ckstocktrans.created_by = GlobalVariables.ActiveUser.Id;
+                ckstocktrans.created_date = DateTime.Now;
+                ck_stock_trans_list.Add(ckstocktrans);
+            }
         }
 
         private void GenerateCKItemCostList()
@@ -241,6 +307,7 @@ namespace dipndipInventory.Views.Stock
                 WHItemUnitService _wucontext = new WHItemUnitService();
                 IEnumerable<ck_item_details> CKItemRecipeList = _cdcontext.ReadAllCKItemRecipeByCKItemId(ck_item_id);
                 decimal? ck_item_prod_qty = design_qty * prodQty;
+                decimal recipe_unit_cost = 0.000m;
                 foreach (ck_item_details item_recipe in CKItemRecipeList)
                 {
                     int ckwh_item_id = (int)item_recipe.ckwh_item_id;
@@ -270,7 +337,7 @@ namespace dipndipInventory.Views.Stock
                     {
                         avg_wh_item_cost = 0.000m;
                     }
-                    
+                    recipe_unit_cost += (decimal)(avg_wh_item_cost * conv_factor)*(decimal)(recipe_wh_item_qty);
                     production_item_cost += (decimal)(avg_wh_item_cost * conv_factor * recipe_wh_item_qty * prodQty);
                 }
                 //MessageBox.Show(ck_item_prod_qty.ToString());

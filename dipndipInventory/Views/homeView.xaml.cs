@@ -181,5 +181,11 @@ namespace dipndipInventory.Views
             ckitemissueView civ = new ckitemissueView();
             civ.Show();
         }
+
+        private void CKAdjustment_Click(object sender, RoutedEventArgs e)
+        {
+            ckstockadjView csv = new ckstockadjView();
+            csv.Show();
+        }
     }
 }

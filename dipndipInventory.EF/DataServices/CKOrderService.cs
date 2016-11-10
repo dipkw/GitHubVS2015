@@ -59,7 +59,7 @@ namespace dipndipInventory.EF.DataServices
                 _context.Dispose();
                 return 1;
             }
-            catch (Exception e)
+            catch
             {
                 _context.Dispose();
                 return 0;
@@ -136,7 +136,7 @@ namespace dipndipInventory.EF.DataServices
 
                 return new_order_no;
             }
-            catch (Exception e) { return string.Empty; }
+            catch { return string.Empty; }
         }
 
         public order ReadCKOrderByID(long? ID)
@@ -218,7 +218,7 @@ namespace dipndipInventory.EF.DataServices
                 _context.Dispose();
                 return 1;
             }
-            catch (Exception e)
+            catch
             {
                 _context.Dispose();
                 return 0;
@@ -241,7 +241,7 @@ namespace dipndipInventory.EF.DataServices
                 _context.Dispose();
                 return 1;
             }
-            catch (Exception e)
+            catch
             {
                 _context.Dispose();
                 return 0;
@@ -261,7 +261,7 @@ namespace dipndipInventory.EF.DataServices
                 _context.SaveChanges();
                 _context.Dispose();
             }
-            catch(Exception e)
+            catch
             {
                 _context.Dispose();
                 return 0;

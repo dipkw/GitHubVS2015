@@ -34,7 +34,8 @@
                     <telerik:GridViewDataColumn x:Name="CatDesc" DataMemberBinding="{Binding wh_category_description}" Width="*" Header="Category"/>
                     <telerik:GridViewDataColumn x:Name="Unit" DataMemberBinding="{Binding wh_unit_description}" Width="*" Header="Unit"/>
                     <telerik:GridViewDataColumn x:Name="CurCost" DataMemberBinding="{Binding unit_cost}" Width="*" Header="Current Cost" TextAlignment="Right"/>
-                    <telerik:GridViewDataColumn x:Name="QtyOnHand" DataMemberBinding="{Binding quantity}" Width="*" Header="Qty on Hand" TextAlignment="Right"/>
+                    <telerik:GridViewDataColumn x:Name="WHQuantity" DataMemberBinding="{Binding quantity}" Width="*" Header="Warehouse Qty" TextAlignment="Right"/>
+                    <telerik:GridViewDataColumn x:Name="CKQuantity" DataMemberBinding="{Binding ck_qty}" Width="*" Header="CK Quantity" TextAlignment="Right"/>
 
                     <telerik:GridViewColumn Width="80">
                         <telerik:GridViewColumn.CellTemplate>

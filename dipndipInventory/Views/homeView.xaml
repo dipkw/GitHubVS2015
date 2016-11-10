@@ -111,12 +111,7 @@
                             <TextBlock Text="Adjustment" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </telerik:RadRibbonButton>
-                    <telerik:RadRibbonButton   Width="70"  HorizontalContentAlignment="Center" x:Name="Wastage" Visibility="Visible">
-                        <StackPanel>
-                            <Image Source="/dipndipInventory;component/images/menu_icons/9_exit_641.png" Width="32" Height="32"/>
-                            <TextBlock Text="Wastage" HorizontalAlignment="Center"/>
-                        </StackPanel>
-                    </telerik:RadRibbonButton>
+                    
                     <telerik:RadRibbonButton x:Name="CategoryMenu"   Width="70"  HorizontalContentAlignment="Center" Click="CategoryMenu_Click" Visibility="Collapsed">
                         <StackPanel>
                             <Image Source="/dipndipInventory;component/Images/menu_icons/Icon-Tickets.png" Width="32" Height="32"/>
@@ -168,6 +163,18 @@
                         <StackPanel>
                             <Image Source="/dipndipInventory;component/Images/menu_icons/fast-food-icon.png" Width="32" Height="32"/>
                             <TextBlock Text="Issue" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </telerik:RadRibbonButton>
+                    <telerik:RadRibbonButton   Width="70"  HorizontalContentAlignment="Center" x:Name="CKAdjustment" Visibility="Visible" Click="CKAdjustment_Click">
+                        <StackPanel>
+                            <Image Source="/dipndipInventory;component/images/menu_icons/Icon-Tickets.png" Width="32" Height="32"/>
+                            <TextBlock Text="Adjustment" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </telerik:RadRibbonButton>
+                    <telerik:RadRibbonButton   Width="70"  HorizontalContentAlignment="Center" x:Name="Wastage" Visibility="Visible">
+                        <StackPanel>
+                            <Image Source="/dipndipInventory;component/images/menu_icons/9_exit_641.png" Width="32" Height="32"/>
+                            <TextBlock Text="Wastage" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </telerik:RadRibbonButton>
                 </telerik:RadRibbonGroup>

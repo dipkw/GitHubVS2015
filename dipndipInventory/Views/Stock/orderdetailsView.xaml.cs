@@ -181,7 +181,7 @@ namespace dipndipInventory.Views.Stock
                     txtItemCode.Focus();
                 }
             }
-            catch (Exception Ex) { }
+            catch { }
         }
 
         private void ClearItem()
