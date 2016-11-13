@@ -118,7 +118,7 @@ namespace dipndipInventory.Views.Stock
 
         private decimal CurrentAverageCost(int wh_item_id, decimal current_cost, decimal current_qty)
         {
-            decimal current_average_cost = 0m;
+            decimal current_average_cost = 0.000m;
             WHItemCostService _hcontext = new WHItemCostService();
             WHItemService _wicontext = new WHItemService();
             wh_item_cost_history lastWHItemCost = _hcontext.GetLastCost((int)(wh_item_id));
@@ -355,6 +355,11 @@ namespace dipndipInventory.Views.Stock
             result = _tcontext.CreateTransaction(objTransactionDetail);
 
             return result;
+        }
+
+        private void btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

@@ -66,18 +66,22 @@ namespace dipndipInventory.Views.Stock
 
         private void dgCKOrderDetails_CellValidating(object sender, GridViewCellValidatingEventArgs e)
         {
-            if (e.Cell.Column.UniqueName == "qty_issued")
+            try
             {
-                if ((Convert.ToDecimal(e.NewValue.ToString())) >= 0)
+                if (e.Cell.Column.UniqueName == "qty_issued")
                 {
-                }
-                else
-                {
-                    e.IsValid = false;
-                    e.ErrorMessage = "Not a valid quantity";
+                    if ((Convert.ToDecimal(e.NewValue.ToString())) >= 0)
+                    {
+                    }
+                    else
+                    {
+                        e.IsValid = false;
+                        e.ErrorMessage = "Not a valid quantity";
 
+                    }
                 }
             }
+            catch { }
         }
 
         private void btnAddItem_Click(object sender, RoutedEventArgs e)
@@ -128,6 +132,11 @@ namespace dipndipInventory.Views.Stock
             string response = result > 0 ? "Items Issued Successfully" : "Unable to issue the Items";
 
             RadWindow.Alert(response);
+        }
+
+        private void btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

@@ -99,31 +99,35 @@ namespace dipndipInventory.Views.Stock
 
         private void UpdateItems()
         {
-            if (txtItemCode.Value.Length > 0)
+            try
             {
-                WHItemService _wcontext = new WHItemService();
-                ckwh_items item_details = _wcontext.GetItemByCode(txtItemCode.Value);
-                if (item_details != null)
+                if (txtItemCode.Value.Length > 0)
                 {
-                    txtDescription.Value = item_details.wh_item_description;
-                    txtItemID.Value = item_details.Id.ToString();
-                    WHItemUnitService _wucontext = new WHItemUnitService();
-                    int base_unit_id = (int)(_wucontext.GetIdOfBaseUnit(item_details.Id));
-                    if (base_unit_id == 0)
+                    WHItemService _wcontext = new WHItemService();
+                    ckwh_items item_details = _wcontext.GetItemByCode(txtItemCode.Value);
+                    if (item_details != null)
                     {
-                        RadWindow.Alert("Please configure Unit for Item Code: " + txtItemCode.Value);
-                        return;
+                        txtDescription.Value = item_details.wh_item_description;
+                        txtItemID.Value = item_details.Id.ToString();
+                        WHItemUnitService _wucontext = new WHItemUnitService();
+                        int base_unit_id = (int)(_wucontext.GetIdOfBaseUnit(item_details.Id));
+                        if (base_unit_id == 0)
+                        {
+                            RadWindow.Alert("Please configure Unit for Item Code: " + txtItemCode.Value);
+                            return;
+                        }
+                        txtUnitID.Value = base_unit_id.ToString();
+                        txtUnit.Value = item_details.wh_unit_description;
+                        txtQty.Focus();
                     }
-                    txtUnitID.Value = base_unit_id.ToString();
-                    txtUnit.Value = item_details.wh_unit_description;
-                    txtQty.Focus();
-                }
-                else
-                {
-                    txtItemCode.SelectAll();
-                    //txtItemCode.Focus();
+                    else
+                    {
+                        txtItemCode.SelectAll();
+                        //txtItemCode.Focus();
+                    }
                 }
             }
+            catch { }
         }
 
         private void btnAddItem_Click(object sender, RoutedEventArgs e)
@@ -257,33 +261,37 @@ namespace dipndipInventory.Views.Stock
             {
                 return;
             }
-            OrderDetailsViewModel odvm = (dgCKOrderDetails.SelectedItem) as OrderDetailsViewModel;
+            try
+            {
+                OrderDetailsViewModel odvm = (dgCKOrderDetails.SelectedItem) as OrderDetailsViewModel;
 
-            txtItemID.Value = odvm.itemId.ToString();
-            txtItemID.IsEnabled = false;
-            txtItemID.IsReadOnly = true;
+                txtItemID.Value = odvm.itemId.ToString();
+                txtItemID.IsEnabled = false;
+                txtItemID.IsReadOnly = true;
 
-            txtItemCode.Value = odvm.itemCode;
-            txtItemCode.IsEnabled = false;
-            txtItemCode.IsReadOnly = true;
+                txtItemCode.Value = odvm.itemCode;
+                txtItemCode.IsEnabled = false;
+                txtItemCode.IsReadOnly = true;
 
-            txtDescription.Value = odvm.itemDescription;
-            txtDescription.IsEnabled = false;
-            txtDescription.IsReadOnly = true;
+                txtDescription.Value = odvm.itemDescription;
+                txtDescription.IsEnabled = false;
+                txtDescription.IsReadOnly = true;
 
-            txtUnitID.Value = odvm.unitId.ToString();
-            txtUnitID.IsEnabled = false;
-            txtUnitID.IsReadOnly = true;
+                txtUnitID.Value = odvm.unitId.ToString();
+                txtUnitID.IsEnabled = false;
+                txtUnitID.IsReadOnly = true;
 
-            txtUnit.Value = odvm.unitDescription;
-            txtUnit.IsEnabled = false;
-            txtUnit.IsReadOnly = true;
+                txtUnit.Value = odvm.unitDescription;
+                txtUnit.IsEnabled = false;
+                txtUnit.IsReadOnly = true;
 
-            txtQty.Value = (double)odvm.qty;
-            txtQty.IsEnabled = false;
-            txtQty.IsReadOnly = true;
+                txtQty.Value = (double)odvm.qty;
+                txtQty.IsEnabled = false;
+                txtQty.IsReadOnly = true;
 
-            btnSave.IsEnabled = false;
+                btnSave.IsEnabled = false;
+            }
+            catch { }
         }
 
         private void btnEdit_Click(object sender, RoutedEventArgs e)
@@ -381,6 +389,7 @@ namespace dipndipInventory.Views.Stock
                 RadWindow.Alert("Please add at least one item in the order");
                 return;
             }
+
             order order_master = new order();
             order_master.Id = id;
             order_master.order_no = txtOrderNo.Value;

@@ -152,6 +152,19 @@ namespace dipndipInventory.EF.DataServices
             return item_code;
         }
 
+        public int GetItemId(string item_code)
+        {
+            int item_id = 0;
+
+            try
+            {
+                _context = new CKEntities();
+                item_id = (from ckitems in _context.ck_items where ckitems.ck_item_code == item_code select ckitems.Id).FirstOrDefault();
+            }
+            catch { return 0; }
+            return item_id;
+        }
+
         public ck_items GetItemByCode(string item_code)
         {
             try

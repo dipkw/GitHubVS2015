@@ -193,7 +193,7 @@ namespace dipndipInventory.EF.DataServices
             try
             {
                 _context = new CKEntities();
-                IEnumerable<order> objOrders = (from ckorders in _context.orders where (ckorders.active == true && (ckorders.order_from_site_id == site_id || ckorders.order_to_site_id == site_id)) orderby ckorders.Id ascending select ckorders);
+                IEnumerable<order> objOrders = (from ckorders in _context.orders where (ckorders.active == true && (ckorders.order_from_site_id == site_id || ckorders.order_to_site_id == site_id)) orderby ckorders.Id descending select ckorders);
                 return objOrders;
             }
             catch

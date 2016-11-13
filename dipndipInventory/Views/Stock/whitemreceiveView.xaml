@@ -109,7 +109,7 @@
             <telerik:RadButton Content="Save" Margin="3" Width="50" Name="btnSave"  TabIndex="4" Click="btnSave_Click"/>
             <!--<telerik:RadButton Content="New" Margin="3" Width="50" Name="btnNew"  TabIndex="5"/>
             <telerik:RadButton Content="Delete" Margin="3" Width="50" x:Name="btnDelete" TabIndex="6"/>-->
-            <telerik:RadButton Content="Close" Margin="3" Width="50" Name="btnClose"   TabIndex="7"/>
+            <telerik:RadButton Content="Close" Margin="3" Width="50" Name="btnClose"   TabIndex="7" Click="btnClose_Click"/>
         </StackPanel>
     </Grid>
 </telerik:RadWindow>
