@@ -2,8 +2,12 @@
 using dipndipInventory.EF.DataServices;
 using dipndipInventory.Helpers;
 using dipndipInventory.ViewModels;
+using Microsoft.SqlServer.Dts.Runtime;
+using Microsoft.SqlServer.Management.IntegrationServices;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,9 +36,41 @@ namespace dipndipInventory.Views.Stock
             InitializeComponent();
         }
 
+
+        public int UpdateWarehouseItems()
+        {
+            SqlConnection ssisConnection = new SqlConnection(@"Data Source=192.168.0.187\MSSQLSERVER14;Initial Catalog=dipck;Integrated Security=SSPI;");
+            IntegrationServices ssisServer = new IntegrationServices(ssisConnection);
+            var projectBytes = ssisServer.Catalogs["SSISDB"]
+                             .Folders["wh_item_updation"]
+                             .Projects["wh_item_updation"].GetProjectBytes();
+
+            // note that projectBytes is basically __URFILE__.ispac      
+            using (var existingProject = Project.OpenProject(new MemoryStream(projectBytes)))
+            {
+                //existingProject.PackageItems["master.dtsx"].Package.Execute(.... todo....)
+                DTSExecResult exec_result = existingProject.PackageItems["Package.dtsx"].Package.Execute();
+                if (exec_result == DTSExecResult.Success)
+                {
+                    //MessageBox.Show("Items Updated Successfully");
+                    return 1;
+                }
+                else
+                {
+                    MessageBox.Show("Updation Failed");
+                    return 0;
+                }
+            }
+        }
+
         public whitemreceiveView(long order_id, string order_no, DateTime order_date, DateTime issue_date) 
         {
             InitializeComponent();
+
+            if(UpdateWarehouseItems() == 0)
+            {
+                return;
+            }
             ShowTaskBar.ShowInTaskbar(this, "Item Receiving Details");
 
             CKReceiptService _rcontext = new CKReceiptService();

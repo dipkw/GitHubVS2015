@@ -53,6 +53,33 @@ namespace dipndipInventory.EF.DataServices
             }
         }
 
+        public string GetNewCKWastageCode()
+        {
+            //CKEntities _context;
+            //try
+            //{
+            //    string new_ck_wst_code = string.Empty;
+            //    string last_ck_wst_code = string.Empty;
+            //    _context = new CKEntities();
+            //    //var result = _context.ck_items.OrderByDescending(i => i.Id).FirstOrDefault().ck_item_code;
+            //    var result = _context.ck_wastage_master.OrderByDescending(i => i.Id).FirstOrDefault();
+            //    if (result == null)
+            //    {
+            //        return "CWST-0001";
+            //    }
+
+            //    last_ck_wst_code = ((ck_wastage_master)result).;
+            //    string[] tmpWstCode = last_ck_wst_code.Split('-');
+
+            //    new_ck_wst_code = "CWST-" + (Convert.ToInt32(tmpWstCode[1]) + 1).ToString("D4");
+
+            //    return new_ck_wst_code;
+            //}
+            //catch { return string.Empty; }
+
+            return "";
+        }
+
 
     }
 }

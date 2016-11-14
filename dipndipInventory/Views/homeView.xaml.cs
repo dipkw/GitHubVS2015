@@ -4,8 +4,11 @@ using dipndipInventory.Views.Site;
 using dipndipInventory.Views.Stock;
 using dipndipInventory.Views.Users;
 using Microsoft.SqlServer.Dts.Runtime;
+using Microsoft.SqlServer.Management.IntegrationServices;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.IO;
 using System.IO.Packaging;
 using System.Linq;
 using System.Text;
@@ -121,9 +124,34 @@ namespace dipndipInventory.Views
 
         private void UpdateWHCost_Click(object sender, RoutedEventArgs e)
         {
+            SqlConnection ssisConnection = new SqlConnection(@"Data Source=192.168.0.187\MSSQLSERVER14;Initial Catalog=dipck;Integrated Security=SSPI;");
+            IntegrationServices ssisServer = new IntegrationServices(ssisConnection);
+            var projectBytes = ssisServer.Catalogs["SSISDB"]
+                             .Folders["wh_item_updation"]
+                             .Projects["wh_item_updation"].GetProjectBytes();
+
+            // note that projectBytes is basically __URFILE__.ispac      
+            using (var existingProject = Project.OpenProject(new MemoryStream(projectBytes)))
+            {
+                //existingProject.PackageItems["master.dtsx"].Package.Execute(.... todo....)
+                DTSExecResult exec_result = existingProject.PackageItems["Package.dtsx"].Package.Execute();
+                if (exec_result == DTSExecResult.Success)
+                {
+                    MessageBox.Show("Items Updated Successfully");
+                }
+                else
+                {
+                    MessageBox.Show("Updation Failed");
+                }
+            }
+        }
+
+        private void UpdateWHCost_Click1(object sender, RoutedEventArgs e)
+        {
             //string pkgLocation = @"D:\Prj\SSIS\ImportCostChangeHistory\ImportCostChangeHistory\ImportCostChange.dtsx";
-            string pkgLocation = @"D:\Prj\test\ssisexec\ImportCostChange.dtsx";
-        
+            //string pkgLocation = @"D:\Prj\test\ssisexec\ImportCostChange.dtsx";
+            string pkgLocation = @"Package.dtsx";
+
             Microsoft.SqlServer.Dts.Runtime.Package pkg;
             Microsoft.SqlServer.Dts.Runtime.Application app;
             DTSExecResult pkgResults;
@@ -186,6 +214,12 @@ namespace dipndipInventory.Views
         {
             ckstockadjView csv = new ckstockadjView();
             csv.Show();
+        }
+
+        private void Wastage_Click(object sender, RoutedEventArgs e)
+        {
+            ckwastageView cwv = new ckwastageView();
+            cwv.Show();
         }
     }
 }

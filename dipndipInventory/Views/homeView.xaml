@@ -171,7 +171,7 @@
                             <TextBlock Text="Adjustment" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </telerik:RadRibbonButton>
-                    <telerik:RadRibbonButton   Width="70"  HorizontalContentAlignment="Center" x:Name="Wastage" Visibility="Visible">
+                    <telerik:RadRibbonButton   Width="70"  HorizontalContentAlignment="Center" x:Name="Wastage" Visibility="Visible" Click="Wastage_Click">
                         <StackPanel>
                             <Image Source="/dipndipInventory;component/images/menu_icons/9_exit_641.png" Width="32" Height="32"/>
                             <TextBlock Text="Wastage" HorizontalAlignment="Center"/>
@@ -207,10 +207,10 @@
                             <TextBlock Text="Update GP Items" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </telerik:RadRibbonButton>
-                    <telerik:RadRibbonButton x:Name="UpdateWHCost"  Width="95"  HorizontalContentAlignment="Center" Click="UpdateWHCost_Click" Visibility="Collapsed">
+                    <telerik:RadRibbonButton x:Name="UpdateWHCost"  Width="100"  HorizontalContentAlignment="Center" Click="UpdateWHCost_Click" Visibility="Visible">
                         <StackPanel>
                             <Image Source="/dipndipInventory;component/images/menu_icons/sites-2-icon.png" Width="32" Height="32"/>
-                            <TextBlock Text="Update WH Cost" HorizontalAlignment="Center"/>
+                            <TextBlock Text="Update WH Items" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </telerik:RadRibbonButton>
                 </telerik:RadRibbonGroup>
