@@ -218,8 +218,33 @@ namespace dipndipInventory.Views
 
         private void Wastage_Click(object sender, RoutedEventArgs e)
         {
-            ckwastageView cwv = new ckwastageView();
+            ckitemwastageView cwv = new ckitemwastageView();
             cwv.Show();
+        }
+
+        private void comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string selected_theme = ((ComboBoxItem)comboBox.SelectedItem).Content.ToString();
+            switch (selected_theme)
+            {
+                case "Windows 8":
+                    StyleManager.ApplicationTheme = new Windows8Theme();
+                    break;
+                case "Windows 7":
+                    StyleManager.ApplicationTheme = new Windows7Theme();
+                    break;
+                case "Office Black":
+                    StyleManager.ApplicationTheme = new Office_BlackTheme();
+                    break;
+                case "Office Blue":
+                    StyleManager.ApplicationTheme = new Office_BlueTheme();
+                    break;
+                case "Office Silver":
+                    StyleManager.ApplicationTheme = new Office_SilverTheme();
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

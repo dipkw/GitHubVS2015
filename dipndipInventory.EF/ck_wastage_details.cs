@@ -24,6 +24,15 @@ namespace dipndipInventory.EF
         public Nullable<int> modified_by { get; set; }
         public Nullable<System.DateTime> modified_date { get; set; }
         public Nullable<bool> active { get; set; }
+        public string ck_wastage_code { get; set; }
+        public string ck_prod_code { get; set; }
+        public string ck_batch_no { get; set; }
+        public Nullable<System.DateTime> ck_prod_date { get; set; }
+        public Nullable<System.DateTime> ck_exp_date { get; set; }
+        public string ck_item_code { get; set; }
+        public string ck_item_desc { get; set; }
+        public Nullable<decimal> ck_item_unit_cost { get; set; }
+        public Nullable<decimal> ck_item_total_cost { get; set; }
     
         public virtual ck_users ck_users { get; set; }
         public virtual ck_users ck_users1 { get; set; }

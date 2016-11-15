@@ -170,6 +170,12 @@
     <Compile Include="Views\Stock\ckitemunitsetupView.xaml.cs">
       <DependentUpon>ckitemunitsetupView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Stock\ckitemwastagebatchView.xaml.cs">
+      <DependentUpon>ckitemwastagebatchView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Stock\ckitemwastageView.xaml.cs">
+      <DependentUpon>ckitemwastageView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Stock\ckorderView.xaml.cs">
       <DependentUpon>ckorderView.xaml</DependentUpon>
     </Compile>
@@ -256,6 +262,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Stock\ckitemunitsetupView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Stock\ckitemwastagebatchView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Stock\ckitemwastageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -21,36 +21,36 @@ using Telerik.Windows.Controls.GridView;
 namespace dipndipInventory.Views.Stock
 {
     /// <summary>
-    /// Interaction logic for ckitembatchView.xaml
+    /// Interaction logic for ckitemwastagebatchView.xaml
     /// </summary>
-    public partial class ckitembatchView : RadWindow
+    public partial class ckitemwastagebatchView : RadWindow
     {
         CKIssueViewModel g_ck_issue_vm;
         //List<CKItemBatchViewModel> g_ck_item_batches;
-        ckitemissueView g_ck_item_issue_view;
+        ckitemwastageView g_ck_item_issue_view;
         List<CKIssueViewModel> g_ck_item_issue_list = new List<CKIssueViewModel>();
         List<CKProductionViewModel> g_ck_production_list = new List<CKProductionViewModel>();
-        List<ck_issue_detais> g_ck_issue_details = new List<ck_issue_detais>();
+        List<ck_wastage_details> g_ck_wastage_details = new List<ck_wastage_details>();
         List<CKItemBatchViewModel> g_ck_item_batches = new List<CKItemBatchViewModel>();
         List<ck_prod> g_ck_prod_update_list = new List<ck_prod>();
         decimal g_conv_factor = 0.000m;
-        public ckitembatchView()
+
+        public ckitemwastagebatchView()
         {
             InitializeComponent();
         }
 
-        //public ckitembatchView(CKIssueViewModel ck_issue_vm, List<CKItemBatchViewModel> ck_item_batches)
-        public ckitembatchView(CKIssueViewModel ck_issue_vm, List<CKIssueViewModel>ck_item_issue_list, List<ck_prod> ck_production_list, List<ck_issue_detais> ckissue_details, ckitemissueView ck_item_issue_view)
+        public ckitemwastagebatchView(CKIssueViewModel ck_issue_vm, List<CKIssueViewModel> ck_item_issue_list, List<ck_prod> ck_production_list, List<ck_wastage_details> ckwastage_details, ckitemwastageView ck_item_issue_view)
         {
             InitializeComponent();
-            ShowTaskBar.ShowInTaskbar(this, "Central Kitchen Item Issue");
+            ShowTaskBar.ShowInTaskbar(this, "Central Kitchen Item Wastage");
             g_ck_issue_vm = ck_issue_vm;
             //g_ck_item_batches = ck_item_batches;
             g_ck_item_issue_view = ck_item_issue_view;
 
             g_ck_item_issue_list = ck_item_issue_list;
             g_ck_prod_update_list = ck_production_list;
-            g_ck_issue_details = ckissue_details;
+            g_ck_wastage_details = ckwastage_details;
 
             FillUnits(g_ck_issue_vm.itemId);
             UpdateConvFactor();
@@ -65,7 +65,7 @@ namespace dipndipInventory.Views.Stock
             cmbUnit.SelectedValuePath = "Id";
             cmbUnit.ItemsSource = ck_item_units.ToList();
             int? default_unit = cuscontext.GetDefaultUnitID(itemId);
-            if(default_unit != null)
+            if (default_unit != null)
             {
                 cmbUnit.SelectedValue = default_unit;
             }
@@ -99,9 +99,9 @@ namespace dipndipInventory.Views.Stock
                     objCKItemBatchVM.bal_qty = (decimal)ck_batch_item.bal_qty;
                     objCKItemBatchVM.rem_qty = (decimal)ck_batch_item.bal_qty / g_conv_factor;
                     objCKItemBatchVM.tmp_ck_unit_cost = (decimal)ck_batch_item.unit_cost;
-                    objCKItemBatchVM.ck_unit_cost = (decimal)(ck_batch_item.unit_cost * g_conv_factor)*(objCKItemBatchVM.qty_issued);
-                    objCKItemBatchVM.ck_total_cost = (decimal)(ck_batch_item.total_cost *g_conv_factor)*(objCKItemBatchVM.qty_issued);
-                    
+                    objCKItemBatchVM.ck_unit_cost = (decimal)(ck_batch_item.unit_cost * g_conv_factor) * (objCKItemBatchVM.qty_issued);
+                    objCKItemBatchVM.ck_total_cost = (decimal)(ck_batch_item.total_cost * g_conv_factor) * (objCKItemBatchVM.qty_issued);
+
                     objCKItemBatchVM.row_id = row_id++;
                     g_ck_item_batches.Add(objCKItemBatchVM);
                 }
@@ -153,28 +153,28 @@ namespace dipndipInventory.Views.Stock
                         CKItemUnitService cucontext = new CKItemUnitService();
                         prod_item_conv_factor = (decimal)cucontext.GetConversionFactor(Convert.ToInt32(cmbUnit.SelectedValue.ToString()));
 
-                        ckprod.bal_qty = (ck_item_batch_qty) - (objItemBatchVM.qty_issued* prod_item_conv_factor);
+                        ckprod.bal_qty = (ck_item_batch_qty) - (objItemBatchVM.qty_issued * prod_item_conv_factor);
                         g_ck_prod_update_list.Add(ckprod);
 
 
                         //Updation for CK Issue Details
-                        g_ck_issue_details.RemoveAll(p => (p.ck_prod_code == objItemBatchVM.ck_prod_code && p.ck_batch_no == objItemBatchVM.batch_no));
-                        ck_issue_detais ckissuedetail = new ck_issue_detais();
-                        ckissuedetail.ck_prod_code = objItemBatchVM.ck_prod_code;
-                        ckissuedetail.ck_batch_no = objItemBatchVM.batch_no;
-                        ckissuedetail.ck_prod_date = objItemBatchVM.prod_date;
-                        ckissuedetail.ck_exp_date = objItemBatchVM.exp_date;
-                        ckissuedetail.ck_item_id = objItemBatchVM.ck_item_id;
-                        ckissuedetail.ck_item_code = objItemBatchVM.ck_item_code;
-                        ckissuedetail.ck_item_desc = objItemBatchVM.ck_item_description;
-                        ckissuedetail.ck_item_unit_id = objItemBatchVM.ck_item_unit_id;
-                        ckissuedetail.qty_issued = objItemBatchVM.qty_issued;
-                        ckissuedetail.ck_item_unit_cost = (objItemBatchVM.tmp_ck_unit_cost * g_conv_factor);
-                        ckissuedetail.ck_item_total_cost = (objItemBatchVM.tmp_ck_unit_cost * g_conv_factor) * (objItemBatchVM.qty_issued);
-                        ckissuedetail.created_by = GlobalVariables.ActiveUser.Id;
-                        ckissuedetail.created_date = DateTime.Now;
-                        ckissuedetail.active = true;
-                        g_ck_issue_details.Add(ckissuedetail);
+                        g_ck_wastage_details.RemoveAll(p => (p.ck_prod_code == objItemBatchVM.ck_prod_code && p.ck_batch_no == objItemBatchVM.batch_no));
+                        ck_wastage_details ckwastagedetail = new ck_wastage_details();
+                        ckwastagedetail.ck_prod_code = objItemBatchVM.ck_prod_code;
+                        ckwastagedetail.ck_batch_no = objItemBatchVM.batch_no;
+                        ckwastagedetail.ck_prod_date = objItemBatchVM.prod_date;
+                        ckwastagedetail.ck_exp_date = objItemBatchVM.exp_date;
+                        ckwastagedetail.ck_item_id = objItemBatchVM.ck_item_id;
+                        ckwastagedetail.ck_item_code = objItemBatchVM.ck_item_code;
+                        ckwastagedetail.ck_item_desc = objItemBatchVM.ck_item_description;
+                        ckwastagedetail.ck_item_unit_id = objItemBatchVM.ck_item_unit_id;
+                        ckwastagedetail.wastage_qty = objItemBatchVM.qty_issued;
+                        ckwastagedetail.ck_item_unit_cost = (objItemBatchVM.tmp_ck_unit_cost * g_conv_factor);
+                        ckwastagedetail.ck_item_total_cost = (objItemBatchVM.tmp_ck_unit_cost * g_conv_factor) * (objItemBatchVM.qty_issued);
+                        ckwastagedetail.created_by = GlobalVariables.ActiveUser.Id;
+                        ckwastagedetail.created_date = DateTime.Now;
+                        ckwastagedetail.active = true;
+                        g_ck_wastage_details.Add(ckwastagedetail);
 
                     }
                 }
@@ -182,7 +182,7 @@ namespace dipndipInventory.Views.Stock
                 //
                 try
                 {
-                    
+
                 }
                 catch { }
             }

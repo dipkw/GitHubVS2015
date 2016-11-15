@@ -13,6 +13,10 @@
       <Name>OrderDetailsReport.rdl</Name>
       <FullPath>OrderDetailsReport.rdl</FullPath>
     </ProjectItem>
+    <ProjectItem>
+      <Name>OrderPrintReport.rdl</Name>
+      <FullPath>OrderPrintReport.rdl</FullPath>
+    </ProjectItem>
   </Reports>
   <Configurations>
     <Configuration>

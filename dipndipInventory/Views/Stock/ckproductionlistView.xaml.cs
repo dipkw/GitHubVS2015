@@ -1,4 +1,5 @@
 ﻿using dipndipInventory.EF;
+using dipndipInventory.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +31,7 @@ namespace dipndipInventory.Views.Stock
         public ckproductionlistView(string prod_code, DateTime prod_date, List<ck_prod> production_list)
         {
             InitializeComponent();
+            ShowTaskBar.ShowInTaskbar(this, "Central Kitchen Production Item List");
             txtProductionCode.Value = prod_code;
             dtpProductionDate.SelectedDate = prod_date;
             dgCKProduction.ItemsSource = production_list;

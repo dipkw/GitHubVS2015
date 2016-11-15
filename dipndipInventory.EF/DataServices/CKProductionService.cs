@@ -116,7 +116,7 @@ namespace dipndipInventory.EF.DataServices
                         dbcxtrx.Commit();
                         return 1;
                     }
-                    catch
+                    catch(Exception ex)
                     {
                         dbcxtrx.Rollback();
                         return 0;

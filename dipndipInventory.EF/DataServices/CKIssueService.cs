@@ -66,7 +66,8 @@ namespace dipndipInventory.EF.DataServices
                         context.ck_issue_master.Add(g_ck_issue_master);
                         foreach(ck_issue_detais ckissuedetail in g_ck_issue_details)
                         {
-                            ckissuedetail.ck_issue_master_id = g_ck_issue_master.Id;
+                            //ckissuedetail.ck_issue_master_id = g_ck_issue_master.Id;
+                            ckissuedetail.ck_issue_master = g_ck_issue_master;
                             context.ck_issue_detais.Add(ckissuedetail);
                             context.SaveChanges();
                         }

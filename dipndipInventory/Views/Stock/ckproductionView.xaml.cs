@@ -40,11 +40,17 @@ namespace dipndipInventory.Views.Stock
             txtProductionCode.Value = prod_code;
             SetDate();
             ShowTaskBar.ShowInTaskbar(this, "Central Kitchen Item Production");
+            FillProductionGrid();
+        }
+
+        private void FillProductionGrid()
+        {
             CKItemService _cicontext = new CKItemService();
+
             IEnumerable<ck_items> objCKItems = _cicontext.ReadAllCKItems();
             List<CKProductionViewModel> objCKProductionViewModel = new List<CKProductionViewModel>();
-            
-            foreach(ck_items ckitem in objCKItems)
+
+            foreach (ck_items ckitem in objCKItems)
             {
                 CKProductionViewModel ckpvm = new CKProductionViewModel();
                 try
@@ -70,7 +76,7 @@ namespace dipndipInventory.Views.Stock
                     }
                     ckpvm.prodDate = DateTime.Today;
                     ckpvm.expDate = DateTime.Today;
-                    if(ckitem.qty_on_hand == null)
+                    if (ckitem.qty_on_hand == null)
                     {
                         ckpvm.qtyonHand = 0.000m;
                     }
@@ -87,9 +93,9 @@ namespace dipndipInventory.Views.Stock
 
                 objCKProductionViewModel.Add(ckpvm);
             }
+            dgCKProduction.ItemsSource = null;
             dgCKProduction.ItemsSource = objCKProductionViewModel.ToList();
         }
-
         private void SetDate()
         {
             this.dtpProductionDate.Culture = new System.Globalization.CultureInfo("en-US");
@@ -115,8 +121,10 @@ namespace dipndipInventory.Views.Stock
             }
 
             CKProductionService pscontext = new CKProductionService();
-            pscontext.SaveCKItemProduction(production_list, ck_items_list, warehouse_items_list, ck_item_cost_list, ck_stock_trans_list, GlobalVariables.ActiveUser.Id);
+            string result = pscontext.SaveCKItemProduction(production_list, ck_items_list, warehouse_items_list, ck_item_cost_list, ck_stock_trans_list, GlobalVariables.ActiveUser.Id) > 0 ? "CK Branch Item Production Saved Successfully" : "Unable to Save CK Branch Item Production";
+            MessageBox.Show(result);
             production_list.Clear();
+            FillProductionGrid();
         }
 
         private bool CheckWarehouseItems()
@@ -237,12 +245,15 @@ namespace dipndipInventory.Views.Stock
                     objProduction.ck_item_unit_id = ck_unit_id;
                     objProduction.conv_factor = 1.000m;
                     objProduction.ck_item_unit_desc = objCKProductionViewModel.ckUnit;
-                    objProduction.prod_qty = objCKProductionViewModel.prodQty;
-                    objProduction.bal_qty = objCKProductionViewModel.prodQty;
+                    //objProduction.prod_qty = objCKProductionViewModel.prodQty;
+                    objProduction.prod_qty = objCKProductionViewModel.prodQty*objCKProductionViewModel.designQty;
+                    //objProduction.bal_qty = objCKProductionViewModel.prodQty;
+                    objProduction.bal_qty = objCKProductionViewModel.prodQty * objCKProductionViewModel.designQty;
                     decimal cur_ck_item_prod_cost = GetCKItemProdCost(objCKProductionViewModel.itemId, objCKProductionViewModel.prodQty, objCKProductionViewModel.designQty);
                     decimal cur_ck_item_cost = cur_ck_item_prod_cost / objCKProductionViewModel.prodQty;
                     objProduction.unit_cost = GetCKItemAvgCost(objCKProductionViewModel.itemId,cur_ck_item_cost,objCKProductionViewModel.prodQty);
-                    objProduction.total_cost = objProduction.prod_qty * objProduction.unit_cost;
+                    objProduction.total_cost = objProduction.bal_qty * objProduction.unit_cost;
+                    //objProduction.total_cost = objCKProductionViewModel.prodQty * objProduction.unit_cost;
                     objProduction.created_by = GlobalVariables.ActiveUser.Id;
                     objProduction.created_date = DateTime.Now;
                     objProduction.active = 1;
@@ -257,7 +268,8 @@ namespace dipndipInventory.Views.Stock
                     }
                     objCKItem.Id = objCKProductionViewModel.itemId;
                     objCKItem.ck_item_unit_cost = objProduction.unit_cost;
-                    objCKItem.qty_on_hand = objCKProductionViewModel.prodQty + ck_item_current_qty;
+                    //objCKItem.qty_on_hand = objCKProductionViewModel.prodQty + ck_item_current_qty;
+                    objCKItem.qty_on_hand = objProduction.prod_qty + ck_item_current_qty;
                     ck_items_list.Add(objCKItem);
 
                     objCKProductionViewModel.prodCode = txtProductionCode.Value;

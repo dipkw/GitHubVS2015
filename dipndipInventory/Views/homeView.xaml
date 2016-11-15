@@ -233,8 +233,19 @@
                 </telerik:RadRibbonGroup>-->
             </telerik:RadRibbonTab>
             <telerik:RadRibbonTab Header="Reports"></telerik:RadRibbonTab>
-            <telerik:RadRibbonTab Header="Admin"></telerik:RadRibbonTab>
-            
+            <telerik:RadRibbonTab Header="Admin">
+                <telerik:RadRibbonGroup/>
+                <telerik:RadRibbonGroup/>
+
+            </telerik:RadRibbonTab>
+            <ComboBox x:Name="comboBox" Width="120" SelectionChanged="comboBox_SelectionChanged">
+                <ComboBoxItem>Windows 8</ComboBoxItem>
+                <ComboBoxItem>Windows 7</ComboBoxItem>
+                <ComboBoxItem>Office Black</ComboBoxItem>
+                <ComboBoxItem>Office Blue</ComboBoxItem>
+                <ComboBoxItem>Office Silver</ComboBoxItem>
+            </ComboBox>
+
         </telerik:RadRibbonView>
         <StackPanel Margin="0,145,0,0" x:Name="stkGrid" VerticalAlignment="Stretch" >
 
