@@ -3,6 +3,7 @@
   <ConnectionProperties>
     <Extension>SQL</Extension>
     <ConnectString>Data Source=JOLLY\MSSQLSERVER14;Initial Catalog=dipck</ConnectString>
+    <Prompt>Specify a user name and password for data source dipndipDataSource:</Prompt>
   </ConnectionProperties>
   <DataSourceID>ab76b8dd-3642-4106-a219-956310ba02ca</DataSourceID>
 </RptDataSource>

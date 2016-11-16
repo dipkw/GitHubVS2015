@@ -57,8 +57,8 @@
 
                     <telerik:GridViewDataColumn x:Name="ItemId" DataMemberBinding="{Binding ck_item_id}" Width="*" Header="Item Id" IsVisible="False"/>
                     <telerik:GridViewDataColumn x:Name="UnitId" DataMemberBinding="{Binding ck_unit_id}" Width="*" Header="Unit Id" IsVisible="False"/>
-                    <telerik:GridViewDataColumn x:Name="UnitCost" DataMemberBinding="{Binding unit_cost}" Width="*" Header="Unit Cost" IsVisible="True"/>
-                    <telerik:GridViewDataColumn x:Name="TotalCost" DataMemberBinding="{Binding total_cost}" Width="*" Header="Total Cost" IsVisible="True"/>
+                    <telerik:GridViewDataColumn x:Name="UnitCost" DataMemberBinding="{Binding unit_cost}" Width="*" Header="Unit Cost" IsVisible="False"/>
+                    <telerik:GridViewDataColumn x:Name="TotalCost" DataMemberBinding="{Binding total_cost}" Width="*" Header="Total Cost" IsVisible="False"/>
                     <telerik:GridViewDataColumn x:Name="RowIndex" DataMemberBinding="{Binding row_index}" Width="*" Header="Row Index" IsVisible="False"/>
 
                     <!--<telerik:GridViewColumn Width="80">

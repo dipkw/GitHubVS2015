@@ -1,0 +1,672 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report MustUnderstand="df" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns:df="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition/defaultfontfamily">
+  <df:DefaultFontFamily>Segoe UI</df:DefaultFontFamily>
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="PrintOrderDataSource">
+      <ConnectionProperties>
+        <DataProvider>SQL</DataProvider>
+        <ConnectString>Data Source=192.168.0.187\MSSQLSERVER14;Initial Catalog=dipck</ConnectString>
+        <IntegratedSecurity>true</IntegratedSecurity>
+      </ConnectionProperties>
+      <rd:SecurityType>Integrated</rd:SecurityType>
+      <rd:DataSourceID>e202bba9-9249-442e-ab39-9b2b458d1e41</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="PrintOrderDataSet">
+      <Query>
+        <DataSourceName>PrintOrderDataSource</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="@OrderNo">
+            <Value>=Parameters!OrderNo.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandText>SELECT        o.order_no, o.order_date, c.wh_item_code, c.wh_item_description, d.qty, u.unit_description, s.site_name
+FROM            orders AS o INNER JOIN
+                         order_details AS d ON o.Id = d.order_id INNER JOIN
+                         ckwh_items AS c ON d.ckwh_item_id = c.Id INNER JOIN
+                         wh_item_unit AS w ON d.wh_item_unit_id = w.Id INNER JOIN
+                         ck_units AS u ON w.ck_unit_id = u.Id INNER JOIN
+                         sites AS s ON o.order_from_site_id = s.Id
+WHERE        (o.order_no = @OrderNo)</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="order_no">
+          <DataField>order_no</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="order_date">
+          <DataField>order_date</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="wh_item_code">
+          <DataField>wh_item_code</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="wh_item_description">
+          <DataField>wh_item_description</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="qty">
+          <DataField>qty</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="unit_description">
+          <DataField>unit_description</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="site_name">
+          <DataField>site_name</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="PrintOrderParamDataSet">
+      <Query>
+        <DataSourceName>PrintOrderDataSource</DataSourceName>
+        <CommandText>SELECT        o.order_no
+FROM            orders AS o</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="order_no">
+          <DataField>order_no</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
+  <ReportSections>
+    <ReportSection>
+      <Body>
+        <ReportItems>
+          <Tablix Name="Tablix1">
+            <TablixBody>
+              <TablixColumns>
+                <TablixColumn>
+                  <Width>2.16667in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>2.16667in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>0.98833in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>1in</Width>
+                </TablixColumn>
+              </TablixColumns>
+              <TablixRows>
+                <TablixRow>
+                  <Height>0.27083in</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox1">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Item Code</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox1</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BottomBorder>
+                              <Color>Black</Color>
+                            </BottomBorder>
+                            <BackgroundColor>LightGrey</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox3">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Description</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox3</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BottomBorder>
+                              <Color>Black</Color>
+                            </BottomBorder>
+                            <BackgroundColor>LightGrey</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox5">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Quantity</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox5</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BottomBorder>
+                              <Color>Black</Color>
+                            </BottomBorder>
+                            <BackgroundColor>LightGrey</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox7">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Unit</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox7</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BottomBorder>
+                              <Color>Black</Color>
+                            </BottomBorder>
+                            <BackgroundColor>LightGrey</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+                <TablixRow>
+                  <Height>0.22917in</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="wh_item_code">
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!wh_item_code.Value</Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>wh_item_code</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>1pt</PaddingLeft>
+                            <PaddingRight>1pt</PaddingRight>
+                            <PaddingTop>1pt</PaddingTop>
+                            <PaddingBottom>1pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="wh_item_description">
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!wh_item_description.Value</Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>wh_item_description</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>1pt</PaddingLeft>
+                            <PaddingRight>1pt</PaddingRight>
+                            <PaddingTop>1pt</PaddingTop>
+                            <PaddingBottom>1pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="qty">
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!qty.Value</Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>qty</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>1pt</PaddingLeft>
+                            <PaddingRight>1pt</PaddingRight>
+                            <PaddingTop>1pt</PaddingTop>
+                            <PaddingBottom>1pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="unit_description">
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!unit_description.Value</Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>unit_description</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>1pt</PaddingLeft>
+                            <PaddingRight>1pt</PaddingRight>
+                            <PaddingTop>1pt</PaddingTop>
+                            <PaddingBottom>1pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+              </TablixRows>
+            </TablixBody>
+            <TablixColumnHierarchy>
+              <TablixMembers>
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+              </TablixMembers>
+            </TablixColumnHierarchy>
+            <TablixRowHierarchy>
+              <TablixMembers>
+                <TablixMember>
+                  <KeepWithGroup>After</KeepWithGroup>
+                </TablixMember>
+                <TablixMember>
+                  <Group Name="Details" />
+                </TablixMember>
+              </TablixMembers>
+            </TablixRowHierarchy>
+            <DataSetName>PrintOrderDataSet</DataSetName>
+            <Top>1.9675in</Top>
+            <Height>0.5in</Height>
+            <Width>6.32167in</Width>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Tablix>
+          <Textbox Name="Textbox9">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>Order Details</Value>
+                    <Style>
+                      <FontFamily>Garamond</FontFamily>
+                      <FontSize>14pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <TextAlign>Center</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox9</rd:DefaultName>
+            <Top>0.74875in</Top>
+            <Height>0.32986in</Height>
+            <Width>6.32167in</Width>
+            <ZIndex>1</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="order_date">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=First(Fields!order_date.Value, "PrintOrderDataSet")</Value>
+                    <Style>
+                      <Format>dd-MM-yyyy</Format>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <TextAlign>Left</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>order_date</rd:DefaultName>
+            <Top>1.52306in</Top>
+            <Left>5.26958in</Left>
+            <Height>0.25in</Height>
+            <Width>1in</Width>
+            <ZIndex>2</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="order_no">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=First(Fields!order_no.Value, "PrintOrderDataSet")</Value>
+                    <Style />
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>order_no</rd:DefaultName>
+            <Top>1.52306in</Top>
+            <Left>0.7175in</Left>
+            <Height>0.25in</Height>
+            <Width>1in</Width>
+            <ZIndex>3</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox14">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>Order No</Value>
+                    <Style />
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox14</rd:DefaultName>
+            <Top>1.52306in</Top>
+            <Left>0.05083in</Left>
+            <Height>0.25in</Height>
+            <Width>0.65625in</Width>
+            <ZIndex>4</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox15">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>Order Date</Value>
+                    <Style />
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox15</rd:DefaultName>
+            <Top>1.52306in</Top>
+            <Left>4.49875in</Left>
+            <Height>0.25in</Height>
+            <Width>0.77083in</Width>
+            <ZIndex>5</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Image Name="Image2">
+            <Source>Embedded</Source>
+            <Value>dipndiplogo</Value>
+            <Sizing>Clip</Sizing>
+            <Top>0.125in</Top>
+            <Height>0.5in</Height>
+            <Width>2.41667in</Width>
+            <ZIndex>6</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Image>
+          <Textbox Name="site_name">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=First(Fields!site_name.Value, "PrintOrderDataSet")</Value>
+                    <Style>
+                      <FontFamily>Garamond</FontFamily>
+                      <FontSize>18pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <TextAlign>Center</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>site_name</rd:DefaultName>
+            <Top>0.23833in</Top>
+            <Height>0.38667in</Height>
+            <Width>6.32167in</Width>
+            <ZIndex>7</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+        </ReportItems>
+        <Height>2.54042in</Height>
+        <Style />
+      </Body>
+      <Width>6.4375in</Width>
+      <Page>
+        <LeftMargin>1in</LeftMargin>
+        <RightMargin>1in</RightMargin>
+        <TopMargin>1in</TopMargin>
+        <BottomMargin>1in</BottomMargin>
+        <Style />
+      </Page>
+    </ReportSection>
+  </ReportSections>
+  <ReportParameters>
+    <ReportParameter Name="OrderNo">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <DataSetReference>
+          <DataSetName>PrintOrderParamDataSet</DataSetName>
+          <ValueField>order_no</ValueField>
+        </DataSetReference>
+      </DefaultValue>
+      <Prompt>Order No</Prompt>
+      <ValidValues>
+        <DataSetReference>
+          <DataSetName>PrintOrderParamDataSet</DataSetName>
+          <ValueField>order_no</ValueField>
+          <LabelField>order_no</LabelField>
+        </DataSetReference>
+      </ValidValues>
+    </ReportParameter>
+  </ReportParameters>
+  <ReportParametersLayout>
+    <GridLayoutDefinition>
+      <NumberOfColumns>4</NumberOfColumns>
+      <NumberOfRows>2</NumberOfRows>
+      <CellDefinitions>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>OrderNo</ParameterName>
+        </CellDefinition>
+      </CellDefinitions>
+    </GridLayoutDefinition>
+  </ReportParametersLayout>
+  <EmbeddedImages>
+    <EmbeddedImage Name="dipndiplogo">
+      <MIMEType>image/png</MIMEType>
+      <ImageData>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</ImageData>
+    </EmbeddedImage>
+  </EmbeddedImages>
+  <rd:ReportUnitType>Inch</rd:ReportUnitType>
+  <rd:ReportID>89d5f4c3-b8fd-4b2b-8c1a-96772cfd3eea</rd:ReportID>
+</Report>

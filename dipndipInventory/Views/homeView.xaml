@@ -165,13 +165,13 @@
                             <TextBlock Text="Issue" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </telerik:RadRibbonButton>
-                    <telerik:RadRibbonButton   Width="70"  HorizontalContentAlignment="Center" x:Name="CKAdjustment" Visibility="Visible" Click="CKAdjustment_Click">
+                    <telerik:RadRibbonButton   Width="70"  HorizontalContentAlignment="Center" x:Name="CKAdjustment" Visibility="Collapsed" Click="CKAdjustment_Click">
                         <StackPanel>
                             <Image Source="/dipndipInventory;component/images/menu_icons/Icon-Tickets.png" Width="32" Height="32"/>
                             <TextBlock Text="Adjustment" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </telerik:RadRibbonButton>
-                    <telerik:RadRibbonButton   Width="70"  HorizontalContentAlignment="Center" x:Name="Wastage" Visibility="Visible" Click="Wastage_Click">
+                    <telerik:RadRibbonButton   Width="70"  HorizontalContentAlignment="Center" x:Name="Wastage" Visibility="Collapsed" Click="Wastage_Click">
                         <StackPanel>
                             <Image Source="/dipndipInventory;component/images/menu_icons/9_exit_641.png" Width="32" Height="32"/>
                             <TextBlock Text="Wastage" HorizontalAlignment="Center"/>

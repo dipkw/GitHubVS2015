@@ -18,7 +18,7 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Border Grid.ColumnSpan="2" Margin="10" BorderBrush="Black" BorderThickness="0.5" >
-            <telerik:RadGridView x:Name="dgWHItems" AutoGenerateColumns="False" IsReadOnly="True" RowIndicatorVisibility="Collapsed" IsSynchronizedWithCurrentItem="False" FocusManager.FocusedElement="{Binding ElementName=dgWHItems}" HorizontalAlignment="Left" VerticalAlignment="Top" SelectionChanged="dgWHItems_SelectionChanged">
+            <telerik:RadGridView x:Name="dgWHItems" AutoGenerateColumns="False" IsReadOnly="True" RowIndicatorVisibility="Collapsed" IsSynchronizedWithCurrentItem="False" FocusManager.FocusedElement="{Binding ElementName=dgWHItems}" HorizontalAlignment="Left" VerticalAlignment="Top" SelectionChanged="dgWHItems_SelectionChanged" ShowSearchPanel="True">
                 <telerik:RadGridView.Columns>
                     <telerik:GridViewDataColumn x:Name="ItemCode" DataMemberBinding="{Binding wh_item_code}" Width="*" Header="Item Code"/>
 
@@ -33,7 +33,8 @@
                     <telerik:GridViewDataColumn x:Name="CatDesc" DataMemberBinding="{Binding wh_category_description}" Width="*" Header="Category"/>
                     <telerik:GridViewDataColumn x:Name="Unit" DataMemberBinding="{Binding wh_unit_description}" Width="*" Header="Unit (GP)"/>
                     <telerik:GridViewDataColumn x:Name="CurCost" DataMemberBinding="{Binding unit_cost}" Width="*" Header="Current Cost" TextAlignment="Right"/>
-                    <telerik:GridViewDataColumn x:Name="QtyOnHand" DataMemberBinding="{Binding quantity}" Width="*" Header="Qty on Hand" TextAlignment="Right"/>
+                    <!--<telerik:GridViewDataColumn x:Name="QtyOnHand" DataMemberBinding="{Binding quantity}" Width="*" Header="Qty on Hand" TextAlignment="Right"/>-->
+                    <telerik:GridViewDataColumn x:Name="QtyOnHand" DataMemberBinding="{Binding ck_qty}" Width="*" Header="Qty on Hand" TextAlignment="Right"/>
 
                     <telerik:GridViewColumn Width="80">
                         <telerik:GridViewColumn.CellTemplate>

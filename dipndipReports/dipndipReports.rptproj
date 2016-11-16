@@ -6,6 +6,10 @@
       <Name>dipndipDataSource.rds</Name>
       <FullPath>dipndipDataSource.rds</FullPath>
     </ProjectItem>
+    <ProjectItem>
+      <Name>paramPrintOrderDataSource.rds</Name>
+      <FullPath>paramPrintOrderDataSource.rds</FullPath>
+    </ProjectItem>
   </DataSources>
   <DataSets />
   <Reports>
@@ -17,6 +21,10 @@
       <Name>OrderPrintReport.rdl</Name>
       <FullPath>OrderPrintReport.rdl</FullPath>
     </ProjectItem>
+    <ProjectItem>
+      <Name>PrintOrder.rdl</Name>
+      <FullPath>PrintOrder.rdl</FullPath>
+    </ProjectItem>
   </Reports>
   <Configurations>
     <Configuration>
@@ -24,8 +32,8 @@
       <Platform>Win32</Platform>
       <Options>
         <OutputPath>bin\Debug</OutputPath>
-        <TargetServerVersion>SSRS2016</TargetServerVersion>
-        <TargetServerURL>http://localhost/ReportServer</TargetServerURL>
+        <TargetServerVersion>SSRS2008R2</TargetServerVersion>
+        <TargetServerURL>http://jolly/ReportServer_MSSQLSERVER14/</TargetServerURL>
         <TargetFolder>dipndipReports</TargetFolder>
         <TargetDataSourceFolder>Data Sources</TargetDataSourceFolder>
         <TargetDatasetFolder>Datasets</TargetDatasetFolder>
