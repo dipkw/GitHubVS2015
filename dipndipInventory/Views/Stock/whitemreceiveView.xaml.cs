@@ -31,6 +31,18 @@ namespace dipndipInventory.Views.Stock
     {
         long active_order_id;
         string active_receipt_no;
+
+        long g_order_detail_id = 0;
+        decimal g_qty_received = 0.000m;
+
+        receipt g_receipt_master = new receipt();
+        List<receipt_details> g_receipt_detail_list = new List<receipt_details>();
+        List<transaction_details> g_transaction_detail_list = new List<transaction_details>();
+        List<ckwh_items> g_ckwh_items_list = new List<ckwh_items>();
+        List<wh_item_cost_history> g_wh_item_cost_history_list = new List<wh_item_cost_history>();
+        order g_order_master = new order();
+        List<order_details> g_order_detail_list = new List<order_details>();
+
         public whitemreceiveView()
         {
             InitializeComponent();
@@ -129,19 +141,26 @@ namespace dipndipInventory.Views.Stock
         private int CreateReceipt(DateTime receipt_date_time, List<receipt_details> receipt_detail_list)
         {
             int result = 0;
-            CKReceiptService _rcontext = new CKReceiptService();
-            SiteService _scontext = new SiteService();
-            receipt receipt_master = new receipt();
-            receipt_master.receipt_no = active_receipt_no;
-            receipt_master.receipt_date = receipt_date_time;
-            receipt_master.order_id = active_order_id;
-            receipt_master.order_no = txtOrderNo.Value;
-            receipt_master.issued_site = _scontext.GetSiteIDBySiteName("Central Warehouse");
-            receipt_master.received_site = _scontext.GetSiteIDBySiteName("Central Kitchen"); //Active Site ID
-            receipt_master.created_by = GlobalVariables.ActiveUser.Id;
-            receipt_master.created_date = receipt_date_time;
-            receipt_master.active = true;
-            result = _rcontext.CreateReceipt(receipt_master, receipt_detail_list);
+            try
+            {
+                CKReceiptService _rcontext = new CKReceiptService();
+                SiteService _scontext = new SiteService();
+                receipt receipt_master = new receipt();
+                receipt_master.receipt_no = active_receipt_no;
+                receipt_master.receipt_date = receipt_date_time;
+                receipt_master.order_id = active_order_id;
+                receipt_master.order_no = txtOrderNo.Value;
+                receipt_master.issued_site = _scontext.GetSiteIDBySiteName("Central Warehouse");
+                receipt_master.received_site = _scontext.GetSiteIDBySiteName("Central Kitchen"); //Active Site ID
+                receipt_master.created_by = GlobalVariables.ActiveUser.Id;
+                receipt_master.created_date = receipt_date_time;
+                receipt_master.active = true;
+                //**Changed for making transaction
+                //result = _rcontext.CreateReceipt(receipt_master, receipt_detail_list);
+                //**Changed for making transaction
+                g_receipt_master = receipt_master;
+            }
+            catch { }
             return result;
         }
 
@@ -204,7 +223,8 @@ namespace dipndipInventory.Views.Stock
                 if (lastWHItemCost != null)
                 {
                     //if cost changes
-                    if (lastWHItemCost.curr_cost != ReceiptDetail.wh_item_unit_cost)
+                    //if (lastWHItemCost.curr_cost != ReceiptDetail.wh_item_unit_cost)
+                    if (lastWHItemCost.curr_cost != Math.Truncate((decimal)(ReceiptDetail.wh_item_unit_cost) * 1000m) / 1000m)
                     {
                         objWHItemCost.wh_item_id = ReceiptDetail.wh_item_id;
                         objWHItemCost.wh_item_code = ReceiptDetail.wh_item_code;
@@ -224,13 +244,20 @@ namespace dipndipInventory.Views.Stock
 
                         objWHItemCost.created_by = GlobalVariables.ActiveUser.Id;
                         objWHItemCost.created_date = DateTime.Now;
-                        //result = _hcontext.UpdateWHItemCost(objWHItemCost);//_hcontext.CreateWHItemCost(objWHItemCost);
-                        _hcontext.CreateWHItemCost(objWHItemCost);
-                        if (result <= 0)
-                        {
-                            MessageBox.Show("Warehouse Item Cost Updation Failed");
-                            return result;
-                        }
+
+                        //**Changed for making transaction
+
+                        ////result = _hcontext.UpdateWHItemCost(objWHItemCost);//_hcontext.CreateWHItemCost(objWHItemCost);
+                        //_hcontext.CreateWHItemCost(objWHItemCost);
+                        //if (result <= 0)
+                        //{
+                        //    MessageBox.Show("Warehouse Item Cost Updation Failed");
+                        //    return result;
+                        //}
+
+                        //**Changed for making transaction
+
+                        g_wh_item_cost_history_list.Add(objWHItemCost);
                     }
                     else
                     {
@@ -257,13 +284,18 @@ namespace dipndipInventory.Views.Stock
 
                     objWHItemCost.created_by = GlobalVariables.ActiveUser.Id;
                     objWHItemCost.created_date = DateTime.Now;
-                    //result = _hcontext.UpdateWHItemCost(objWHItemCost);
-                    result = _hcontext.CreateWHItemCost(objWHItemCost);
-                    if (result <= 0)
-                    {
-                        MessageBox.Show("Warehouse Item Cost Updation Failed");
-                        return result;
-                    }
+
+                    //**Changed for making transaction
+
+                    ////result = _hcontext.UpdateWHItemCost(objWHItemCost);
+                    //result = _hcontext.CreateWHItemCost(objWHItemCost);
+                    //if (result <= 0)
+                    //{
+                    //    MessageBox.Show("Warehouse Item Cost Updation Failed");
+                    //    return result;
+                    //}
+                    //**Changed for making transaction
+                    g_wh_item_cost_history_list.Add(objWHItemCost);
                 }
             }
             return result;
@@ -278,7 +310,7 @@ namespace dipndipInventory.Views.Stock
             
 
             CKOrderService _ocontext = new CKOrderService();
-            List<receipt_details> receipt_detail_list = new List<receipt_details>();
+            //List<receipt_details> receipt_detail_list = new List<receipt_details>();
             WHItemService _wcontext = new WHItemService();
             
             foreach (var row in rows)
@@ -290,12 +322,26 @@ namespace dipndipInventory.Views.Stock
 
                 // Update order_details table with received qty
                 //result = _ocontext.UpdateReceivedQty(active_order_id, objOrderDetails.qty_received);
-                result = _ocontext.UpdateReceivedQty(objOrderDetails.id, objOrderDetails.qty_received);
-                if (result<=0)
-                {
-                    break;
-                }
 
+                order_details orderdetail = new order_details();
+                orderdetail.Id = objOrderDetails.id;
+                orderdetail.qty_received = objOrderDetails.qty_received;
+                orderdetail.modified_by = GlobalVariables.ActiveUser.Id;
+                orderdetail.modified_date = DateTime.Now;
+                g_order_detail_list.Add(orderdetail);
+
+                //g_order_detail_id = objOrderDetails.id;
+                //g_qty_received = objOrderDetails.qty_received;
+
+                //**Changed for making transaction
+
+                //result = _ocontext.UpdateReceivedQty(objOrderDetails.id, objOrderDetails.qty_received);
+                //if (result<=0)
+                //{
+                //    break;
+                //}
+
+                //**Changed for making transaction
 
                 //Retreive current unit cost from ckwh_items table
                 decimal item_unit_cost = (decimal)_wcontext.GetCurrentCost(objOrderDetails.itemId);
@@ -315,16 +361,21 @@ namespace dipndipInventory.Views.Stock
                 objReceiptDetail.created_by = GlobalVariables.ActiveUser.Id;
                 objReceiptDetail.created_date = receipt_date_time;
 
-                receipt_detail_list.Add(objReceiptDetail);
+                g_receipt_detail_list.Add(objReceiptDetail);
 
                 //Update new transaction in Transaction Table with current warehouse item cost as item_unit_cost
-                result = SaveTransaction(objOrderDetails, receipt_date_time, item_unit_cost);
 
+                //**Changed for making transaction
+                //result = SaveTransaction(objOrderDetails, receipt_date_time, item_unit_cost);
 
-                if(result<=0)
-                {
-                    break;
-                }
+                SaveTransaction(objOrderDetails, receipt_date_time, item_unit_cost);
+
+                //if (result<=0)
+                //{
+                //    break;
+                //}
+
+                //**Changed for making transaction
                 decimal current_item_qty = 0.0m;
 
                 //Get current ck_qty from ckwh_items to update with the received qty
@@ -336,28 +387,53 @@ namespace dipndipInventory.Views.Stock
                 decimal ck_updated_qty =  current_item_qty + objOrderDetails.qty_received;
 
                 //Update ck_qty with ck_updated_qty in ckwh_items table
-                result = _wcontext.UpdateCKItemQty(objOrderDetails.itemId, ck_updated_qty, GlobalVariables.ActiveUser.Id);
 
-                if(result<=0)
-                {
-                    break;
-                }
+                //**Changed for making transaction
+                //result = _wcontext.UpdateCKItemQty(objOrderDetails.itemId, ck_updated_qty, GlobalVariables.ActiveUser.Id);
+                //if (result <= 0)
+                //{
+                //    break;
+                //}
+                //**Changed for making transaction
 
+                ckwh_items ckwhitem = new ckwh_items();
+                ckwhitem.Id = objOrderDetails.itemId;
+                ckwhitem.ck_qty = ck_updated_qty;
                 decimal current_average_cost = CurrentAverageCost(objOrderDetails.itemId, item_unit_cost, objOrderDetails.qty_received);
-                result = _wcontext.UpdateCKItemAvgUnitCost(objOrderDetails.itemId, current_average_cost);
+                ckwhitem.ck_avg_unit_cost = current_average_cost;
+                ckwhitem.modified_by = GlobalVariables.ActiveUser.Id;
+                ckwhitem.modified_date = DateTime.Now;
+                g_ckwh_items_list.Add(ckwhitem);
 
-                if(result<=0)
-                {
-                    break;
-                }
+
+
+                //**Changed for making transaction
+
+                //decimal current_average_cost = CurrentAverageCost(objOrderDetails.itemId, item_unit_cost, objOrderDetails.qty_received);
+                //result = _wcontext.UpdateCKItemAvgUnitCost(objOrderDetails.itemId, current_average_cost);
+
+                //if(result<=0)
+                //{
+                //    break;
+                //}
+
+                //**Changed for making transaction
             }
 
-            result = CreateReceipt(receipt_date_time, receipt_detail_list);
-            result = UpdateItemCostHistory(receipt_detail_list);
+            result = CreateReceipt(receipt_date_time, g_receipt_detail_list);
+            result = UpdateItemCostHistory(g_receipt_detail_list);
             if (result > 0)
             {
-                result = _ocontext.UpdateCKOrderReceiveStatus(active_order_id, "Received", receipt_date_time, GlobalVariables.ActiveUser.Id);
+                //**Changed for making transaction
+                //result = _ocontext.UpdateCKOrderReceiveStatus(active_order_id, "Received", receipt_date_time, GlobalVariables.ActiveUser.Id);
+                //**Changed for making transaction
+                g_order_master.Id = active_order_id;
+                g_order_master.order_status = "Received";
+                g_order_master.receipt_date = receipt_date_time;
+                g_order_master.modified_by = GlobalVariables.ActiveUser.Id;
+                g_order_master.modified_date = DateTime.Now;
             }
+            result = _ocontext.SaveReceipt(g_order_master, g_order_detail_list, g_transaction_detail_list, g_ckwh_items_list, g_receipt_master, g_receipt_detail_list, g_wh_item_cost_history_list);
             string response = result > 0 ? "Items Received Successfully" : "Unable to receive the Items. Please contact administrator";
 
             
@@ -368,28 +444,34 @@ namespace dipndipInventory.Views.Stock
         private int SaveTransaction(OrderDetailsViewModel objOrderDetails, DateTime receipt_date_time, decimal item_unit_cost)
         {
             int result = 0;
+            try
+            {
+                SiteService _scontext = new SiteService();
+                TransactionService _tcontext = new TransactionService();
+                transaction_details objTransactionDetail = new transaction_details();
+                objTransactionDetail.trans_ref_no = active_receipt_no;
+                objTransactionDetail.wh_item_id = objOrderDetails.itemId;
+                objTransactionDetail.wh_item_code = objOrderDetails.itemCode;
+                objTransactionDetail.wh_item_description = objOrderDetails.itemDescription;
+                objTransactionDetail.trans_date = dtpReceiptDate.SelectedDate + DateTime.Now.TimeOfDay;
+                objTransactionDetail.wh_item_unit_id = objOrderDetails.unitId;
+                objTransactionDetail.ck_unit_description = objOrderDetails.unitDescription;
+                objTransactionDetail.qty = objOrderDetails.qty_received;
+                objTransactionDetail.unit_cost = item_unit_cost;
+                objTransactionDetail.total_cost = (objTransactionDetail.qty * objTransactionDetail.unit_cost);
+                objTransactionDetail.order_from_site_id = _scontext.GetSiteIDBySiteName("Central Warehouse");
+                objTransactionDetail.order_to_site_id = _scontext.GetSiteIDBySiteName("Central Kitchen");
+                objTransactionDetail.trans_type = "Receipt";
+                objTransactionDetail.active = true;
+                objTransactionDetail.created_by = GlobalVariables.ActiveUser.Id;
+                objTransactionDetail.created_date = receipt_date_time;
+                g_transaction_detail_list.Add(objTransactionDetail);
 
-            SiteService _scontext = new SiteService();
-            TransactionService _tcontext = new TransactionService();
-            transaction_details objTransactionDetail = new transaction_details();
-            objTransactionDetail.trans_ref_no = active_receipt_no;
-            objTransactionDetail.wh_item_id = objOrderDetails.itemId;
-            objTransactionDetail.wh_item_code = objOrderDetails.itemCode;
-            objTransactionDetail.wh_item_description = objOrderDetails.itemDescription;
-            objTransactionDetail.trans_date = dtpReceiptDate.SelectedDate + DateTime.Now.TimeOfDay;
-            objTransactionDetail.wh_item_unit_id = objOrderDetails.unitId;
-            objTransactionDetail.ck_unit_description = objOrderDetails.unitDescription;
-            objTransactionDetail.qty = objOrderDetails.qty_received;
-            objTransactionDetail.unit_cost = item_unit_cost;
-            objTransactionDetail.total_cost = (objTransactionDetail.qty * objTransactionDetail.unit_cost);
-            objTransactionDetail.order_from_site_id = _scontext.GetSiteIDBySiteName("Central Warehouse");
-            objTransactionDetail.order_to_site_id = _scontext.GetSiteIDBySiteName("Central Kitchen");
-            objTransactionDetail.trans_type = "Receipt";
-            objTransactionDetail.active = true;
-            objTransactionDetail.created_by = GlobalVariables.ActiveUser.Id;
-            objTransactionDetail.created_date = receipt_date_time;
-            result = _tcontext.CreateTransaction(objTransactionDetail);
-
+                //**Changed for making transaction
+                //result = _tcontext.CreateTransaction(objTransactionDetail);
+                //**Changed for making transaction
+            }
+            catch { }
             return result;
         }
 

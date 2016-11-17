@@ -33,12 +33,12 @@
       <Options>
         <OutputPath>bin\Debug</OutputPath>
         <TargetServerVersion>SSRS2008R2</TargetServerVersion>
-        <TargetServerURL>http://jolly/ReportServer_MSSQLSERVER14/</TargetServerURL>
+        <TargetServerURL>http://jolly/Reports_MSSQLSERVER14</TargetServerURL>
         <TargetFolder>dipndipReports</TargetFolder>
         <TargetDataSourceFolder>Data Sources</TargetDataSourceFolder>
         <TargetDatasetFolder>Datasets</TargetDatasetFolder>
         <TargetReportPartFolder>Report Parts</TargetReportPartFolder>
-        <StartItem>OrderDetailsReport.rdl</StartItem>
+        <StartItem>PrintOrder.rdl</StartItem>
       </Options>
     </Configuration>
     <Configuration>

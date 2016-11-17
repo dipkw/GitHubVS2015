@@ -3,6 +3,7 @@ using dipndipInventory.EF.DataServices;
 using dipndipInventory.Helpers;
 using dipndipInventory.Validations;
 using dipndipInventory.ViewModels;
+using dipndipInventory.Views.Reports;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -461,6 +462,12 @@ namespace dipndipInventory.Views.Stock
             mailItem.Send();
             //mailItem.Display(false);
             
+        }
+
+        private void btnPrint_Click(object sender, RoutedEventArgs e)
+        {
+            OrderDetailsPrint odp = new OrderDetailsPrint();
+            odp.Show();
         }
     }
 }
