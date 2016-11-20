@@ -106,6 +106,66 @@
       <HintPath>..\packages\Telerik.DataAccess.Web.2016.1.224.1\lib\net40\Telerik.OpenAccess.Web.40.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Telerik.Reporting, Version=10.0.16.113, Culture=neutral, PublicKeyToken=a9d7983dfcc261be, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Telerik\Reporting Q1 2016\Bin\Telerik.Reporting.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Reporting.Adomd, Version=10.0.16.113, Culture=neutral, PublicKeyToken=a9d7983dfcc261be, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Telerik\Reporting Q1 2016\Bin\Telerik.Reporting.Adomd.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Reporting.Cache.Database, Version=10.0.16.113, Culture=neutral, PublicKeyToken=a9d7983dfcc261be, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Telerik\Reporting Q1 2016\Bin\Telerik.Reporting.Cache.Database.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Reporting.Cache.StackExchangeRedis, Version=10.0.16.113, Culture=neutral, PublicKeyToken=a9d7983dfcc261be, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Telerik\Reporting Q1 2016\Bin\Telerik.Reporting.Cache.StackExchangeRedis.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Reporting.OpenXmlRendering, Version=10.0.16.113, Culture=neutral, PublicKeyToken=a9d7983dfcc261be, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Telerik\Reporting Q1 2016\Bin\Telerik.Reporting.OpenXmlRendering.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Reporting.Service, Version=10.0.16.113, Culture=neutral, PublicKeyToken=a9d7983dfcc261be, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Telerik\Reporting Q1 2016\Bin\Telerik.Reporting.Service.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Reporting.Services.ServiceStack, Version=10.0.16.113, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Telerik\Reporting Q1 2016\Bin\Telerik.Reporting.Services.ServiceStack.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Reporting.Services.WebApi, Version=10.0.16.113, Culture=neutral, PublicKeyToken=a9d7983dfcc261be, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Telerik\Reporting Q1 2016\Bin\Telerik.Reporting.Services.WebApi.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Reporting.XpsRendering, Version=10.0.16.113, Culture=neutral, PublicKeyToken=a9d7983dfcc261be, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Telerik\Reporting Q1 2016\Bin\Telerik.Reporting.XpsRendering.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.ReportViewer.Html5.WebForms, Version=10.0.16.113, Culture=neutral, PublicKeyToken=a9d7983dfcc261be, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Telerik\Reporting Q1 2016\Bin\Telerik.ReportViewer.Html5.WebForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.ReportViewer.Mvc, Version=10.0.16.113, Culture=neutral, PublicKeyToken=a9d7983dfcc261be, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Telerik\Reporting Q1 2016\Bin\Telerik.ReportViewer.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.ReportViewer.Silverlight, Version=10.0.16.113, Culture=neutral, PublicKeyToken=a9d7983dfcc261be, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Telerik\Reporting Q1 2016\Bin\Telerik.ReportViewer.Silverlight.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.ReportViewer.WebForms, Version=10.0.16.113, Culture=neutral, PublicKeyToken=a9d7983dfcc261be, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Telerik\Reporting Q1 2016\Bin\Telerik.ReportViewer.WebForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.ReportViewer.WinForms, Version=10.0.16.113, Culture=neutral, PublicKeyToken=a9d7983dfcc261be, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Telerik\Reporting Q1 2016\Bin\Telerik.ReportViewer.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.ReportViewer.Wpf, Version=10.0.16.113, Culture=neutral, PublicKeyToken=a9d7983dfcc261be, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Telerik\Reporting Q1 2016\Bin\Telerik.ReportViewer.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="Telerik.Windows.Controls, Version=2016.1.112.45, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL" />
     <Reference Include="Telerik.Windows.Controls.Data, Version=2016.1.112.45, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL" />
     <Reference Include="Telerik.Windows.Controls.DataVisualization, Version=2016.1.112.45, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL" />
@@ -424,6 +484,10 @@
     <ProjectReference Include="..\dipndipInventory.EF\dipndipInventory.EF.csproj">
       <Project>{D04A889F-66BC-4270-93CB-C61C7FE47032}</Project>
       <Name>dipndipInventory.EF</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\dipndipTLReports\dipndipTLReports.csproj">
+      <Project>{38084e8f-0d8a-4087-a80d-f11bde0ea621}</Project>
+      <Name>dipndipTLReports</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
