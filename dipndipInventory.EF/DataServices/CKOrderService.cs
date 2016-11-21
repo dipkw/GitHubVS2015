@@ -102,16 +102,24 @@ namespace dipndipInventory.EF.DataServices
         public bool IsExistingCKOrderByOrderNo(string ck_order_no)
         {
             bool _result = false;
-            _context = new CKEntities();
-
-            //order objCKOrder = (from ckorder in _context.orders where ckorder.order_no == ck_order_no select ckorder).FirstOrDefault();
-            order objCKOrder = (from ckorder in _context.orders where string.Equals(ckorder.order_no, ck_order_no, StringComparison.OrdinalIgnoreCase) select ckorder).FirstOrDefault();
-
-            if (objCKOrder != null)
+            try
             {
-                _result = true;
-            }
+                _context = new CKEntities();
 
+                //order objCKOrder = (from ckorder in _context.orders where ckorder.order_no == ck_order_no select ckorder).FirstOrDefault();
+                //order objCKOrder = (from ckorder in _context.orders where string.Equals(ckorder.order_no, ck_order_no, StringComparison.OrdinalIgnoreCase) select ckorder).FirstOrDefault();
+
+                order objCKOrder = (from ckorder in _context.orders where ckorder.order_no == ck_order_no select ckorder).FirstOrDefault();
+
+                if (objCKOrder != null)
+                {
+                    _result = true;
+                }
+            }
+            catch(Exception ex)
+            {
+
+            }
             return _result;
         }
 

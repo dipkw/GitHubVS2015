@@ -60,6 +60,25 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Reports\OrderDetailsB.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\OrderDetailsB.Designer.cs">
+      <DependentUpon>OrderDetailsB.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\OrderPrinReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\OrderPrinReport.Designer.cs">
+      <DependentUpon>OrderPrinReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\ReportVM\PrintOrderVM.cs" />
+    <Compile Include="TestReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TestReport.Designer.cs">
+      <DependentUpon>TestReport.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -84,6 +103,15 @@
       <DependentUpon>PrintOrderReport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
+    <EmbeddedResource Include="Reports\OrderDetailsB.resx">
+      <DependentUpon>OrderDetailsB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\OrderPrinReport.resx">
+      <DependentUpon>OrderPrinReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestReport.resx">
+      <DependentUpon>TestReport.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

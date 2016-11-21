@@ -4,9 +4,12 @@ using dipndipInventory.Helpers;
 using dipndipInventory.Validations;
 using dipndipInventory.ViewModels;
 using dipndipInventory.Views.Reports;
+using Microsoft.Office.Interop.Outlook;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -17,6 +20,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Telerik.Reporting.Processing;
 using Telerik.Windows.Controls;
 
 
@@ -385,6 +389,13 @@ namespace dipndipInventory.Views.Stock
 
         private void saveOrder()
         {
+
+            CKOrderService ckocontext = new CKOrderService();
+            if (ckocontext.IsExistingCKOrderByOrderNo(txtOrderNo.Value))
+            {
+                return;
+            }
+
             SiteService _scontext = new SiteService();
             if (OrderDetailsList.Count < 1)
             {
@@ -431,32 +442,51 @@ namespace dipndipInventory.Views.Stock
                 {
                     order_master.created_by = GlobalVariables.ActiveUser.Id;
                     order_master.created_date = DateTime.Now;
+                    CallSaveReport();
                     _result = _ocontext.CreateOrder(order_master, order_detail_list) > 0 ? "Order Details Created Successfully" : "Unable to Create Order Details";
                     RadWindow.Alert(_result);
                     if (_result == "Order Details Created Successfully")
                     {
+                        SendMail();
+                        if(MessageBox.Show("Do you want to print the order","Print",MessageBoxButton.YesNo)==MessageBoxResult.Yes)
+                        {
+                            PrintOrder(txtOrderNo.Value);
+                        }
                         ClearOrder();
                     }
                 }
             }
-            catch { }
+            catch(System.Exception ex)
+            {
+
+            }
 
 
         }
 
         private void btnMail_Click(object sender, RoutedEventArgs e)
         {
-            SendMail();
+            //SendMail();
+            SavePdfOrder();
+            //MailOrder();
         }
 
         private void SendMail()
         {
+            Telerik.Reporting.Report myReport = new dipndipTLReports.Reports.OrderDetailsB(txtOrderNo.Value);
+            string fileName = @"D:\CKOrders\Order-" + DateTime.Now.Date.ToString("dd-MM-yyyy") + ".pdf";
+            SaveReport(myReport, fileName);
+
             Microsoft.Office.Interop.Outlook.Application app = new Microsoft.Office.Interop.Outlook.Application();
             Microsoft.Office.Interop.Outlook.MailItem mailItem = app.CreateItem(Microsoft.Office.Interop.Outlook.OlItemType.olMailItem);
-            mailItem.Subject = "This is the subject";
+            mailItem.Subject = "Central Kitchen Order";
             mailItem.To = "jolly@dipndipkw.com";
-            mailItem.Body = "This is the message.";
-            string logPath = @"D:\items.pdf";
+            mailItem.Body = @"Dear Warehouse Officer,
+Please find attached Order for Central Kitchen to be delivered on " + DateTime.Now.AddDays(1) + ".";
+            mailItem.Body += "Regards";
+            mailItem.Body += "Central Kitchen";
+            //string logPath = @"D:\items.pdf";
+            string logPath = fileName;
             mailItem.Attachments.Add(logPath);//logPath is a string holding path to the log.txt file
             mailItem.Importance = Microsoft.Office.Interop.Outlook.OlImportance.olImportanceHigh;
             mailItem.ReadReceiptRequested = true;
@@ -473,33 +503,186 @@ namespace dipndipInventory.Views.Stock
             try
             {
 
+                //Telerik.Reporting.IReportDocument myReport = new DieReports.DieDetailsReport(die_id, "Drawing");
+                //Telerik.Reporting.IReportDocument myReport = new dipndipTLReports.PrintOrderReport("CKOR-0007");
+                Telerik.Reporting.IReportDocument myReport = new dipndipTLReports.Reports.OrderDetailsB("CKOR-0007");
+
+
+                // Obtain the settings of the default printer
+                System.Drawing.Printing.PrinterSettings printerSettings
+                    = new System.Drawing.Printing.PrinterSettings();
+
+                //// The standard print controller comes with no UI
+                System.Drawing.Printing.PrintController standardPrintController =
+                    new System.Drawing.Printing.StandardPrintController();
+
+                // Print the report using the custom print controller
+                Telerik.Reporting.Processing.ReportProcessor reportProcessor
+                    = new Telerik.Reporting.Processing.ReportProcessor();
+
+                reportProcessor.PrintController = standardPrintController;
+
+                Telerik.Reporting.InstanceReportSource instanceReportSource =
+                    new Telerik.Reporting.InstanceReportSource();
+
+                instanceReportSource.ReportDocument = myReport;
+
+                reportProcessor.PrintReport(instanceReportSource, printerSettings);
+            }
+            catch 
+            {
+
+            }
+        }
+
+        public void PrintOrder(string order_no)
+        {
+            try
+            {
 
                 //Telerik.Reporting.IReportDocument myReport = new DieReports.DieDetailsReport(die_id, "Drawing");
-                Telerik.Reporting.IReportDocument myReport = new dipndipTLReports.PrintOrderReport("CKOR-0005");
+                //Telerik.Reporting.IReportDocument myReport = new dipndipTLReports.PrintOrderReport("CKOR-0007");
+                Telerik.Reporting.IReportDocument myReport = new dipndipTLReports.Reports.OrderDetailsB(order_no);
 
 
-                //// Obtain the settings of the default printer
-                //System.Drawing.Printing.PrinterSettings printerSettings
-                //    = new System.Drawing.Printing.PrinterSettings();
+                // Obtain the settings of the default printer
+                System.Drawing.Printing.PrinterSettings printerSettings
+                    = new System.Drawing.Printing.PrinterSettings();
 
-                ////// The standard print controller comes with no UI
-                //System.Drawing.Printing.PrintController standardPrintController =
-                //    new System.Drawing.Printing.StandardPrintController();
+                //// The standard print controller comes with no UI
+                System.Drawing.Printing.PrintController standardPrintController =
+                    new System.Drawing.Printing.StandardPrintController();
 
-                //// Print the report using the custom print controller
-                //Telerik.Reporting.Processing.ReportProcessor reportProcessor
-                //    = new Telerik.Reporting.Processing.ReportProcessor();
+                // Print the report using the custom print controller
+                Telerik.Reporting.Processing.ReportProcessor reportProcessor
+                    = new Telerik.Reporting.Processing.ReportProcessor();
 
-                //reportProcessor.PrintController = standardPrintController;
+                reportProcessor.PrintController = standardPrintController;
 
-                //Telerik.Reporting.InstanceReportSource instanceReportSource =
-                //    new Telerik.Reporting.InstanceReportSource();
+                Telerik.Reporting.InstanceReportSource instanceReportSource =
+                    new Telerik.Reporting.InstanceReportSource();
 
-                //instanceReportSource.ReportDocument = myReport;
+                instanceReportSource.ReportDocument = myReport;
 
-                //reportProcessor.PrintReport(instanceReportSource, printerSettings);
+                reportProcessor.PrintReport(instanceReportSource, printerSettings);
             }
             catch { }
         }
+
+        public void SendOrder()
+        {
+            //string mimeType;
+            //string extension;
+            //Encoding encoding;
+
+            //Telerik.Reporting.IReportDocument myReport = new dipndipTLReports.Reports.OrderDetailsB(txtOrderNo.Value);
+
+            //ReportProcessor rp = new ReportProcessor();
+            //rp.RenderReport("PDF", myReport, myReport,null);
+
+            //byte[] reportBytes = ReportProcessor.Render("PDF", myReport, null, out mimeType, out extension, out encoding);
+
+            //MemoryStream ms = new MemoryStream(reportBytes);
+            //ms.Position = 0;
+
+            //System.Net.Mime.ContentType ct = new System.Net.Mime.ContentType(System.Net.Mime.MediaTypeNames.Text.Plain);
+            //System.Net.Mail.Attachment attach = new System.Net.Mail.Attachment(ms, ct);
+            //attach.ContentDisposition.FileName = "myFile.txt";
+        }
+
+        public void MailOrder()
+        {
+
+            Telerik.Reporting.Processing.ReportProcessor reportProcessor =
+                new Telerik.Reporting.Processing.ReportProcessor();
+
+            // set any deviceInfo settings if necessary
+            System.Collections.Hashtable deviceInfo = new System.Collections.Hashtable();
+
+            Telerik.Reporting.InstanceReportSource instanceReportSource =
+                new Telerik.Reporting.InstanceReportSource();
+
+            Telerik.Reporting.IReportDocument myReport = new dipndipTLReports.Reports.OrderDetailsB(txtOrderNo.Value);
+
+            instanceReportSource.ReportDocument = myReport;
+
+            // "OrderNumber" is the name of the parameter and "SO43659" is the default value
+            //instanceReportSource.Parameters.Add(new Telerik.Reporting.Parameter("OrderNumber", "SO43659"));
+
+            Telerik.Reporting.Processing.RenderingResult result =
+                reportProcessor.RenderReport("PDF", instanceReportSource, deviceInfo);
+
+            // The rest of the snippet goes here
+            byte[] reportBytes = result.DocumentBytes;
+            MemoryStream ms = new MemoryStream(reportBytes);
+            ms.Position = 0;
+
+            System.Net.Mime.ContentType ct = new System.Net.Mime.ContentType(System.Net.Mime.MediaTypeNames.Text.Plain);
+            System.Net.Mail.Attachment attach = new System.Net.Mail.Attachment(ms, ct);
+            attach.ContentDisposition.FileName = @"D:\" + result.DocumentName + "." + result.Extension;
+
+            FileStream fstr = new FileStream(attach.ContentDisposition.FileName, FileMode.Truncate);
+            fstr.CopyTo(ms);
+
+            Microsoft.Office.Interop.Outlook.Application app = new Microsoft.Office.Interop.Outlook.Application();
+            Microsoft.Office.Interop.Outlook.MailItem mailItem = app.CreateItem(Microsoft.Office.Interop.Outlook.OlItemType.olMailItem);
+
+            mailItem.Subject = "This is the subject";
+            mailItem.To = "jolly@dipndipkw.com";
+            mailItem.Body = "This is the message.";
+            mailItem.Attachments.Add(attach.ContentDisposition.FileName);
+            mailItem.Importance = Microsoft.Office.Interop.Outlook.OlImportance.olImportanceHigh;
+            mailItem.ReadReceiptRequested = true;
+            mailItem.Send();
+        }
+
+        public void SavePdfOrder()
+        {
+            Telerik.Reporting.Processing.ReportProcessor reportProcessor =
+            new Telerik.Reporting.Processing.ReportProcessor();
+
+            // set any deviceInfo settings if necessary
+            System.Collections.Hashtable deviceInfo =
+                new System.Collections.Hashtable();
+
+            Telerik.Reporting.TypeReportSource typeReportSource =
+                         new Telerik.Reporting.TypeReportSource();
+            //Telerik.Reporting.IReportDocument myReport = new dipndipTLReports.Reports.OrderDetailsB(txtOrderNo.Value);
+            Telerik.Reporting.IReportDocument myReport = new dipndipTLReports.Reports.OrderDetailsB("CKOR-0007");
+            // reportName is the Assembly Qualified Name of the report
+
+            typeReportSource.TypeName = typeof(dipndipTLReports.Reports.OrderDetailsB).AssemblyQualifiedName;
+            Telerik.Reporting.Processing.RenderingResult result =
+                reportProcessor.RenderReport("PDF", typeReportSource, deviceInfo);
+
+            string fileName = @"D:\Order-" + DateTime.Now.Date.ToString("dd-MM-yyyy") + "." + result.Extension;
+            string path = System.IO.Path.GetTempPath();
+            string filePath = System.IO.Path.Combine(path, fileName);
+
+            using (System.IO.FileStream fs = new System.IO.FileStream(filePath, System.IO.FileMode.Create))
+            {
+                fs.Write(result.DocumentBytes, 0, result.DocumentBytes.Length);
+            }
+        }
+
+        public void CallSaveReport()
+        {
+            Telerik.Reporting.Report myReport = new dipndipTLReports.Reports.OrderDetailsB("CKOR-0007");
+            string fileName = @"D:\Order-" + DateTime.Now.Date.ToString("dd-MM-yyyy") + ".pdf";
+            SaveReport(myReport, fileName);
+        }
+        void SaveReport(Telerik.Reporting.Report report, string fileName)
+        {
+            ReportProcessor reportProcessor = new ReportProcessor();
+            Telerik.Reporting.InstanceReportSource instanceReportSource = new Telerik.Reporting.InstanceReportSource();
+            instanceReportSource.ReportDocument = report;
+            RenderingResult result = reportProcessor.RenderReport("PDF", instanceReportSource, null);
+
+            using (FileStream fs = new FileStream(fileName, FileMode.Create))
+            {
+                fs.Write(result.DocumentBytes, 0, result.DocumentBytes.Length);
+            }
+        }
+
     }
 }

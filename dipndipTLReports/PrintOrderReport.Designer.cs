@@ -9,12 +9,12 @@ namespace dipndipTLReports
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PrintOrderReport));
             Telerik.Reporting.TableGroup tableGroup1 = new Telerik.Reporting.TableGroup();
             Telerik.Reporting.TableGroup tableGroup2 = new Telerik.Reporting.TableGroup();
             Telerik.Reporting.TableGroup tableGroup3 = new Telerik.Reporting.TableGroup();
             Telerik.Reporting.TableGroup tableGroup4 = new Telerik.Reporting.TableGroup();
             Telerik.Reporting.TableGroup tableGroup5 = new Telerik.Reporting.TableGroup();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PrintOrderReport));
             Telerik.Reporting.ReportParameter reportParameter1 = new Telerik.Reporting.ReportParameter();
             Telerik.Reporting.Drawing.StyleRule styleRule1 = new Telerik.Reporting.Drawing.StyleRule();
             Telerik.Reporting.Drawing.StyleRule styleRule2 = new Telerik.Reporting.Drawing.StyleRule();
@@ -22,53 +22,77 @@ namespace dipndipTLReports
             Telerik.Reporting.Drawing.DescendantSelector descendantSelector1 = new Telerik.Reporting.Drawing.DescendantSelector();
             Telerik.Reporting.Drawing.StyleRule styleRule4 = new Telerik.Reporting.Drawing.StyleRule();
             Telerik.Reporting.Drawing.DescendantSelector descendantSelector2 = new Telerik.Reporting.Drawing.DescendantSelector();
-            this.detailSection1 = new Telerik.Reporting.DetailSection();
-            this.PrintOrderSqlDataSource = new Telerik.Reporting.SqlDataSource();
-            this.table1 = new Telerik.Reporting.Table();
             this.textBox3 = new Telerik.Reporting.TextBox();
             this.textBox5 = new Telerik.Reporting.TextBox();
             this.textBox6 = new Telerik.Reporting.TextBox();
             this.textBox7 = new Telerik.Reporting.TextBox();
+            this.OrderParamSqlDataSource = new Telerik.Reporting.SqlDataSource();
+            this.detailSection1 = new Telerik.Reporting.DetailSection();
+            this.table1 = new Telerik.Reporting.Table();
             this.textBox10 = new Telerik.Reporting.TextBox();
             this.textBox12 = new Telerik.Reporting.TextBox();
             this.textBox13 = new Telerik.Reporting.TextBox();
             this.textBox14 = new Telerik.Reporting.TextBox();
+            this.PrintOrderSqlDataSource = new Telerik.Reporting.SqlDataSource();
             this.textBox15 = new Telerik.Reporting.TextBox();
             this.pageHeaderSection1 = new Telerik.Reporting.PageHeaderSection();
-            this.textBox16 = new Telerik.Reporting.TextBox();
-            this.pageFooterSection1 = new Telerik.Reporting.PageFooterSection();
-            this.OrderParamSqlDataSource = new Telerik.Reporting.SqlDataSource();
-            this.textBox17 = new Telerik.Reporting.TextBox();
             this.pictureBox1 = new Telerik.Reporting.PictureBox();
             this.textBox18 = new Telerik.Reporting.TextBox();
             this.textBox19 = new Telerik.Reporting.TextBox();
             this.textBox20 = new Telerik.Reporting.TextBox();
             this.textBox1 = new Telerik.Reporting.TextBox();
+            this.textBox16 = new Telerik.Reporting.TextBox();
+            this.pageFooterSection1 = new Telerik.Reporting.PageFooterSection();
+            this.sqlDataSource1 = new Telerik.Reporting.SqlDataSource();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
+            // 
+            // textBox3
+            // 
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Inch(1.7895839214324951D), Telerik.Reporting.Drawing.Unit.Inch(0.20000001788139343D));
+            this.textBox3.StyleName = "Corporate.TableHeader";
+            this.textBox3.Value = "Item Code";
+            // 
+            // textBox5
+            // 
+            this.textBox5.Name = "textBox5";
+            this.textBox5.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Inch(2.3416669368743896D), Telerik.Reporting.Drawing.Unit.Inch(0.20000001788139343D));
+            this.textBox5.StyleName = "Corporate.TableHeader";
+            this.textBox5.Value = "Description";
+            // 
+            // textBox6
+            // 
+            this.textBox6.Name = "textBox6";
+            this.textBox6.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Inch(0.800000011920929D), Telerik.Reporting.Drawing.Unit.Inch(0.20000000298023224D));
+            this.textBox6.StyleName = "Corporate.TableHeader";
+            this.textBox6.Value = "Unit";
+            // 
+            // textBox7
+            // 
+            this.textBox7.Name = "textBox7";
+            this.textBox7.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Inch(1.1749999523162842D), Telerik.Reporting.Drawing.Unit.Inch(0.19999998807907105D));
+            this.textBox7.StyleName = "Corporate.TableHeader";
+            this.textBox7.Value = "Quantity";
+            // 
+            // OrderParamSqlDataSource
+            // 
+            this.OrderParamSqlDataSource.ConnectionString = "dipndipTLReports.Properties.Settings.dipckConnectionString";
+            this.OrderParamSqlDataSource.Name = "OrderParamSqlDataSource";
+            this.OrderParamSqlDataSource.SelectCommand = "SELECT order_no FROM orders";
             // 
             // detailSection1
             // 
-            this.detailSection1.Height = Telerik.Reporting.Drawing.Unit.Inch(1.9770833253860474D);
+            this.detailSection1.Height = Telerik.Reporting.Drawing.Unit.Inch(1.6771225929260254D);
             this.detailSection1.Items.AddRange(new Telerik.Reporting.ReportItemBase[] {
             this.table1});
             this.detailSection1.Name = "detailSection1";
             // 
-            // PrintOrderSqlDataSource
-            // 
-            this.PrintOrderSqlDataSource.ConnectionString = "Data Source=JOLLY\\MSSQLSERVER14;Initial Catalog=dipck;Persist Security Info=True;" +
-    "User ID=sa;Password=adnan2011";
-            this.PrintOrderSqlDataSource.Name = "PrintOrderSqlDataSource";
-            this.PrintOrderSqlDataSource.Parameters.AddRange(new Telerik.Reporting.SqlDataSourceParameter[] {
-            new Telerik.Reporting.SqlDataSourceParameter("@OrderNo", System.Data.DbType.String, null)});
-            this.PrintOrderSqlDataSource.ProviderName = "System.Data.SqlClient";
-            this.PrintOrderSqlDataSource.SelectCommand = resources.GetString("PrintOrderSqlDataSource.SelectCommand");
-            // 
             // table1
             // 
-            this.table1.Body.Columns.Add(new Telerik.Reporting.TableBodyColumn(Telerik.Reporting.Drawing.Unit.Inch(1.7895838022232056D)));
-            this.table1.Body.Columns.Add(new Telerik.Reporting.TableBodyColumn(Telerik.Reporting.Drawing.Unit.Inch(2.3416671752929688D)));
+            this.table1.Body.Columns.Add(new Telerik.Reporting.TableBodyColumn(Telerik.Reporting.Drawing.Unit.Inch(1.789583683013916D)));
+            this.table1.Body.Columns.Add(new Telerik.Reporting.TableBodyColumn(Telerik.Reporting.Drawing.Unit.Inch(2.3416669368743896D)));
             this.table1.Body.Columns.Add(new Telerik.Reporting.TableBodyColumn(Telerik.Reporting.Drawing.Unit.Inch(0.80000066757202148D)));
-            this.table1.Body.Columns.Add(new Telerik.Reporting.TableBodyColumn(Telerik.Reporting.Drawing.Unit.Inch(1.1750000715255737D)));
+            this.table1.Body.Columns.Add(new Telerik.Reporting.TableBodyColumn(Telerik.Reporting.Drawing.Unit.Inch(1.1749999523162842D)));
             this.table1.Body.Rows.Add(new Telerik.Reporting.TableBodyRow(Telerik.Reporting.Drawing.Unit.Inch(0.32500004768371582D)));
             this.table1.Body.SetCellContent(0, 0, this.textBox10);
             this.table1.Body.SetCellContent(0, 1, this.textBox12);
@@ -100,34 +124,6 @@ namespace dipndipTLReports
             this.table1.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Inch(6.1062517166137695D), Telerik.Reporting.Drawing.Unit.Inch(0.52500003576278687D));
             this.table1.StyleName = "Corporate.TableNormal";
             // 
-            // textBox3
-            // 
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Inch(1.7895839214324951D), Telerik.Reporting.Drawing.Unit.Inch(0.20000001788139343D));
-            this.textBox3.StyleName = "Corporate.TableHeader";
-            this.textBox3.Value = "qty";
-            // 
-            // textBox5
-            // 
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Inch(2.3416669368743896D), Telerik.Reporting.Drawing.Unit.Inch(0.20000001788139343D));
-            this.textBox5.StyleName = "Corporate.TableHeader";
-            this.textBox5.Value = "unit_description";
-            // 
-            // textBox6
-            // 
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Inch(0.800000011920929D), Telerik.Reporting.Drawing.Unit.Inch(0.20000000298023224D));
-            this.textBox6.StyleName = "Corporate.TableHeader";
-            this.textBox6.Value = "wh_item_code";
-            // 
-            // textBox7
-            // 
-            this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Inch(1.1749999523162842D), Telerik.Reporting.Drawing.Unit.Inch(0.19999998807907105D));
-            this.textBox7.StyleName = "Corporate.TableHeader";
-            this.textBox7.Value = "wh_item_description";
-            // 
             // textBox10
             // 
             this.textBox10.Name = "textBox10";
@@ -156,6 +152,14 @@ namespace dipndipTLReports
             this.textBox14.StyleName = "Corporate.TableBody";
             this.textBox14.Value = "= Fields.qty";
             // 
+            // PrintOrderSqlDataSource
+            // 
+            this.PrintOrderSqlDataSource.ConnectionString = "dipndipTLReports.Properties.Settings.dipckConnectionString";
+            this.PrintOrderSqlDataSource.Name = "PrintOrderSqlDataSource";
+            this.PrintOrderSqlDataSource.Parameters.AddRange(new Telerik.Reporting.SqlDataSourceParameter[] {
+            new Telerik.Reporting.SqlDataSourceParameter("@OrderNo", System.Data.DbType.String, "= Parameters.OrderNo.Value")});
+            this.PrintOrderSqlDataSource.SelectCommand = resources.GetString("PrintOrderSqlDataSource.SelectCommand");
+            // 
             // textBox15
             // 
             this.textBox15.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Inch(0D), Telerik.Reporting.Drawing.Unit.Inch(0.7999998927116394D));
@@ -170,45 +174,15 @@ namespace dipndipTLReports
             // 
             // pageHeaderSection1
             // 
-            this.pageHeaderSection1.Height = Telerik.Reporting.Drawing.Unit.Inch(2.422877311706543D);
+            this.pageHeaderSection1.Height = Telerik.Reporting.Drawing.Unit.Inch(2.1000001430511475D);
             this.pageHeaderSection1.Items.AddRange(new Telerik.Reporting.ReportItemBase[] {
             this.textBox15,
-            this.textBox17,
             this.pictureBox1,
             this.textBox18,
             this.textBox19,
             this.textBox20,
             this.textBox1});
             this.pageHeaderSection1.Name = "pageHeaderSection1";
-            // 
-            // textBox16
-            // 
-            this.textBox16.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Inch(4.425196647644043D), Telerik.Reporting.Drawing.Unit.Inch(0.60629922151565552D));
-            this.textBox16.Name = "ReportPageNumberTextBox";
-            this.textBox16.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Inch(1.5748031139373779D), Telerik.Reporting.Drawing.Unit.Inch(0.39370077848434448D));
-            this.textBox16.Style.Font.Name = "Segoe UI";
-            this.textBox16.Value = "Page: {PageNumber}";
-            // 
-            // pageFooterSection1
-            // 
-            this.pageFooterSection1.Height = Telerik.Reporting.Drawing.Unit.Inch(1.7000001668930054D);
-            this.pageFooterSection1.Items.AddRange(new Telerik.Reporting.ReportItemBase[] {
-            this.textBox16});
-            this.pageFooterSection1.Name = "pageFooterSection1";
-            // 
-            // OrderParamSqlDataSource
-            // 
-            this.OrderParamSqlDataSource.ConnectionString = "jolly\\mssqlserver14.dipck.dbo";
-            this.OrderParamSqlDataSource.Name = "OrderParamSqlDataSource";
-            this.OrderParamSqlDataSource.SelectCommand = "SELECT order_no FROM orders";
-            // 
-            // textBox17
-            // 
-            this.textBox17.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Inch(0.70007878541946411D), Telerik.Reporting.Drawing.Unit.Inch(1.7000001668930054D));
-            this.textBox17.Name = "textBox17";
-            this.textBox17.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Inch(1.3000015020370483D), Telerik.Reporting.Drawing.Unit.Inch(0.1999213844537735D));
-            this.textBox17.StyleName = "Corporate.TableBody";
-            this.textBox17.Value = "= Fields.order_no";
             // 
             // pictureBox1
             // 
@@ -247,6 +221,29 @@ namespace dipndipTLReports
             this.textBox1.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Inch(6.0999608039855957D), Telerik.Reporting.Drawing.Unit.Inch(0.19999997317790985D));
             this.textBox1.Style.TextAlign = Telerik.Reporting.Drawing.HorizontalAlign.Center;
             this.textBox1.Value = "= Fields.site_name";
+            // 
+            // textBox16
+            // 
+            this.textBox16.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Inch(4.425196647644043D), Telerik.Reporting.Drawing.Unit.Inch(0.60629922151565552D));
+            this.textBox16.Name = "ReportPageNumberTextBox";
+            this.textBox16.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Inch(1.5748031139373779D), Telerik.Reporting.Drawing.Unit.Inch(0.39370077848434448D));
+            this.textBox16.Style.Font.Name = "Segoe UI";
+            this.textBox16.Value = "Page: {PageNumber}";
+            // 
+            // pageFooterSection1
+            // 
+            this.pageFooterSection1.Height = Telerik.Reporting.Drawing.Unit.Inch(1.7000001668930054D);
+            this.pageFooterSection1.Items.AddRange(new Telerik.Reporting.ReportItemBase[] {
+            this.textBox16});
+            this.pageFooterSection1.Name = "pageFooterSection1";
+            // 
+            // sqlDataSource1
+            // 
+            this.sqlDataSource1.ConnectionString = "dipndipTLReports.Properties.Settings.dipckConnectionString";
+            this.sqlDataSource1.Name = "sqlDataSource1";
+            this.sqlDataSource1.Parameters.AddRange(new Telerik.Reporting.SqlDataSourceParameter[] {
+            new Telerik.Reporting.SqlDataSourceParameter("@OrderNo", System.Data.DbType.String, "= Parameters.OrderNo.Value")});
+            this.sqlDataSource1.SelectCommand = resources.GetString("sqlDataSource1.SelectCommand");
             // 
             // PrintOrderReport
             // 
@@ -327,11 +324,11 @@ namespace dipndipTLReports
         private Telerik.Reporting.TextBox textBox16;
         private Telerik.Reporting.PageFooterSection pageFooterSection1;
         private Telerik.Reporting.SqlDataSource OrderParamSqlDataSource;
-        private Telerik.Reporting.TextBox textBox17;
         private Telerik.Reporting.PictureBox pictureBox1;
         private Telerik.Reporting.TextBox textBox18;
         private Telerik.Reporting.TextBox textBox19;
         private Telerik.Reporting.TextBox textBox20;
         private Telerik.Reporting.TextBox textBox1;
+        private Telerik.Reporting.SqlDataSource sqlDataSource1;
     }
 }

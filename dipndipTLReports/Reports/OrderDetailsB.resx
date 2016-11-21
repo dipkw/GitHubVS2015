@@ -117,10 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="PrintOrderSqlDataSource.ParameterValues" xml:space="preserve">
-    <value>{"@OrderNo":"CKOR-0005"}</value>
+  <metadata name="OrderDetailsqlDataSource.ParameterValues" xml:space="preserve">
+    <value>{"@order_no":"CKOR-0007"}</value>
   </metadata>
-  <data name="PrintOrderSqlDataSource.SelectCommand" xml:space="preserve">
+  <data name="OrderDetailsqlDataSource.SelectCommand" xml:space="preserve">
     <value>SELECT        o.order_no, o.order_date, c.wh_item_code, c.wh_item_description, d.qty, u.unit_description, s.site_name
 FROM            orders AS o INNER JOIN
                          order_details AS d ON o.Id = d.order_id INNER JOIN
@@ -128,13 +128,13 @@ FROM            orders AS o INNER JOIN
                          wh_item_unit AS w ON d.wh_item_unit_id = w.Id INNER JOIN
                          ck_units AS u ON w.ck_unit_id = u.Id INNER JOIN
                          sites AS s ON o.order_from_site_id = s.Id
-WHERE        (o.order_no = @OrderNo)</value>
+WHERE        (o.order_no = @order_no)</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="pictureBox1.Value" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAOIAAAAjCAYAAACJpNbGAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsIAAA7CARUoSoAAABSbSURBVHhe7VwLlF1Veb4JbSHJzD37nHMnD0uNxbDAZO5r
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAABSbSURBVHhe7VwLlF1Veb4JbSHJzD37nHMnD0uNxbDAZO5r
         Zu7cx0wy2FqlVlCrWF219GktimCxrVAlUR6iWB4KJKQGEkwQLHTJwijSysICUhveaTGKICQSyLwnYZKQ
         10y/b59/X84995w7NyEXErzfWv869+z9773//e//3+9zY68WGSd+eYdrj6YcNUhKO2qIz4WOs1BYYmnH
         ujPr2iOGJ0iIG8NzqbA3Ici61u9nXDUc1FXSUecKSyzjxs/KePqr0Kkhpk/b6ifLYrHpkqSJNyJSjnV9
@@ -224,18 +224,5 @@ WHERE        (o.order_no = @OrderNo)</value>
         vfwXG00cJOpxxCYODTUcccpz4yZ+zdB0xMah6YhN1I2mIzYOTUdsom40HbFxaDpiE3Wj6YiNQ9MRm6gb
         TUdsHJqO2ETdaDpi49B0xCMRsdj/A3djUKbpyvkCAAAAAElFTkSuQmCC
 </value>
-  </data>
-  <metadata name="sqlDataSource1.ParameterValues" xml:space="preserve">
-    <value>{"@OrderNo":"CKOR-0007"}</value>
-  </metadata>
-  <data name="sqlDataSource1.SelectCommand" xml:space="preserve">
-    <value>SELECT        o.order_no OrderNo, o.order_date OrderDate, s.site_name SiteName
-FROM            orders AS o INNER JOIN
-                         order_details AS d ON o.Id = d.order_id INNER JOIN
-                         ckwh_items AS c ON d.ckwh_item_id = c.Id INNER JOIN
-                         wh_item_unit AS w ON d.wh_item_unit_id = w.Id INNER JOIN
-                         ck_units AS u ON w.ck_unit_id = u.Id INNER JOIN
-                         sites AS s ON o.order_from_site_id = s.Id
-WHERE        (o.order_no = @OrderNo)</value>
   </data>
 </root>

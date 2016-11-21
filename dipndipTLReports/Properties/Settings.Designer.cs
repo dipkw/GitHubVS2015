@@ -26,8 +26,8 @@ namespace dipndipTLReports.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=JOLLY\\MSSQLSERVER14;Initial Catalog=dipck;Persist Security Info=True;" +
-            "User ID=sa;Password=adnan2011")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=192.168.0.187\\MSSQLSERVER14;Initial Catalog=dipck;Integrated Security" +
+            "=True")]
         public string dipckConnectionString {
             get {
                 return ((string)(this["dipckConnectionString"]));
