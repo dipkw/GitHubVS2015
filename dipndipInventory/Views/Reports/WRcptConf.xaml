@@ -1,0 +1,25 @@
+﻿<telerik:RadWindow x:Class="dipndipInventory.Views.Reports.WRcptConf"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:dipndipInventory.Views.Reports"
+    xmlns:tr="http://schemas.telerik.com/wpf"
+    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+    xmlns:telerikrptvwr="clr-namespace:Telerik.ReportViewer.Wpf;assembly=Telerik.ReportViewer.Wpf"
+    xmlns:telerikReporting="clr-namespace:Telerik.Reporting;assembly=Telerik.Reporting"
+    Header="Warehouse Receipt Confirmation" Height="700" Width="1024" WindowStartupLocation="CenterScreen" Activated="RadWindow_Activated" WindowState="Maximized">
+
+    <Grid x:Name="LayoutRoot">
+        <Grid Margin="20" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <telerikrptvwr:ReportViewer x:Name="ReportViewer1" ViewMode="PrintPreview" Grid.Row="0" />
+            <!--<tr:ReportViewer Grid.Row="0" x:Name="ReportViewer1" HorizontalAlignment="Stretch">
+              <tr:ReportViewer.ReportSource>
+                <telerikReporting:TypeReportSource TypeName="dipndipTLReports.WHReceiptConfirmation, dipndipTLReports" />
+              </tr:ReportViewer.ReportSource>
+            </tr:ReportViewer>-->
+
+        </Grid>
+    </Grid>
+</telerik:RadWindow>

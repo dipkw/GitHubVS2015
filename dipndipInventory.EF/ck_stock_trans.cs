@@ -43,5 +43,6 @@ namespace dipndipInventory.EF
         public virtual ck_units ck_units { get; set; }
         public virtual site site { get; set; }
         public virtual site site1 { get; set; }
+        public virtual ck_item_unit ck_item_unit { get; set; }
     }
 }

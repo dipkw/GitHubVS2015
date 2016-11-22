@@ -20,6 +20,7 @@ namespace dipndipInventory.EF
             this.ck_wastage_details = new HashSet<ck_wastage_details>();
             this.ck_issue_detais = new HashSet<ck_issue_detais>();
             this.ck_items_adj = new HashSet<ck_items_adj>();
+            this.ck_stock_trans = new HashSet<ck_stock_trans>();
         }
     
         public int Id { get; set; }
@@ -43,5 +44,7 @@ namespace dipndipInventory.EF
         public virtual ICollection<ck_issue_detais> ck_issue_detais { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ck_items_adj> ck_items_adj { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ck_stock_trans> ck_stock_trans { get; set; }
     }
 }

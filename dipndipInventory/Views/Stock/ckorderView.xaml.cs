@@ -1,6 +1,7 @@
 ﻿using dipndipInventory.EF;
 using dipndipInventory.EF.DataServices;
 using dipndipInventory.Helpers;
+using dipndipInventory.Views.Reports;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -67,7 +68,8 @@ namespace dipndipInventory.Views.Stock
                 irv.Show();
                 
             }
-            else if ((GlobalVariables.ActiveSite.Id == objOrder.order_to_site_id) && (objOrder.order_status != "Received" || objOrder.order_status != "Confirmed"))
+            //else if ((GlobalVariables.ActiveSite.Id == objOrder.order_to_site_id) && (objOrder.order_status != "Received" || objOrder.order_status != "Confirmed"))
+            else if ((GlobalVariables.ActiveSite.Id == objOrder.order_to_site_id) && (objOrder.order_status != "Received"))
             {
                 //Open Order Issue Window For To_Site(Warehouse) to issue the items
                 whitemissueView itmissueView = new whitemissueView(objOrder.Id, objOrder.order_no, (DateTime)objOrder.order_date);
@@ -77,7 +79,10 @@ namespace dipndipInventory.Views.Stock
             else if ((GlobalVariables.ActiveSite.Id == objOrder.order_to_site_id) && objOrder.order_status == "Received")
             {
                 //Open Receipt Confirmation Window For To_Site(Warehouse) to confirm the receipt
-                return;
+                //MessageBox.Show(objOrder.order_no);
+                WRcptConf wcv = new WRcptConf(objOrder.order_no);
+                wcv.Show();
+                //return;
             }
         }
 

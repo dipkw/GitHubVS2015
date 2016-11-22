@@ -221,6 +221,9 @@
     <Compile Include="Views\Reports\OrderDetailsPrint.xaml.cs">
       <DependentUpon>OrderDetailsPrint.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Reports\WRcptConf.xaml.cs">
+      <DependentUpon>WRcptConf.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Site\siteView.xaml.cs">
       <DependentUpon>siteView.xaml</DependentUpon>
     </Compile>
@@ -313,6 +316,10 @@
     <Page Include="Views\Reports\OrderDetailsPrint.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Reports\WRcptConf.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Site\siteView.xaml">
       <SubType>Designer</SubType>

@@ -144,6 +144,13 @@ namespace dipndipInventory.EF.DataServices
             return objCKReceipt;
         }
 
+        public receipt ReadCKReceiptByReceiptNo(string receipt_no)
+        {
+            _context = new CKEntities();
+            receipt objCKReceipt = (from ckreceipt in _context.receipts where ckreceipt.receipt_no == receipt_no select ckreceipt).FirstOrDefault();
+            return objCKReceipt;
+        }
+
         public long GetLastCKReceiptId()
         {
             _context = new CKEntities();
@@ -291,6 +298,59 @@ namespace dipndipInventory.EF.DataServices
             {
                 return null;
             }
+        }
+
+        public IEnumerable<receipt_details> ReadCKReceiptDetailsByReceiptNo(string receipt_no)
+        {
+            try
+            {
+                _context = new CKEntities();
+                //IEnumerable<Purchase_detail> objPurchaseDetails = (from purchasedetail in _rcontext.Purchase_details where purchasedetail.Purchase_master_id == purchaseMasterId orderby purchasedetail.Purchase_details_id descending select purchasedetail);
+                IEnumerable<receipt_details> objCKReceiptDetails = (from ckreceiptdetail in _context.receipt_details where ckreceiptdetail.receipt_no == receipt_no orderby ckreceiptdetail.Id ascending select ckreceiptdetail);
+                 return objCKReceiptDetails;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public IEnumerable<receipt_details> ReadReceiptByOrderNo(string order_no)
+        {
+            try
+            {
+                //IEnumerable<receipt_details> ReceiptDetails = (from r in _context.receipt_details where r.receipt.order_no == order_no select new
+                //{
+                //    r.receipt.order.order_date,
+                //    r.receipt.order.issue_date,
+                //    r.receipt.order.receipt_date,
+                //    r.Id,
+                //    r.receipt_id,
+                //    r.receipt_no,
+                //    r.wh_item_id,
+                //    r.wh_item_code,
+                //    r.wh_item_description,
+                //    r.wh_item_unit_id,
+                //    r.ck_unit_description,
+                //    r.qty_ordered,
+                //    r.qty_received,
+                //    r.qyt_returned,
+                //    r.wh_item_unit_cost,
+                //    r.wh_item_ext_cost,
+                //    r.remarks,
+                //    r.created_by,
+                //    r.created_date,
+                //    r.modified_by,
+                //    r.modified_date,
+                //    r.active
+                //});
+                IEnumerable<receipt_details> ReceiptDetails = (from r in _context.receipt_details
+                                                               where r.receipt.order_no == order_no
+                                                               select r);
+                return ReceiptDetails;
+            }
+            catch { return null; }
+
         }
 
         public int UpdateReceivedQty(long receipt_id, decimal qty_received)

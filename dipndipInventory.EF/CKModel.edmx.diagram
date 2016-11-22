@@ -133,6 +133,7 @@
         <AssociationConnector Association="dipckModel.FK_ck_items_adj_ck_items" />
         <AssociationConnector Association="dipckModel.FK_ck_items_adj_ck_users_created" />
         <AssociationConnector Association="dipckModel.FK_ck_items_adj_ck_users_modified" />
+        <AssociationConnector Association="dipckModel.FK_ck_stock_trans_ck_units1" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

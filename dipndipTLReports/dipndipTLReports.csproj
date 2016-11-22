@@ -73,6 +73,13 @@
       <DependentUpon>OrderPrinReport.cs</DependentUpon>
     </Compile>
     <Compile Include="Reports\ReportVM\PrintOrderVM.cs" />
+    <Compile Include="Reports\ReportVM\ReceiptReportVM.cs" />
+    <Compile Include="Reports\WHReceiptConfirmation.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\WHReceiptConfirmation.Designer.cs">
+      <DependentUpon>WHReceiptConfirmation.cs</DependentUpon>
+    </Compile>
     <Compile Include="TestReport.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -109,9 +116,18 @@
     <EmbeddedResource Include="Reports\OrderPrinReport.resx">
       <DependentUpon>OrderPrinReport.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reports\WHReceiptConfirmation.resx">
+      <DependentUpon>WHReceiptConfirmation.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="TestReport.resx">
       <DependentUpon>TestReport.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\dipndipInventory.EF\dipndipInventory.EF.csproj">
+      <Project>{D04A889F-66BC-4270-93CB-C61C7FE47032}</Project>
+      <Name>dipndipInventory.EF</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -474,7 +474,8 @@ namespace dipndipInventory.Views.Stock
         private void SendMail()
         {
             Telerik.Reporting.Report myReport = new dipndipTLReports.Reports.OrderDetailsB(txtOrderNo.Value);
-            string fileName = @"D:\CKOrders\Order-" + DateTime.Now.Date.ToString("dd-MM-yyyy") + ".pdf";
+            string ftime = DateTime.Now.Hour.ToString() + "-" + DateTime.Now.Minute.ToString() + "-" + DateTime.Now.Second.ToString();
+            string fileName = @"D:\CKOrders\Order-" + DateTime.Now.Date.ToString("dd-MM-yyyy") + "-" + ftime + ".pdf";
             SaveReport(myReport, fileName);
 
             Microsoft.Office.Interop.Outlook.Application app = new Microsoft.Office.Interop.Outlook.Application();
@@ -482,9 +483,13 @@ namespace dipndipInventory.Views.Stock
             mailItem.Subject = "Central Kitchen Order";
             mailItem.To = "jolly@dipndipkw.com";
             mailItem.Body = @"Dear Warehouse Officer,
-Please find attached Order for Central Kitchen to be delivered on " + DateTime.Now.AddDays(1) + ".";
-            mailItem.Body += "Regards";
-            mailItem.Body += "Central Kitchen";
+
+Please find attached Order for Central Kitchen to be delivered on " + DateTime.Now.AddDays(1).Date.ToString("dd-MM-yyyy") + ".";
+            mailItem.Body += @"
+
+Regards";
+            mailItem.Body += @"
+Central Kitchen";
             //string logPath = @"D:\items.pdf";
             string logPath = fileName;
             mailItem.Attachments.Add(logPath);//logPath is a string holding path to the log.txt file
