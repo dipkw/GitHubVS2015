@@ -256,6 +256,29 @@ namespace dipndipInventory.EF.DataServices
             }
         }
 
+        public int UpdateCKOrderConfirmStatus(string order_no, string order_status, DateTime confirm_date, int user_id)
+        {
+            try
+            {
+                _context = new CKEntities();
+                //ck_users objUserToUpdate = new ck_users();
+                order objCKOrderToUpdate = (from ckorder in _context.orders where ckorder.order_no == order_no select ckorder).SingleOrDefault();
+                objCKOrderToUpdate.confirm_date = confirm_date;
+                objCKOrderToUpdate.order_status = order_status;
+                objCKOrderToUpdate.modified_by = user_id;
+                objCKOrderToUpdate.modified_date = DateTime.Now;
+                _context.SaveChanges();
+
+                _context.Dispose();
+                return 1;
+            }
+            catch
+            {
+                _context.Dispose();
+                return 0;
+            }
+        }
+
 
         //***************************** Order Details ****************************************
 

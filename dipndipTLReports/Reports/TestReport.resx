@@ -117,17 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="sqlDataSource1.ParameterValues" xml:space="preserve">
-    <value>{"@order_no":"CKOR-0007"}</value>
-  </metadata>
-  <data name="sqlDataSource1.SelectCommand" xml:space="preserve">
-    <value>SELECT        o.order_no, o.order_date, c.wh_item_code, c.wh_item_description, d.qty, u.unit_description, s.site_name
-FROM            orders AS o INNER JOIN
-                         order_details AS d ON o.Id = d.order_id INNER JOIN
-                         ckwh_items AS c ON d.ckwh_item_id = c.Id INNER JOIN
-                         wh_item_unit AS w ON d.wh_item_unit_id = w.Id INNER JOIN
-                         ck_units AS u ON w.ck_unit_id = u.Id INNER JOIN
-                         sites AS s ON o.order_from_site_id = s.Id
-WHERE        (o.order_no = @order_no)</value>
-  </data>
 </root>

@@ -344,12 +344,14 @@ namespace dipndipInventory.EF.DataServices
                 //    r.modified_date,
                 //    r.active
                 //});
+                _context = new CKEntities();
                 IEnumerable<receipt_details> ReceiptDetails = (from r in _context.receipt_details
                                                                where r.receipt.order_no == order_no
                                                                select r);
                 return ReceiptDetails;
             }
-            catch { return null; }
+            catch(Exception ex)
+            { return null; }
 
         }
 

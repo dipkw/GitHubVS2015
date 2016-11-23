@@ -41,10 +41,10 @@ namespace dipndipTLReports.Reports
             //
             
             this.DataSource = null;
-            this.NeedDataSource += new System.EventHandler(this.WHReceiptConfirmation_NeedDataSource);
+            //this.NeedDataSource += new System.EventHandler(this.WHReceiptConfirmation_NeedDataSource);
             //this.Report.ReportParameters["order_no"].Value = order_no;
             g_order_no = order_no;
-            this.DataSource = null;
+            //this.DataSource = null;
         }
 
         private void WHReceiptConfirmation_NeedDataSource(object sender, EventArgs e)
@@ -57,10 +57,12 @@ namespace dipndipTLReports.Reports
             foreach(receipt_details receipt_item in receipt_detail_list)
             {
                 ReceiptReportVM receipt_report_vm = new ReceiptReportVM();
+                receipt_report_vm.OrderNo = receipt_item.receipt.order.order_no;
                 receipt_report_vm.item_code = receipt_item.wh_item_code;
                 receipt_report_vm.item_description = receipt_item.wh_item_description;
-                //receipt_report_vm.iten_unit = receipt_item.wh_item_unit.ck_units.unit_description;
-                receipt_report_vm.order_qty = receipt_report_vm.order_qty;
+                receipt_report_vm.iten_unit = receipt_item.ck_unit_description;
+                receipt_report_vm.order_qty = (decimal)receipt_item.qty_ordered;
+                receipt_report_vm.received_qty = (decimal)receipt_item.qty_received;
                 receipt_report_vm_list.Add(receipt_report_vm);
             }
             report.DataSource = receipt_report_vm_list;

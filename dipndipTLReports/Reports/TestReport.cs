@@ -1,4 +1,4 @@
-namespace dipndipTLReports
+namespace dipndipTLReports.Reports
 {
     using System;
     using System.ComponentModel;
@@ -31,7 +31,6 @@ namespace dipndipTLReports
             Telerik.Reporting.Processing.Report report = (Telerik.Reporting.Processing.Report)sender;
             // Transfer the value of the processing instance of ReportParameter
             // to the parameter value of the sqlDataSource component
-            //this.sqlDataSource1.Parameters[0].Value = report.Parameters["order_no"].Value;
 
             // Set the SqlDataSource component as it's DataSource
             report.DataSource = this.sqlDataSource1;

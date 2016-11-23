@@ -60,16 +60,16 @@ namespace dipndipInventory.Views.Stock
             else if ((GlobalVariables.ActiveSite.Id == objOrder.order_from_site_id) && objOrder.order_status == "Issued")
             {
                 //Open Receive Window For From_Site (CK) to receive the items
-                if(objOrder.issue_date == null)
+                if (objOrder.issue_date == null)
                 {
                     objOrder.issue_date = DateTime.Now;
                 }
-                whitemreceiveView irv = new whitemreceiveView(objOrder.Id, objOrder.order_no, (DateTime)objOrder.order_date,(DateTime)objOrder.issue_date);
+                whitemreceiveView irv = new whitemreceiveView(objOrder.Id, objOrder.order_no, (DateTime)objOrder.order_date, (DateTime)objOrder.issue_date);
                 irv.Show();
-                
+
             }
             //else if ((GlobalVariables.ActiveSite.Id == objOrder.order_to_site_id) && (objOrder.order_status != "Received" || objOrder.order_status != "Confirmed"))
-            else if ((GlobalVariables.ActiveSite.Id == objOrder.order_to_site_id) && (objOrder.order_status != "Received"))
+            else if ((GlobalVariables.ActiveSite.Id == objOrder.order_to_site_id) && (objOrder.order_status != "Received" && objOrder.order_status != "Confirmed"))
             {
                 //Open Order Issue Window For To_Site(Warehouse) to issue the items
                 whitemissueView itmissueView = new whitemissueView(objOrder.Id, objOrder.order_no, (DateTime)objOrder.order_date);
@@ -80,7 +80,8 @@ namespace dipndipInventory.Views.Stock
             {
                 //Open Receipt Confirmation Window For To_Site(Warehouse) to confirm the receipt
                 //MessageBox.Show(objOrder.order_no);
-                WRcptConf wcv = new WRcptConf(objOrder.order_no);
+                //WRcptConf wcv = new WRcptConf(objOrder.order_no);
+                ReceiptConfirmationReportView wcv = new ReceiptConfirmationReportView(objOrder.order_no);
                 wcv.Show();
                 //return;
             }

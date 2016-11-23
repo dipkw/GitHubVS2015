@@ -74,17 +74,17 @@
     </Compile>
     <Compile Include="Reports\ReportVM\PrintOrderVM.cs" />
     <Compile Include="Reports\ReportVM\ReceiptReportVM.cs" />
+    <Compile Include="Reports\TestReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\TestReport.Designer.cs">
+      <DependentUpon>TestReport.cs</DependentUpon>
+    </Compile>
     <Compile Include="Reports\WHReceiptConfirmation.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reports\WHReceiptConfirmation.Designer.cs">
       <DependentUpon>WHReceiptConfirmation.cs</DependentUpon>
-    </Compile>
-    <Compile Include="TestReport.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="TestReport.Designer.cs">
-      <DependentUpon>TestReport.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -116,11 +116,11 @@
     <EmbeddedResource Include="Reports\OrderPrinReport.resx">
       <DependentUpon>OrderPrinReport.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reports\TestReport.resx">
+      <DependentUpon>TestReport.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reports\WHReceiptConfirmation.resx">
       <DependentUpon>WHReceiptConfirmation.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="TestReport.resx">
-      <DependentUpon>TestReport.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
