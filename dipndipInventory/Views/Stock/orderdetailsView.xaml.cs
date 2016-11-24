@@ -391,10 +391,10 @@ namespace dipndipInventory.Views.Stock
         {
 
             CKOrderService ckocontext = new CKOrderService();
-            if (ckocontext.IsExistingCKOrderByOrderNo(txtOrderNo.Value))
-            {
-                return;
-            }
+            //if (ckocontext.IsExistingCKOrderByOrderNo(txtOrderNo.Value))
+            //{
+            //    return;
+            //}
 
             SiteService _scontext = new SiteService();
             if (OrderDetailsList.Count < 1)
@@ -672,7 +672,8 @@ Central Kitchen";
 
         public void CallSaveReport()
         {
-            Telerik.Reporting.Report myReport = new dipndipTLReports.Reports.OrderDetailsB("CKOR-0007");
+            //Telerik.Reporting.Report myReport = new dipndipTLReports.Reports.OrderDetailsB("CKOR-0007");
+            Telerik.Reporting.Report myReport = new dipndipTLReports.Reports.OrderDetailsB(txtOrderNo.Value);
             string fileName = @"D:\Order-" + DateTime.Now.Date.ToString("dd-MM-yyyy") + ".pdf";
             SaveReport(myReport, fileName);
         }

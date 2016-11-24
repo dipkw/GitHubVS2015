@@ -492,8 +492,24 @@ namespace dipndipInventory.EF.DataServices
                         foreach (var order_detail in order_detail_list)
                         {
                             order_details objCKOrderDetailsToUpdate = (from ckorderdetails in context.order_details where ckorderdetails.Id == order_detail.Id select ckorderdetails).SingleOrDefault();
+                            if(objCKOrderDetailsToUpdate == null)
+                            {
+                                order_details objCKOrderDetailsToAdd = new order_details();
+                                objCKOrderDetailsToAdd.order_id = order_detail.order_id;
+                                objCKOrderDetailsToAdd.order_no = order_detail.order_no;
+                                objCKOrderDetailsToAdd.ckwh_item_id = order_detail.ckwh_item_id;
+                                objCKOrderDetailsToAdd.wh_item_unit_id = order_detail.wh_item_unit_id;
+                                objCKOrderDetailsToAdd.qty = order_detail.qty;
+                                objCKOrderDetailsToAdd.active = order_detail.active;
+                                objCKOrderDetailsToAdd.modified_date = order_detail.modified_date;
+                                objCKOrderDetailsToAdd.modified_by = order_detail.modified_by;
+                                objCKOrderDetailsToAdd.active = order_detail.active;
+                                CreateCKOrderDetails(objCKOrderDetailsToAdd);
+                                continue;
+                            }
                             objCKOrderDetailsToUpdate.order_id = order_detail.order_id;
                             objCKOrderDetailsToUpdate.order_no = order_detail.order_no;
+                            //objCKOrderDetailsToUpdate.order = order_master;
                             objCKOrderDetailsToUpdate.ckwh_item_id = order_detail.ckwh_item_id;
                             objCKOrderDetailsToUpdate.wh_item_unit_id = order_detail.wh_item_unit_id;
                             objCKOrderDetailsToUpdate.qty = order_detail.qty;
