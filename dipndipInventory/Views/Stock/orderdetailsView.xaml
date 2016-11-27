@@ -19,14 +19,19 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="10,0,0,0">
-            <telerik:Label Content="Order No" Height="25" Width="150"/>
+            <telerik:Label Content="Order No" Height="25" Width="75"/>
             <!--<telerik:RadMaskedTextInput Name="txtSiteName" Width="250" Margin="3" TabIndex="0" Placeholder=" " TextMode="MaskedText"/>-->
-            <telerik:RadMaskedTextInput Name="txtOrderNo" Width="250" Margin="3" TabIndex="7" Placeholder="_" TextMode="MaskedText" Mask="" InputBehavior="Insert" AcceptsReturn="False"/>
+            <telerik:RadMaskedTextInput Name="txtOrderNo" Width="150" Margin="3" TabIndex="7" Placeholder="_" TextMode="MaskedText" Mask="" InputBehavior="Insert" AcceptsReturn="False"/>
         </StackPanel>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" Margin="10,0,0,0">
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="0" Margin="300,0,0,0">
             <telerik:Label Content="Order Date" Height="25" Width="150"/>
-            <telerik:RadDatePicker x:Name="dtpDate" Width="175" Margin="3" TabIndex="8" DisplayFormat="Short" Culture="en-US" />
+            <telerik:RadDatePicker x:Name="dtpDate" Width="175" Margin="3" TabIndex="8" DisplayFormat="Short" Culture="en-US" IsReadOnly="True" />
+            <!--<telerik:RadDateTimePicker x:Name="dtpDate" Width="175" Margin="3" TabIndex="1" DisplayFormat="Short" Culture="en-US" DateTimeWatermarkContent="Enter Date" />-->
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="1" Margin="150,0,0,0">
+            <telerik:Label Content="Delivery Date" Height="25" Width="150"/>
+            <telerik:RadDatePicker x:Name="dtpDeliveryDate" Width="175" Margin="3" TabIndex="8" DisplayFormat="Short" Culture="en-US" />
             <!--<telerik:RadDateTimePicker x:Name="dtpDate" Width="175" Margin="3" TabIndex="1" DisplayFormat="Short" Culture="en-US" DateTimeWatermarkContent="Enter Date" />-->
         </StackPanel>
 
@@ -107,7 +112,7 @@
 
         <StackPanel Orientation="Horizontal"  HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row="3" Margin="0,0,5,5" Grid.ColumnSpan="2">
             <telerik:RadButton Content="Save" Margin="3" Width="50" Name="btnSave"  TabIndex="4" Click="btnSave_Click"/>
-            <telerik:RadButton Content="Mail" Margin="3" Width="50" Name="btnMail"  TabIndex="4" Click="btnMail_Click" Visibility="Collapsed"/>
+            <telerik:RadButton Content="Mail" Margin="3" Width="50" Name="btnMail"  TabIndex="4" Click="btnMail_Click" Visibility="Visible"/>
             <telerik:RadButton Content="New" Margin="3" Width="50" Name="btnNew"  TabIndex="5" Click="btnNew_Click"/>
             <telerik:RadButton Content="Print" Margin="3" Width="50" x:Name="btnPrint" TabIndex="6" Click="btnPrint_Click" Visibility="Collapsed"/>
             <telerik:RadButton Content="Close" Margin="3" Width="50" Name="btnClose"   TabIndex="7" Click="btnClose_Click"/>

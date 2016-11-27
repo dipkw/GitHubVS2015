@@ -53,6 +53,19 @@ namespace dipndipInventory.Views.Stock
             txtOrderNo.Value = order_no.ToString();
             dtpDate.SelectedDate = order_date;
             CKOrderService _ocontext = new CKOrderService();
+            DateTime delivery_date = DateTime.Now;
+            
+            try
+            {
+                delivery_date = (DateTime)_context.GetDeliveryDate(order_no);
+            }
+            catch
+            {
+
+            }
+
+            dtpDeliveryDate.SelectedDate = delivery_date;
+
             IEnumerable<order_details> selected_order = _ocontext.ReadCKOrderDetailsByMasterId(order_id);
             List<OrderDetailsViewModel> order_detail_list = new List<OrderDetailsViewModel>();
             int row_index = 0;
@@ -251,6 +264,7 @@ namespace dipndipInventory.Views.Stock
 
                 dgCKOrderDetails.ItemsSource = null;
                 dgCKOrderDetails.ItemsSource = OrderDetailsList;
+                btnSave.IsEnabled = true;
                 ClearItem();
             }
             catch { }
@@ -355,6 +369,11 @@ namespace dipndipInventory.Views.Stock
         }
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
+            if (OrderPlaced())
+            {
+                return;
+            }
+
             if (ValidateOrderDetails())
             {
                 RadWindow.Confirm("Do you want to Continue ?", this.onSave);
@@ -407,6 +426,7 @@ namespace dipndipInventory.Views.Stock
             order_master.Id = id;
             order_master.order_no = txtOrderNo.Value;
             order_master.order_date = dtpDate.SelectedDate + DateTime.Now.TimeOfDay;
+            order_master.delivery_date = dtpDeliveryDate.SelectedDate;
             order_master.order_from_site_id = GlobalVariables.ActiveSite.Id;
             order_master.order_to_site_id = _scontext.GetSiteIDBySiteName("Central Warehouse");
             order_master.order_status = "Pending";
@@ -447,7 +467,7 @@ namespace dipndipInventory.Views.Stock
                     RadWindow.Alert(_result);
                     if (_result == "Order Details Created Successfully")
                     {
-                        SendMail();
+                        //SendMail();
                         if(MessageBox.Show("Do you want to print the order","Print",MessageBoxButton.YesNo)==MessageBoxResult.Yes)
                         {
                             PrintOrder(txtOrderNo.Value);
@@ -467,12 +487,38 @@ namespace dipndipInventory.Views.Stock
         private void btnMail_Click(object sender, RoutedEventArgs e)
         {
             //SendMail();
-            SavePdfOrder();
+            //SavePdfOrder();
             //MailOrder();
+            SendMail();
         }
 
+        private bool OrderPlaced()
+        {
+            bool result = false;
+
+            CKOrderService ckocontext = new CKOrderService();
+            try
+            {
+                if (ckocontext.OrderPlaced(txtOrderNo.Value, DateTime.Now))
+                {
+                    MessageBox.Show("Sorry, You can make only one order per day");
+                    return true;
+                }
+            }
+            catch
+            {
+                return true;
+            }
+
+            return result;
+        }
         private void SendMail()
         {
+            if(OrderPlaced())
+            {
+                return;
+            }
+
             Telerik.Reporting.Report myReport = new dipndipTLReports.Reports.OrderDetailsB(txtOrderNo.Value);
             string ftime = DateTime.Now.Hour.ToString() + "-" + DateTime.Now.Minute.ToString() + "-" + DateTime.Now.Second.ToString();
             string fileName = @"D:\CKOrders\Order-" + DateTime.Now.Date.ToString("dd-MM-yyyy") + "-" + ftime + ".pdf";
@@ -497,7 +543,16 @@ Central Kitchen";
             mailItem.ReadReceiptRequested = true;
             mailItem.Send();
             //mailItem.Display(false);
-            
+
+            CKOrderService ckocontext = new CKOrderService();
+            if(ckocontext.UpdateCKOrderMail(txtOrderNo.Value)>0)
+            {
+                MessageBox.Show("You order has been placed");
+            }
+            else
+            {
+                MessageBox.Show("Sorry");
+            }
         }
 
         private void btnPrint_Click(object sender, RoutedEventArgs e)

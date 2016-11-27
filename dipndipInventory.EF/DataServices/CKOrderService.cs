@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -64,6 +66,73 @@ namespace dipndipInventory.EF.DataServices
                 _context.Dispose();
                 return 0;
             }
+        }
+
+        public int UpdateCKOrderMail(string order_no)
+        {
+            try
+            {
+                _context = new CKEntities();
+                //ck_users objUserToUpdate = new ck_users();
+                order objCKOrderToUpdate = (from ckorder in _context.orders where ckorder.order_no == order_no select ckorder).SingleOrDefault();
+                objCKOrderToUpdate.sent_mail = true;
+                _context.SaveChanges();
+
+                _context.Dispose(); 
+                return 1;
+            }
+            catch
+            {
+                _context.Dispose();
+                return 0;
+            }
+        }
+
+        public bool OrderPlaced(string order_no, DateTime order_date)
+        {
+            bool result = false;
+            order_date = order_date.Date;
+            try
+            {
+                _context = new CKEntities();
+
+
+                //order objCKOrder = (from ckorder in _context.orders where (ckorder.order_no == order_no && ((DateTime)ckorder.order_date).Date == order_date.Date) select ckorder).FirstOrDefault();
+                order objCKOrder = (from ckorder in _context.orders where (ckorder.order_no == order_no && DbFunctions.TruncateTime(ckorder.order_date) == order_date && ckorder.sent_mail == true) select ckorder).FirstOrDefault();
+
+                if (objCKOrder != null)
+                {
+                    result = true;
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return result;
+        }
+
+        public DateTime? GetDeliveryDate(string order_no)
+        {
+            DateTime delivery_date = DateTime.Now;
+            try
+            {
+                _context = new CKEntities();
+
+
+                order objCKOrder = (from ckorder in _context.orders where (ckorder.order_no == order_no) select ckorder).FirstOrDefault();
+
+                if (objCKOrder != null)
+                {
+                    return objCKOrder.delivery_date;
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+            return delivery_date;
         }
 
         public int DeleteOrder(order objCKOrder)
@@ -375,6 +444,21 @@ namespace dipndipInventory.EF.DataServices
             }
         }
 
+        public IEnumerable<order_details> ReadCKOrderDetailsByOrderNo(string order_no)
+        {
+            try
+            {
+                _context = new CKEntities();
+                //IEnumerable<Purchase_detail> objPurchaseDetails = (from purchasedetail in _rcontext.Purchase_details where purchasedetail.Purchase_master_id == purchaseMasterId orderby purchasedetail.Purchase_details_id descending select purchasedetail);
+                IEnumerable<order_details> objCKOrderDetails = (from ckorderdetail in _context.order_details where ckorderdetail.order_no == order_no orderby ckorderdetail.Id ascending select ckorderdetail);
+                return objCKOrderDetails;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         public int UpdateIssuedQty(long order_detail_id, decimal qty_issued)
         {
             try
@@ -504,7 +588,8 @@ namespace dipndipInventory.EF.DataServices
                                 objCKOrderDetailsToAdd.modified_date = order_detail.modified_date;
                                 objCKOrderDetailsToAdd.modified_by = order_detail.modified_by;
                                 objCKOrderDetailsToAdd.active = order_detail.active;
-                                CreateCKOrderDetails(objCKOrderDetailsToAdd);
+                                //CreateCKOrderDetails(objCKOrderDetailsToAdd);
+                                context.order_details.Add(objCKOrderDetailsToAdd);
                                 continue;
                             }
                             objCKOrderDetailsToUpdate.order_id = order_detail.order_id;
@@ -519,6 +604,20 @@ namespace dipndipInventory.EF.DataServices
                             objCKOrderDetailsToUpdate.active = order_detail.active;
                             //context.SaveChanges();
                         }
+
+                        //Delete items from table if it is not in the new order list
+
+                        List<order_details> existing_order_details = ReadCKOrderDetailsByOrderNo(order_master.order_no).ToList();
+                        foreach (order_details ex_order_detail in existing_order_details)
+                        {
+                            var search_result = order_detail_list.Where(odetail => ((odetail.Id == ex_order_detail.Id || odetail.Id == 0)));
+                            if (search_result.Count() == 0)
+                            {
+                                order_details order_detail_to_delete = (from ckorderdetail in context.order_details where ckorderdetail.Id == ex_order_detail.Id select ckorderdetail).Single();
+                                context.order_details.Remove(order_detail_to_delete);
+                            }
+                        }
+
                         context.SaveChanges();
                         dbcxtrx.Commit();
                         return 1;

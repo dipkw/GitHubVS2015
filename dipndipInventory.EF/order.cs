@@ -35,6 +35,8 @@ namespace dipndipInventory.EF
         public Nullable<System.DateTime> modified_date { get; set; }
         public Nullable<bool> active { get; set; }
         public Nullable<System.DateTime> confirm_date { get; set; }
+        public Nullable<System.DateTime> delivery_date { get; set; }
+        public Nullable<bool> sent_mail { get; set; }
     
         public virtual ck_users ck_users { get; set; }
         public virtual ck_users ck_users1 { get; set; }
