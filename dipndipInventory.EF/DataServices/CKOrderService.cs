@@ -270,7 +270,8 @@ namespace dipndipInventory.EF.DataServices
             try
             {
                 _context = new CKEntities();
-                IEnumerable<order> objOrders = (from ckorders in _context.orders where (ckorders.active == true && (ckorders.order_from_site_id == site_id || ckorders.order_to_site_id == site_id)) orderby ckorders.Id descending select ckorders);
+                //IEnumerable<order> objOrders = (from ckorders in _context.orders where (ckorders.active == true && (ckorders.order_from_site_id == site_id || ckorders.order_to_site_id == site_id)) orderby ckorders.Id descending select ckorders);
+                IEnumerable<order> objOrders = (from ckorders in _context.orders where (ckorders.active == true && (ckorders.order_from_site_id == site_id || ckorders.order_to_site_id == site_id) && (ckorders.order_status != "Confirmed")) orderby ckorders.Id descending select ckorders);
                 return objOrders;
             }
             catch
@@ -567,6 +568,7 @@ namespace dipndipInventory.EF.DataServices
                     {
                         order objCKOrderToUpdate = (from ckorder in context.orders where ckorder.Id == order_master.Id select ckorder).SingleOrDefault();
                         objCKOrderToUpdate.order_date = order_master.order_date;
+                        objCKOrderToUpdate.delivery_date = order_master.delivery_date;
                         objCKOrderToUpdate.order_from_site_id = order_master.order_from_site_id;
                         objCKOrderToUpdate.order_to_site_id = order_master.order_to_site_id;
                         objCKOrderToUpdate.modified_date = order_master.modified_date;

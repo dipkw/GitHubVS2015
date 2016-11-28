@@ -14,34 +14,39 @@ namespace dipndipTLReports.Reports
             Telerik.Reporting.Group group2 = new Telerik.Reporting.Group();
             Telerik.Reporting.Group group3 = new Telerik.Reporting.Group();
             Telerik.Reporting.Group group4 = new Telerik.Reporting.Group();
-            Telerik.Reporting.ReportParameter reportParameter1 = new Telerik.Reporting.ReportParameter();
             Telerik.Reporting.Drawing.StyleRule styleRule1 = new Telerik.Reporting.Drawing.StyleRule();
             Telerik.Reporting.Drawing.StyleRule styleRule2 = new Telerik.Reporting.Drawing.StyleRule();
             Telerik.Reporting.Drawing.StyleRule styleRule3 = new Telerik.Reporting.Drawing.StyleRule();
             Telerik.Reporting.Drawing.StyleRule styleRule4 = new Telerik.Reporting.Drawing.StyleRule();
             Telerik.Reporting.Drawing.StyleRule styleRule5 = new Telerik.Reporting.Drawing.StyleRule();
-            this.OrderDetailsqlDataSource = new Telerik.Reporting.SqlDataSource();
-            this.order_noGroupHeaderSection = new Telerik.Reporting.GroupHeaderSection();
             this.order_noGroupFooterSection = new Telerik.Reporting.GroupFooterSection();
-            this.order_dateDateGroupHeaderSection = new Telerik.Reporting.GroupHeaderSection();
+            this.order_noGroupHeaderSection = new Telerik.Reporting.GroupHeaderSection();
             this.order_dateDateGroupFooterSection = new Telerik.Reporting.GroupFooterSection();
-            this.issue_dateDateGroupHeaderSection = new Telerik.Reporting.GroupHeaderSection();
-            this.issue_dateDateGroupFooterSection = new Telerik.Reporting.GroupFooterSection();
-            this.textBox1 = new Telerik.Reporting.TextBox();
-            this.textBox2 = new Telerik.Reporting.TextBox();
+            this.order_dateDateGroupHeaderSection = new Telerik.Reporting.GroupHeaderSection();
             this.textBox3 = new Telerik.Reporting.TextBox();
             this.textBox4 = new Telerik.Reporting.TextBox();
+            this.textBox2 = new Telerik.Reporting.TextBox();
+            this.textBox1 = new Telerik.Reporting.TextBox();
+            this.issue_dateDateGroupFooterSection = new Telerik.Reporting.GroupFooterSection();
+            this.issue_dateDateGroupHeaderSection = new Telerik.Reporting.GroupHeaderSection();
             this.textBox5 = new Telerik.Reporting.TextBox();
             this.textBox6 = new Telerik.Reporting.TextBox();
-            this.labelsGroupHeaderSection = new Telerik.Reporting.GroupHeaderSection();
             this.labelsGroupFooterSection = new Telerik.Reporting.GroupFooterSection();
+            this.labelsGroupHeaderSection = new Telerik.Reporting.GroupHeaderSection();
             this.wh_item_codeCaptionTextBox = new Telerik.Reporting.TextBox();
             this.wh_item_descriptionCaptionTextBox = new Telerik.Reporting.TextBox();
             this.wh_unit_descriptionCaptionTextBox = new Telerik.Reporting.TextBox();
             this.qtyCaptionTextBox = new Telerik.Reporting.TextBox();
             this.qty_issuedCaptionTextBox = new Telerik.Reporting.TextBox();
+            this.shape1 = new Telerik.Reporting.Shape();
+            this.shape3 = new Telerik.Reporting.Shape();
+            this.shape5 = new Telerik.Reporting.Shape();
+            this.shape7 = new Telerik.Reporting.Shape();
+            this.ParamsqlDataSource = new Telerik.Reporting.SqlDataSource();
+            this.OrderDetailsqlDataSource = new Telerik.Reporting.SqlDataSource();
             this.pageHeader = new Telerik.Reporting.PageHeaderSection();
             this.reportNameTextBox = new Telerik.Reporting.TextBox();
+            this.pictureBox1 = new Telerik.Reporting.PictureBox();
             this.pageFooter = new Telerik.Reporting.PageFooterSection();
             this.currentTimeTextBox = new Telerik.Reporting.TextBox();
             this.pageInfoTextBox = new Telerik.Reporting.TextBox();
@@ -54,35 +59,26 @@ namespace dipndipTLReports.Reports
             this.wh_unit_descriptionDataTextBox = new Telerik.Reporting.TextBox();
             this.qtyDataTextBox = new Telerik.Reporting.TextBox();
             this.qty_issuedDataTextBox = new Telerik.Reporting.TextBox();
-            this.ParamsqlDataSource = new Telerik.Reporting.SqlDataSource();
             this.shape2 = new Telerik.Reporting.Shape();
-            this.shape1 = new Telerik.Reporting.Shape();
-            this.shape3 = new Telerik.Reporting.Shape();
             this.shape4 = new Telerik.Reporting.Shape();
-            this.shape5 = new Telerik.Reporting.Shape();
             this.shape6 = new Telerik.Reporting.Shape();
-            this.shape7 = new Telerik.Reporting.Shape();
             this.shape8 = new Telerik.Reporting.Shape();
-            this.pictureBox1 = new Telerik.Reporting.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             // 
-            // OrderDetailsqlDataSource
+            // order_noGroupFooterSection
             // 
-            this.OrderDetailsqlDataSource.ConnectionString = "dipndipTLReports.Properties.Settings.dipckConnectionString";
-            this.OrderDetailsqlDataSource.Name = "OrderDetailsqlDataSource";
-            this.OrderDetailsqlDataSource.Parameters.AddRange(new Telerik.Reporting.SqlDataSourceParameter[] {
-            new Telerik.Reporting.SqlDataSourceParameter("@order_no", System.Data.DbType.String, "= Parameters.order_no.Value")});
-            this.OrderDetailsqlDataSource.SelectCommand = resources.GetString("OrderDetailsqlDataSource.SelectCommand");
+            this.order_noGroupFooterSection.Height = Telerik.Reporting.Drawing.Unit.Inch(0.28125D);
+            this.order_noGroupFooterSection.Name = "order_noGroupFooterSection";
             // 
             // order_noGroupHeaderSection
             // 
             this.order_noGroupHeaderSection.Height = Telerik.Reporting.Drawing.Unit.Inch(0.28125D);
             this.order_noGroupHeaderSection.Name = "order_noGroupHeaderSection";
             // 
-            // order_noGroupFooterSection
+            // order_dateDateGroupFooterSection
             // 
-            this.order_noGroupFooterSection.Height = Telerik.Reporting.Drawing.Unit.Inch(0.28125D);
-            this.order_noGroupFooterSection.Name = "order_noGroupFooterSection";
+            this.order_dateDateGroupFooterSection.Height = Telerik.Reporting.Drawing.Unit.Inch(0.28125D);
+            this.order_dateDateGroupFooterSection.Name = "order_dateDateGroupFooterSection";
             // 
             // order_dateDateGroupHeaderSection
             // 
@@ -93,43 +89,6 @@ namespace dipndipTLReports.Reports
             this.textBox2,
             this.textBox1});
             this.order_dateDateGroupHeaderSection.Name = "order_dateDateGroupHeaderSection";
-            // 
-            // order_dateDateGroupFooterSection
-            // 
-            this.order_dateDateGroupFooterSection.Height = Telerik.Reporting.Drawing.Unit.Inch(0.28125D);
-            this.order_dateDateGroupFooterSection.Name = "order_dateDateGroupFooterSection";
-            // 
-            // issue_dateDateGroupHeaderSection
-            // 
-            this.issue_dateDateGroupHeaderSection.Height = Telerik.Reporting.Drawing.Unit.Inch(0.28125D);
-            this.issue_dateDateGroupHeaderSection.Items.AddRange(new Telerik.Reporting.ReportItemBase[] {
-            this.textBox5,
-            this.textBox6});
-            this.issue_dateDateGroupHeaderSection.Name = "issue_dateDateGroupHeaderSection";
-            // 
-            // issue_dateDateGroupFooterSection
-            // 
-            this.issue_dateDateGroupFooterSection.Height = Telerik.Reporting.Drawing.Unit.Inch(0.28125D);
-            this.issue_dateDateGroupFooterSection.Name = "issue_dateDateGroupFooterSection";
-            // 
-            // textBox1
-            // 
-            this.textBox1.CanGrow = true;
-            this.textBox1.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Inch(0.02083333395421505D), Telerik.Reporting.Drawing.Unit.Inch(0.02083333395421505D));
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Inch(0.77916675806045532D), Telerik.Reporting.Drawing.Unit.Inch(0.20000000298023224D));
-            this.textBox1.Style.TextAlign = Telerik.Reporting.Drawing.HorizontalAlign.Left;
-            this.textBox1.StyleName = "Caption";
-            this.textBox1.Value = "Order No";
-            // 
-            // textBox2
-            // 
-            this.textBox2.CanGrow = true;
-            this.textBox2.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Inch(1.2416667938232422D), Telerik.Reporting.Drawing.Unit.Inch(0.024949708953499794D));
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Inch(1.2999999523162842D), Telerik.Reporting.Drawing.Unit.Inch(0.20000000298023224D));
-            this.textBox2.StyleName = "Data";
-            this.textBox2.Value = "= Fields.order_no";
             // 
             // textBox3
             // 
@@ -151,6 +110,38 @@ namespace dipndipTLReports.Reports
             this.textBox4.StyleName = "Data";
             this.textBox4.Value = "= Fields.order_date.Date";
             // 
+            // textBox2
+            // 
+            this.textBox2.CanGrow = true;
+            this.textBox2.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Inch(1.2416667938232422D), Telerik.Reporting.Drawing.Unit.Inch(0.024949708953499794D));
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Inch(1.2999999523162842D), Telerik.Reporting.Drawing.Unit.Inch(0.20000000298023224D));
+            this.textBox2.StyleName = "Data";
+            this.textBox2.Value = "= Fields.order_no";
+            // 
+            // textBox1
+            // 
+            this.textBox1.CanGrow = true;
+            this.textBox1.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Inch(0.02083333395421505D), Telerik.Reporting.Drawing.Unit.Inch(0.02083333395421505D));
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Inch(0.77916675806045532D), Telerik.Reporting.Drawing.Unit.Inch(0.20000000298023224D));
+            this.textBox1.Style.TextAlign = Telerik.Reporting.Drawing.HorizontalAlign.Left;
+            this.textBox1.StyleName = "Caption";
+            this.textBox1.Value = "Order No";
+            // 
+            // issue_dateDateGroupFooterSection
+            // 
+            this.issue_dateDateGroupFooterSection.Height = Telerik.Reporting.Drawing.Unit.Inch(0.28125D);
+            this.issue_dateDateGroupFooterSection.Name = "issue_dateDateGroupFooterSection";
+            // 
+            // issue_dateDateGroupHeaderSection
+            // 
+            this.issue_dateDateGroupHeaderSection.Height = Telerik.Reporting.Drawing.Unit.Inch(0.28125D);
+            this.issue_dateDateGroupHeaderSection.Items.AddRange(new Telerik.Reporting.ReportItemBase[] {
+            this.textBox5,
+            this.textBox6});
+            this.issue_dateDateGroupHeaderSection.Name = "issue_dateDateGroupHeaderSection";
+            // 
             // textBox5
             // 
             this.textBox5.CanGrow = true;
@@ -171,6 +162,12 @@ namespace dipndipTLReports.Reports
             this.textBox6.StyleName = "Data";
             this.textBox6.Value = "= Fields.issue_date.Date";
             // 
+            // labelsGroupFooterSection
+            // 
+            this.labelsGroupFooterSection.Height = Telerik.Reporting.Drawing.Unit.Inch(0.28125D);
+            this.labelsGroupFooterSection.Name = "labelsGroupFooterSection";
+            this.labelsGroupFooterSection.Style.Visible = false;
+            // 
             // labelsGroupHeaderSection
             // 
             this.labelsGroupHeaderSection.Height = Telerik.Reporting.Drawing.Unit.Inch(0.31000000238418579D);
@@ -189,12 +186,6 @@ namespace dipndipTLReports.Reports
             this.labelsGroupHeaderSection.Style.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.labelsGroupHeaderSection.Style.BorderStyle.Default = Telerik.Reporting.Drawing.BorderType.Solid;
             this.labelsGroupHeaderSection.Style.VerticalAlign = Telerik.Reporting.Drawing.VerticalAlign.Middle;
-            // 
-            // labelsGroupFooterSection
-            // 
-            this.labelsGroupFooterSection.Height = Telerik.Reporting.Drawing.Unit.Inch(0.28125D);
-            this.labelsGroupFooterSection.Name = "labelsGroupFooterSection";
-            this.labelsGroupFooterSection.Style.Visible = false;
             // 
             // wh_item_codeCaptionTextBox
             // 
@@ -251,6 +242,48 @@ namespace dipndipTLReports.Reports
             this.qty_issuedCaptionTextBox.StyleName = "Caption";
             this.qty_issuedCaptionTextBox.Value = "Delivered Qty";
             // 
+            // shape1
+            // 
+            this.shape1.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Inch(0.90000009536743164D), Telerik.Reporting.Drawing.Unit.Inch(0D));
+            this.shape1.Name = "shape1";
+            this.shape1.ShapeType = new Telerik.Reporting.Drawing.Shapes.LineShape(Telerik.Reporting.Drawing.Shapes.LineDirection.NS);
+            this.shape1.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Inch(0.20000000298023224D), Telerik.Reporting.Drawing.Unit.Inch(0.31000000238418579D));
+            // 
+            // shape3
+            // 
+            this.shape3.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Inch(2.9000003337860107D), Telerik.Reporting.Drawing.Unit.Inch(0D));
+            this.shape3.Name = "shape3";
+            this.shape3.ShapeType = new Telerik.Reporting.Drawing.Shapes.LineShape(Telerik.Reporting.Drawing.Shapes.LineDirection.NS);
+            this.shape3.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Inch(0.20000000298023224D), Telerik.Reporting.Drawing.Unit.Inch(0.31000000238418579D));
+            // 
+            // shape5
+            // 
+            this.shape5.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Inch(3.9000003337860107D), Telerik.Reporting.Drawing.Unit.Inch(0D));
+            this.shape5.Name = "shape5";
+            this.shape5.ShapeType = new Telerik.Reporting.Drawing.Shapes.LineShape(Telerik.Reporting.Drawing.Shapes.LineDirection.NS);
+            this.shape5.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Inch(0.20000000298023224D), Telerik.Reporting.Drawing.Unit.Inch(0.31000000238418579D));
+            // 
+            // shape7
+            // 
+            this.shape7.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Inch(5D), Telerik.Reporting.Drawing.Unit.Inch(0D));
+            this.shape7.Name = "shape7";
+            this.shape7.ShapeType = new Telerik.Reporting.Drawing.Shapes.LineShape(Telerik.Reporting.Drawing.Shapes.LineDirection.NS);
+            this.shape7.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Inch(0.20000000298023224D), Telerik.Reporting.Drawing.Unit.Inch(0.31000000238418579D));
+            // 
+            // ParamsqlDataSource
+            // 
+            this.ParamsqlDataSource.ConnectionString = "dipndipTLReports.Properties.Settings.dipckConnectionString";
+            this.ParamsqlDataSource.Name = "ParamsqlDataSource";
+            this.ParamsqlDataSource.SelectCommand = "SELECT  order_no \r\nFROM orders\r\nWHERE orders.issue_date IS NOT NULL";
+            // 
+            // OrderDetailsqlDataSource
+            // 
+            this.OrderDetailsqlDataSource.ConnectionString = "dipndipTLReports.Properties.Settings.dipckConnectionString";
+            this.OrderDetailsqlDataSource.Name = "OrderDetailsqlDataSource";
+            this.OrderDetailsqlDataSource.Parameters.AddRange(new Telerik.Reporting.SqlDataSourceParameter[] {
+            new Telerik.Reporting.SqlDataSourceParameter("@order_no", System.Data.DbType.String, "= Parameters.order_no.Value")});
+            this.OrderDetailsqlDataSource.SelectCommand = resources.GetString("OrderDetailsqlDataSource.SelectCommand");
+            // 
             // pageHeader
             // 
             this.pageHeader.Height = Telerik.Reporting.Drawing.Unit.Inch(0.5D);
@@ -267,6 +300,14 @@ namespace dipndipTLReports.Reports
             this.reportNameTextBox.Style.Visible = false;
             this.reportNameTextBox.StyleName = "PageInfo";
             this.reportNameTextBox.Value = "WHDeliveryDetails";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Inch(0D), Telerik.Reporting.Drawing.Unit.Inch(0D));
+            this.pictureBox1.MimeType = "image/png";
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Inch(2.5791668891906738D), Telerik.Reporting.Drawing.Unit.Inch(0.5D));
+            this.pictureBox1.Value = ((object)(resources.GetObject("pictureBox1.Value")));
             // 
             // pageFooter
             // 
@@ -383,32 +424,12 @@ namespace dipndipTLReports.Reports
             this.qty_issuedDataTextBox.StyleName = "Data";
             this.qty_issuedDataTextBox.Value = "= Fields.qty_issued";
             // 
-            // ParamsqlDataSource
-            // 
-            this.ParamsqlDataSource.ConnectionString = "dipndipTLReports.Properties.Settings.dipckConnectionString";
-            this.ParamsqlDataSource.Name = "ParamsqlDataSource";
-            this.ParamsqlDataSource.SelectCommand = "SELECT  order_no \r\nFROM orders";
-            // 
             // shape2
             // 
             this.shape2.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Inch(0.90000009536743164D), Telerik.Reporting.Drawing.Unit.Inch(0D));
             this.shape2.Name = "shape2";
             this.shape2.ShapeType = new Telerik.Reporting.Drawing.Shapes.LineShape(Telerik.Reporting.Drawing.Shapes.LineDirection.NS);
             this.shape2.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Inch(0.20000000298023224D), Telerik.Reporting.Drawing.Unit.Inch(0.31000000238418579D));
-            // 
-            // shape1
-            // 
-            this.shape1.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Inch(0.90000009536743164D), Telerik.Reporting.Drawing.Unit.Inch(0D));
-            this.shape1.Name = "shape1";
-            this.shape1.ShapeType = new Telerik.Reporting.Drawing.Shapes.LineShape(Telerik.Reporting.Drawing.Shapes.LineDirection.NS);
-            this.shape1.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Inch(0.20000000298023224D), Telerik.Reporting.Drawing.Unit.Inch(0.31000000238418579D));
-            // 
-            // shape3
-            // 
-            this.shape3.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Inch(2.9000003337860107D), Telerik.Reporting.Drawing.Unit.Inch(0D));
-            this.shape3.Name = "shape3";
-            this.shape3.ShapeType = new Telerik.Reporting.Drawing.Shapes.LineShape(Telerik.Reporting.Drawing.Shapes.LineDirection.NS);
-            this.shape3.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Inch(0.20000000298023224D), Telerik.Reporting.Drawing.Unit.Inch(0.31000000238418579D));
             // 
             // shape4
             // 
@@ -417,13 +438,6 @@ namespace dipndipTLReports.Reports
             this.shape4.ShapeType = new Telerik.Reporting.Drawing.Shapes.LineShape(Telerik.Reporting.Drawing.Shapes.LineDirection.NS);
             this.shape4.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Inch(0.20000000298023224D), Telerik.Reporting.Drawing.Unit.Inch(0.31000000238418579D));
             // 
-            // shape5
-            // 
-            this.shape5.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Inch(3.9000003337860107D), Telerik.Reporting.Drawing.Unit.Inch(0D));
-            this.shape5.Name = "shape5";
-            this.shape5.ShapeType = new Telerik.Reporting.Drawing.Shapes.LineShape(Telerik.Reporting.Drawing.Shapes.LineDirection.NS);
-            this.shape5.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Inch(0.20000000298023224D), Telerik.Reporting.Drawing.Unit.Inch(0.31000000238418579D));
-            // 
             // shape6
             // 
             this.shape6.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Inch(3.9000003337860107D), Telerik.Reporting.Drawing.Unit.Inch(0D));
@@ -431,27 +445,12 @@ namespace dipndipTLReports.Reports
             this.shape6.ShapeType = new Telerik.Reporting.Drawing.Shapes.LineShape(Telerik.Reporting.Drawing.Shapes.LineDirection.NS);
             this.shape6.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Inch(0.20000000298023224D), Telerik.Reporting.Drawing.Unit.Inch(0.31000000238418579D));
             // 
-            // shape7
-            // 
-            this.shape7.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Inch(5D), Telerik.Reporting.Drawing.Unit.Inch(0D));
-            this.shape7.Name = "shape7";
-            this.shape7.ShapeType = new Telerik.Reporting.Drawing.Shapes.LineShape(Telerik.Reporting.Drawing.Shapes.LineDirection.NS);
-            this.shape7.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Inch(0.20000000298023224D), Telerik.Reporting.Drawing.Unit.Inch(0.31000000238418579D));
-            // 
             // shape8
             // 
             this.shape8.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Inch(5D), Telerik.Reporting.Drawing.Unit.Inch(0D));
             this.shape8.Name = "shape8";
             this.shape8.ShapeType = new Telerik.Reporting.Drawing.Shapes.LineShape(Telerik.Reporting.Drawing.Shapes.LineDirection.NS);
             this.shape8.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Inch(0.20000000298023224D), Telerik.Reporting.Drawing.Unit.Inch(0.31000000238418579D));
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Inch(0D), Telerik.Reporting.Drawing.Unit.Inch(0D));
-            this.pictureBox1.MimeType = "image/png";
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Inch(2.5791668891906738D), Telerik.Reporting.Drawing.Unit.Inch(0.5D));
-            this.pictureBox1.Value = ((object)(resources.GetObject("pictureBox1.Value")));
             // 
             // WHDeliveryDetails
             // 
@@ -493,14 +492,6 @@ namespace dipndipTLReports.Reports
             this.Name = "WHDeliveryDetails";
             this.PageSettings.Margins = new Telerik.Reporting.Drawing.MarginsU(Telerik.Reporting.Drawing.Unit.Inch(1D), Telerik.Reporting.Drawing.Unit.Inch(1D), Telerik.Reporting.Drawing.Unit.Inch(1D), Telerik.Reporting.Drawing.Unit.Inch(1D));
             this.PageSettings.PaperKind = System.Drawing.Printing.PaperKind.Letter;
-            reportParameter1.AvailableValues.DataSource = this.ParamsqlDataSource;
-            reportParameter1.AvailableValues.DisplayMember = "= Fields.order_no";
-            reportParameter1.AvailableValues.ValueMember = "= Fields.order_no";
-            reportParameter1.Name = "order_no";
-            reportParameter1.Text = "Order No";
-            reportParameter1.Value = "= Fields.order_no";
-            reportParameter1.Visible = true;
-            this.ReportParameters.Add(reportParameter1);
             styleRule1.Selectors.AddRange(new Telerik.Reporting.Drawing.ISelector[] {
             new Telerik.Reporting.Drawing.TypeSelector(typeof(Telerik.Reporting.TextItemBase)),
             new Telerik.Reporting.Drawing.TypeSelector(typeof(Telerik.Reporting.HtmlTextBox))});
@@ -538,6 +529,7 @@ namespace dipndipTLReports.Reports
             styleRule4,
             styleRule5});
             this.Width = Telerik.Reporting.Drawing.Unit.Inch(6.4583334922790527D);
+            this.NeedDataSource += new System.EventHandler(this.WHDeliveryDetails_NeedDataSource);
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
 
         }

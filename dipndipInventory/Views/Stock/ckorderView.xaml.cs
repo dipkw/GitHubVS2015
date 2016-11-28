@@ -28,6 +28,7 @@ namespace dipndipInventory.Views.Stock
         bool edit_mode = false;
         //string username = string.Empty;
         int id = 0;
+        //IEnumerable<order> objOrders;
         public ckorderView()
         {
             InitializeComponent();
@@ -37,9 +38,14 @@ namespace dipndipInventory.Views.Stock
 
         private void ReadAllCKOrders()
         {
-            //IEnumerable<order> objOrders = _context.ReadAllActiveCKOrders();
-            IEnumerable<order> objOrders = _context.ReadAllActiveSiteOrders(GlobalVariables.ActiveSite.Id);
-            dgCKOrders.ItemsSource = objOrders;
+            try
+            {
+                //IEnumerable<order> objOrders = _context.ReadAllActiveCKOrders();
+                IEnumerable<order> objOrders = _context.ReadAllActiveSiteOrders(GlobalVariables.ActiveSite.Id);
+                //objOrders = _context.ReadAllActiveSiteOrders(GlobalVariables.ActiveSite.Id);
+                dgCKOrders.ItemsSource = objOrders;
+            }
+            catch { }
         }
 
         private void btnEdit_Click(object sender, RoutedEventArgs e)
@@ -54,7 +60,8 @@ namespace dipndipInventory.Views.Stock
             if ((GlobalVariables.ActiveSite.Id == objOrder.order_from_site_id) && objOrder.order_status == "Pending")
             {
                 //Open Edit Window For From_Site (CK) to update the order
-                orderdetailsView odv = new orderdetailsView(objOrder.Id, objOrder.order_no, (DateTime)objOrder.order_date);
+                //orderdetailsView odv = new orderdetailsView(objOrder.Id, objOrder.order_no, (DateTime)objOrder.order_date);
+                orderdetailsView odv = new orderdetailsView(objOrder.Id, objOrder.order_no, (DateTime)objOrder.order_date, this);
                 odv.Show();
             }
             else if ((GlobalVariables.ActiveSite.Id == objOrder.order_from_site_id) && objOrder.order_status == "Issued")
@@ -64,7 +71,7 @@ namespace dipndipInventory.Views.Stock
                 {
                     objOrder.issue_date = DateTime.Now;
                 }
-                whitemreceiveView irv = new whitemreceiveView(objOrder.Id, objOrder.order_no, (DateTime)objOrder.order_date, (DateTime)objOrder.issue_date);
+                whitemreceiveView irv = new whitemreceiveView(objOrder.Id, objOrder.order_no, (DateTime)objOrder.order_date, (DateTime)objOrder.issue_date, this);
                 irv.Show();
 
             }
@@ -72,7 +79,7 @@ namespace dipndipInventory.Views.Stock
             else if ((GlobalVariables.ActiveSite.Id == objOrder.order_to_site_id) && (objOrder.order_status != "Received" && objOrder.order_status != "Confirmed"))
             {
                 //Open Order Issue Window For To_Site(Warehouse) to issue the items
-                whitemissueView itmissueView = new whitemissueView(objOrder.Id, objOrder.order_no, (DateTime)objOrder.order_date);
+                whitemissueView itmissueView = new whitemissueView(objOrder.Id, objOrder.order_no, (DateTime)objOrder.order_date, this);
                 itmissueView.Show();
                 return;
             }
@@ -81,7 +88,7 @@ namespace dipndipInventory.Views.Stock
                 //Open Receipt Confirmation Window For To_Site(Warehouse) to confirm the receipt
                 //MessageBox.Show(objOrder.order_no);
                 //WRcptConf wcv = new WRcptConf(objOrder.order_no);
-                ReceiptConfirmationReportView wcv = new ReceiptConfirmationReportView(objOrder.order_no);
+                ReceiptConfirmationReportView wcv = new ReceiptConfirmationReportView(objOrder.order_no, this);
                 wcv.Show();
                 //return;
             }

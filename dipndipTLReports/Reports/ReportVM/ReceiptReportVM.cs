@@ -11,6 +11,7 @@ namespace dipndipTLReports.Reports.ReportVM
         public string OrderNo { get; set; }
         public DateTime OrderDate { get; set; }
         public DateTime IssueDate { get; set; }
+        public string ReceiptNo { get; set; }
         public DateTime ReceiptDate { get; set; }
         public string item_code { get; set; }
         public string item_description { get; set; }

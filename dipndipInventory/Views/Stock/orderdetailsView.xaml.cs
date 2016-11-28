@@ -36,7 +36,9 @@ namespace dipndipInventory.Views.Stock
         bool item_edit_mode = false;
         //string username = string.Empty;
         long id = 0;
+        ckorderView g_ck_order_view;
         List<OrderDetailsViewModel> OrderDetailsList = new List<OrderDetailsViewModel>();
+        
         public orderdetailsView()
         {
             InitializeComponent();
@@ -44,6 +46,19 @@ namespace dipndipInventory.Views.Stock
             SetDate();
             string order_no = _context.GetNewCKOrderNo();
             txtOrderNo.Value = order_no;
+
+            DateTime delivery_date = DateTime.Now;
+
+            try
+            {
+                delivery_date = (DateTime)_context.GetDeliveryDate(order_no);
+            }
+            catch
+            {
+
+            }
+
+            dtpDeliveryDate.SelectedDate = delivery_date;
         }
 
         public orderdetailsView(long order_id, string order_no, DateTime order_date)
@@ -55,6 +70,54 @@ namespace dipndipInventory.Views.Stock
             CKOrderService _ocontext = new CKOrderService();
             DateTime delivery_date = DateTime.Now;
             
+            try
+            {
+                delivery_date = (DateTime)_context.GetDeliveryDate(order_no);
+            }
+            catch
+            {
+
+            }
+
+            dtpDeliveryDate.SelectedDate = delivery_date;
+
+            IEnumerable<order_details> selected_order = _ocontext.ReadCKOrderDetailsByMasterId(order_id);
+            List<OrderDetailsViewModel> order_detail_list = new List<OrderDetailsViewModel>();
+            int row_index = 0;
+            id = order_id;
+            foreach (order_details order_detail in selected_order)
+            {
+                OrderDetailsViewModel order_detail_vm = new OrderDetailsViewModel();
+                order_detail_vm.id = order_detail.Id;
+                order_detail_vm.itemId = (int)order_detail.ckwh_item_id;
+                order_detail_vm.itemCode = order_detail.ckwh_items.wh_item_code;
+                order_detail_vm.itemDescription = order_detail.ckwh_items.wh_item_description;
+                order_detail_vm.unitId = (int)order_detail.wh_item_unit_id;
+                order_detail_vm.unitDescription = order_detail.wh_item_unit.ck_units.unit_description;
+                order_detail_vm.qty = (decimal)order_detail.qty;
+                order_detail_vm.rowIndex = ++row_index;
+                if (order_detail.qty_issued != null)
+                {
+                    order_detail_vm.qty_issued = (decimal)order_detail.qty_issued;
+                }
+                order_detail_list.Add(order_detail_vm);
+            }
+            dgCKOrderDetails.ItemsSource = null;
+            dgCKOrderDetails.ItemsSource = order_detail_list;
+            OrderDetailsList = order_detail_list;
+            edit_mode = true;
+        }
+
+        public orderdetailsView(long order_id, string order_no, DateTime order_date, ckorderView ck_order_view)
+        {
+            InitializeComponent();
+            ShowTaskBar.ShowInTaskbar(this, "Order Details");
+            
+            txtOrderNo.Value = order_no.ToString();
+            dtpDate.SelectedDate = order_date;
+            CKOrderService _ocontext = new CKOrderService();
+            DateTime delivery_date = DateTime.Now;
+
             try
             {
                 delivery_date = (DateTime)_context.GetDeliveryDate(order_no);
@@ -472,6 +535,9 @@ namespace dipndipInventory.Views.Stock
                         {
                             PrintOrder(txtOrderNo.Value);
                         }
+                        IEnumerable<order> g_orders = _ocontext.ReadAllActiveSiteOrders(GlobalVariables.ActiveSite.Id);
+                        g_ck_order_view.dgCKOrders.ItemsSource = g_orders;
+                        g_ck_order_view.dgCKOrders.Rebind();
                         ClearOrder();
                     }
                 }
@@ -565,7 +631,8 @@ Central Kitchen";
 
                 //Telerik.Reporting.IReportDocument myReport = new DieReports.DieDetailsReport(die_id, "Drawing");
                 //Telerik.Reporting.IReportDocument myReport = new dipndipTLReports.PrintOrderReport("CKOR-0007");
-                Telerik.Reporting.IReportDocument myReport = new dipndipTLReports.Reports.OrderDetailsB("CKOR-0007");
+                //Telerik.Reporting.IReportDocument myReport = new dipndipTLReports.Reports.OrderDetailsB("CKOR-0007");
+                Telerik.Reporting.IReportDocument myReport = new dipndipTLReports.Reports.OrderDetailsB(txtOrderNo.Value);
 
 
                 // Obtain the settings of the default printer

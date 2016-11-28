@@ -8,11 +8,11 @@ namespace dipndipTLReports.Reports
     using Telerik.Reporting.Drawing;
 
     /// <summary>
-    /// Summary description for WHDeliveryDetails.
+    /// Summary description for WHReceiptDetails.
     /// </summary>
-    public partial class WHDeliveryDetails : Telerik.Reporting.Report
+    public partial class WHReceiptDetails : Telerik.Reporting.Report
     {
-        public WHDeliveryDetails()
+        public WHReceiptDetails()
         {
             //
             // Required for telerik Reporting designer support
@@ -24,7 +24,7 @@ namespace dipndipTLReports.Reports
             //
         }
 
-        public WHDeliveryDetails(string order_no)
+        public WHReceiptDetails(string order_no)
         {
             //
             // Required for telerik Reporting designer support
@@ -42,7 +42,7 @@ namespace dipndipTLReports.Reports
             this.DataSource = null;
         }
 
-        private void WHDeliveryDetails_NeedDataSource(object sender, EventArgs e)
+        private void WHReceiptDetails_NeedDataSource(object sender, EventArgs e)
         {
             //Take the Telerik.Reporting.Processing.Report instance
             Telerik.Reporting.Processing.Report report = (Telerik.Reporting.Processing.Report)sender;

@@ -106,6 +106,12 @@ namespace dipndipInventory.Views.Stock
         private void btnProcess_Click(object sender, RoutedEventArgs e)
         {
             ReadProductionGrid();
+
+            if(!CKItemUnitsAssigned())
+            {
+                return;
+            }
+
             if (MessageBox.Show("Do you want to save?", "Confirm", MessageBoxButton.YesNo) == MessageBoxResult.No)
             {
                 return;
@@ -125,6 +131,29 @@ namespace dipndipInventory.Views.Stock
             MessageBox.Show(result);
             production_list.Clear();
             FillProductionGrid();
+        }
+
+        private bool CKItemUnitsAssigned()
+        {
+            CKItemUnitService ckucontext = new CKItemUnitService();
+            foreach(ck_prod production_item in production_list)
+            {
+                try
+                {
+                    int default_unit_id = (int)ckucontext.GetDefaultUnitID((int)production_item.ck_item_id);
+                    if(default_unit_id == 0)
+                    {
+                        MessageBox.Show("Please assign unit for " + production_item.ck_item_code + " (" + production_item.ck_item_desc + ")");
+                        return false;
+                    }
+                }
+                catch
+                {
+                    
+                }
+            }
+
+            return true;
         }
 
         private bool CheckWarehouseItems()

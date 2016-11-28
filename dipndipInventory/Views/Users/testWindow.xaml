@@ -1,0 +1,104 @@
+﻿<Window x:Class="dipndipInventory.Views.Users.testWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:dipndipInventory.Views.Users"
+        mc:Ignorable="d"
+        Title="testWindow" Height="700" Width="1024">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="75" />
+            <RowDefinition Height="502*" />
+            <RowDefinition Height="45" />
+        </Grid.RowDefinitions>
+        <!--<telerik:RadGridView Height="566" HorizontalAlignment="Left" Margin="10,10,0,0" Name="radGridView1" VerticalAlignment="Top" Width="600" >
+            <telerik:RadGridView.Columns>
+                <telerik:GridViewColumn Name="gvcPages" Header="Pages" Width="370">
+                    
+                </telerik:GridViewColumn>
+                <telerik:GridViewCheckBoxColumn Name="gvcCreate" Header="Create" Width="50">
+                    
+
+                </telerik:GridViewCheckBoxColumn>
+                <telerik:GridViewColumn Name="gvcRead" Header="Read" Width="50">
+
+                </telerik:GridViewColumn>
+                <telerik:GridViewColumn Name="gvcUpdate" Header="Update" Width="50">
+
+                </telerik:GridViewColumn>
+                <telerik:GridViewColumn Name="gvcDelete" Header="Delete" Width="50">
+
+                </telerik:GridViewColumn>
+            </telerik:RadGridView.Columns>
+        </telerik:RadGridView>-->
+        <StackPanel Grid.Row="0" Margin="10" Orientation="Horizontal">
+            <TextBlock Name="tbRoles" Text="Roles" Margin="10,20,10,10" Foreground="White"/>
+            <ComboBox Name="cmbRoles" ItemsSource="{Binding}" Margin="10" Width="200"/>
+        </StackPanel>
+
+        <DataGrid Name="dgControlPanel" AutoGenerateColumns="False" ItemsSource="{Binding}" Grid.Row="1" CanUserAddRows="False" VerticalAlignment="Top" VirtualizingStackPanel.VirtualizationMode="Standard" VirtualizingStackPanel.IsVirtualizing="False" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Path=SlNo}" Width="45" Header="Sl No" x:Name="SlNo"/>
+                <DataGridTextColumn Binding="{Binding Path=PageName}" Width="330" Header="Pages" x:Name="PageName"/>
+                <DataGridTemplateColumn >
+                    <DataGridTemplateColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <CheckBox Name="hCreatePermission" Content="Create"  HorizontalAlignment="Center"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.HeaderTemplate>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox Name="chkCreate" IsChecked="{Binding CreatePermission}" HorizontalAlignment="Center"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <CheckBox Name="hReadPermission" Content="Read" HorizontalAlignment="Center"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.HeaderTemplate>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox x:Name="chkRead" IsChecked="{Binding ReadPermission}" HorizontalAlignment="Center"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <CheckBox Name="hUpdatePermission" Content="Update" HorizontalAlignment="Center" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.HeaderTemplate>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox x:Name="chkUpdate" IsChecked="{Binding UpdatePermission}" HorizontalAlignment="Center" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <CheckBox Name="hDeletePermission" Content="Delete" HorizontalAlignment="Center" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.HeaderTemplate>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox x:Name="chkDelete" IsChecked="{Binding DeletePermission}" HorizontalAlignment="Center"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Binding="{Binding Path=PageID}" Width="330" Header="Page ID" x:Name="PageID" Visibility="Hidden"/>
+            </DataGrid.Columns>
+
+        </DataGrid>
+        <StackPanel Grid.Row="2" Height="37" HorizontalAlignment="Right" Orientation="Horizontal"  Width="auto" VerticalAlignment="Top" Grid.Column="2">
+            <Button Content="Save" Height="30" HorizontalAlignment="Right" Margin="0,0,5,0" Name="btnSave" Width="75"  IsEnabled="True"/>
+            <Button Content="Select All" Height="30" HorizontalAlignment="Right" Margin="0,0,5,0" Name="btnSelectAll" Width="75" IsEnabled="True"/>
+            <Button Content="Clear All" Height="30" HorizontalAlignment="Right" Margin="0,0,5,0" Name="btnClearAll" Width="75" IsEnabled="True"/>
+            <Button Content="Clear" Height="30" HorizontalAlignment="Right" Margin="0,0,5,0" Name="btnClear" Width="75"/>
+
+        </StackPanel>
+    </Grid>
+</Window>

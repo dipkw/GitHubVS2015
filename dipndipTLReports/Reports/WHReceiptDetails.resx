@@ -118,21 +118,22 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <metadata name="OrderDetailsqlDataSource.ParameterValues" xml:space="preserve">
-    <value>{"@order_no":"CKOR-0017"}</value>
+    <value>{"@order_no":"CKOR-0007"}</value>
   </metadata>
   <data name="OrderDetailsqlDataSource.SelectCommand" xml:space="preserve">
-    <value>SELECT        order_details.order_no, orders.order_date, ckwh_items.wh_item_code, ckwh_items.wh_item_description, ckwh_items.wh_unit_description, order_details.qty, order_details.qty_issued, 
-                         orders.issue_date
+    <value>SELECT        order_details.order_no, receipts.receipt_no, orders.order_date, orders.issue_date, orders.receipt_date, ckwh_items.wh_item_code, ckwh_items.wh_item_description, ckwh_items.wh_unit_description, order_details.qty, order_details.qty_issued, order_details.qty_received
+                         
 FROM            order_details INNER JOIN
                          orders ON order_details.order_id = orders.Id INNER JOIN
-                         ckwh_items ON order_details.ckwh_item_id = ckwh_items.Id
+                         ckwh_items ON order_details.ckwh_item_id = ckwh_items.Id INNER JOIN
+						 receipts ON orders.Id = receipts.order_id
 WHERE (order_details.order_no=@order_no)</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="pictureBox1.Value" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAOIAAAAjCAYAAACJpNbGAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsAAAA7AAWrWiQkAABSbSURBVHhe7VwLlF1Veb4JbSHJzD37nHMnD0uNxbDAZO5r
+        YQUAAAAJcEhZcwAADrwAAA68AZW8ckkAABSbSURBVHhe7VwLlF1Veb4JbSHJzD37nHMnD0uNxbDAZO5r
         Zu7cx0wy2FqlVlCrWF219GktimCxrVAlUR6iWB4KJKQGEkwQLHTJwijSysICUhveaTGKICQSyLwnYZKQ
         10y/b59/X84995w7NyEXErzfWv869+z9773//e//3+9zY68WGSd+eYdrj6YcNUhKO2qIz4WOs1BYYmnH
         ujPr2iOGJ0iIG8NzqbA3Ici61u9nXDUc1FXSUecKSyzjxs/KePqr0Kkhpk/b6ifLYrHpkqSJNyJSjnV9

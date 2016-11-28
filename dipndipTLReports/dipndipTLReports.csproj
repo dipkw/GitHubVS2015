@@ -92,6 +92,12 @@
     <Compile Include="Reports\WHReceiptConfirmation.Designer.cs">
       <DependentUpon>WHReceiptConfirmation.cs</DependentUpon>
     </Compile>
+    <Compile Include="Reports\WHReceiptDetails.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\WHReceiptDetails.Designer.cs">
+      <DependentUpon>WHReceiptDetails.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -130,6 +136,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\WHReceiptConfirmation.resx">
       <DependentUpon>WHReceiptConfirmation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\WHReceiptDetails.resx">
+      <DependentUpon>WHReceiptDetails.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

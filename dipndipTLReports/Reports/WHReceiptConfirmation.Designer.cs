@@ -34,6 +34,8 @@ namespace dipndipTLReports.Reports
             this.textBox8 = new Telerik.Reporting.TextBox();
             this.textBox3 = new Telerik.Reporting.TextBox();
             this.textBox4 = new Telerik.Reporting.TextBox();
+            this.textBox5 = new Telerik.Reporting.TextBox();
+            this.textBox6 = new Telerik.Reporting.TextBox();
             this.labelsGroupFooterSection = new Telerik.Reporting.GroupFooterSection();
             this.labelsGroupHeaderSection = new Telerik.Reporting.GroupHeaderSection();
             this.item_codeCaptionTextBox = new Telerik.Reporting.TextBox();
@@ -136,7 +138,9 @@ namespace dipndipTLReports.Reports
             this.textBox7,
             this.textBox8,
             this.textBox3,
-            this.textBox4});
+            this.textBox4,
+            this.textBox5,
+            this.textBox6});
             this.receiptDateGroupHeaderSection.Name = "receiptDateGroupHeaderSection";
             // 
             // textBox7
@@ -184,6 +188,29 @@ namespace dipndipTLReports.Reports
             this.textBox4.Style.Font.Size = Telerik.Reporting.Drawing.Unit.Point(10D);
             this.textBox4.StyleName = "Data";
             this.textBox4.Value = "= Fields.OrderDate";
+            // 
+            // textBox5
+            // 
+            this.textBox5.CanGrow = true;
+            this.textBox5.Format = "{0:dd/MM/yyyy}";
+            this.textBox5.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Inch(3D), Telerik.Reporting.Drawing.Unit.Inch(0.0416666679084301D));
+            this.textBox5.Name = "textBox5";
+            this.textBox5.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Inch(1.0520833730697632D), Telerik.Reporting.Drawing.Unit.Inch(0.20000000298023224D));
+            this.textBox5.Style.Font.Name = "Garamond";
+            this.textBox5.Style.Font.Size = Telerik.Reporting.Drawing.Unit.Point(10D);
+            this.textBox5.StyleName = "Data";
+            this.textBox5.Value = "= Fields.ReceiptNo";
+            // 
+            // textBox6
+            // 
+            this.textBox6.CanGrow = true;
+            this.textBox6.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Inch(2.1584126949310303D), Telerik.Reporting.Drawing.Unit.Inch(0.0416666679084301D));
+            this.textBox6.Name = "textBox6";
+            this.textBox6.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Inch(0.74158751964569092D), Telerik.Reporting.Drawing.Unit.Inch(0.20000000298023224D));
+            this.textBox6.Style.Font.Name = "Garamond";
+            this.textBox6.Style.TextAlign = Telerik.Reporting.Drawing.HorizontalAlign.Right;
+            this.textBox6.StyleName = "Caption";
+            this.textBox6.Value = "Receipt No:";
             // 
             // labelsGroupFooterSection
             // 
@@ -618,5 +645,7 @@ namespace dipndipTLReports.Reports
         private Telerik.Reporting.Shape shape5;
         private Telerik.Reporting.Shape shape8;
         private Telerik.Reporting.Shape shape7;
+        private Telerik.Reporting.TextBox textBox5;
+        private Telerik.Reporting.TextBox textBox6;
     }
 }

@@ -290,7 +290,21 @@ namespace dipndipInventory.Views.Stock
             catch { }
         }
 
-        
+        private void radGridView_RowValidating(object sender, Telerik.Windows.Controls.GridViewRowValidatingEventArgs e)
+        {
+
+            
+
+        }
+
+        private void dgCKIssueDetails_CellValidating(object sender, GridViewCellValidatingEventArgs e)
+        {
+            //if(e.Cell.Column.UniqueName == "qtyIssued")
+            //{
+                
+            //    //decimal qty_on_hand = 
+            //}
+        }
 
 
 

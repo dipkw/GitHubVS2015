@@ -4,6 +4,7 @@ using dipndipInventory.Helpers;
 using dipndipInventory.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -130,6 +131,11 @@ namespace dipndipInventory.Views.Stock
                         continue;
 
                     CKItemBatchViewModel objItemBatchVM = row.Item as CKItemBatchViewModel;
+                    if(objItemBatchVM.bal_qty<objItemBatchVM.qty_issued)
+                    {
+                        string msg = "Insufficient quantity for batch no: " + objItemBatchVM.batch_no;
+                        MessageBox.Show(msg);
+                    }
                     if (objItemBatchVM.qty_issued > 0)
                     {
                         g_ck_prod_update_list.RemoveAll(p => (p.prod_code == objItemBatchVM.ck_prod_code && p.batch_no == objItemBatchVM.batch_no));
@@ -227,6 +233,19 @@ namespace dipndipInventory.Views.Stock
         {
             CKItemUnitService ciscontext = new CKItemUnitService();
             g_conv_factor = (decimal)ciscontext.GetConversionFactor(Convert.ToInt32(cmbUnit.SelectedValue.ToString()));
+        }
+
+        private void dgCKIssueDetails_RowValidating(object sender, GridViewRowValidatingEventArgs e)
+        {
+            CKItemBatchViewModel item_issue_detail = e.Row.DataContext as CKItemBatchViewModel;
+            if (item_issue_detail.qty_issued > item_issue_detail.bal_qty)
+            {
+                //validationResult.PropertyName = "IssuedQty";
+                //ValidationResult.ErrorMessage = "Issued Quantity is more than Quantity on Hand";
+                //e.ValidationResults.Add(validationResult);
+                e.IsValid = false;
+                
+            }
         }
     }
 }

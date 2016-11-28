@@ -1,5 +1,7 @@
-﻿using dipndipInventory.EF.DataServices;
+﻿using dipndipInventory.EF;
+using dipndipInventory.EF.DataServices;
 using dipndipInventory.Helpers;
+using dipndipInventory.Views.Stock;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -26,15 +28,17 @@ namespace dipndipInventory.Views.Reports
     {
         Telerik.Reporting.IReportDocument myReport;
         string g_order_no;
+        ckorderView g_ck_order_view;
         public ReceiptConfirmationReportView()
         {
             InitializeComponent();
         }
 
-        public ReceiptConfirmationReportView(string order_no)
+        public ReceiptConfirmationReportView(string order_no, ckorderView ck_order_view)
         {
             InitializeComponent();
             g_order_no = order_no;
+            g_ck_order_view = ck_order_view;
             //ShowTaskBar.ShowInTaskbar(this, "Central Kitchen Confirmation");
         }
 
@@ -82,6 +86,10 @@ namespace dipndipInventory.Views.Reports
 
         private void btnConfirm_Click(object sender, RoutedEventArgs e)
         {
+            if(MessageBox.Show("Do you want to continue?","Confirm",MessageBoxButton.YesNo) == MessageBoxResult.No)
+            {
+                return;
+            }
             CKOrderService ckocontext = new CKOrderService();
             if(ckocontext.UpdateCKOrderConfirmStatus(g_order_no, "Confirmed", DateTime.Now, GlobalVariables.ActiveUser.Id)>0)
             {
@@ -91,6 +99,10 @@ namespace dipndipInventory.Views.Reports
                 {
                     PrintOrder(g_order_no);
                 }
+                CKOrderService _ocontext = new CKOrderService();
+                IEnumerable<order> g_orders = _ocontext.ReadAllActiveSiteOrders(GlobalVariables.ActiveSite.Id);
+                g_ck_order_view.dgCKOrders.ItemsSource = g_orders;
+                g_ck_order_view.dgCKOrders.Rebind();
             }
             else
             {

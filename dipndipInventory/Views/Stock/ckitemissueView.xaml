@@ -37,7 +37,7 @@
         </StackPanel>-->
 
         <Border Grid.ColumnSpan="2" Margin="10" BorderBrush="Black" BorderThickness="0.5" Grid.Row="1">
-            <telerik:RadGridView x:Name="dgCKIssueDetails" AutoGenerateColumns="False" RowIndicatorVisibility="Collapsed" IsSynchronizedWithCurrentItem="False" FocusManager.FocusedElement="{Binding ElementName=dgCKIssueDetails}" HorizontalAlignment="Left" VerticalAlignment="Top" CanUserInsertRows="False" ShowSearchPanel="True">
+            <telerik:RadGridView x:Name="dgCKIssueDetails" AutoGenerateColumns="False" RowIndicatorVisibility="Collapsed" IsSynchronizedWithCurrentItem="False" FocusManager.FocusedElement="{Binding ElementName=dgCKIssueDetails}" HorizontalAlignment="Left" VerticalAlignment="Top" CanUserInsertRows="False" ShowSearchPanel="True" RowValidating="radGridView_RowValidating" CellValidating="dgCKIssueDetails_CellValidating">
                 <telerik:RadGridView.Columns>
                     <!--<telerik:GridViewDataColumn x:Name="ItemCode" DataMemberBinding="{Binding ck_item_code}" Width="*" Header="Item Code" IsReadOnly="True"/>-->
                     <telerik:GridViewDataColumn x:Name="ItemCode" DataMemberBinding="{Binding itemCode}" Width="*" Header="Item Code" IsReadOnly="True"/>

@@ -19,6 +19,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Telerik.Reporting.Processing;
 using Telerik.Windows.Controls;
 using Telerik.Windows.Controls.GridView;
 
@@ -42,6 +43,7 @@ namespace dipndipInventory.Views.Stock
         List<wh_item_cost_history> g_wh_item_cost_history_list = new List<wh_item_cost_history>();
         order g_order_master = new order();
         List<order_details> g_order_detail_list = new List<order_details>();
+        ckorderView g_ck_order_view;
 
         public whitemreceiveView()
         {
@@ -75,10 +77,10 @@ namespace dipndipInventory.Views.Stock
             }
         }
 
-        public whitemreceiveView(long order_id, string order_no, DateTime order_date, DateTime issue_date) 
+        public whitemreceiveView(long order_id, string order_no, DateTime order_date, DateTime issue_date, ckorderView ck_order_view) 
         {
             InitializeComponent();
-
+            g_ck_order_view = ck_order_view;
             if(UpdateWarehouseItems() == 0)
             {
                 return;
@@ -302,6 +304,11 @@ namespace dipndipInventory.Views.Stock
         }
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
+            if(MessageBox.Show("Do you want to continue?","Confirm",MessageBoxButton.YesNo) == MessageBoxResult.No)
+            {
+                return;
+            }
+            btnSave.IsEnabled = false;
             var rows = this.dgCKOrderDetails.ChildrenOfType<GridViewRow>();
             int result = 0;
 
@@ -436,7 +443,14 @@ namespace dipndipInventory.Views.Stock
             result = _ocontext.SaveReceipt(g_order_master, g_order_detail_list, g_transaction_detail_list, g_ckwh_items_list, g_receipt_master, g_receipt_detail_list, g_wh_item_cost_history_list);
             string response = result > 0 ? "Items Received Successfully" : "Unable to receive the Items. Please contact administrator";
 
-            
+            if(result>0)
+            {
+                SendMail();
+                btnSave.IsEnabled = true;
+                IEnumerable<order> g_orders = _ocontext.ReadAllActiveSiteOrders(GlobalVariables.ActiveSite.Id);
+                g_ck_order_view.dgCKOrders.ItemsSource = g_orders;
+                g_ck_order_view.dgCKOrders.Rebind();
+            }
 
             RadWindow.Alert(response);
         }
@@ -478,6 +492,102 @@ namespace dipndipInventory.Views.Stock
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void btnPrint_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+
+                //Telerik.Reporting.IReportDocument myReport = new DieReports.DieDetailsReport(die_id, "Drawing");
+                //Telerik.Reporting.IReportDocument myReport = new dipndipTLReports.PrintOrderReport("CKOR-0007");
+                //Telerik.Reporting.IReportDocument myReport = new dipndipTLReports.Reports.OrderDetailsB("CKOR-0007");
+                Telerik.Reporting.IReportDocument myReport = new dipndipTLReports.Reports.WHReceiptDetails(txtOrderNo.Value);
+
+
+                // Obtain the settings of the default printer
+                System.Drawing.Printing.PrinterSettings printerSettings
+                    = new System.Drawing.Printing.PrinterSettings();
+
+                //// The standard print controller comes with no UI
+                System.Drawing.Printing.PrintController standardPrintController =
+                    new System.Drawing.Printing.StandardPrintController();
+
+                // Print the report using the custom print controller
+                Telerik.Reporting.Processing.ReportProcessor reportProcessor
+                    = new Telerik.Reporting.Processing.ReportProcessor();
+
+                reportProcessor.PrintController = standardPrintController;
+
+                Telerik.Reporting.InstanceReportSource instanceReportSource =
+                    new Telerik.Reporting.InstanceReportSource();
+
+                instanceReportSource.ReportDocument = myReport;
+
+                reportProcessor.PrintReport(instanceReportSource, printerSettings);
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        private void SendMail()
+        {
+            //if (OrderPlaced())
+            //{
+            //    return;
+            //}
+
+            Telerik.Reporting.Report myReport = new dipndipTLReports.Reports.WHReceiptDetails(txtOrderNo.Value);
+            string ftime = DateTime.Now.Hour.ToString() + "-" + DateTime.Now.Minute.ToString() + "-" + DateTime.Now.Second.ToString();
+            //string fileName = @"D:\CKReceipts\Receipt-" + DateTime.Now.Date.ToString("dd-MM-yyyy") + "-" + ftime + ".pdf";
+            string fileName = @"D:\CKReceipts\" + active_receipt_no + ".pdf";
+            SaveReport(myReport, fileName);
+
+            Microsoft.Office.Interop.Outlook.Application app = new Microsoft.Office.Interop.Outlook.Application();
+            Microsoft.Office.Interop.Outlook.MailItem mailItem = app.CreateItem(Microsoft.Office.Interop.Outlook.OlItemType.olMailItem);
+            mailItem.Subject = "Central Kitchen Receipt";
+            mailItem.To = "jolly@dipndipkw.com";
+            mailItem.Body = @"Dear Warehouse Officer,
+
+Please find attached Receipt for Central Kitchen Order No: " + txtOrderNo.Value + ".";
+            mailItem.Body += @"
+
+Regards";
+            mailItem.Body += @"
+Central Kitchen";
+            //string logPath = @"D:\items.pdf";
+            string logPath = fileName;
+            mailItem.Attachments.Add(logPath);//logPath is a string holding path to the log.txt file
+            mailItem.Importance = Microsoft.Office.Interop.Outlook.OlImportance.olImportanceHigh;
+            mailItem.ReadReceiptRequested = true;
+            mailItem.Send();
+            //mailItem.Display(false);
+
+            //CKOrderService ckocontext = new CKOrderService();
+            //if (ckocontext.UpdateCKOrderMail(txtOrderNo.Value) > 0)
+            //{
+            //    MessageBox.Show("You order has been placed");
+            //}
+            //else
+            //{
+            //    MessageBox.Show("Sorry");
+            //}
+        }
+
+        void SaveReport(Telerik.Reporting.Report report, string fileName)
+        {
+            ReportProcessor reportProcessor = new ReportProcessor();
+            Telerik.Reporting.InstanceReportSource instanceReportSource = new Telerik.Reporting.InstanceReportSource();
+            instanceReportSource.ReportDocument = report;
+            RenderingResult result = reportProcessor.RenderReport("PDF", instanceReportSource, null);
+            if (File.Exists(fileName))
+                File.Delete(fileName);
+            using (FileStream fs = new FileStream(fileName, FileMode.Create))
+            {
+                fs.Write(result.DocumentBytes, 0, result.DocumentBytes.Length);
+            }
         }
     }
 }
