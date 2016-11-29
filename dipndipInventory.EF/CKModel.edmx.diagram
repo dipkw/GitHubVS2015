@@ -134,6 +134,12 @@
         <AssociationConnector Association="dipckModel.FK_ck_items_adj_ck_users_created" />
         <AssociationConnector Association="dipckModel.FK_ck_items_adj_ck_users_modified" />
         <AssociationConnector Association="dipckModel.FK_ck_stock_trans_ck_units1" />
+        <EntityTypeShape EntityType="dipckModel.user_roles" Width="1.5" PointX="3.375" PointY="3.75" />
+        <AssociationConnector Association="dipckModel.FK_ck_users_user_roles" />
+        <EntityTypeShape EntityType="dipckModel.app_forms" Width="1.5" PointX="5.375" PointY="0.75" />
+        <EntityTypeShape EntityType="dipckModel.app_form_permissions" Width="1.5" PointX="5.375" PointY="4.75" />
+        <AssociationConnector Association="dipckModel.FK_app_form_permissions_app_forms" />
+        <AssociationConnector Association="dipckModel.FK_app_form_permissions_user_roles" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

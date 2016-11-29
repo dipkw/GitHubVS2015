@@ -30,7 +30,7 @@
         </StackPanel>
 
         <Border Grid.ColumnSpan="2" Margin="10" BorderBrush="Black" BorderThickness="0.5" Grid.Row="1">
-            <telerik:RadGridView x:Name="dgCKProduction" AutoGenerateColumns="False" RowIndicatorVisibility="Collapsed" IsSynchronizedWithCurrentItem="False" FocusManager.FocusedElement="{Binding ElementName=dgCKProduction}" HorizontalAlignment="Left" VerticalAlignment="Top" ShowSearchPanel="True">
+            <telerik:RadGridView x:Name="dgCKProduction" AutoGenerateColumns="False" RowIndicatorVisibility="Collapsed" IsSynchronizedWithCurrentItem="False" FocusManager.FocusedElement="{Binding ElementName=dgCKProduction}" HorizontalAlignment="Left" VerticalAlignment="Top" ShowSearchPanel="True" IsHitTestVisible="False">
                 <telerik:RadGridView.Columns>
                     <telerik:GridViewDataColumn x:Name="ItemCode" DataMemberBinding="{Binding ck_item_code}" Width="*" Header="Item Code" IsReadOnly="True"/>
                     <telerik:GridViewDataColumn x:Name="ItemDescription" DataMemberBinding="{Binding ck_item_desc}" Width="3*" Header="Description" IsReadOnly="True"/>
@@ -52,7 +52,7 @@
                         <telerik:GridViewDataColumn.CellTemplate>
                             <DataTemplate>
                                 <!--<telerik:RadDatePicker SelectedValue="{Binding expDate, Mode=TwoWay}" SelectedDate="{x:Static sys:DateTime.Now}"></telerik:RadDatePicker>-->
-                                <telerik:RadDatePicker x:Name="dtpExpiryDate" DisplayFormat="Short" Culture="en-US" SelectedValue="{Binding exp_date, Mode=TwoWay}" ></telerik:RadDatePicker>
+                                <telerik:RadDatePicker x:Name="dtpExpiryDate" DisplayFormat="Short" Culture="en-US" SelectedValue="{Binding exp_date, Mode=TwoWay}" IsReadOnly="True" IsEnabled="False" ></telerik:RadDatePicker>
                             </DataTemplate>
                         </telerik:GridViewDataColumn.CellTemplate>
                     </telerik:GridViewDataColumn>

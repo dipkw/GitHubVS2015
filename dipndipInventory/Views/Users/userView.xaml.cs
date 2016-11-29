@@ -37,6 +37,7 @@ namespace dipndipInventory.Views.Users
             InitializeComponent();
             ShowTaskBar.ShowInTaskbar(this, "Users");
             ReadAllUsers();
+            FillActiveRoles();
             FillAllActiveSites();
         }
 
@@ -49,6 +50,14 @@ namespace dipndipInventory.Views.Users
             txtName.Focus();
         }
 
+        public void FillActiveRoles()
+        {
+            UserRoleService urscontext = new UserRoleService();
+            IEnumerable<user_roles> objUnits = urscontext.ReadAllActiveUserRoles();
+            cmbRole.DisplayMemberPath = "role_desc";
+            cmbRole.SelectedValuePath = "Id";
+            cmbRole.ItemsSource = objUnits.ToList();
+        }
         private void FillAllActiveSites()
         {
             SiteService _scontext = new SiteService();
@@ -83,7 +92,8 @@ namespace dipndipInventory.Views.Users
                 //txtPassword.MaskedText = Crypto.CalculateHash(objStaff.Password, objStaff.User_name);
                 txtPassword.IsReadOnly = true;
 
-                cmbRole.Text = objUser.role;
+                //cmbRole.Text = objUser.role;
+                cmbRole.SelectedValue = objUser.role_id;
                 cmbRole.IsReadOnly = true;
                 cmbRole.IsHitTestVisible = false;
 
@@ -166,7 +176,7 @@ namespace dipndipInventory.Views.Users
                 return false;
             }
 
-            if (Validate.TxtMaskBlankCheck(txtUsername, "Username"))
+            if (Validate.TxtMaskBlankCheck(txtUsername, "Username") || txtUsername.Value.Trim() == "admin")
             {
                 return false;
             }
@@ -190,6 +200,10 @@ namespace dipndipInventory.Views.Users
             {
                 RadWindow.Confirm("Do you want to Continue ?", this.onSave);
             }
+            else
+            {
+                MessageBox.Show("Invalid User Details");
+            }
         }
 
         private void onSave(object sender, WindowClosedEventArgs e)
@@ -205,11 +219,12 @@ namespace dipndipInventory.Views.Users
             ck_users objUser = new ck_users();
 
             objUser.uname = txtName.Value;
-            objUser.username = txtUsername.Value;
+            objUser.username = txtUsername.Value.Trim();
             //objUser.User_name = txtUsername.MaskedText;
             //objStaff.Password = Crypto.EncryptStringAES(txtPassword.MaskedText, txtUsername.MaskedText);
             objUser.password = Crypto.CalculateHash(txtPassword.Value, txtUsername.Value);
-            objUser.role = cmbRole.Text;
+            //objUser.role = cmbRole.Text;
+            objUser.role_id = (int)cmbRole.SelectedValue;
             objUser.site_id = Convert.ToInt32(cmbSite.SelectedValue.ToString());
             objUser.active = chkActive.IsChecked;
 

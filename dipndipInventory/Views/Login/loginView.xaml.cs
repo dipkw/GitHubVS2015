@@ -54,7 +54,7 @@ namespace dipndipInventory.Views.Login
         {
             try
             {
-                if(cmbSites.SelectedIndex==-1)
+                if (cmbSites.SelectedIndex == -1)
                 {
                     MessageBox.Show("Please Select Branch");
                     return;
@@ -71,7 +71,14 @@ namespace dipndipInventory.Views.Login
                     //if ((txtUserName.MaskedText == "admin" && txtPassword.Password == "admin"))
                     //{
                     GlobalVariables.ActiveUser = objUser;
+                    
+                    string site_code = objUser.user_roles.role_desc.Substring(0, 2).ToUpper();
+
+                    SiteService scontext = new SiteService();
+                    int active_site_id = scontext.GetSiteIdBySiteCode(site_code);
+
                     GlobalVariables.ActiveSite.Id = (int)cmbSites.SelectedValue;
+                    //GlobalVariables.ActiveSite.Id = active_site_id;
                     //homeView objHomeView = new homeView(objUser);
                     homeView objHomeView = new homeView(objUser,objSite);
                     objHomeView.Show();

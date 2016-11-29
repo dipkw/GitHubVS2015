@@ -73,7 +73,7 @@ namespace dipndipInventory.EF.DataServices
             try
             {
                 _context = new CKEntities();
-                IEnumerable<site> objSite = (from tmpsite in _context.sites where (tmpsite.site_id == "CK" || tmpsite.site_id == "CW") orderby tmpsite.site_name ascending select tmpsite);
+                IEnumerable<site> objSite = (from tmpsite in _context.sites where (tmpsite.site_id == "CK" || tmpsite.site_id == "WH") orderby tmpsite.site_name ascending select tmpsite);
                 return objSite;
             }
             catch
@@ -187,6 +187,17 @@ namespace dipndipInventory.EF.DataServices
             site_code = (from tmpsite in _context.sites where tmpsite.Id == id select tmpsite.site_id).FirstOrDefault();
 
             return site_code;
+        }
+
+        public int GetSiteIdBySiteCode(string site_code)
+        {
+            int site_id = 0;
+
+            _context = new CKEntities();
+
+            site_id = (from tmpsite in _context.sites where tmpsite.site_id == site_code select tmpsite.Id).FirstOrDefault();
+
+            return site_id;
         }
     }
 }

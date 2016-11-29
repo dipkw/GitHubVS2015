@@ -201,6 +201,12 @@
                             <TextBlock Text="Sites" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </telerik:RadRibbonButton>
+                    <telerik:RadRibbonButton x:Name="FormPermissionsMenu"  Width="100"  HorizontalContentAlignment="Center" Click="FormPermissionsMenu_Click">
+                        <StackPanel>
+                            <Image Source="/dipndipInventory;component/images/menu_icons/sites-2-icon.png" Width="32" Height="32"/>
+                            <TextBlock Text="Form Permissions" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </telerik:RadRibbonButton>
                     <telerik:RadRibbonButton x:Name="UpdateGPItemsMenu"  Width="65"  HorizontalContentAlignment="Center" Visibility="Collapsed">
                         <StackPanel>
                             <Image Source="/dipndipInventory;component/images/menu_icons/sites-2-icon.png" Width="32" Height="32"/>

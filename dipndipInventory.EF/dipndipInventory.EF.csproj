@@ -51,6 +51,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="app_forms.cs">
+      <DependentUpon>CKModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="app_form_permissions.cs">
+      <DependentUpon>CKModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="CKModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -121,6 +127,8 @@
       <DependentUpon>CKModel.tt</DependentUpon>
     </Compile>
     <Compile Include="CustomModels\UserCustomModel.cs" />
+    <Compile Include="DataServices\AppFormPermissionService.cs" />
+    <Compile Include="DataServices\AppFormService.cs" />
     <Compile Include="DataServices\CategoryService.cs" />
     <Compile Include="DataServices\CKAdjService.cs" />
     <Compile Include="DataServices\CKIssueService.cs" />
@@ -137,6 +145,7 @@
     <Compile Include="DataServices\SiteService.cs" />
     <Compile Include="DataServices\TransactionService.cs" />
     <Compile Include="DataServices\UnitService.cs" />
+    <Compile Include="DataServices\UserRoleService.cs" />
     <Compile Include="DataServices\UserService.cs" />
     <Compile Include="DataServices\WHAdjService.cs" />
     <Compile Include="DataServices\WHItemCostService.cs" />
@@ -168,6 +177,9 @@
       <DependentUpon>CKModel.tt</DependentUpon>
     </Compile>
     <Compile Include="transaction_details.cs">
+      <DependentUpon>CKModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="user_roles.cs">
       <DependentUpon>CKModel.tt</DependentUpon>
     </Compile>
     <Compile Include="wh_item_cost_history.cs">

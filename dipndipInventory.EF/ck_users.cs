@@ -70,6 +70,7 @@ namespace dipndipInventory.EF
         public string role { get; set; }
         public Nullable<bool> active { get; set; }
         public Nullable<int> site_id { get; set; }
+        public Nullable<int> role_id { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ck_item_details> ck_item_details { get; set; }
@@ -160,5 +161,6 @@ namespace dipndipInventory.EF
         public virtual ICollection<ck_items_adj> ck_items_adj { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ck_items_adj> ck_items_adj1 { get; set; }
+        public virtual user_roles user_roles { get; set; }
     }
 }

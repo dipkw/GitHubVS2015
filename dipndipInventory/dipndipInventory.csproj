@@ -202,6 +202,7 @@
     <Compile Include="Product.cs" />
     <Compile Include="Validations\Validation.cs" />
     <Compile Include="ViewModels\AdjustmentDetailsViewModel.cs" />
+    <Compile Include="ViewModels\AppFormPermissionViewModel.cs" />
     <Compile Include="ViewModels\CKIssueViewModel.cs" />
     <Compile Include="ViewModels\CKItemBatchViewModel.cs" />
     <Compile Include="ViewModels\CKItemRecipeViewModel.cs" />
@@ -292,6 +293,9 @@
     </Compile>
     <Compile Include="Views\Stock\whitemunitsetupView.xaml.cs">
       <DependentUpon>whitemunitsetupView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Users\formpermissionsView.xaml.cs">
+      <DependentUpon>formpermissionsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Users\testWindow.xaml.cs">
       <DependentUpon>testWindow.xaml</DependentUpon>
@@ -456,6 +460,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Stock\whitemunitsetupView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Users\formpermissionsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

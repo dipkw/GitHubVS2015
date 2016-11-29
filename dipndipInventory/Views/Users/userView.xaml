@@ -22,7 +22,7 @@
                 <telerik:RadGridView.Columns>
                     <telerik:GridViewDataColumn x:Name="Name" DataMemberBinding="{Binding uname}" Width="*" Header="Name"/>
                     <telerik:GridViewDataColumn x:Name="UserName" DataMemberBinding="{Binding username}" Width="*" Header="User Name"/>
-                    <telerik:GridViewDataColumn x:Name="role" DataMemberBinding="{Binding role}" Width="*" Header="Role"/>
+                    <telerik:GridViewDataColumn x:Name="role" DataMemberBinding="{Binding user_roles.role_desc}" Width="*" Header="Role"/>
                     <telerik:GridViewColumn Width="80">
                         <telerik:GridViewColumn.CellTemplate>
                             <DataTemplate>
@@ -52,10 +52,11 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <telerik:Label Content="Role" Height="25" Width="150"/>
-                    <telerik:RadComboBox Name="cmbRole" Width="250" Margin="5" TabIndex="5">
+                    <!--<telerik:RadComboBox Name="cmbRole" Width="250" Margin="5" TabIndex="5">
                         <Label Content="Admin"/>
                         <Label Content="User"/>
-                    </telerik:RadComboBox>
+                    </telerik:RadComboBox>-->
+                    <telerik:RadComboBox Name="cmbRole" Width="250" Margin="5" TabIndex="5"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <telerik:Label Content="Site" Height="25" Width="150"/>

@@ -1,4 +1,5 @@
 ﻿using dipndipInventory.EF;
+using dipndipInventory.EF.DataServices;
 using dipndipInventory.Helpers;
 using dipndipInventory.Views.Site;
 using dipndipInventory.Views.Stock;
@@ -45,7 +46,7 @@ namespace dipndipInventory.Views
                 //StaffMenu.IsEnabled = false;
                 //BackupDB.IsEnabled = false;
             }
-
+            
             //lblUserName.Content = objStaff.User_name;
             //txtUserName.Text = objStaff.User_name;
 
@@ -62,6 +63,50 @@ namespace dipndipInventory.Views
                 //StaffMenu.IsEnabled = false;
                 //BackupDB.IsEnabled = false;
             }
+            AppFormPermissionService afpcontext = new AppFormPermissionService();
+            CKOrders.IsEnabled = afpcontext.GetAppRoleFormPermission(objUser.role_id, "CK Order", "Read");
+            NewOrder.IsEnabled = afpcontext.GetAppRoleFormPermission(objUser.role_id, "WH Order Details", "Read");
+            Adjustment.IsEnabled = afpcontext.GetAppRoleFormPermission(objUser.role_id, "WH Stock Adjustment", "Read");
+            WHItemsMenu.IsEnabled = afpcontext.GetAppRoleFormPermission(objUser.role_id, "WH Items", "Read");
+            ItemUnitsMenu.IsEnabled = afpcontext.GetAppRoleFormPermission(objUser.role_id, "WH Item Unit Setup", "Read");
+            CKItemsMenu.IsEnabled = afpcontext.GetAppRoleFormPermission(objUser.role_id, "CK Items", "Read");
+            CKItemsRecipeMenu.IsEnabled = afpcontext.GetAppRoleFormPermission(objUser.role_id, "CK Item Recipe", "Read");
+            CKItemUnitsMenu.IsEnabled = afpcontext.GetAppRoleFormPermission(objUser.role_id, "CK Item Unit Setup", "Read");
+            CKProductionMenu.IsEnabled = afpcontext.GetAppRoleFormPermission(objUser.role_id, "CK Production", "Read");
+            CKIssueMenu.IsEnabled = afpcontext.GetAppRoleFormPermission(objUser.role_id, "CK Item Delivery", "Read");
+            UnitsMenu.IsEnabled = afpcontext.GetAppRoleFormPermission(objUser.role_id, "Units", "Read");
+            UsersMenu.IsEnabled = afpcontext.GetAppRoleFormPermission(objUser.role_id, "Users", "Read");
+            SitesMenu.IsEnabled = afpcontext.GetAppRoleFormPermission(objUser.role_id, "Sites", "Read");
+            FormPermissionsMenu.IsEnabled = afpcontext.GetAppRoleFormPermission(objUser.role_id, "Form Permissions", "Read");
+
+            //if (objUser.role_id == 2)
+            //{
+            //    Adjustment.IsEnabled = afpcontext.GetAppRoleFormPermission(objUser.role_id, "Stock Adjustment", "Read");
+            //    WHItemsMenu.IsEnabled = false;
+            //    ItemUnitsMenu.IsEnabled = false;
+            //    UnitsMenu.IsEnabled = false;
+            //    UsersMenu.IsEnabled = false;
+            //    SitesMenu.IsEnabled = false;
+            //    FormPermissionsMenu.IsEnabled = false;
+            //}
+
+            //if (objUser.role_id == 3)
+            //{
+            //    NewOrder.IsEnabled = false;
+            //    Adjustment.IsEnabled = false;
+            //    WHItemsMenu.IsEnabled = false;
+            //    ItemUnitsMenu.IsEnabled = false;
+            //    CKItemsMenu.IsEnabled = false;
+            //    CKIssueMenu.IsEnabled = false;
+            //    CKItemsRecipeMenu.IsEnabled = false;
+            //    CKItemUnitsMenu.IsEnabled = false;
+            //    CKProductionMenu.IsEnabled = false;
+            //    CKIssueMenu.IsEnabled = false;
+            //    UnitsMenu.IsEnabled = false;
+            //    UsersMenu.IsEnabled = false;
+            //    SitesMenu.IsEnabled = false;
+            //    FormPermissionsMenu.IsEnabled = false;
+            //}
 
             //lblUserName.Content = objStaff.User_name;
             //txtUserName.Text = objStaff.User_name;
@@ -245,6 +290,12 @@ namespace dipndipInventory.Views
                 default:
                     break;
             }
+        }
+
+        private void FormPermissionsMenu_Click(object sender, RoutedEventArgs e)
+        {
+            formpermissionsView fpv = new formpermissionsView();
+            fpv.Show();
         }
     }
 }

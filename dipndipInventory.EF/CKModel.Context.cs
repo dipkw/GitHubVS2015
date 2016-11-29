@@ -55,6 +55,9 @@ namespace dipndipInventory.EF
         public virtual DbSet<ck_issue_master> ck_issue_master { get; set; }
         public virtual DbSet<ck_issue_detais> ck_issue_detais { get; set; }
         public virtual DbSet<ck_items_adj> ck_items_adj { get; set; }
+        public virtual DbSet<user_roles> user_roles { get; set; }
+        public virtual DbSet<app_forms> app_forms { get; set; }
+        public virtual DbSet<app_form_permissions> app_form_permissions { get; set; }
     
         public virtual ObjectResult<ReadWarehouseItems_Result> ReadWarehouseItems()
         {

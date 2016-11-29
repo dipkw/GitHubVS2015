@@ -5,6 +5,36 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="dipckModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="app_form_permissions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="role_id" Type="int" />
+          <Property Name="form_id" Type="int" />
+          <Property Name="form_desc" Type="nvarchar" MaxLength="150" />
+          <Property Name="create_permission" Type="bit" />
+          <Property Name="read_permission" Type="bit" />
+          <Property Name="update_permission" Type="bit" />
+          <Property Name="delete_permission" Type="bit" />
+          <Property Name="created_by" Type="int" />
+          <Property Name="created_date" Type="datetime" />
+          <Property Name="modified_by" Type="int" />
+          <Property Name="modified_date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="app_forms">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="form_id" Type="nvarchar" MaxLength="50" />
+          <Property Name="form_desc" Type="nvarchar" MaxLength="150" />
+          <Property Name="active" Type="bit" />
+          <Property Name="created_by" Type="int" />
+          <Property Name="created_date" Type="datetime" />
+          <Property Name="modified_by" Type="int" />
+          <Property Name="modified_date" Type="datetime" />
+        </EntityType>
         <EntityType Name="ck_issue_detais">
           <Key>
             <PropertyRef Name="Id" />
@@ -205,6 +235,7 @@
           <Property Name="uname" Type="nvarchar" MaxLength="50" />
           <Property Name="username" Type="nvarchar" MaxLength="150" />
           <Property Name="password" Type="nvarchar" MaxLength="50" />
+          <Property Name="role_id" Type="int" />
           <Property Name="role" Type="nvarchar" MaxLength="50" />
           <Property Name="site_id" Type="int" />
           <Property Name="active" Type="bit" />
@@ -462,6 +493,18 @@
           <Property Name="modified_by" Type="int" />
           <Property Name="modified_date" Type="datetime" />
         </EntityType>
+        <EntityType Name="user_roles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="role_desc" Type="nvarchar" MaxLength="50" />
+          <Property Name="active" Type="bit" />
+          <Property Name="created_by" Type="int" />
+          <Property Name="created_date" Type="datetime" />
+          <Property Name="modified_by" Type="int" />
+          <Property Name="modified_date" Type="datetime" />
+        </EntityType>
         <!--Errors Found During Generation:
 warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
         <EntityType Name="wh_cost_change_history">
@@ -503,6 +546,30 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
           <Property Name="modified_date" Type="datetime" />
           <Property Name="active" Type="bit" />
         </EntityType>
+        <Association Name="FK_app_form_permissions_app_forms">
+          <End Role="app_forms" Type="Self.app_forms" Multiplicity="0..1" />
+          <End Role="app_form_permissions" Type="Self.app_form_permissions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="app_forms">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="app_form_permissions">
+              <PropertyRef Name="form_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_app_form_permissions_user_roles">
+          <End Role="user_roles" Type="Self.user_roles" Multiplicity="0..1" />
+          <End Role="app_form_permissions" Type="Self.app_form_permissions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user_roles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="app_form_permissions">
+              <PropertyRef Name="role_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ck_issue_detais_ck_issue_detais">
           <End Role="ck_issue_master" Type="Self.ck_issue_master" Multiplicity="1" />
           <End Role="ck_issue_detais" Type="Self.ck_issue_detais" Multiplicity="*" />
@@ -932,6 +999,18 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
             </Principal>
             <Dependent Role="ck_users">
               <PropertyRef Name="site_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ck_users_user_roles">
+          <End Role="user_roles" Type="Self.user_roles" Multiplicity="0..1" />
+          <End Role="ck_users" Type="Self.ck_users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user_roles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ck_users">
+              <PropertyRef Name="role_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1633,6 +1712,8 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
         </Association>
         <Function Name="ReadWarehouseItems" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="dipckModelStoreContainer">
+          <EntitySet Name="app_form_permissions" EntityType="Self.app_form_permissions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="app_forms" EntityType="Self.app_forms" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ck_issue_detais" EntityType="Self.ck_issue_detais" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ck_issue_master" EntityType="Self.ck_issue_master" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ck_item_cost_history" EntityType="Self.ck_item_cost_history" Schema="dbo" store:Type="Tables" />
@@ -1659,8 +1740,17 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
           <EntitySet Name="receipts" EntityType="Self.receipts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sites" EntityType="Self.sites" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="transaction_details" EntityType="Self.transaction_details" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="user_roles" EntityType="Self.user_roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="wh_item_cost_history" EntityType="Self.wh_item_cost_history" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="wh_item_unit" EntityType="Self.wh_item_unit" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_app_form_permissions_app_forms" Association="Self.FK_app_form_permissions_app_forms">
+            <End Role="app_forms" EntitySet="app_forms" />
+            <End Role="app_form_permissions" EntitySet="app_form_permissions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_app_form_permissions_user_roles" Association="Self.FK_app_form_permissions_user_roles">
+            <End Role="user_roles" EntitySet="user_roles" />
+            <End Role="app_form_permissions" EntitySet="app_form_permissions" />
+          </AssociationSet>
           <AssociationSet Name="FK_ck_issue_detais_ck_issue_detais" Association="Self.FK_ck_issue_detais_ck_issue_detais">
             <End Role="ck_issue_master" EntitySet="ck_issue_master" />
             <End Role="ck_issue_detais" EntitySet="ck_issue_detais" />
@@ -1803,6 +1893,10 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
           </AssociationSet>
           <AssociationSet Name="FK_ck_users_sites" Association="Self.FK_ck_users_sites">
             <End Role="sites" EntitySet="sites" />
+            <End Role="ck_users" EntitySet="ck_users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ck_users_user_roles" Association="Self.FK_ck_users_user_roles">
+            <End Role="user_roles" EntitySet="user_roles" />
             <End Role="ck_users" EntitySet="ck_users" />
           </AssociationSet>
           <AssociationSet Name="FK_ck_wastage_details_ck_item_unit" Association="Self.FK_ck_wastage_details_ck_item_unit">
@@ -2448,6 +2542,21 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
             <End Role="ck_item_unit" EntitySet="ck_item_unit" />
             <End Role="ck_stock_trans" EntitySet="ck_stock_trans" />
           </AssociationSet>
+          <EntitySet Name="user_roles" EntityType="dipckModel.user_roles" />
+          <AssociationSet Name="FK_ck_users_user_roles" Association="dipckModel.FK_ck_users_user_roles">
+            <End Role="user_roles" EntitySet="user_roles" />
+            <End Role="ck_users" EntitySet="ck_users" />
+          </AssociationSet>
+          <EntitySet Name="app_forms" EntityType="dipckModel.app_forms" />
+          <EntitySet Name="app_form_permissions" EntityType="dipckModel.app_form_permissions" />
+          <AssociationSet Name="FK_app_form_permissions_app_forms" Association="dipckModel.FK_app_form_permissions_app_forms">
+            <End Role="app_forms" EntitySet="app_forms" />
+            <End Role="app_form_permissions" EntitySet="app_form_permissions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_app_form_permissions_user_roles" Association="dipckModel.FK_app_form_permissions_user_roles">
+            <End Role="user_roles" EntitySet="user_roles" />
+            <End Role="app_form_permissions" EntitySet="app_form_permissions" />
+          </AssociationSet>
           </EntityContainer>
         <ComplexType Name="ReadWarehouseItems_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
@@ -2559,6 +2668,8 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
           <NavigationProperty Name="ck_issue_detais1" Relationship="dipckModel.FK_ck_issue_detais_ck_users_modified" FromRole="ck_users" ToRole="ck_issue_detais" />
           <NavigationProperty Name="ck_items_adj" Relationship="dipckModel.FK_ck_items_adj_ck_users_created" FromRole="ck_users" ToRole="ck_items_adj" />
           <NavigationProperty Name="ck_items_adj1" Relationship="dipckModel.FK_ck_items_adj_ck_users_modified" FromRole="ck_users" ToRole="ck_items_adj" />
+          <Property Name="role_id" Type="Int32" />
+          <NavigationProperty Name="user_roles" Relationship="dipckModel.FK_ck_users_user_roles" FromRole="ck_users" ToRole="user_roles" />
           </EntityType>
         <EntityType Name="ckwh_category">
           <Key>
@@ -4266,6 +4377,89 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="user_roles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="role_desc" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="active" Type="Boolean" />
+          <Property Name="created_by" Type="Int32" />
+          <Property Name="created_date" Type="DateTime" Precision="3" />
+          <Property Name="modified_by" Type="Int32" />
+          <Property Name="modified_date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ck_users" Relationship="dipckModel.FK_ck_users_user_roles" FromRole="user_roles" ToRole="ck_users" />
+          <NavigationProperty Name="app_form_permissions" Relationship="dipckModel.FK_app_form_permissions_user_roles" FromRole="user_roles" ToRole="app_form_permissions" />
+        </EntityType>
+        <Association Name="FK_ck_users_user_roles">
+          <End Type="dipckModel.user_roles" Role="user_roles" Multiplicity="0..1" />
+          <End Type="dipckModel.ck_users" Role="ck_users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user_roles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ck_users">
+              <PropertyRef Name="role_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="app_forms">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="form_id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="active" Type="Boolean" />
+          <Property Name="created_by" Type="Int32" />
+          <Property Name="created_date" Type="DateTime" Precision="3" />
+          <Property Name="modified_by" Type="Int32" />
+          <Property Name="modified_date" Type="DateTime" Precision="3" />
+          <Property Name="form_desc" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="app_form_permissions" Relationship="dipckModel.FK_app_form_permissions_app_forms" FromRole="app_forms" ToRole="app_form_permissions" />
+        </EntityType>
+        <EntityType Name="app_form_permissions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="role_id" Type="Int32" />
+          <Property Name="form_id" Type="Int32" />
+          <Property Name="create_permission" Type="Boolean" />
+          <Property Name="read_permission" Type="Boolean" />
+          <Property Name="update_permission" Type="Boolean" />
+          <Property Name="delete_permission" Type="Boolean" />
+          <Property Name="created_by" Type="Int32" />
+          <Property Name="created_date" Type="DateTime" Precision="3" />
+          <Property Name="modified_by" Type="Int32" />
+          <Property Name="modified_date" Type="DateTime" Precision="3" />
+          <Property Name="form_desc" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="app_forms" Relationship="dipckModel.FK_app_form_permissions_app_forms" FromRole="app_form_permissions" ToRole="app_forms" />
+          <NavigationProperty Name="user_roles" Relationship="dipckModel.FK_app_form_permissions_user_roles" FromRole="app_form_permissions" ToRole="user_roles" />
+        </EntityType>
+        <Association Name="FK_app_form_permissions_app_forms">
+          <End Type="dipckModel.app_forms" Role="app_forms" Multiplicity="0..1" />
+          <End Type="dipckModel.app_form_permissions" Role="app_form_permissions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="app_forms">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="app_form_permissions">
+              <PropertyRef Name="form_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_app_form_permissions_user_roles">
+          <End Type="dipckModel.user_roles" Role="user_roles" Multiplicity="0..1" />
+          <End Type="dipckModel.app_form_permissions" Role="app_form_permissions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user_roles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="app_form_permissions">
+              <PropertyRef Name="role_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4324,6 +4518,7 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
           <EntitySetMapping Name="ck_users">
             <EntityTypeMapping TypeName="dipckModel.ck_users">
               <MappingFragment StoreEntitySet="ck_users">
+                <ScalarProperty Name="role_id" ColumnName="role_id" />
                 <ScalarProperty Name="site_id" ColumnName="site_id" />
                 <ScalarProperty Name="active" ColumnName="active" />
                 <ScalarProperty Name="role" ColumnName="role" />
@@ -4801,6 +4996,51 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
                 <ScalarProperty Name="ck_item_code" ColumnName="ck_item_code" />
                 <ScalarProperty Name="ck_item_id" ColumnName="ck_item_id" />
                 <ScalarProperty Name="adj_code" ColumnName="adj_code" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="user_roles">
+            <EntityTypeMapping TypeName="dipckModel.user_roles">
+              <MappingFragment StoreEntitySet="user_roles">
+                <ScalarProperty Name="modified_date" ColumnName="modified_date" />
+                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="active" ColumnName="active" />
+                <ScalarProperty Name="role_desc" ColumnName="role_desc" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="app_forms">
+            <EntityTypeMapping TypeName="dipckModel.app_forms">
+              <MappingFragment StoreEntitySet="app_forms">
+                <ScalarProperty Name="form_desc" ColumnName="form_desc" />
+                <ScalarProperty Name="modified_date" ColumnName="modified_date" />
+                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="active" ColumnName="active" />
+                <ScalarProperty Name="form_id" ColumnName="form_id" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="app_form_permissions">
+            <EntityTypeMapping TypeName="dipckModel.app_form_permissions">
+              <MappingFragment StoreEntitySet="app_form_permissions">
+                <ScalarProperty Name="form_desc" ColumnName="form_desc" />
+                <ScalarProperty Name="modified_date" ColumnName="modified_date" />
+                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="delete_permission" ColumnName="delete_permission" />
+                <ScalarProperty Name="update_permission" ColumnName="update_permission" />
+                <ScalarProperty Name="read_permission" ColumnName="read_permission" />
+                <ScalarProperty Name="create_permission" ColumnName="create_permission" />
+                <ScalarProperty Name="form_id" ColumnName="form_id" />
+                <ScalarProperty Name="role_id" ColumnName="role_id" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
