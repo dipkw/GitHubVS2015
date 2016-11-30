@@ -65,9 +65,16 @@
       <HintPath>C:\Windows\assembly\GAC_MSIL\Microsoft.SqlServer.Management.Sdk.Sfc\12.0.0.0__89845dcd8080cc91\Microsoft.SqlServer.Management.Sdk.Sfc.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.SqlServer.Smo, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
+    <Reference Include="MultiEventCommandBinder">
+      <HintPath>CustomDLL\MultiEventCommandBinder.dll</HintPath>
+    </Reference>
+    <Reference Include="ReuxablesLegacy">
+      <HintPath>CustomDLL\ReuxablesLegacy.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Management" />
     <Reference Include="System.Net" />
@@ -188,6 +195,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Classes\TryCatch.cs" />
+    <Compile Include="CustomControls\MyRichTextBox.cs" />
+    <Compile Include="CustomControls\ReflectionControl.cs" />
     <Compile Include="FluentContext.cs" />
     <Compile Include="FluentMetadataSource.cs" />
     <Compile Include="GlobalObjects\ActiveUser.cs" />
@@ -212,6 +222,7 @@
     <Compile Include="ViewModels\OrderDetailsPrintViewModel.cs" />
     <Compile Include="ViewModels\OrderDetailsViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
+    <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="ViewModels\WHStockAdjustmentViewModel.cs" />
     <Compile Include="Views\homeView.xaml.cs">
       <DependentUpon>homeView.xaml</DependentUpon>
@@ -230,6 +241,9 @@
     </Compile>
     <Compile Include="Views\Site\siteView.xaml.cs">
       <DependentUpon>siteView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\splashscreenView.xaml.cs">
+      <DependentUpon>splashscreenView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Stock\ckitembatchView.xaml.cs">
       <DependentUpon>ckitembatchView.xaml</DependentUpon>
@@ -258,6 +272,9 @@
     <Compile Include="Views\Stock\ckproductionlistView.xaml.cs">
       <DependentUpon>ckproductionlistView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Stock\CKProductions.xaml.cs">
+      <DependentUpon>CKProductions.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Stock\ckproductionView.xaml.cs">
       <DependentUpon>ckproductionView.xaml</DependentUpon>
     </Compile>
@@ -275,6 +292,9 @@
     </Compile>
     <Compile Include="Views\Stock\orderdetailsView.xaml.cs">
       <DependentUpon>orderdetailsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Stock\productiondetailView.xaml.cs">
+      <DependentUpon>productiondetailView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Stock\unitView.xaml.cs">
       <DependentUpon>unitView.xaml</DependentUpon>
@@ -379,6 +399,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\splashscreenView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Stock\ckitembatchView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -415,6 +439,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Stock\CKProductions.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Stock\ckproductionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -436,6 +464,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Stock\orderdetailsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Stock\productiondetailView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -574,6 +606,12 @@
     <Resource Include="Images\menu_icons\orders.png" />
     <Resource Include="Images\menu_icons\stk-adj.png" />
     <Resource Include="Images\menu_icons\wh-items.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="CustomDLL\MultiEventCommandBinder.dll" />
+    <Content Include="CustomDLL\ReuxablesLegacy.dll" />
+    <Resource Include="Images\LOGIN\background.png" />
+    <Resource Include="Images\LOGIN\Splash.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="OpenAccessNuget.targets" />

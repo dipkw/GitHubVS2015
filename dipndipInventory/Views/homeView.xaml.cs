@@ -297,5 +297,11 @@ namespace dipndipInventory.Views
             formpermissionsView fpv = new formpermissionsView();
             fpv.Show();
         }
+
+        private void CKProductions_Click(object sender, RoutedEventArgs e)
+        {
+            CKProductions cpv = new Stock.CKProductions();
+            cpv.Show();
+        }
     }
 }

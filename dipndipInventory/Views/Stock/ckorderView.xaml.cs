@@ -76,7 +76,7 @@ namespace dipndipInventory.Views.Stock
 
             }
             //else if ((GlobalVariables.ActiveSite.Id == objOrder.order_to_site_id) && (objOrder.order_status != "Received" || objOrder.order_status != "Confirmed"))
-            else if ((GlobalVariables.ActiveSite.Id == objOrder.order_to_site_id) && (objOrder.order_status != "Received" && objOrder.order_status != "Confirmed"))
+            else if ((GlobalVariables.ActiveSite.Id == objOrder.order_to_site_id) && (objOrder.order_status != "Received" && objOrder.order_status != "Confirmed" && objOrder.order_status != "Issued"))
             {
                 //Open Order Issue Window For To_Site(Warehouse) to issue the items
                 whitemissueView itmissueView = new whitemissueView(objOrder.Id, objOrder.order_no, (DateTime)objOrder.order_date, this);

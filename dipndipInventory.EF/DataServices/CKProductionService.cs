@@ -31,6 +31,43 @@ namespace dipndipInventory.EF.DataServices
             return 1;
         }
 
+        public IEnumerable<ck_prod> ReadAllProductions()
+        {
+            try
+            {
+                _context = new CKEntities();
+                IEnumerable<ck_prod> objCKProductions = (from ckproductions in _context.ck_prod orderby ckproductions.prod_date ascending select ckproductions);
+                return objCKProductions;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public IEnumerable<ck_prod> ReadAllDistinctProductions()
+        {
+            try
+            {
+                _context = new CKEntities();
+
+                IEnumerable<ck_prod> objCKProductions = (from ckproductions in _context.ck_prod orderby ckproductions.prod_date ascending select ckproductions);
+
+                return objCKProductions;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public IEnumerable<ck_prod> ReadCKProductionDetails(string prod_code)
+        {
+            _context = new CKEntities();
+            IEnumerable<ck_prod> production_details = (from prod_detail in _context.ck_prod where prod_detail.prod_code == prod_code select prod_detail);
+            return production_details;
+        }
+
         public string GetNewProductionCode()
         {
             try

@@ -20,7 +20,7 @@
         <Border Grid.ColumnSpan="2" Margin="10" BorderBrush="Black" BorderThickness="0.5" >
             <telerik:RadGridView x:Name="dgUnits" AutoGenerateColumns="False" IsReadOnly="True" RowIndicatorVisibility="Collapsed" IsSynchronizedWithCurrentItem="False" FocusManager.FocusedElement="{Binding ElementName=dgUnits}" HorizontalAlignment="Left" VerticalAlignment="Top"  SelectionChanged="dgUnits_SelectionChanged">
                 <telerik:RadGridView.Columns>
-                    <telerik:GridViewDataColumn x:Name="UnitID" DataMemberBinding="{Binding Id}" Width="*" Header="Unit ID"/>
+                    <telerik:GridViewDataColumn x:Name="UnitID" DataMemberBinding="{Binding Id}" Width="*" Header="Unit ID" IsVisible="False"/>
 
                     <!--<telerik:GridViewColumn Width="80">
                         <telerik:GridViewColumn.CellTemplate>

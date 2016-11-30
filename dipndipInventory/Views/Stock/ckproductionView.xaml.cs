@@ -35,14 +35,17 @@ namespace dipndipInventory.Views.Stock
         public ckproductionView()
         {
             InitializeComponent();
-
-            string prod_code = cpcontext.GetNewProductionCode();
-            txtProductionCode.Value = prod_code;
+            AssignNewProductionCode();            
             SetDate();
             ShowTaskBar.ShowInTaskbar(this, "Central Kitchen Item Production");
             FillProductionGrid();
         }
 
+        private void AssignNewProductionCode()
+        {
+            string prod_code = cpcontext.GetNewProductionCode();
+            txtProductionCode.Value = prod_code;
+        }
         private void FillProductionGrid()
         {
             CKItemService _cicontext = new CKItemService();
@@ -129,6 +132,14 @@ namespace dipndipInventory.Views.Stock
             CKProductionService pscontext = new CKProductionService();
             string result = pscontext.SaveCKItemProduction(production_list, ck_items_list, warehouse_items_list, ck_item_cost_list, ck_stock_trans_list, GlobalVariables.ActiveUser.Id) > 0 ? "CK Branch Item Production Saved Successfully" : "Unable to Save CK Branch Item Production";
             MessageBox.Show(result);
+            if(result == "CK Branch Item Production Saved Successfully")
+            {
+                if (MessageBox.Show("Do you want to print?", "Confirm", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    PrintProduction();
+                }
+                AssignNewProductionCode();
+            }
             production_list.Clear();
             FillProductionGrid();
         }
@@ -250,7 +261,7 @@ namespace dipndipInventory.Views.Stock
             var rows = this.dgCKProduction.ChildrenOfType<GridViewRow>();
             int result = 0;
             CKOrderService _ocontext = new CKOrderService();
-            
+            production_list.Clear();
             foreach (var row in rows)
             {
                 if (row is GridViewNewRow)
@@ -402,6 +413,44 @@ namespace dipndipInventory.Views.Stock
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void PrintProduction()
+        {
+            try
+            {
+
+                //Telerik.Reporting.IReportDocument myReport = new DieReports.DieDetailsReport(die_id, "Drawing");
+                //Telerik.Reporting.IReportDocument myReport = new dipndipTLReports.PrintOrderReport("CKOR-0007");
+                //Telerik.Reporting.IReportDocument myReport = new dipndipTLReports.Reports.OrderDetailsB("CKOR-0007");
+                Telerik.Reporting.IReportDocument myReport = new dipndipTLReports.Reports.CKProductionDetails(txtProductionCode.Value);
+
+
+                // Obtain the settings of the default printer
+                System.Drawing.Printing.PrinterSettings printerSettings
+                    = new System.Drawing.Printing.PrinterSettings();
+
+                //// The standard print controller comes with no UI
+                System.Drawing.Printing.PrintController standardPrintController =
+                    new System.Drawing.Printing.StandardPrintController();
+
+                // Print the report using the custom print controller
+                Telerik.Reporting.Processing.ReportProcessor reportProcessor
+                    = new Telerik.Reporting.Processing.ReportProcessor();
+
+                reportProcessor.PrintController = standardPrintController;
+
+                Telerik.Reporting.InstanceReportSource instanceReportSource =
+                    new Telerik.Reporting.InstanceReportSource();
+
+                instanceReportSource.ReportDocument = myReport;
+
+                reportProcessor.PrintReport(instanceReportSource, printerSettings);
+            }
+            catch
+            {
+
+            }
         }
     }
 }

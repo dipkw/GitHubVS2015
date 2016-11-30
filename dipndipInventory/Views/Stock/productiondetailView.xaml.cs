@@ -1,4 +1,5 @@
 ﻿using dipndipInventory.EF;
+using dipndipInventory.EF.DataServices;
 using dipndipInventory.Helpers;
 using System;
 using System.Collections.Generic;
@@ -18,33 +19,35 @@ using Telerik.Windows.Controls;
 namespace dipndipInventory.Views.Stock
 {
     /// <summary>
-    /// Interaction logic for ckproductionlistView.xaml
+    /// Interaction logic for productiondetailView.xaml
     /// </summary>
-    public partial class ckproductionlistView : RadWindow
+    public partial class productiondetailView : RadWindow
     {
-        public string ReturnValue { get; set; }
-        public ckproductionlistView()
+        string g_prod_code;
+        public productiondetailView()
         {
             InitializeComponent();
         }
 
-        public ckproductionlistView(string prod_code, DateTime prod_date, List<ck_prod> production_list)
+        public productiondetailView(string prod_code)
         {
             InitializeComponent();
-            ShowTaskBar.ShowInTaskbar(this, "Central Kitchen Production Item List");
-            txtProductionCode.Value = prod_code;
-            dtpProductionDate.SelectedDate = prod_date;
-            dgCKProduction.ItemsSource = production_list;
+            g_prod_code = prod_code;
+            ShowTaskBar.ShowInTaskbar(this, "Production Details");
+            FillProductionDetails(prod_code);
         }
 
-        private void btnSave_Click(object sender, RoutedEventArgs e)
+        private void FillProductionDetails(string prod_code)
         {
-            ReturnValue = "Save";
-        }
-
-        private void btnClose_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
+            try
+            {
+                CKProductionService cpscontext = new CKProductionService();
+                IEnumerable<ck_prod> production_list = cpscontext.ReadCKProductionDetails(prod_code);
+                dgCKProduction.ItemsSource = production_list;
+                txtProductionCode.Value = production_list.First().prod_code;
+                dtpProductionDate.SelectedDate = production_list.First().prod_date;
+            }
+            catch { }
         }
 
         private void btnPrint_Click(object sender, RoutedEventArgs e)
@@ -83,6 +86,11 @@ namespace dipndipInventory.Views.Stock
             {
 
             }
+        }
+
+        private void btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }
