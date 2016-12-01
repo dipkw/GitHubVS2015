@@ -61,6 +61,13 @@ namespace dipndipInventory.Views.Stock
             {
                 //Open Edit Window For From_Site (CK) to update the order
                 //orderdetailsView odv = new orderdetailsView(objOrder.Id, objOrder.order_no, (DateTime)objOrder.order_date);
+                AppFormService afscontext = new AppFormService();
+                if (afscontext.GetAppFormLockStatus("orderdetailsView") == "locked")
+                {
+                    MessageBox.Show("Window is locked");
+                    return;
+                }
+
                 orderdetailsView odv = new orderdetailsView(objOrder.Id, objOrder.order_no, (DateTime)objOrder.order_date, this);
                 odv.Show();
             }
@@ -79,6 +86,13 @@ namespace dipndipInventory.Views.Stock
             else if ((GlobalVariables.ActiveSite.Id == objOrder.order_to_site_id) && (objOrder.order_status != "Received" && objOrder.order_status != "Confirmed" && objOrder.order_status != "Issued"))
             {
                 //Open Order Issue Window For To_Site(Warehouse) to issue the items
+                AppFormService afscontext = new AppFormService();
+                if (afscontext.GetAppFormLockStatus("orderdetailsView") == "locked")
+                {
+                    MessageBox.Show("Window is locked");
+                    return;
+                }
+
                 whitemissueView itmissueView = new whitemissueView(objOrder.Id, objOrder.order_no, (DateTime)objOrder.order_date, this);
                 itmissueView.Show();
                 return;

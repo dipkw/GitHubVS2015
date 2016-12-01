@@ -35,6 +35,9 @@ namespace dipndipInventory.Views.Stock
         List<CKItemBatchViewModel> g_ck_item_batches = new List<CKItemBatchViewModel>();
         List<ck_prod> g_ck_prod_update_list = new List<ck_prod>();
         decimal g_conv_factor = 0.000m;
+
+        decimal g_n_qty_on_hand = 0.000m;
+        decimal g_n_qty_issued = 0.000m;
         public ckitembatchView()
         {
             InitializeComponent();
@@ -123,6 +126,13 @@ namespace dipndipInventory.Views.Stock
             int result = 0;
             decimal total_qty_issued = 0.000m;
             CKOrderService _ocontext = new CKOrderService();
+
+            //if(!ItemIssueIsBatchwise())
+            //{
+            //    MessageBox.Show("Please issue items in FIFO basis");
+            //    return;
+            //}
+
             foreach (var row in rows)
             {
                 try
@@ -212,6 +222,69 @@ namespace dipndipInventory.Views.Stock
             this.Close();
         }
 
+        private bool ItemIssueIsBatchwise()
+        {
+            bool result = true;
+
+
+
+            return result;
+        }
+
+        private decimal NTotalQtyOnHand(int n)
+        {
+            g_n_qty_on_hand = 0.000m;
+
+            var rows = this.dgCKIssueDetails.ChildrenOfType<GridViewRow>();
+
+            int row_count = 0;
+            foreach (var row in rows)
+            {
+                try
+                {
+                    if (row is GridViewNewRow)
+                        continue;
+
+                    CKItemBatchViewModel objItemBatchVM = row.Item as CKItemBatchViewModel;
+                    g_n_qty_on_hand += objItemBatchVM.bal_qty;
+                    row_count++;
+                    if(row_count>n)
+                    {
+                        break;
+                    }
+                }
+                catch { }
+            }
+            return g_n_qty_on_hand;
+        }
+
+        private decimal NTotalQtyIssued(int n)
+        {
+            g_n_qty_issued = 0.000m;
+
+            var rows = this.dgCKIssueDetails.ChildrenOfType<GridViewRow>();
+
+            int row_count = 0;
+            foreach (var row in rows)
+            {
+                try
+                {
+                    if (row is GridViewNewRow)
+                        continue;
+
+                    CKItemBatchViewModel objItemBatchVM = row.Item as CKItemBatchViewModel;
+                    g_n_qty_issued += objItemBatchVM.qty_issued;
+                    row_count++;
+                    if (row_count > n)
+                    {
+                        break;
+                    }
+                }
+                catch { }
+            }
+            return g_n_qty_issued;
+        }
+
         private void cmbUnit_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             foreach (CKItemBatchViewModel ck_item_batch_vm in g_ck_item_batches)
@@ -238,6 +311,24 @@ namespace dipndipInventory.Views.Stock
         private void dgCKIssueDetails_RowValidating(object sender, GridViewRowValidatingEventArgs e)
         {
             CKItemBatchViewModel item_issue_detail = e.Row.DataContext as CKItemBatchViewModel;
+
+            int row_index = item_issue_detail.row_id;
+
+            NTotalQtyOnHand(row_index - 1);
+            NTotalQtyIssued(row_index - 1);
+
+            if(item_issue_detail.qty_issued>0)
+            {
+                if(g_n_qty_issued<g_n_qty_on_hand)
+                {
+                    MessageBox.Show("Please issue items in FIFO basis");
+                    e.IsValid = false;
+                }
+            }
+
+            //MessageBox.Show("QOH" + g_n_qty_on_hand.ToString());
+            //MessageBox.Show("QIS" + g_n_qty_issued.ToString());
+
             if (item_issue_detail.qty_issued > item_issue_detail.bal_qty)
             {
                 //validationResult.PropertyName = "IssuedQty";

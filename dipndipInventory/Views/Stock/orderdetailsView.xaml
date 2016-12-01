@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:dipndipInventory.Views.Stock"
         xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
         mc:Ignorable="d"
-        Header="Warehouse Order Details" Height="700" Width="1024" WindowStartupLocation="CenterScreen">
+        Header="Warehouse Order Details" Height="700" Width="1024" WindowStartupLocation="CenterScreen" Loaded="RadWindow_Loaded" Closed="RadWindow_Closed">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>

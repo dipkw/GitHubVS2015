@@ -220,6 +220,11 @@ namespace dipndipInventory.Views.Stock
                 OrderDetailsViewModel odv = new OrderDetailsViewModel();
                 if (ValidateOrderItem())
                 {
+                    if(ExistingItem())
+                    {
+                        MessageBox.Show("Item is already existing in the order list");
+                        return;
+                    }
                     if (txtQty.Value <= 0)
                     {
                         RadWindow.Alert("Invalid Quantity");
@@ -268,6 +273,11 @@ namespace dipndipInventory.Views.Stock
                 }
             }
             catch { }
+        }
+
+        private bool ExistingItem()
+        {
+            return OrderDetailsList.Any(z => z.itemCode == txtItemCode.Value);
         }
 
         private void ClearItem()
@@ -812,5 +822,16 @@ Central Kitchen";
             }
         }
 
+        private void RadWindow_Closed(object sender, WindowClosedEventArgs e)
+        {
+            AppFormService afscontext = new AppFormService();
+            afscontext.SetAppFormLockStatus("orderdetailsView", false);
+        }
+
+        private void RadWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            AppFormService afscontext = new AppFormService();
+            afscontext.SetAppFormLockStatus("orderdetailsView", true);
+        }
     }
 }

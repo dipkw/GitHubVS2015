@@ -38,6 +38,7 @@ namespace dipndipInventory.EF
         public Nullable<System.DateTime> modified_date { get; set; }
         public string prod_code { get; set; }
         public string batch_no { get; set; }
+        public Nullable<decimal> current_qty { get; set; }
     
         public virtual reason_codes reason_codes { get; set; }
         public virtual ck_units ck_units { get; set; }

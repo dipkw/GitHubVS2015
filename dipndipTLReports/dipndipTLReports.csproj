@@ -60,6 +60,12 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Reports\CKItemDeliveryReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\CKItemDeliveryReport.Designer.cs">
+      <DependentUpon>CKItemDeliveryReport.cs</DependentUpon>
+    </Compile>
     <Compile Include="Reports\CKProductionDetails.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -128,6 +134,9 @@
       <DependentUpon>PrintOrderReport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
+    <EmbeddedResource Include="Reports\CKItemDeliveryReport.resx">
+      <DependentUpon>CKItemDeliveryReport.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reports\CKProductionDetails.resx">
       <DependentUpon>CKProductionDetails.cs</DependentUpon>
     </EmbeddedResource>

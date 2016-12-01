@@ -171,7 +171,7 @@
                             <TextBlock Text="Adjustment" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </telerik:RadRibbonButton>
-                    <telerik:RadRibbonButton   Width="70"  HorizontalContentAlignment="Center" x:Name="Wastage" Visibility="Collapsed" Click="Wastage_Click">
+                    <telerik:RadRibbonButton   Width="70"  HorizontalContentAlignment="Center" x:Name="Wastage" Visibility="Visible" Click="Wastage_Click">
                         <StackPanel>
                             <Image Source="/dipndipInventory;component/images/menu_icons/9_exit_641.png" Width="32" Height="32"/>
                             <TextBlock Text="Wastage" HorizontalAlignment="Center"/>
@@ -201,7 +201,7 @@
                             <TextBlock Text="Sites" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </telerik:RadRibbonButton>
-                    <telerik:RadRibbonButton x:Name="FormPermissionsMenu"  Width="100"  HorizontalContentAlignment="Center" Click="FormPermissionsMenu_Click">
+                    <telerik:RadRibbonButton x:Name="FormPermissionsMenu"  Width="100"  HorizontalContentAlignment="Center" Click="FormPermissionsMenu_Click" Visibility="Collapsed">
                         <StackPanel>
                             <Image Source="/dipndipInventory;component/images/menu_icons/sites-2-icon.png" Width="32" Height="32"/>
                             <TextBlock Text="Form Permissions" HorizontalAlignment="Center"/>

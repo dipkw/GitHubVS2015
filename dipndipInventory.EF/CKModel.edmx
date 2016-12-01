@@ -29,6 +29,7 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="form_id" Type="nvarchar" MaxLength="50" />
           <Property Name="form_desc" Type="nvarchar" MaxLength="150" />
+          <Property Name="locked" Type="bit" />
           <Property Name="active" Type="bit" />
           <Property Name="created_by" Type="int" />
           <Property Name="created_date" Type="datetime" />
@@ -203,6 +204,7 @@
           <Property Name="ck_unit_id" Type="int" />
           <Property Name="ck_unit_desc" Type="nvarchar" MaxLength="50" />
           <Property Name="qty" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="current_qty" Type="decimal" Precision="18" Scale="3" />
           <Property Name="trans_type" Type="nvarchar" MaxLength="50" />
           <Property Name="unit_cost" Type="decimal" Precision="18" Scale="3" />
           <Property Name="total_cost" Type="decimal" Precision="18" Scale="3" />
@@ -481,6 +483,7 @@
           <Property Name="wh_item_unit_id" Type="int" />
           <Property Name="ck_unit_description" Type="nvarchar" MaxLength="50" />
           <Property Name="qty" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="current_qty" Type="decimal" Precision="18" Scale="3" />
           <Property Name="unit_cost" Type="decimal" Precision="18" Scale="3" />
           <Property Name="total_cost" Type="decimal" Precision="18" Scale="3" />
           <Property Name="order_from_site_id" Type="int" />
@@ -3189,6 +3192,7 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
           <Property Name="trans_ref_no" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="reason_id" Type="Int32" />
           <NavigationProperty Name="reason_codes" Relationship="dipckModel.FK_transaction_details_reason_codes" FromRole="transaction_details" ToRole="reason_codes" />
+          <Property Name="current_qty" Type="Decimal" Precision="18" Scale="3" />
         </EntityType>
         <Association Name="FK_order_details_ck_users">
           <End Type="dipckModel.ck_users" Role="ck_users" Multiplicity="0..1" />
@@ -3784,6 +3788,7 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
           <Property Name="prod_code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="batch_no" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ck_item_unit" Relationship="dipckModel.FK_ck_stock_trans_ck_units1" FromRole="ck_stock_trans" ToRole="ck_item_unit" />
+          <Property Name="current_qty" Type="Decimal" Precision="18" Scale="3" />
         </EntityType>
         <Association Name="FK_ck_users_sites">
           <End Type="dipckModel.site" Role="site" Multiplicity="0..1" />
@@ -4416,6 +4421,7 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
           <Property Name="modified_date" Type="DateTime" Precision="3" />
           <Property Name="form_desc" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="app_form_permissions" Relationship="dipckModel.FK_app_form_permissions_app_forms" FromRole="app_forms" ToRole="app_form_permissions" />
+          <Property Name="locked" Type="Boolean" />
         </EntityType>
         <EntityType Name="app_form_permissions">
           <Key>
@@ -4698,6 +4704,7 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
           <EntitySetMapping Name="transaction_details">
             <EntityTypeMapping TypeName="dipckModel.transaction_details">
               <MappingFragment StoreEntitySet="transaction_details">
+                <ScalarProperty Name="current_qty" ColumnName="current_qty" />
                 <ScalarProperty Name="reason_id" ColumnName="reason_id" />
                 <ScalarProperty Name="trans_ref_no" ColumnName="trans_ref_no" />
                 <ScalarProperty Name="modified_date" ColumnName="modified_date" />
@@ -4820,6 +4827,7 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
           <EntitySetMapping Name="ck_stock_trans">
             <EntityTypeMapping TypeName="dipckModel.ck_stock_trans">
               <MappingFragment StoreEntitySet="ck_stock_trans">
+                <ScalarProperty Name="current_qty" ColumnName="current_qty" />
                 <ScalarProperty Name="batch_no" ColumnName="batch_no" />
                 <ScalarProperty Name="prod_code" ColumnName="prod_code" />
                 <ScalarProperty Name="modified_date" ColumnName="modified_date" />
@@ -5016,6 +5024,7 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
           <EntitySetMapping Name="app_forms">
             <EntityTypeMapping TypeName="dipckModel.app_forms">
               <MappingFragment StoreEntitySet="app_forms">
+                <ScalarProperty Name="locked" ColumnName="locked" />
                 <ScalarProperty Name="form_desc" ColumnName="form_desc" />
                 <ScalarProperty Name="modified_date" ColumnName="modified_date" />
                 <ScalarProperty Name="modified_by" ColumnName="modified_by" />

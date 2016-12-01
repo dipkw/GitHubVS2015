@@ -176,6 +176,20 @@ namespace dipndipInventory.EF.DataServices
             }
         }
 
+        public IEnumerable<ck_prod> GetAvailableBatchItemsByProductionDate(string ck_item_code)
+        {
+            try
+            {
+                _context = new CKEntities();
+                IEnumerable<ck_prod> ck_batch_items = (from ckprod in _context.ck_prod where (ckprod.ck_item_code == ck_item_code && ckprod.bal_qty > 0) orderby ckprod.prod_date ascending select ckprod);
+                return ck_batch_items;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         public decimal GetCurrentCKItemBatchQty(string prod_code, string batch_no)
         {
             decimal ck_item_batch_qty = 0.000m;

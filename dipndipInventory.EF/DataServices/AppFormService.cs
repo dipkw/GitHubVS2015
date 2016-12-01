@@ -22,5 +22,38 @@ namespace dipndipInventory.EF.DataServices
                 return null;
             }
         }
+
+        public string GetAppFormLockStatus(string form_id)
+        {
+            string lock_status = "open";
+            try
+            {
+                _context = new CKEntities();
+                lock_status = (from app_form in _context.app_forms orderby app_form.form_desc ascending where app_form.form_id == form_id select app_form.locked).FirstOrDefault()==false?"open":"locked";
+                return lock_status;
+            }
+            catch
+            {
+                return "open";
+            }
+        }
+
+        public int SetAppFormLockStatus(string form_id, bool lock_status)
+        {
+            try
+            {
+                _context = new CKEntities();
+                app_forms app_form_to_update = (from app_form in _context.app_forms orderby app_form.form_desc ascending where app_form.form_id == form_id select app_form).FirstOrDefault();
+                app_form_to_update.locked = lock_status;
+                _context.SaveChanges();
+                _context.Dispose();
+                return 1;
+            }
+            catch
+            {
+                _context.Dispose();
+                return 0;
+            }
+        }
     }
 }

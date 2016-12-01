@@ -221,6 +221,13 @@ namespace dipndipInventory.Views
 
         private void Order_Click(object sender, RoutedEventArgs e)
         {
+            AppFormService afscontext = new AppFormService();
+            if (afscontext.GetAppFormLockStatus("orderdetailsView") == "locked")
+            {
+                MessageBox.Show("Window is locked");
+                return;
+            }
+
             orderdetailsView odv = new orderdetailsView();
             odv.Show();
         }

@@ -45,7 +45,7 @@ namespace dipndipInventory.Views.Stock
             ShowTaskBar.ShowInTaskbar(this, "Central Kitchen Item Issue");
             this.AddHandler(GridViewRow.MouseLeftButtonUpEvent, new MouseButtonEventHandler(this.GridViewRow_OnMouseLeftButtonUp), true);
             this._lastClick = DateTime.Now;
-            dtpOrderDate.SelectedDate = DateTime.Now.Date;
+            //dtpOrderDate.SelectedDate = DateTime.Now.Date;
             FillAllSites();
             CKIssueService cicontext = new CKIssueService();
             string issue_code = cicontext.GetNewCKIssueCode();
@@ -171,6 +171,7 @@ namespace dipndipInventory.Views.Stock
             //    catch { }
             //}
 
+
             for(int row_index = 0; row_index<g_ck_issue_details.Count; row_index++)
             {
                 try
@@ -225,6 +226,33 @@ namespace dipndipInventory.Views.Stock
 
             UpdateAllList();
             //update ck_issue_details.ck_issue_master_id in DataService
+
+            bool list_has_items_to_issue = g_ck_item_issue_list.Any(z => z.qtyIssued > 0);
+
+            if (!list_has_items_to_issue)
+            {
+                MessageBox.Show("Please add items to issue");
+                return;
+            }
+
+            if (dtpOrderDate.SelectedDate == null)
+            {
+                MessageBox.Show("Please select Order Date");
+                return;
+            }
+
+            if(dtpIssueDate.SelectedDate == null)
+            {
+                MessageBox.Show("Please select Issue Date");
+                return;
+            }
+
+            if(cmbBranch.SelectedIndex == -1)
+            {
+                MessageBox.Show("Please select branch");
+                return;
+            }
+
             CKIssueService ciscontext = new CKIssueService();
            
             result = ciscontext.SaveCKBranchIssue(g_ck_items_update_list, g_ck_prod_update_list, g_ck_issue_master, g_ck_issue_details, g_ck_stock_trans_list, GlobalVariables.ActiveUser.Id) > 0 ? "CK Branch Item Issue Saved Successfully" : "Unable to Save CK Branch Item Issue";

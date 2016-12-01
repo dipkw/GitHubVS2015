@@ -28,6 +28,7 @@ namespace dipndipInventory.EF
         public Nullable<int> modified_by { get; set; }
         public Nullable<System.DateTime> modified_date { get; set; }
         public string form_desc { get; set; }
+        public Nullable<bool> locked { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<app_form_permissions> app_form_permissions { get; set; }
