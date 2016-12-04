@@ -310,5 +310,11 @@ namespace dipndipInventory.Views
             CKProductions cpv = new Stock.CKProductions();
             cpv.Show();
         }
+
+        private void CKBranchDelivery_Click(object sender, RoutedEventArgs e)
+        {
+            ckbranchdeliverylistView bdv = new ckbranchdeliverylistView();
+            bdv.Show();
+        }
     }
 }

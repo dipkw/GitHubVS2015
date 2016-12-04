@@ -239,11 +239,17 @@
                 </telerik:RadRibbonGroup>-->
             </telerik:RadRibbonTab>
             <telerik:RadRibbonTab Header="Reports">
-                <telerik:RadRibbonGroup Header="Central Kitchen Production">
+                <telerik:RadRibbonGroup Header="Central Kitchen">
                     <telerik:RadRibbonButton   Width="100"  HorizontalContentAlignment="Center" x:Name="CKProductions" Click="CKProductions_Click">
                         <StackPanel>
                             <Image Source="/dipndipInventory;component/images/menu_icons/orders.png" Width="32" Height="32"/>
                             <TextBlock Text="CK Productions" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </telerik:RadRibbonButton>
+                    <telerik:RadRibbonButton   Width="110"  HorizontalContentAlignment="Center" x:Name="CKBranchDelivery" Click="CKBranchDelivery_Click">
+                        <StackPanel>
+                            <Image Source="/dipndipInventory;component/images/menu_icons/orders.png" Width="32" Height="32"/>
+                            <TextBlock Text="CK Branch Delivery" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </telerik:RadRibbonButton>
                 </telerik:RadRibbonGroup>

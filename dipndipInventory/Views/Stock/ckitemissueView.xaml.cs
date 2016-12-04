@@ -81,6 +81,7 @@ namespace dipndipInventory.Views.Stock
             CKItemService citcontext = new CKItemService();
             IEnumerable<ck_items> ck_active_items = citcontext.ReadAllActiveCKItems();
             int row_indx = 0;
+            g_ck_item_issue_list.Clear();
             foreach(ck_items ck_active_item in ck_active_items)
             {
                 CKIssueViewModel ckivm = new CKIssueViewModel();
@@ -116,7 +117,9 @@ namespace dipndipInventory.Views.Stock
                 ckivm.rowIndex = row_indx++;
                 g_ck_item_issue_list.Add(ckivm);
             }
+            dgCKIssueDetails.ItemsSource = null;
             dgCKIssueDetails.ItemsSource = g_ck_item_issue_list;
+            dgCKIssueDetails.Rebind();
         }
 
         private void FillAllSites()
@@ -255,19 +258,32 @@ namespace dipndipInventory.Views.Stock
 
             CKIssueService ciscontext = new CKIssueService();
            
-            result = ciscontext.SaveCKBranchIssue(g_ck_items_update_list, g_ck_prod_update_list, g_ck_issue_master, g_ck_issue_details, g_ck_stock_trans_list, GlobalVariables.ActiveUser.Id) > 0 ? "CK Branch Item Issue Saved Successfully" : "Unable to Save CK Branch Item Issue";
+            result = ciscontext.SaveCKBranchIssue(g_ck_items_update_list, g_ck_prod_update_list, g_ck_issue_master, g_ck_issue_details, g_ck_stock_trans_list, GlobalVariables.ActiveUser.Id) > 0 ? "CK Branch Items Delivery Saved Successfully" : "Unable to Save CK Branch Items Delivery";
             MessageBox.Show(result);
-            //Clear All List after Save
-            g_ck_prod_update_list.Clear();
-            g_ck_issue_details.Clear();
-            g_ck_stock_trans_list.Clear();
+            if (result == "CK Branch Items Delivery Saved Successfully")
+            {
+                if (MessageBox.Show("Do you want to print?", "Confirm", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    PrintDelivery();
+                }
+                //Clear All List after Save
+                g_ck_prod_update_list.Clear();
+                g_ck_issue_details.Clear();
+                g_ck_stock_trans_list.Clear();
 
-            //Clear Grid
-            g_ck_item_issue_list.Clear();
-            dgCKIssueDetails.ItemsSource = null;
-            FillAllCKItems();
-
-            //Generate new issue_code
+                //Clear Grid
+                g_ck_item_issue_list.Clear();
+                dgCKIssueDetails.ItemsSource = null;
+                //FillAllCKItems();
+                GenerateNewCKIssueCode();
+                FillAllCKItems();
+            }
+        }
+        /// Generate new issue_code
+        /// 
+        private void GenerateNewCKIssueCode()
+        {
+            
             CKIssueService cicontext = new CKIssueService();
             string issue_code = cicontext.GetNewCKIssueCode();
             txtIssueCode.Value = issue_code;
@@ -334,7 +350,43 @@ namespace dipndipInventory.Views.Stock
             //}
         }
 
+        private void PrintDelivery()
+        {
+            try
+            {
 
+                //Telerik.Reporting.IReportDocument myReport = new DieReports.DieDetailsReport(die_id, "Drawing");
+                //Telerik.Reporting.IReportDocument myReport = new dipndipTLReports.PrintOrderReport("CKOR-0007");
+                //Telerik.Reporting.IReportDocument myReport = new dipndipTLReports.Reports.OrderDetailsB("CKOR-0007");
+                Telerik.Reporting.IReportDocument myReport = new dipndipTLReports.Reports.CKItemDeliveryReport(txtIssueCode.Value);
+
+
+                // Obtain the settings of the default printer
+                System.Drawing.Printing.PrinterSettings printerSettings
+                    = new System.Drawing.Printing.PrinterSettings();
+
+                //// The standard print controller comes with no UI
+                System.Drawing.Printing.PrintController standardPrintController =
+                    new System.Drawing.Printing.StandardPrintController();
+
+                // Print the report using the custom print controller
+                Telerik.Reporting.Processing.ReportProcessor reportProcessor
+                    = new Telerik.Reporting.Processing.ReportProcessor();
+
+                reportProcessor.PrintController = standardPrintController;
+
+                Telerik.Reporting.InstanceReportSource instanceReportSource =
+                    new Telerik.Reporting.InstanceReportSource();
+
+                instanceReportSource.ReportDocument = myReport;
+
+                reportProcessor.PrintReport(instanceReportSource, printerSettings);
+            }
+            catch
+            {
+
+            }
+        }
 
         //Generate Issue Code (Generate Code based on Site or not?)
     }

@@ -94,7 +94,10 @@ namespace dipndipInventory.Views.Stock
                     {
                         objCKItemBatchVM.ck_item_unit_id = (int)ck_batch_item.ck_item_unit_id;
                     }
-                    catch { }
+                    catch
+                    {
+                        MessageBox.Show("Please check unit for " + ck_batch_item.ck_item_code);
+                    }
                     objCKItemBatchVM.ck_item_unit_desc = ck_batch_item.ck_item_unit_desc;
                     objCKItemBatchVM.batch_no = ck_batch_item.batch_no;
                     objCKItemBatchVM.prod_date = (DateTime)ck_batch_item.prod_date;
@@ -319,10 +322,13 @@ namespace dipndipInventory.Views.Stock
 
             if(item_issue_detail.qty_issued>0)
             {
-                if(g_n_qty_issued<g_n_qty_on_hand)
+                if (row_index > 0)
                 {
-                    MessageBox.Show("Please issue items in FIFO basis");
-                    e.IsValid = false;
+                    if (g_n_qty_issued < g_n_qty_on_hand)
+                    {
+                        MessageBox.Show("Please issue items in FIFO basis");
+                        e.IsValid = false;
+                    }
                 }
             }
 

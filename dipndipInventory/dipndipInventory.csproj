@@ -245,6 +245,12 @@
     <Compile Include="Views\splashscreenView.xaml.cs">
       <DependentUpon>splashscreenView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Stock\ckbranchdeliverydetailsView.xaml.cs">
+      <DependentUpon>ckbranchdeliverydetailsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Stock\ckbranchdeliverylistView.xaml.cs">
+      <DependentUpon>ckbranchdeliverylistView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Stock\ckitembatchView.xaml.cs">
       <DependentUpon>ckitembatchView.xaml</DependentUpon>
     </Compile>
@@ -400,6 +406,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\splashscreenView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Stock\ckbranchdeliverydetailsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Stock\ckbranchdeliverylistView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

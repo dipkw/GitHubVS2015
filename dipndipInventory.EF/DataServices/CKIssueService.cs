@@ -33,6 +33,62 @@ namespace dipndipInventory.EF.DataServices
             catch (Exception e) { return string.Empty; }
         }
 
+        public IEnumerable<ck_issue_master> ReadAllCKBranchDelivery()
+        {
+            try
+            {
+                _context = new CKEntities();
+                IEnumerable<ck_issue_master> objCKIssueMaster = (from ckdeliveries in _context.ck_issue_master orderby ckdeliveries.Id descending select ckdeliveries);
+                return objCKIssueMaster;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public IEnumerable<ck_issue_master> ReadLast1KCKBranchDelivery()
+        {
+            try
+            {
+                _context = new CKEntities();
+                IEnumerable<ck_issue_master> objCKIssueMaster = (from ckdeliveries in _context.ck_issue_master orderby ckdeliveries.Id descending select ckdeliveries).Take(1000);
+                return objCKIssueMaster;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public IEnumerable<ck_issue_detais> GetBranchDeliveryByIssueCode(string ck_issue_code)
+        {
+            try
+            {
+                _context = new CKEntities();
+                IEnumerable<ck_issue_detais> ck_issue_delivery_detaiil = (from ckdeliveries in _context.ck_issue_detais orderby ckdeliveries.Id ascending where ckdeliveries.ck_issue_code == ck_issue_code select ckdeliveries);
+                return ck_issue_delivery_detaiil;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public ck_issue_master GetIssueMasterInfo(string ck_issue_code)
+        {
+            try
+            {
+                _context = new CKEntities();
+                ck_issue_master ck_issue_master_info = (from ckissuemaster in _context.ck_issue_master where ckissuemaster.ck_issue_code == ck_issue_code select ckissuemaster).FirstOrDefault();
+                return ck_issue_master_info;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         public int SaveCKBranchIssue(List<ck_items> g_ck_items_update_list, List<ck_prod> g_ck_prod_update_list, ck_issue_master g_ck_issue_master, List<ck_issue_detais> g_ck_issue_details, List<ck_stock_trans> g_ck_stock_trans_list, int active_user)
         {
             using (var context = new CKEntities())
