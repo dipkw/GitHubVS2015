@@ -187,7 +187,8 @@ namespace dipndipInventory.Views.Stock
                         ckissuedetail.ck_item_code = objItemBatchVM.ck_item_code;
                         ckissuedetail.ck_item_desc = objItemBatchVM.ck_item_description;
                         ckissuedetail.ck_item_unit_id = objItemBatchVM.ck_item_unit_id;
-                        ckissuedetail.qty_issued = objItemBatchVM.qty_issued;
+                        //ckissuedetail.qty_issued = objItemBatchVM.qty_issued;
+                        ckissuedetail.qty_issued = objItemBatchVM.qty_issued * g_conv_factor;
                         ckissuedetail.ck_item_unit_cost = (objItemBatchVM.tmp_ck_unit_cost * g_conv_factor);
                         ckissuedetail.ck_item_total_cost = (objItemBatchVM.tmp_ck_unit_cost * g_conv_factor) * (objItemBatchVM.qty_issued);
                         ckissuedetail.created_by = GlobalVariables.ActiveUser.Id;
@@ -208,7 +209,8 @@ namespace dipndipInventory.Views.Stock
             try
             {
                 //Updation for ckitemissueView grid items
-                g_ck_item_issue_list[g_ck_issue_vm.rowIndex].qtyIssued = total_qty_issued;
+                //g_ck_item_issue_list[g_ck_issue_vm.rowIndex].qtyIssued = total_qty_issued;
+                g_ck_item_issue_list[g_ck_issue_vm.rowIndex].qtyIssued = total_qty_issued * g_conv_factor;
                 decimal ck_item_unit_cost = 0.000m;
                 decimal item_conv_factor = 0.000m;
                 CKItemService cscontext = new CKItemService();
@@ -249,7 +251,8 @@ namespace dipndipInventory.Views.Stock
                         continue;
 
                     CKItemBatchViewModel objItemBatchVM = row.Item as CKItemBatchViewModel;
-                    g_n_qty_on_hand += objItemBatchVM.bal_qty;
+                    //g_n_qty_on_hand += objItemBatchVM.bal_qty;
+                    g_n_qty_on_hand += objItemBatchVM.bal_qty/g_conv_factor;
                     row_count++;
                     if(row_count>n)
                     {
@@ -334,8 +337,8 @@ namespace dipndipInventory.Views.Stock
 
             //MessageBox.Show("QOH" + g_n_qty_on_hand.ToString());
             //MessageBox.Show("QIS" + g_n_qty_issued.ToString());
-
-            if (item_issue_detail.qty_issued > item_issue_detail.bal_qty)
+            //if (item_issue_detail.qty_issued > item_issue_detail.bal_qty)
+            if (item_issue_detail.qty_issued > item_issue_detail.bal_qty/g_conv_factor)
             {
                 //validationResult.PropertyName = "IssuedQty";
                 //ValidationResult.ErrorMessage = "Issued Quantity is more than Quantity on Hand";

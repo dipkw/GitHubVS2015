@@ -117,7 +117,7 @@ namespace dipndipInventory.Views.Stock
             dtpDate.SelectedDate = order_date;
             CKOrderService _ocontext = new CKOrderService();
             DateTime delivery_date = DateTime.Now;
-
+            g_ck_order_view = ck_order_view;
             try
             {
                 delivery_date = (DateTime)_context.GetDeliveryDate(order_no);
@@ -566,6 +566,16 @@ namespace dipndipInventory.Views.Stock
             //SavePdfOrder();
             //MailOrder();
             SendMail();
+            CKOrderService ckocontext = new CKOrderService();
+            if(ckocontext.UpdateCKOrderedStatus(id,"Ordered",(DateTime)dtpDate.SelectedDate, GlobalVariables.ActiveUser.Id)<1)
+            {
+                MessageBox.Show("Error");
+            }
+            IEnumerable<order> g_orders = ckocontext.ReadAllActiveSiteOrders(GlobalVariables.ActiveSite.Id);
+            g_ck_order_view.dgCKOrders.ItemsSource = null;
+            g_ck_order_view.dgCKOrders.ItemsSource = g_orders;
+            g_ck_order_view.dgCKOrders.Rebind();
+            ClearOrder();
         }
 
         private bool OrderPlaced()

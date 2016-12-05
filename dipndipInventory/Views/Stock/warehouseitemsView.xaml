@@ -33,10 +33,10 @@
                     <telerik:GridViewDataColumn x:Name="ItemDesc" DataMemberBinding="{Binding wh_item_description}" Width="*" Header="Item Description"/>
                     <telerik:GridViewDataColumn x:Name="CatDesc" DataMemberBinding="{Binding wh_category_description}" Width="*" Header="Category"/>
                     <telerik:GridViewDataColumn x:Name="Unit" DataMemberBinding="{Binding wh_unit_description}" Width="*" Header="Unit"/>
-                    <telerik:GridViewDataColumn x:Name="CurCost" DataMemberBinding="{Binding unit_cost}" Width="*" Header="Current Cost" TextAlignment="Right"/>
-                    <telerik:GridViewDataColumn x:Name="CKCost" DataMemberBinding="{Binding ck_avg_unit_cost}" Width="*" Header="CK Avg Cost" TextAlignment="Right"/>
-                    <telerik:GridViewDataColumn x:Name="WHQuantity" DataMemberBinding="{Binding quantity}" Width="*" Header="Warehouse Qty" TextAlignment="Right"/>
-                    <telerik:GridViewDataColumn x:Name="CKQuantity" DataMemberBinding="{Binding ck_qty}" Width="*" Header="CK Quantity" TextAlignment="Right"/>
+                    <telerik:GridViewDataColumn x:Name="CurCost" DataMemberBinding="{Binding unit_cost, StringFormat=N3}" Width="*" Header="Current Cost" TextAlignment="Right"/>
+                    <telerik:GridViewDataColumn x:Name="CKCost" DataMemberBinding="{Binding ck_avg_unit_cost, StringFormat=N3}" Width="*" Header="CK Avg Cost" TextAlignment="Right"/>
+                    <telerik:GridViewDataColumn x:Name="WHQuantity" DataMemberBinding="{Binding quantity, StringFormat=N3}" Width="*" Header="Warehouse Qty" TextAlignment="Right"/>
+                    <telerik:GridViewDataColumn x:Name="CKQuantity" DataMemberBinding="{Binding ck_qty, StringFormat=N3}" Width="*" Header="CK Quantity" TextAlignment="Right"/>
 
                     <telerik:GridViewColumn Width="80">
                         <telerik:GridViewColumn.CellTemplate>

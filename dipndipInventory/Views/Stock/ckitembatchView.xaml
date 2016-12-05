@@ -33,11 +33,11 @@
                     <telerik:GridViewDataColumn x:Name="ProdCode" DataMemberBinding="{Binding ck_prod_code}" Width="*" Header="Production Code" IsVisible="True"/>
                     <telerik:GridViewDataColumn x:Name="BatchNo" DataMemberBinding="{Binding batch_no}" Width="*" Header="Batch No" IsVisible="True"/>
                     <!--<telerik:GridViewDataColumn x:Name="Unit" DataMemberBinding="{Binding ck_item_unit_desc}" Width="*" Header="Unit" IsReadOnly="True"/>-->
-                    <telerik:GridViewDataColumn x:Name="ProdDate" DataMemberBinding="{Binding prod_date}" Width="*" Header="Production Date" IsVisible="True"/>
-                    <telerik:GridViewDataColumn x:Name="ExpiryDate" DataMemberBinding="{Binding exp_date}" Width="*" Header="Expiry Date" IsReadOnly="True"/>
+                    <telerik:GridViewDataColumn x:Name="ProdDate" DataMemberBinding="{Binding prod_date, StringFormat=d}" Width="*" Header="Production Date" IsVisible="True"/>
+                    <telerik:GridViewDataColumn x:Name="ExpiryDate" DataMemberBinding="{Binding exp_date, StringFormat=d}" Width="*" Header="Expiry Date" IsReadOnly="True"/>
                     <!--<telerik:GridViewDataColumn x:Name="QuantityOnHand" DataMemberBinding="{Binding bal_qty}" Width="*" Header="Quantity On Hand" IsReadOnly="True"/>-->
-                    <telerik:GridViewDataColumn x:Name="QuantityOnHand" DataMemberBinding="{Binding rem_qty}" Width="*" Header="Quantity On Hand" IsReadOnly="True"/>
-                    <telerik:GridViewDataColumn x:Name="IssuedQuantity" DataMemberBinding="{Binding qty_issued}" Width="*" Header="Issued Quantity" />
+                    <telerik:GridViewDataColumn x:Name="QuantityOnHand" DataMemberBinding="{Binding rem_qty, StringFormat=N3}" Width="*" Header="Quantity On Hand" IsReadOnly="True" TextAlignment="Right"/>
+                    <telerik:GridViewDataColumn x:Name="IssuedQuantity" DataMemberBinding="{Binding qty_issued, StringFormat=N3}" Width="*" Header="Issued Quantity" TextAlignment="Right"/>
 
                     <telerik:GridViewDataColumn x:Name="ItemId" DataMemberBinding="{Binding ck_item_id}" Width="*" Header="Item Id" IsVisible="False"/>
                     

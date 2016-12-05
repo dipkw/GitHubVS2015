@@ -33,8 +33,17 @@ namespace dipndipInventory.Views.Stock
         {
             InitializeComponent();
             ShowTaskBar.ShowInTaskbar(this, "Central Kitchen Items");
+            CheckUserPermissions();
             ReadAllCKItems();
             FillUnits();
+        }
+
+        private void CheckUserPermissions()
+        {
+            AppFormPermissionService afpcontext = new AppFormPermissionService();
+            btnNew.IsEnabled = afpcontext.GetAppRoleFormPermission(GlobalVariables.ActiveUser.role_id, "CK Items", "Create");
+            btnSave.IsEnabled = afpcontext.GetAppRoleFormPermission(GlobalVariables.ActiveUser.role_id, "CK Items", "Create");
+            btnDelete.IsEnabled = afpcontext.GetAppRoleFormPermission(GlobalVariables.ActiveUser.role_id, "CK Items", "Delete");
         }
 
         private void ReadAllCKItems()
@@ -110,6 +119,12 @@ namespace dipndipInventory.Views.Stock
             //    RadWindow.Alert("Access denied, Please contact Administrator");
             //    return;
             //}
+            AppFormPermissionService afpcontext = new AppFormPermissionService();
+            if(afpcontext.GetAppRoleFormPermission(GlobalVariables.ActiveUser.role_id, "CK Items", "Update") == false)
+            {
+                MessageBox.Show("Access Denied");
+                return;
+            }
 
             if (dgCKItems.SelectedItem == null)
             {

@@ -14,33 +14,33 @@
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="500"/>
+            <ColumnDefinition Width="550"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
         <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="10,0,0,0">
-            <telerik:Label Content="Doc. No." Height="25" Width="65"/>
-            <telerik:RadMaskedTextInput Name="txtDocNo" Width="85" Margin="3" TabIndex="7" Placeholder="_" TextMode="MaskedText" Mask="" InputBehavior="Insert" AcceptsReturn="False" IsReadOnly="True"/>
+            <telerik:Label Content="Doc. No." Height="25" Width="55"/>
+            <telerik:RadMaskedTextInput Name="txtDocNo" Height="25" Width="95" Margin="3" TabIndex="7" Placeholder="_" TextMode="MaskedText" Mask="" InputBehavior="Insert" AcceptsReturn="False" IsReadOnly="True"/>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="163,0,0,0">
             <telerik:Label Content="Order No." Height="25" Width="60"/>
-            <telerik:RadMaskedTextInput Name="txtOrderNo" Width="85" Margin="3" TabIndex="7" Placeholder="_" TextMode="MaskedText" Mask="" InputBehavior="Insert" AcceptsReturn="False" IsReadOnly="True"/>
+            <telerik:RadMaskedTextInput Name="txtOrderNo" Height="25" Width="110" Margin="3" TabIndex="7" Placeholder="_" TextMode="MaskedText" Mask="" InputBehavior="Insert" AcceptsReturn="False" IsReadOnly="True"/>
         </StackPanel>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="315,0,0,0">
-            <telerik:Label Content="Branch" Height="25" Width="60"/>
-            <telerik:RadMaskedTextInput Name="txtBranch" Width="115" Margin="3" TabIndex="7" Placeholder="_" TextMode="MaskedText" Mask="" InputBehavior="Insert" AcceptsReturn="False" IsReadOnly="True"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="345,0,0,0">
+            <telerik:Label Content="Branch" Height="25" Width="46"/>
+            <telerik:RadMaskedTextInput Name="txtBranch" Height="25" Width="150" Margin="3" TabIndex="7" Placeholder="_" TextMode="MaskedText" Mask="" InputBehavior="Insert" AcceptsReturn="False" IsReadOnly="True"/>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" Margin="10,0,0,0">
             <telerik:Label Content="Order Date" Height="25" Width="68"/>
-            <telerik:RadDatePicker x:Name="dtpOrderDate" Width="125" Margin="3" TabIndex="8" DisplayFormat="Short" Culture="en-US" IsHitTestVisible="False"/>
+            <telerik:RadDatePicker x:Name="dtpOrderDate" Height="25" Width="125" Margin="3" TabIndex="8" DisplayFormat="Short" Culture="en-US" IsHitTestVisible="False"/>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" Margin="210,0,0,0">
             <telerik:Label Content="Delivered Date" Height="25" Width="88"/>
-            <telerik:RadDatePicker x:Name="dtpDeliveredDate" Width="125" Margin="3" TabIndex="8" DisplayFormat="Short" Culture="en-US" IsHitTestVisible="False"/>
+            <telerik:RadDatePicker x:Name="dtpDeliveredDate" Height="25" Width="125" Margin="3" TabIndex="8" DisplayFormat="Short" Culture="en-US" IsHitTestVisible="False"/>
         </StackPanel>
         
         <Border Grid.ColumnSpan="2" Margin="10" BorderBrush="Black" BorderThickness="0.5" Grid.Row="1">

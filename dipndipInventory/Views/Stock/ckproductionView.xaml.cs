@@ -228,8 +228,10 @@ namespace dipndipInventory.Views.Stock
             foreach(ck_prod ckproduction in production_list)
             {
                 CKItemCostService cscontext = new CKItemCostService();
+                CKItemService citcontext = new CKItemService();
                 int ck_item_id = (int)ckproduction.ck_item_id;
-                decimal ck_item_current_cost = cscontext.GetCurrentCKItemCost(ck_item_id);
+                decimal ck_item_current_cost_1 = cscontext.GetCurrentCKItemCost(ck_item_id);
+                decimal ck_item_current_cost = citcontext.GetCurrentCKItemCost(ck_item_id);
 
                 ck_item_cost_history ck_item_cost = new ck_item_cost_history();
                 ck_item_cost.ck_item_id = ck_item_id;
@@ -239,7 +241,7 @@ namespace dipndipInventory.Views.Stock
                 ck_item_cost.created_by = GlobalVariables.ActiveUser.Id;
                 ck_item_cost.created_date = DateTime.Now;
 
-                if (ck_item_current_cost == 0.000m)
+                if (ck_item_current_cost_1 == 0.000m)
                 {
                     ck_item_cost.ord = 1;
                     ck_item_cost.prev_cost = 0.000m;
@@ -290,9 +292,9 @@ namespace dipndipInventory.Views.Stock
                     //objProduction.bal_qty = objCKProductionViewModel.prodQty;
                     objProduction.bal_qty = objCKProductionViewModel.prodQty * objCKProductionViewModel.designQty;
                     decimal cur_ck_item_prod_cost = GetCKItemProdCost(objCKProductionViewModel.itemId, objCKProductionViewModel.prodQty, objCKProductionViewModel.designQty);
-                    decimal cur_ck_item_cost = cur_ck_item_prod_cost / objCKProductionViewModel.prodQty;
+                    decimal cur_ck_item_cost = ((cur_ck_item_prod_cost / objCKProductionViewModel.prodQty)/objCKProductionViewModel.designQty);
                     objProduction.unit_cost = GetCKItemAvgCost(objCKProductionViewModel.itemId,cur_ck_item_cost,objCKProductionViewModel.prodQty);
-                    objProduction.total_cost = objProduction.bal_qty * objProduction.unit_cost;
+                    objProduction.total_cost = (decimal)(objProduction.bal_qty * objProduction.unit_cost);
                     //objProduction.total_cost = objCKProductionViewModel.prodQty * objProduction.unit_cost;
                     objProduction.created_by = GlobalVariables.ActiveUser.Id;
                     objProduction.created_date = DateTime.Now;

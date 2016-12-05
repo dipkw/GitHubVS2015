@@ -140,9 +140,9 @@ namespace dipndipInventory.Views.Stock
             }
         }
 
-        private int CreateReceipt(DateTime receipt_date_time, List<receipt_details> receipt_detail_list)
+        private void CreateReceipt(DateTime receipt_date_time, List<receipt_details> receipt_detail_list)
         {
-            int result = 0;
+            //int result = 0;
             try
             {
                 CKReceiptService _rcontext = new CKReceiptService();
@@ -163,7 +163,7 @@ namespace dipndipInventory.Views.Stock
                 g_receipt_master = receipt_master;
             }
             catch { }
-            return result;
+            //return result;
         }
 
         private decimal CalculateAverageCost(decimal previous_cost, decimal previous_qty, decimal current_cost, decimal current_qty)
@@ -212,9 +212,9 @@ namespace dipndipInventory.Views.Stock
             return current_average_cost;
         }
 
-        private int UpdateItemCostHistory(List<receipt_details> receipt_detail_list)
+        private void UpdateItemCostHistory(List<receipt_details> receipt_detail_list)
         {
-            int result = 0;
+            //int result = 0;
             WHItemCostService _hcontext = new WHItemCostService();
             WHItemService _wicontext = new WHItemService();
             foreach (receipt_details ReceiptDetail in receipt_detail_list)
@@ -263,7 +263,8 @@ namespace dipndipInventory.Views.Stock
                     }
                     else
                     {
-                        return 1;
+                        //return 1;
+                        return;
                     }
                 }
                 else 
@@ -300,7 +301,7 @@ namespace dipndipInventory.Views.Stock
                     g_wh_item_cost_history_list.Add(objWHItemCost);
                 }
             }
-            return result;
+            //return result;
         }
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
@@ -427,19 +428,27 @@ namespace dipndipInventory.Views.Stock
                 //**Changed for making transaction
             }
 
-            result = CreateReceipt(receipt_date_time, g_receipt_detail_list);
-            result = UpdateItemCostHistory(g_receipt_detail_list);
-            if (result > 0)
-            {
-                //**Changed for making transaction
-                //result = _ocontext.UpdateCKOrderReceiveStatus(active_order_id, "Received", receipt_date_time, GlobalVariables.ActiveUser.Id);
-                //**Changed for making transaction
-                g_order_master.Id = active_order_id;
-                g_order_master.order_status = "Received";
-                g_order_master.receipt_date = receipt_date_time;
-                g_order_master.modified_by = GlobalVariables.ActiveUser.Id;
-                g_order_master.modified_date = DateTime.Now;
-            }
+            //result = CreateReceipt(receipt_date_time, g_receipt_detail_list);
+            //result = UpdateItemCostHistory(g_receipt_detail_list);
+            CreateReceipt(receipt_date_time, g_receipt_detail_list);
+            UpdateItemCostHistory(g_receipt_detail_list);
+
+            //if (result > 0)
+            //{
+            //**Changed for making transaction
+            //result = _ocontext.UpdateCKOrderReceiveStatus(active_order_id, "Received", receipt_date_time, GlobalVariables.ActiveUser.Id);
+            //**Changed for making transaction
+            //g_order_master.Id = active_order_id;
+            //g_order_master.order_status = "Received";
+            //g_order_master.receipt_date = receipt_date_time;
+            //g_order_master.modified_by = GlobalVariables.ActiveUser.Id;
+            //g_order_master.modified_date = DateTime.Now;
+            //}
+            g_order_master.Id = active_order_id;
+            g_order_master.order_status = "Received";
+            g_order_master.receipt_date = receipt_date_time;
+            g_order_master.modified_by = GlobalVariables.ActiveUser.Id;
+            g_order_master.modified_date = DateTime.Now;
             result = _ocontext.SaveReceipt(g_order_master, g_order_detail_list, g_transaction_detail_list, g_ckwh_items_list, g_receipt_master, g_receipt_detail_list, g_wh_item_cost_history_list);
             string response = result > 0 ? "Items Received Successfully" : "Unable to receive the Items. Please contact administrator";
 
@@ -452,12 +461,13 @@ namespace dipndipInventory.Views.Stock
                 g_ck_order_view.dgCKOrders.Rebind();
             }
 
-            RadWindow.Alert(response);
+            //RadWindow.Alert(response);
+            MessageBox.Show(response);
         }
 
-        private int SaveTransaction(OrderDetailsViewModel objOrderDetails, DateTime receipt_date_time, decimal item_unit_cost)
+        private void SaveTransaction(OrderDetailsViewModel objOrderDetails, DateTime receipt_date_time, decimal item_unit_cost)
         {
-            int result = 0;
+            //int result = 0;
             try
             {
                 SiteService _scontext = new SiteService();
@@ -486,7 +496,7 @@ namespace dipndipInventory.Views.Stock
                 //**Changed for making transaction
             }
             catch { }
-            return result;
+            //return result;
         }
 
         private void btnClose_Click(object sender, RoutedEventArgs e)

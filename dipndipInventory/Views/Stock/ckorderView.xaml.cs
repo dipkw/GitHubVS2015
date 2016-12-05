@@ -83,7 +83,7 @@ namespace dipndipInventory.Views.Stock
 
             }
             //else if ((GlobalVariables.ActiveSite.Id == objOrder.order_to_site_id) && (objOrder.order_status != "Received" || objOrder.order_status != "Confirmed"))
-            else if ((GlobalVariables.ActiveSite.Id == objOrder.order_to_site_id) && (objOrder.order_status != "Received" && objOrder.order_status != "Confirmed" && objOrder.order_status != "Issued"))
+            else if ((GlobalVariables.ActiveSite.Id == objOrder.order_to_site_id) && (objOrder.order_status != "Received" && objOrder.order_status != "Confirmed" && objOrder.order_status != "Issued" && objOrder.order_status != "Pending"))
             {
                 //Open Order Issue Window For To_Site(Warehouse) to issue the items
                 AppFormService afscontext = new AppFormService();

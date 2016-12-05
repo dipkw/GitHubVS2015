@@ -168,7 +168,8 @@ namespace dipndipInventory.Views.Stock
                         ckwastagedetail.ck_item_code = objItemBatchVM.ck_item_code;
                         ckwastagedetail.ck_item_desc = objItemBatchVM.ck_item_description;
                         ckwastagedetail.ck_item_unit_id = objItemBatchVM.ck_item_unit_id;
-                        ckwastagedetail.wastage_qty = objItemBatchVM.qty_issued;
+                        //ckwastagedetail.wastage_qty = objItemBatchVM.qty_issued;
+                        ckwastagedetail.wastage_qty = objItemBatchVM.qty_issued * g_conv_factor; //Edited on 05-12-2016
                         ckwastagedetail.ck_item_unit_cost = (objItemBatchVM.tmp_ck_unit_cost * g_conv_factor);
                         ckwastagedetail.ck_item_total_cost = (objItemBatchVM.tmp_ck_unit_cost * g_conv_factor) * (objItemBatchVM.qty_issued);
                         ckwastagedetail.created_by = GlobalVariables.ActiveUser.Id;
@@ -189,7 +190,8 @@ namespace dipndipInventory.Views.Stock
             try
             {
                 //Updation for ckitemissueView grid items
-                g_ck_item_issue_list[g_ck_issue_vm.rowIndex].qtyIssued = total_qty_issued;
+                //g_ck_item_issue_list[g_ck_issue_vm.rowIndex].qtyIssued = total_qty_issued;
+                g_ck_item_issue_list[g_ck_issue_vm.rowIndex].qtyIssued = total_qty_issued * g_conv_factor; //Edited on 05-12-2016
                 decimal ck_item_unit_cost = 0.000m;
                 decimal item_conv_factor = 0.000m;
                 CKItemService cscontext = new CKItemService();
