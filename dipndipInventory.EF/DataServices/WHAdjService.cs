@@ -112,5 +112,44 @@ namespace dipndipInventory.EF.DataServices
             }
             catch (Exception e) { return string.Empty; }
         }
+
+        public int SaveStockItemAdjustment(ckwh_items g_ckwh_item, transaction_details g_transaction_details, ckwh_items_adj g_ckwh_items_adj, wh_item_cost_history g_wh_item_cost_history)
+        {
+            using (var context = new CKEntities())
+            {
+                using (var dbcxtrx = context.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        ckwh_items ckwh_item_to_update = (from ckwhitem in context.ckwh_items where ckwhitem.Id == g_ckwh_item.Id select ckwhitem).SingleOrDefault();
+                        ckwh_item_to_update.ck_qty = g_ckwh_item.ck_qty;
+                        ckwh_item_to_update.ck_avg_unit_cost = g_ckwh_item.ck_avg_unit_cost;
+                        ckwh_item_to_update.modified_by = g_ckwh_item.modified_by;
+                        ckwh_item_to_update.modified_date = g_ckwh_item.modified_date;
+                        context.SaveChanges();
+
+                        context.transaction_details.Add(g_transaction_details);
+                        context.SaveChanges();
+
+                        context.ckwh_items_adj.Add(g_ckwh_items_adj);
+                        context.SaveChanges(); 
+
+                        if(g_wh_item_cost_history != null)
+                        {
+                            context.wh_item_cost_history.Add(g_wh_item_cost_history);
+                            context.SaveChanges();
+                        }
+
+                        dbcxtrx.Commit();
+                        return 1;
+                    }
+                    catch
+                    {
+                        dbcxtrx.Rollback();
+                        return 0;
+                    }
+                }
+            }
+        }
     }
 }

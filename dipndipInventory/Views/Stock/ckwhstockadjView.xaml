@@ -76,7 +76,8 @@
 
                 <StackPanel Orientation="Horizontal" >
                     <telerik:Label Content="Quantity" Height="25" Width="150"/>
-                    <telerik:RadMaskedNumericInput Name="txtQty" Width="250" Margin="3" TabIndex="3" Placeholder="_" TextMode="MaskedText" Mask="" InputBehavior="Insert" FormatString="0"/>
+                    <!--<telerik:RadMaskedNumericInput Name="txtQty" Width="250" Margin="3" TabIndex="3" Placeholder="_" TextMode="MaskedText" Mask="" InputBehavior="Insert" FormatString="0"/>-->
+                    <telerik:RadMaskedNumericInput Name="txtQty" Width="250" Margin="3" TabIndex="5" Placeholder="_" TextMode="MaskedText" Mask="" InputBehavior="Insert" FormatString="0.00000000"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" >

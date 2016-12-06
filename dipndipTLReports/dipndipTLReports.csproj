@@ -86,6 +86,7 @@
     </Compile>
     <Compile Include="Reports\ReportVM\PrintOrderVM.cs" />
     <Compile Include="Reports\ReportVM\ReceiptReportVM.cs" />
+    <Compile Include="Reports\ReportVM\WHStockAdjReportVM.cs" />
     <Compile Include="Reports\TestReport.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -98,6 +99,12 @@
     <Compile Include="Reports\WHDeliveryDetails.Designer.cs">
       <DependentUpon>WHDeliveryDetails.cs</DependentUpon>
     </Compile>
+    <Compile Include="Reports\WHItemAdjReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\WHItemAdjReport.Designer.cs">
+      <DependentUpon>WHItemAdjReport.cs</DependentUpon>
+    </Compile>
     <Compile Include="Reports\WHReceiptConfirmation.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -109,6 +116,12 @@
     </Compile>
     <Compile Include="Reports\WHReceiptDetails.Designer.cs">
       <DependentUpon>WHReceiptDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\WHStockAdjReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\WHStockAdjReport.Designer.cs">
+      <DependentUpon>WHStockAdjReport.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -152,11 +165,17 @@
     <EmbeddedResource Include="Reports\WHDeliveryDetails.resx">
       <DependentUpon>WHDeliveryDetails.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reports\WHItemAdjReport.resx">
+      <DependentUpon>WHItemAdjReport.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reports\WHReceiptConfirmation.resx">
       <DependentUpon>WHReceiptConfirmation.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\WHReceiptDetails.resx">
       <DependentUpon>WHReceiptDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\WHStockAdjReport.resx">
+      <DependentUpon>WHStockAdjReport.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

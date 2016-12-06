@@ -34,6 +34,12 @@ namespace dipndipInventory.Views.Stock
         decimal conversion_factor = 0.00000000m;
         string adj_code = string.Empty;
         decimal selected_item_unit_cost = 0.00000000m;
+
+        ckwh_items g_ckwh_item;
+        transaction_details g_transaction_details;
+        ckwh_items_adj g_ckwh_items_adj;
+        wh_item_cost_history g_wh_item_cost_history;
+
         public ckwhstockadjView()
         {
             InitializeComponent();
@@ -182,31 +188,61 @@ namespace dipndipInventory.Views.Stock
                 
             }
 
-            //Update CK Quantity
-            _wcontext.UpdateCKItemQty(Convert.ToInt32(selected_item_id), updated_ck_qty, GlobalVariables.ActiveUser.Id);
+            ////Update CK Quantity
+            //_wcontext.UpdateCKItemQty(Convert.ToInt32(selected_item_id), updated_ck_qty, GlobalVariables.ActiveUser.Id);
 
-            //Update Item CK Item Avg Unit Cost
-            _wicontext.UpdateCKItemAvgUnitCost(selected_item_id, updated_average_cost);
+            ////Update Item CK Item Avg Unit Cost
+            //_wicontext.UpdateCKItemAvgUnitCost(selected_item_id, updated_average_cost);
+
+            g_ckwh_item = new ckwh_items();
+            g_ckwh_item.Id = selected_item_id;
+            g_ckwh_item.ck_qty = updated_ck_qty;
+            g_ckwh_item.ck_avg_unit_cost = updated_average_cost;
+            g_ckwh_item.modified_by = GlobalVariables.ActiveUser.Id;
+            g_ckwh_item.modified_date = DateTime.Now;
 
             //Update Transaction
             SaveTransaction(DateTime.Now, item_unit_cost, adj_qty, trans_type);
 
             SaveStockAdj(conv_factor,item_unit_cost);
 
+            WHAdjService adjcontext = new WHAdjService();
+            int result = adjcontext.SaveStockItemAdjustment(g_ckwh_item, g_transaction_details, g_ckwh_items_adj, g_wh_item_cost_history);
+            if(result > 0)
+            {
+                MessageBox.Show("Stock Quantity Adjusted Successfully");
+                GetNewAdjCode();
+                ReadAllWHItems();
+                ClearFields();
+            }
+            else
+            {
+                MessageBox.Show("Stock Quantity Adjustment Failed");
+            }
             //Update item_cost_history table with new item_avg_cost
 
             //Update adj_code after saving
-            GetNewAdjCode();
+            
             //MessageBox.Show(updated_ck_qty.ToString());
-            ReadAllWHItems();
+            
         }
 
-        private int CreateCost(decimal updated_average_cost)
+        private void ClearFields()
+        {
+            txtItemCode.Value = "";
+            txtDescription.Value = "";
+            cmbUnit.SelectedIndex = -1;
+            txtQty.Value = 0.00000000;
+        }
+        //private int CreateCost(decimal updated_average_cost)
+        private void CreateCost(decimal updated_average_cost)
         {
             WHItemCostService _hcontext = new WHItemCostService();
             wh_item_cost_history objWHItemCost = new wh_item_cost_history();
             wh_item_cost_history lastWHItemCost = _hcontext.GetLastCost((int)(selected_item_id));
-            int result = 0;
+
+            //int result = 0;
+
             //If item cost is in history table
             if (lastWHItemCost != null)
             {
@@ -225,18 +261,21 @@ namespace dipndipInventory.Views.Stock
             objWHItemCost.created_by = GlobalVariables.ActiveUser.Id;
             objWHItemCost.created_date = DateTime.Now;
             //result = _hcontext.UpdateWHItemCost(objWHItemCost);//_hcontext.CreateWHItemCost(objWHItemCost);
-            result = _hcontext.CreateWHItemCost(objWHItemCost);
-            if (result <= 0)
-            {
-                 MessageBox.Show("Warehouse Item Cost Updation Failed");
-            }
-            return result;
+            g_wh_item_cost_history = new wh_item_cost_history();
+            g_wh_item_cost_history = objWHItemCost;
+
+            //result = _hcontext.CreateWHItemCost(objWHItemCost);
+            //if (result <= 0)
+            //{
+            //     MessageBox.Show("Warehouse Item Cost Updation Failed");
+            //}
+            //return result;
         }
         private void SaveStockAdj(decimal conv_factor, decimal item_unit_cost)
         {
             WHAdjService _adcontext = new WHAdjService();
             ckwh_items_adj objWHAdj = new ckwh_items_adj();
-            int result = 0;
+            //int result = 0;
             objWHAdj.adj_code = adj_code;
             objWHAdj.wh_item_id = selected_item_id;
             objWHAdj.wh_item_code = txtItemCode.Value;
@@ -249,7 +288,10 @@ namespace dipndipInventory.Views.Stock
             objWHAdj.created_by = GlobalVariables.ActiveUser.Id;
             objWHAdj.created_date = DateTime.Now;
             objWHAdj.active = 1;
-            result = _adcontext.CreateWHAdj(objWHAdj);
+            //result = _adcontext.CreateWHAdj(objWHAdj);
+
+            g_ckwh_items_adj = new ckwh_items_adj();
+            g_ckwh_items_adj = objWHAdj;
          }
 
         private decimal CalculateAverageCost(decimal previous_cost, decimal previous_qty, decimal current_cost, decimal current_qty)
@@ -332,9 +374,11 @@ namespace dipndipInventory.Views.Stock
             }
             return result;
         }
-        private int SaveTransaction(DateTime adj_date_time, decimal item_unit_cost, decimal qty_adjusted, string trans_type)
+
+        //private int SaveTransaction(DateTime adj_date_time, decimal item_unit_cost, decimal qty_adjusted, string trans_type)
+        private void SaveTransaction(DateTime adj_date_time, decimal item_unit_cost, decimal qty_adjusted, string trans_type)
         {
-            int result = 0;
+            //int result = 0;
 
             SiteService _scontext = new SiteService();
             TransactionService _tcontext = new TransactionService();
@@ -356,9 +400,11 @@ namespace dipndipInventory.Views.Stock
             objTransactionDetail.active = true;
             objTransactionDetail.created_by = GlobalVariables.ActiveUser.Id;
             objTransactionDetail.created_date = adj_date_time;
-            result = _tcontext.CreateTransaction(objTransactionDetail);
+            //result = _tcontext.CreateTransaction(objTransactionDetail);
 
-            return result;
+            //return result;
+            g_transaction_details = new transaction_details();
+            g_transaction_details = objTransactionDetail;
         }
 
         private decimal GetAdjAvgCost(decimal adj_qty)

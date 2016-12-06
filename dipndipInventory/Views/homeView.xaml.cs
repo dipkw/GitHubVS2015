@@ -1,6 +1,7 @@
 ﻿using dipndipInventory.EF;
 using dipndipInventory.EF.DataServices;
 using dipndipInventory.Helpers;
+using dipndipInventory.Views.Reports;
 using dipndipInventory.Views.Site;
 using dipndipInventory.Views.Stock;
 using dipndipInventory.Views.Users;
@@ -315,6 +316,12 @@ namespace dipndipInventory.Views
         {
             ckbranchdeliverylistView bdv = new ckbranchdeliverylistView();
             bdv.Show();
+        }
+
+        private void WHStockAdjustment_Click(object sender, RoutedEventArgs e)
+        {
+            WHStockAdjReportView sav = new WHStockAdjReportView();
+            sav.Show();
         }
     }
 }
