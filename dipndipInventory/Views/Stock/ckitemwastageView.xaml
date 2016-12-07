@@ -50,9 +50,9 @@
 
 
                     <!--<telerik:GridViewDataColumn x:Name="QuantityOnHand" DataMemberBinding="{Binding qty_on_hand}" Width="*" Header="Quantity On Hand" IsReadOnly="True"/>-->
-                    <telerik:GridViewDataColumn x:Name="QuantityOnHand" DataMemberBinding="{Binding qtyonHand}" Width="*" Header="Quantity On Hand" IsReadOnly="True"/>
+                    <telerik:GridViewDataColumn x:Name="QuantityOnHand" DataMemberBinding="{Binding qtyonHand, StringFormat=N3}" Width="*" Header="Quantity On Hand" IsReadOnly="True" TextAlignment="Right"/>
                     <!--<telerik:GridViewDataColumn x:Name="IssuedQuantity" DataMemberBinding="{Binding qty_issued}" Width="*" Header="Issued Quantity" />-->
-                    <telerik:GridViewDataColumn x:Name="IssuedQuantity" DataMemberBinding="{Binding qtyIssued}" Width="*" Header="Issued Quantity" />
+                    <telerik:GridViewDataColumn x:Name="IssuedQuantity" DataMemberBinding="{Binding qtyIssued, StringFormat=N3}" Width="*" Header="Issued Quantity" TextAlignment="Right"/>
 
                     <telerik:GridViewDataColumn x:Name="ItemId" DataMemberBinding="{Binding ck_item_id}" Width="*" Header="Item Id" IsVisible="False"/>
                     <telerik:GridViewDataColumn x:Name="UnitId" DataMemberBinding="{Binding ck_unit_id}" Width="*" Header="Unit Id" IsVisible="False"/>

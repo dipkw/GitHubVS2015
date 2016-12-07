@@ -117,7 +117,33 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="$this.Zoom" type="System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>4</value>
+  <metadata name="ItemStocksqlDataSource.ParameterValues" xml:space="preserve">
+    <value>{"@wh_item_code":"CER010"}</value>
   </metadata>
+  <data name="ItemStocksqlDataSource.SelectCommand" xml:space="preserve">
+    <value>SELECT [Id]
+      ,[trans_ref_no]
+      ,[wh_item_id]
+      ,[wh_item_code]
+      ,[wh_item_description]
+      ,[trans_date]
+      ,[wh_item_unit_id]
+      ,[ck_unit_description]
+      ,[qty]
+      ,sum(qty) over(order by id rows unbounded preceding) as current_quantity
+      ,[current_qty]
+      ,[unit_cost]
+      ,[total_cost]
+      ,[order_from_site_id]
+      ,[order_to_site_id]
+      ,[trans_type]
+      ,[reason_id]
+      ,[active]
+      ,[created_by]
+      ,[created_date]
+      ,[modified_by]
+      ,[modified_date]
+  FROM [dipck].[dbo].[transaction_details]
+  WHERE wh_item_code = @wh_item_code AND (CAST(trans_date as Date)&gt;=@start_date AND CAST(trans_date as Date) &lt;= @end_date)</value>
+  </data>
 </root>

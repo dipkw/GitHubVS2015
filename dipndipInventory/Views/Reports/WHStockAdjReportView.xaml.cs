@@ -25,8 +25,31 @@ namespace dipndipInventory.Views.Reports
         {
             InitializeComponent();
 
-            dtpStartDate.SelectedDate = DateTime.Now;
-            dtpEndDate.SelectedDate = DateTime.Now;
+            //dtpStartDate.SelectedDate = DateTime.Now;
+            //dtpEndDate.SelectedDate = DateTime.Now;
+            LoadReport();
+        }
+
+        private void LoadReport()
+        {
+            try
+            {
+                DateTime defaultDate = DateTime.Today.Date;
+                myReport = new dipndipTLReports.Reports.WHAdjReport();
+
+                Telerik.Reporting.InstanceReportSource instanceReportSource =
+                    new Telerik.Reporting.InstanceReportSource();
+
+                instanceReportSource.ReportDocument = myReport;
+
+                this.ReportViewer1.ReportSource = null;
+                this.ReportViewer1.ReportSource = instanceReportSource;
+                this.ReportViewer1.RefreshReport();
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
 
         private void btnView_Click(object sender, RoutedEventArgs e)
@@ -35,8 +58,9 @@ namespace dipndipInventory.Views.Reports
             {
                 DateTime defaultDate = DateTime.Today.Date;
                 //myReport = new dipndipTLReports.Reports.WHItemAdjReport((DateTime)dtpStartDate.SelectedDate, (DateTime)dtpEndDate.SelectedDate);
-                myReport = new dipndipTLReports.Reports.WHStockAdjReport((DateTime)dtpStartDate.SelectedDate, (DateTime)dtpEndDate.SelectedDate);
-                
+                //myReport = new dipndipTLReports.Reports.WHStockAdjReport((DateTime)dtpStartDate.SelectedDate, (DateTime)dtpEndDate.SelectedDate);
+                //myReport = new dipndipTLReports.Reports.WHItemAdjReport((DateTime)dtpStartDate.SelectedDate, (DateTime)dtpEndDate.SelectedDate);
+                myReport = new dipndipTLReports.Reports.WHAdjReport();
                 //myReport = new dipndipTLReports.Reports.TestReport();
 
                 //// Obtain the settings of the default printer

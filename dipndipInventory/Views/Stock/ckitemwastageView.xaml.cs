@@ -43,6 +43,7 @@ namespace dipndipInventory.Views.Stock
 
         List<ck_stock_trans> g_ck_stock_trans_list = new List<ck_stock_trans>();
         string result = string.Empty;
+        string g_wastage_code;
         public ckitemwastageView()
         {
             InitializeComponent();
@@ -52,8 +53,8 @@ namespace dipndipInventory.Views.Stock
             dtpDate.SelectedDate = DateTime.Now.Date;
             FillAllSites();
             CKWastageService cwcontext = new CKWastageService();
-            string wastage_code = cwcontext.GetNewCKWastageCode();
-            txtIssueCode.Value = wastage_code;
+            g_wastage_code = cwcontext.GetNewCKWastageCode();
+            txtIssueCode.Value = g_wastage_code;
             FillAllCKItems();
         }
 
@@ -236,19 +237,27 @@ namespace dipndipInventory.Views.Stock
             result = cwscontext.SaveCKWastage(g_ck_items_update_list, g_ck_prod_update_list, g_ck_wastage_master, g_ck_issue_details, g_ck_stock_trans_list, GlobalVariables.ActiveUser.Id) > 0 ? "CK Branch Item Wastage Saved Successfully" : "Unable to Save CK Branch Item Wastage";
             MessageBox.Show(result);
             //Clear All List after Save
-            g_ck_prod_update_list.Clear();
-            g_ck_issue_details.Clear();
-            g_ck_stock_trans_list.Clear();
+            if (result == "CK Branch Item Wastage Saved Successfully")
+            {
 
-            //Clear Grid
-            g_ck_item_issue_list.Clear();
-            dgCKIssueDetails.ItemsSource = null;
-            FillAllCKItems();
+                if (MessageBox.Show("Do you want to print?", "Confirm", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    PrintWastage();
+                }
+                g_ck_prod_update_list.Clear();
+                g_ck_issue_details.Clear();
+                g_ck_stock_trans_list.Clear();
 
-            //Generate new issue_code
-            CKIssueService cicontext = new CKIssueService();
-            string issue_code = cicontext.GetNewCKIssueCode();
-            txtIssueCode.Value = issue_code;
+                //Clear Grid
+                g_ck_item_issue_list.Clear();
+                dgCKIssueDetails.ItemsSource = null;
+                FillAllCKItems();
+
+                //Generate new issue_code
+                CKIssueService cicontext = new CKIssueService();
+                string issue_code = cicontext.GetNewCKIssueCode();
+                txtIssueCode.Value = issue_code;
+            }
         }
 
         private void UpdateAllList()
@@ -284,15 +293,54 @@ namespace dipndipInventory.Views.Stock
             try
             {
                 g_ck_wastage_master.ck_wastage_code = txtIssueCode.Value;
-                g_ck_wastage_master.wastage_date = dtpIssueDate.SelectedDate;
+                g_ck_wastage_master.wastage_date = dtpDate.SelectedDate;
                 //g_ck_issue_master.branch_order_no = g_branch_order_no;
                 //g_ck_issue_master.branch_order_date = dtpOrderDate.SelectedDate;
                 //g_ck_issue_master.issue_to_site_id = Convert.ToInt32(cmbBranch.SelectedValue.ToString());
+                g_ck_wastage_master.site_id = 3;
                 g_ck_wastage_master.active = true;
                 g_ck_wastage_master.created_by = GlobalVariables.ActiveUser.Id;
                 g_ck_wastage_master.created_date = DateTime.Now;
             }
             catch { }
+        }
+
+        private void PrintWastage()
+        {
+            try
+            {
+
+                //Telerik.Reporting.IReportDocument myReport = new DieReports.DieDetailsReport(die_id, "Drawing");
+                //Telerik.Reporting.IReportDocument myReport = new dipndipTLReports.PrintOrderReport("CKOR-0007");
+                //Telerik.Reporting.IReportDocument myReport = new dipndipTLReports.Reports.OrderDetailsB("CKOR-0007");
+                Telerik.Reporting.IReportDocument myReport = new dipndipTLReports.Reports.CKWastageReport(g_wastage_code);
+
+
+                // Obtain the settings of the default printer
+                System.Drawing.Printing.PrinterSettings printerSettings
+                    = new System.Drawing.Printing.PrinterSettings();
+
+                //// The standard print controller comes with no UI
+                System.Drawing.Printing.PrintController standardPrintController =
+                    new System.Drawing.Printing.StandardPrintController();
+
+                // Print the report using the custom print controller
+                Telerik.Reporting.Processing.ReportProcessor reportProcessor
+                    = new Telerik.Reporting.Processing.ReportProcessor();
+
+                reportProcessor.PrintController = standardPrintController;
+
+                Telerik.Reporting.InstanceReportSource instanceReportSource =
+                    new Telerik.Reporting.InstanceReportSource();
+
+                instanceReportSource.ReportDocument = myReport;
+
+                reportProcessor.PrintReport(instanceReportSource, printerSettings);
+            }
+            catch
+            {
+
+            }
         }
     }
 }

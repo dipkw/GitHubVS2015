@@ -59,7 +59,8 @@ namespace dipndipTLReports.Reports
             CKAdjService adjcontext = new CKAdjService();
             try
             {
-                IEnumerable<ckwh_items_adj> stock_adjustments = adjcontext.GetAllAdjByDate(g_start_date, g_end_date);
+                //IEnumerable<ckwh_items_adj> stock_adjustments = adjcontext.GetAllAdjByDate(g_start_date, g_end_date);
+                IEnumerable<ckwh_items_adj> stock_adjustments = adjcontext.GetAllAdjByDate(Convert.ToDateTime("2016-11-01"), Convert.ToDateTime("2016-12-07"));
                 List<WHStockAdjReportVM> stock_adj_report_src = new List<WHStockAdjReportVM>();
                 foreach (ckwh_items_adj adj in stock_adjustments)
                 {

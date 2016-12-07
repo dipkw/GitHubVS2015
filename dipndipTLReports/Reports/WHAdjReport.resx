@@ -117,33 +117,34 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="ProductionDetailsqlDataSource.ParameterValues" xml:space="preserve">
-    <value>{"@prod_code":"CKPR-0030"}</value>
+  <metadata name="WHAdjsqlDataSource.ParameterValues" xml:space="preserve">
+    <value>{"@start_date":"2016-11-01","@end_date":"2016-12-31"}</value>
   </metadata>
-  <data name="ProductionDetailsqlDataSource.SelectCommand" xml:space="preserve">
-    <value>SELECT [prod_code]
-      ,[prod_date]
-      ,[exp_date]
-      ,[ck_item_id]
-      ,[ck_item_code]
-      ,[ck_item_desc]
-      ,[batch_no]
-      ,[ck_item_unit_id]
-      ,[ck_item_unit_desc]
-      ,[conv_factor]
-      ,[prod_qty]
-      ,[bal_qty]
+  <data name="WHAdjsqlDataSource.SelectCommand" xml:space="preserve">
+    <value>SELECT [Id]
+      ,[adj_code]
+      ,[wh_item_id]
+      ,[wh_item_code]
+      ,[wh_item_description]
+      ,[wh_item_unit_id]
+      ,[wh_item_unit_description]
+      ,[conversion_factor]
+      ,[adj_qty]
       ,[unit_cost]
-      ,[total_cost]
+      ,[ext_cost]
+      ,[created_by]
+      ,[created_date]
+      ,[modified_by]
+      ,[modified_date]
       ,[active]
-  FROM [dipck].[dbo].[ck_prod]
-  WHERE prod_code=@prod_code</value>
+  FROM [dipck].[dbo].[ckwh_items_adj]
+  WHERE (CAST(created_date AS Date) &gt;= CAST(@start_date AS Date) AND CAST(created_date AS Date) &lt;= CAST(@end_date AS Date)) AND active = 1</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="pictureBox1.Value" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAOIAAAAjCAYAAACJpNbGAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADr0AAA69AUf7kK0AABSbSURBVHhe7VwLlF1Veb4JbSHJzD37nHMnD0uNxbDAZO5r
+        YQUAAAAJcEhZcwAADr4AAA6+AepCscAAABSbSURBVHhe7VwLlF1Veb4JbSHJzD37nHMnD0uNxbDAZO5r
         Zu7cx0wy2FqlVlCrWF219GktimCxrVAlUR6iWB4KJKQGEkwQLHTJwijSysICUhveaTGKICQSyLwnYZKQ
         10y/b59/X84995w7NyEXErzfWv869+z9773//e//3+9zY68WGSd+eYdrj6YcNUhKO2qIz4WOs1BYYmnH
         ujPr2iOGJ0iIG8NzqbA3Ici61u9nXDUc1FXSUecKSyzjxs/KePqr0Kkhpk/b6ifLYrHpkqSJNyJSjnV9

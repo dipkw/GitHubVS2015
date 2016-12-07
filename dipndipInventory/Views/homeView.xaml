@@ -252,7 +252,7 @@
                             <TextBlock Text="CK Branch Delivery" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </telerik:RadRibbonButton>
-                    <telerik:RadRibbonButton   Width="110"  HorizontalContentAlignment="Center" x:Name="WHStockAdjustment" Click="WHStockAdjustment_Click">
+                    <telerik:RadRibbonButton   Width="125"  HorizontalContentAlignment="Center" x:Name="WHStockAdjustment" Click="WHStockAdjustment_Click">
                         <StackPanel>
                             <Image Source="/dipndipInventory;component/images/menu_icons/orders.png" Width="32" Height="32"/>
                             <TextBlock Text="WH Stock Adjustment" HorizontalAlignment="Center"/>
