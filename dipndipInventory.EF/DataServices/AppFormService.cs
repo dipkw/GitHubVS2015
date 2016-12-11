@@ -29,7 +29,16 @@ namespace dipndipInventory.EF.DataServices
             try
             {
                 _context = new CKEntities();
-                lock_status = (from app_form in _context.app_forms orderby app_form.form_desc ascending where app_form.form_id == form_id select app_form.locked).FirstOrDefault()==false?"open":"locked";
+                //lock_status = (from app_form in _context.app_forms orderby app_form.form_desc ascending where app_form.form_id == form_id select app_form.locked).FirstOrDefault()==false?"open":"locked";
+                app_forms appform = (from app_form in _context.app_forms orderby app_form.form_desc ascending where app_form.form_id == form_id select app_form).FirstOrDefault();
+                if(appform.locked == false || appform.locked == null)
+                {
+                    lock_status = "open";
+                }
+                else
+                {
+                    lock_status = "locked";
+                }
                 return lock_status;
             }
             catch

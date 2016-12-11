@@ -99,6 +99,7 @@
     <Compile Include="Reports\ReportVM\PrintOrderVM.cs" />
     <Compile Include="Reports\ReportVM\ReceiptReportVM.cs" />
     <Compile Include="Reports\ReportVM\WHStockAdjReportVM.cs" />
+    <Compile Include="Reports\ReportVM\WHStockReportVM.cs" />
     <Compile Include="Reports\TestReport.cs">
       <SubType>Component</SubType>
     </Compile>

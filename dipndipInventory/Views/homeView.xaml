@@ -258,6 +258,12 @@
                             <TextBlock Text="WH Stock Adjustment" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </telerik:RadRibbonButton>
+                    <telerik:RadRibbonButton   Width="125"  HorizontalContentAlignment="Center" x:Name="WHStockQuantity" Click="WHStockQuantity_Click">
+                        <StackPanel>
+                            <Image Source="/dipndipInventory;component/images/menu_icons/orders.png" Width="32" Height="32"/>
+                            <TextBlock Text="WH Stock Quantity" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </telerik:RadRibbonButton>
                 </telerik:RadRibbonGroup>
             </telerik:RadRibbonTab>
             <telerik:RadRibbonTab Header="Admin">

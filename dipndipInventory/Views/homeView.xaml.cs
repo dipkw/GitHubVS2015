@@ -323,5 +323,11 @@ namespace dipndipInventory.Views
             WHStockAdjReportView sav = new WHStockAdjReportView();
             sav.Show();
         }
+
+        private void WHStockQuantity_Click(object sender, RoutedEventArgs e)
+        {
+            WHStockQuantityReportView wsv = new WHStockQuantityReportView();
+            wsv.Show();
+        }
     }
 }

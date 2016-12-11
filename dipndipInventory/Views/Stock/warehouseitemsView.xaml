@@ -38,7 +38,7 @@
                     <telerik:GridViewDataColumn x:Name="WHQuantity" DataMemberBinding="{Binding quantity, StringFormat=N3}" Width="*" Header="Warehouse Qty" TextAlignment="Right"/>
                     <telerik:GridViewDataColumn x:Name="CKQuantity" DataMemberBinding="{Binding ck_qty, StringFormat=N3}" Width="*" Header="CK Quantity" TextAlignment="Right"/>
 
-                    <telerik:GridViewColumn Width="80">
+                    <telerik:GridViewColumn Width="80" IsVisible="False">
                         <telerik:GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <telerik:RadButton Content="Edit" x:Name="btnEdit" Margin="5"/>

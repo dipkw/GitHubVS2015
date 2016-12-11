@@ -239,6 +239,9 @@
     <Compile Include="Views\Reports\WHStockAdjReportView.xaml.cs">
       <DependentUpon>WHStockAdjReportView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Reports\WHStockQuantityReportView.xaml.cs">
+      <DependentUpon>WHStockQuantityReportView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Reports\WRcptConf.xaml.cs">
       <DependentUpon>WRcptConf.xaml</DependentUpon>
     </Compile>
@@ -401,6 +404,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Reports\WHStockAdjReportView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Reports\WHStockQuantityReportView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

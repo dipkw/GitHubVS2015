@@ -80,6 +80,21 @@ namespace dipndipInventory.EF.DataServices
             catch { return null; }
         }
 
+        public IEnumerable<ckwh_items> GetStockQtySP(string wh_item_code, DateTime trans_date)
+        {
+            try
+            {
+                _context = new CKEntities();
+                string query = "exec dbo.StockQuantity '" + wh_item_code + "', '" + trans_date + "'";
+                IEnumerable<ckwh_items> objWHItems = _context.ckwh_items.SqlQuery(query).ToList<ckwh_items>();
+                return objWHItems;
+            }
+            catch(Exception ex)
+            {
+                return null;
+            }
+        }
+
         public int UpdateWHItem(ckwh_items objWHItem)
         {
             try

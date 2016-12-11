@@ -41,7 +41,13 @@ namespace dipndipInventory.Views.Stock
         
         public orderdetailsView()
         {
+            if (!ActiveSiteIsCK())
+            {
+                MessageBox.Show("Sorry, Active Branch is not Central Kitchen");
+                return;
+            }
             InitializeComponent();
+            
             ShowTaskBar.ShowInTaskbar(this, "Order Details");
             SetDate();
             string order_no = _context.GetNewCKOrderNo();
@@ -61,8 +67,29 @@ namespace dipndipInventory.Views.Stock
             dtpDeliveryDate.SelectedDate = delivery_date;
         }
 
+        public bool ActiveSiteIsCK()
+        {
+            try
+            {
+                SiteService stcontext = new SiteService();
+                if (stcontext.GetSiteNameBySiteId(GlobalVariables.ActiveSite.Id) == "Central Kitchen")
+                {
+                    return true;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+            return false;
+        }
         public orderdetailsView(long order_id, string order_no, DateTime order_date)
         {
+            if (!ActiveSiteIsCK())
+            {
+                MessageBox.Show("Sorry, Active Branch is not Central Kitchen");
+                return;
+            }
             InitializeComponent();
             ShowTaskBar.ShowInTaskbar(this, "Order Details");
             txtOrderNo.Value = order_no.ToString();
@@ -220,7 +247,7 @@ namespace dipndipInventory.Views.Stock
                 OrderDetailsViewModel odv = new OrderDetailsViewModel();
                 if (ValidateOrderItem())
                 {
-                    if(ExistingItem())
+                    if(ExistingItem() && !item_edit_mode)
                     {
                         MessageBox.Show("Item is already existing in the order list");
                         return;
@@ -432,6 +459,7 @@ namespace dipndipInventory.Views.Stock
         {
             edit_mode = false;
             btnSave.IsEnabled = true;
+            btnMail.IsEnabled = false;
             string order_no = _context.GetNewCKOrderNo();
             txtOrderNo.Value = order_no;
             dgCKOrderDetails.ItemsSource = null;
@@ -551,13 +579,14 @@ namespace dipndipInventory.Views.Stock
                         ClearOrder();
                     }
                 }
+                btnMail.IsEnabled = true;
             }
             catch(System.Exception ex)
             {
 
             }
 
-
+            
         }
 
         private void btnMail_Click(object sender, RoutedEventArgs e)
@@ -572,7 +601,10 @@ namespace dipndipInventory.Views.Stock
                 MessageBox.Show("Error");
             }
             IEnumerable<order> g_orders = ckocontext.ReadAllActiveSiteOrders(GlobalVariables.ActiveSite.Id);
-            g_ck_order_view.dgCKOrders.ItemsSource = null;
+            if (g_ck_order_view.dgCKOrders.ItemsSource != null)
+            {
+                g_ck_order_view.dgCKOrders.ItemsSource = null;
+            }
             g_ck_order_view.dgCKOrders.ItemsSource = g_orders;
             g_ck_order_view.dgCKOrders.Rebind();
             ClearOrder();

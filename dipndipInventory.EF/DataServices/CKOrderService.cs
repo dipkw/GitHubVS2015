@@ -755,7 +755,7 @@ namespace dipndipInventory.EF.DataServices
                             context.SaveChanges();
                         }
 
-                        //Create order and order_details
+                        //Create receipt and receipt_details
                         context.receipts.Add(g_receipt_master);
                         foreach (receipt_details receipt_detail in g_receipt_detail_list)
                         {

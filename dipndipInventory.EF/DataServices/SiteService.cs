@@ -189,6 +189,17 @@ namespace dipndipInventory.EF.DataServices
             return site_code;
         }
 
+        public string GetSiteNameBySiteId(int id)
+        {
+            string site_name = string.Empty;
+
+            _context = new CKEntities();
+
+            site_name = (from tmpsite in _context.sites where tmpsite.Id == id select tmpsite.site_name).FirstOrDefault();
+
+            return site_name;
+        }
+
         public int GetSiteIdBySiteCode(string site_code)
         {
             int site_id = 0;

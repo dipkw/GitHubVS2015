@@ -101,7 +101,7 @@ namespace dipndipInventory.EF.DataServices
         }
         
         //Save Item Production (List<ck_prod>)
-        public int SaveCKItemProduction(List<ck_prod> production_list, List<ck_items> ck_items_list, List<ckwh_items> warehouse_items_list, List<ck_item_cost_history> ck_item_cost_list, List<ck_stock_trans> ck_stock_trans_list, int active_user)
+        public int SaveCKItemProduction(List<ck_prod> production_list, List<ck_items> ck_items_list, List<ckwh_items> warehouse_items_list, List<ck_item_cost_history> ck_item_cost_list, List<ck_stock_trans> ck_stock_trans_list, List<transaction_details>transaction_detail_list, int active_user)
         {
             using (var context = new CKEntities())
             {
@@ -138,6 +138,12 @@ namespace dipndipInventory.EF.DataServices
                         foreach(ck_stock_trans ckstocktrans in ck_stock_trans_list)
                         {
                             context.ck_stock_trans.Add(ckstocktrans);
+                            context.SaveChanges();
+                        }
+
+                        foreach(transaction_details transactiondetail in transaction_detail_list)
+                        {
+                            context.transaction_details.Add(transactiondetail);
                             context.SaveChanges();
                         }
 

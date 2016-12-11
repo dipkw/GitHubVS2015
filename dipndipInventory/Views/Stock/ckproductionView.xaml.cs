@@ -32,6 +32,7 @@ namespace dipndipInventory.Views.Stock
         List<ck_prod> production_list = new List<ck_prod>();
         List<ck_item_cost_history> ck_item_cost_list = new List<ck_item_cost_history>();
         List<ck_stock_trans> ck_stock_trans_list = new List<ck_stock_trans>();
+        List<transaction_details> transaction_details_list = new List<transaction_details>();
         public ckproductionView()
         {
             InitializeComponent();
@@ -130,7 +131,7 @@ namespace dipndipInventory.Views.Stock
             }
 
             CKProductionService pscontext = new CKProductionService();
-            string result = pscontext.SaveCKItemProduction(production_list, ck_items_list, warehouse_items_list, ck_item_cost_list, ck_stock_trans_list, GlobalVariables.ActiveUser.Id) > 0 ? "CK Branch Item Production Saved Successfully" : "Unable to Save CK Branch Item Production";
+            string result = pscontext.SaveCKItemProduction(production_list, ck_items_list, warehouse_items_list, ck_item_cost_list, ck_stock_trans_list, transaction_details_list, GlobalVariables.ActiveUser.Id) > 0 ? "CK Branch Item Production Saved Successfully" : "Unable to Save CK Branch Item Production";
             MessageBox.Show(result);
             if(result == "CK Branch Item Production Saved Successfully")
             {
@@ -142,6 +143,7 @@ namespace dipndipInventory.Views.Stock
             }
             production_list.Clear();
             FillProductionGrid();
+            transaction_details_list.Clear();
         }
 
         private bool CKItemUnitsAssigned()
@@ -362,6 +364,7 @@ namespace dipndipInventory.Views.Stock
                 IEnumerable<ck_item_details> CKItemRecipeList = _cdcontext.ReadAllCKItemRecipeByCKItemId(ck_item_id);
                 decimal? ck_item_prod_qty = design_qty * prodQty;
                 decimal recipe_unit_cost = 0.000m;
+                transaction_details_list.Clear();
                 foreach (ck_item_details item_recipe in CKItemRecipeList)
                 {
                     int ckwh_item_id = (int)item_recipe.ckwh_item_id;
@@ -386,6 +389,30 @@ namespace dipndipInventory.Views.Stock
                     objCKWHItem.ck_qty = current_wh_item_qty - used_wh_item_qty;
 
                     warehouse_items_list.Add(objCKWHItem);
+                    try
+                    {
+                        transaction_details transactiondetail = new transaction_details();
+                        transactiondetail.trans_ref_no = txtProductionCode.Value;
+                        transactiondetail.wh_item_id = ckwh_item_id;
+                        //transactiondetail.wh_item_code = _wicontext.GetItemCode(ckwh_item_id);
+                        transactiondetail.wh_item_code = item_recipe.ckwh_items.wh_item_code;
+                        //transactiondetail.wh_item_description = _wicontext.GetItemDescription(ckwh_item_id);
+                        transactiondetail.wh_item_description = item_recipe.ckwh_items.wh_item_description;
+                        transactiondetail.trans_date = dtpProductionDate.SelectedDate;
+                        transactiondetail.wh_item_unit_id = wh_unit_id;
+                        transactiondetail.ck_unit_description = item_recipe.wh_item_unit.ck_units.unit_description;
+                        transactiondetail.qty = (used_wh_item_qty) * (-1);
+                        transactiondetail.unit_cost = (decimal)(avg_wh_item_cost * conv_factor) * (decimal)(recipe_wh_item_qty);
+                        transactiondetail.total_cost = transactiondetail.unit_cost * prodQty;
+                        transactiondetail.order_from_site_id = GlobalVariables.ActiveSite.Id;
+                        transactiondetail.order_to_site_id = GlobalVariables.ActiveSite.Id;
+                        transactiondetail.trans_type = "Production";
+                        transactiondetail.active = true;
+                        transactiondetail.created_by = GlobalVariables.ActiveUser.Id;
+                        transactiondetail.created_date = DateTime.Now;
+                        transaction_details_list.Add(transactiondetail);
+                    }
+                    catch { }
 
                     if (avg_wh_item_cost == null)
                     {
