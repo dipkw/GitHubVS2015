@@ -106,7 +106,21 @@ namespace dipndipInventory.EF.DataServices
             }
         }
 
-        public transaction_details ReadNReceiptTransaction(int skip_no)
+        public transaction_details ReadNReceiptTransaction(int wh_item_id, int skip_no)
+        {
+            try
+            {
+                _context = new CKEntities();
+                transaction_details objTransactionDetail = (from transaction_detail in _context.transaction_details where (transaction_detail.trans_type == "Receipt" || transaction_detail.trans_type == "AdjIn") && (transaction_detail.wh_item_id == wh_item_id) orderby transaction_detail.Id descending select transaction_detail).Skip(skip_no).Take(1).FirstOrDefault();
+                return objTransactionDetail;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public transaction_details ReadNReceiptTransaction1(int skip_no)
         {
             try
             {

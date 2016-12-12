@@ -144,7 +144,7 @@
   <data name="pictureBox1.Value" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAOIAAAAjCAYAAACJpNbGAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADr4AAA6+AepCscAAABSbSURBVHhe7VwLlF1Veb4JbSHJzD37nHMnD0uNxbDAZO5r
+        YQUAAAAJcEhZcwAADrwAAA68AZW8ckkAABSbSURBVHhe7VwLlF1Veb4JbSHJzD37nHMnD0uNxbDAZO5r
         Zu7cx0wy2FqlVlCrWF219GktimCxrVAlUR6iWB4KJKQGEkwQLHTJwijSysICUhveaTGKICQSyLwnYZKQ
         10y/b59/X84995w7NyEXErzfWv869+z9773//e//3+9zY68WGSd+eYdrj6YcNUhKO2qIz4WOs1BYYmnH
         ujPr2iOGJ0iIG8NzqbA3Ici61u9nXDUc1FXSUecKSyzjxs/KePqr0Kkhpk/b6ifLYrHpkqSJNyJSjnV9
@@ -234,5 +234,24 @@
         vfwXG00cJOpxxCYODTUcccpz4yZ+zdB0xMah6YhN1I2mIzYOTUdsom40HbFxaDpiE3Wj6YiNQ9MRm6gb
         TUdsHJqO2ETdaDpi49B0xCMRsdj/A3djUKbpyvkCAAAAAElFTkSuQmCC
 </value>
+  </data>
+  <data name="WHAllAdjsqlDataSource.SelectCommand" xml:space="preserve">
+    <value>SELECT [Id]
+      ,[adj_code]
+      ,[wh_item_id]
+      ,[wh_item_code]
+      ,[wh_item_description]
+      ,[wh_item_unit_id]
+      ,[wh_item_unit_description]
+      ,[conversion_factor]
+      ,[adj_qty]
+      ,[unit_cost]
+      ,[ext_cost]
+      ,[created_by]
+      ,[created_date]
+      ,[modified_by]
+      ,[modified_date]
+      ,[active]
+  FROM [dipck].[dbo].[ckwh_items_adj]</value>
   </data>
 </root>

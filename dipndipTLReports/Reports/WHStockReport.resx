@@ -117,41 +117,30 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="CKWastagesqlDataSource.ParameterValues" xml:space="preserve">
-    <value>{"@ck_wastage_code":"CWST-0005"}</value>
-  </metadata>
-  <data name="CKWastagesqlDataSource.SelectCommand" xml:space="preserve">
-    <value>SELECT d.[Id]
-      ,d.[wastage_master_id]
-      ,d.[ck_wastage_code]
-      ,m.wastage_date
-      ,s.site_name
-      ,d.[ck_prod_code]
-      ,d.[ck_batch_no]
-      ,d.[ck_prod_date]
-      ,d.[ck_exp_date]
-      ,d.[ck_item_id]
-      ,d.[ck_item_code]
-      ,d.[ck_item_desc]
-      ,d.[ck_item_unit_id]
-      ,d.[wastage_qty]
-      ,d.[ck_item_unit_cost]
-      ,d.[ck_item_total_cost]
-      ,d.[created_by]
-      ,d.[created_date]
-      ,d.[modified_by]
-      ,d.[modified_date]
-      ,d.[active]
-  FROM [dipck].[dbo].[ck_wastage_details] d
-  INNER JOIN ck_wastage_master m ON d.wastage_master_id=m.Id
-  INNER JOIN sites s ON m.site_id = s.Id
-  WHERE d.ck_wastage_code = @ck_wastage_code</value>
+  <data name="WHStocksqlDataSource.SelectCommand" xml:space="preserve">
+    <value>SELECT [Id]
+      ,[wh_item_code]
+      ,[wh_item_description]
+      ,[wh_category_id]
+      ,[wh_category_description]
+      ,[wh_unit_id]
+      ,[wh_unit_description]
+      ,[quantity]
+      ,[unit_cost]
+      ,COALESCE([ck_qty],0) [ck_qty]
+      ,COALESCE([ck_avg_unit_cost],0.000) [ck_avg_unit_cost]
+      ,[site_id]
+      ,[created_by]
+      ,[created_date]
+      ,[modified_by]
+      ,[modified_date]
+  FROM [dipck].[dbo].[ckwh_items]</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="pictureBox1.Value" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAOIAAAAjCAYAAACJpNbGAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADr0AAA69AUf7kK0AABSbSURBVHhe7VwLlF1Veb4JbSHJzD37nHMnD0uNxbDAZO5r
+        YQUAAAAJcEhZcwAADrwAAA68AZW8ckkAABSbSURBVHhe7VwLlF1Veb4JbSHJzD37nHMnD0uNxbDAZO5r
         Zu7cx0wy2FqlVlCrWF219GktimCxrVAlUR6iWB4KJKQGEkwQLHTJwijSysICUhveaTGKICQSyLwnYZKQ
         10y/b59/X84995w7NyEXErzfWv869+z9773//e//3+9zY68WGSd+eYdrj6YcNUhKO2qIz4WOs1BYYmnH
         ujPr2iOGJ0iIG8NzqbA3Ici61u9nXDUc1FXSUecKSyzjxs/KePqr0Kkhpk/b6ifLYrHpkqSJNyJSjnV9
@@ -241,88 +230,5 @@
         vfwXG00cJOpxxCYODTUcccpz4yZ+zdB0xMah6YhN1I2mIzYOTUdsom40HbFxaDpiE3Wj6YiNQ9MRm6gb
         TUdsHJqO2ETdaDpi49B0xCMRsdj/A3djUKbpyvkCAAAAAElFTkSuQmCC
 </value>
-  </data>
-  <data name="AllCKWastagesqlDataSource.SelectCommand" xml:space="preserve">
-    <value>SELECT d.[Id]
-      ,d.[wastage_master_id]
-      ,d.[ck_wastage_code]
-      ,m.wastage_date
-      ,s.site_name
-      ,d.[ck_prod_code]
-      ,d.[ck_batch_no]
-      ,d.[ck_prod_date]
-      ,d.[ck_exp_date]
-      ,d.[ck_item_id]
-      ,d.[ck_item_code]
-      ,d.[ck_item_desc]
-      ,d.[ck_item_unit_id]
-      ,d.[wastage_qty]
-      ,d.[ck_item_unit_cost]
-      ,d.[ck_item_total_cost]
-      ,d.[created_by]
-      ,d.[created_date]
-      ,d.[modified_by]
-      ,d.[modified_date]
-      ,d.[active]
-  FROM [dipck].[dbo].[ck_wastage_details] d
-  INNER JOIN ck_wastage_master m ON d.wastage_master_id=m.Id
-  INNER JOIN sites s ON m.site_id = s.Id</value>
-  </data>
-  <metadata name="CKDateWastagesqlDataSource.ParameterValues" xml:space="preserve">
-    <value>{"@start_date":"12-12-2016","@end_date":"12-12-2016"}</value>
-  </metadata>
-  <data name="CKDateWastagesqlDataSource.SelectCommand" xml:space="preserve">
-    <value>SELECT d.[Id]
-      ,d.[wastage_master_id]
-      ,d.[ck_wastage_code]
-      ,m.wastage_date
-      ,s.site_name
-      ,d.[ck_prod_code]
-      ,d.[ck_batch_no]
-      ,d.[ck_prod_date]
-      ,d.[ck_exp_date]
-      ,d.[ck_item_id]
-      ,d.[ck_item_code]
-      ,d.[ck_item_desc]
-      ,d.[ck_item_unit_id]
-      ,d.[wastage_qty]
-      ,d.[ck_item_unit_cost]
-      ,d.[ck_item_total_cost]
-      ,d.[created_by]
-      ,d.[created_date]
-      ,d.[modified_by]
-      ,d.[modified_date]
-      ,d.[active]
-  FROM [dipck].[dbo].[ck_wastage_details] d
-  INNER JOIN ck_wastage_master m ON d.wastage_master_id=m.Id
-  INNER JOIN sites s ON m.site_id = s.Id
-  WHERE CAST(m.wastage_date as Date)&gt;= @start_date AND CAST(m.wastage_date as Date) &lt;= @end_date</value>
-  </data>
-  <data name="CKItemWastagesqlDataSource.SelectCommand" xml:space="preserve">
-    <value>SELECT d.[Id]
-      ,d.[wastage_master_id]
-      ,d.[ck_wastage_code]
-      ,m.wastage_date
-      ,s.site_name
-      ,d.[ck_prod_code]
-      ,d.[ck_batch_no]
-      ,d.[ck_prod_date]
-      ,d.[ck_exp_date]
-      ,d.[ck_item_id]
-      ,d.[ck_item_code]
-      ,d.[ck_item_desc]
-      ,d.[ck_item_unit_id]
-      ,d.[wastage_qty]
-      ,d.[ck_item_unit_cost]
-      ,d.[ck_item_total_cost]
-      ,d.[created_by]
-      ,d.[created_date]
-      ,d.[modified_by]
-      ,d.[modified_date]
-      ,d.[active]
-  FROM [dipck].[dbo].[ck_wastage_details] d
-  INNER JOIN ck_wastage_master m ON d.wastage_master_id=m.Id
-  INNER JOIN sites s ON m.site_id = s.Id
-  WHERE (CAST(m.wastage_date as Date)&gt;= @start_date AND CAST(m.wastage_date as Date) &lt;= @end_date) AND d.[ck_item_code] = @ck_item_code </value>
   </data>
 </root>

@@ -329,5 +329,11 @@ namespace dipndipInventory.Views
             WHStockQuantityReportView wsv = new WHStockQuantityReportView();
             wsv.Show();
         }
+
+        private void CKWastageReport_Click(object sender, RoutedEventArgs e)
+        {
+            CKWastageReportView wrv = new CKWastageReportView();
+            wrv.Show();
+        }
     }
 }

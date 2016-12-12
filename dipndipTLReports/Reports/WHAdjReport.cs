@@ -30,9 +30,17 @@ namespace dipndipTLReports.Reports
 
             //Take the Telerik.Reporting.Processing.Report instance
             Telerik.Reporting.Processing.Report report = (Telerik.Reporting.Processing.Report)sender;
-
             // Set the SqlDataSource component as it's DataSource
-            report.DataSource = this.WHAdjsqlDataSource;
+            if (report.Parameters["start_date"].Value == null || report.Parameters["end_date"].Value == null)
+            {
+                textBox3.Visible = false;
+                report.DataSource = this.WHAllAdjsqlDataSource;
+            }
+            else
+            {
+                textBox3.Visible = true;
+                report.DataSource = this.WHAdjsqlDataSource;
+            }
         }
     }
 }

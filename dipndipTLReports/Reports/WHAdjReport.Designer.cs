@@ -54,6 +54,7 @@ namespace dipndipTLReports.Reports
             this.shape8 = new Telerik.Reporting.Shape();
             this.shape9 = new Telerik.Reporting.Shape();
             this.shape10 = new Telerik.Reporting.Shape();
+            this.WHAllAdjsqlDataSource = new Telerik.Reporting.SqlDataSource();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             // 
             // labelsGroupFooterSection
@@ -391,6 +392,12 @@ namespace dipndipTLReports.Reports
             this.shape10.ShapeType = new Telerik.Reporting.Drawing.Shapes.LineShape(Telerik.Reporting.Drawing.Shapes.LineDirection.NS);
             this.shape10.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Inch(0.1000000610947609D), Telerik.Reporting.Drawing.Unit.Inch(0.2800000011920929D));
             // 
+            // WHAllAdjsqlDataSource
+            // 
+            this.WHAllAdjsqlDataSource.ConnectionString = "dipndipTLReports.Properties.Settings.dipckConnectionString";
+            this.WHAllAdjsqlDataSource.Name = "WHAllAdjsqlDataSource";
+            this.WHAllAdjsqlDataSource.SelectCommand = resources.GetString("WHAllAdjsqlDataSource.SelectCommand");
+            // 
             // WHAdjReport
             // 
             this.DataSource = this.WHAdjsqlDataSource;
@@ -412,10 +419,12 @@ namespace dipndipTLReports.Reports
             this.PageSettings.PaperKind = System.Drawing.Printing.PaperKind.Letter;
             reportParameter1.AllowNull = true;
             reportParameter1.Name = "start_date";
+            reportParameter1.Text = "Start Date";
             reportParameter1.Type = Telerik.Reporting.ReportParameterType.DateTime;
             reportParameter1.Visible = true;
             reportParameter2.AllowNull = true;
             reportParameter2.Name = "end_date";
+            reportParameter2.Text = "End Date";
             reportParameter2.Type = Telerik.Reporting.ReportParameterType.DateTime;
             reportParameter2.Visible = true;
             this.ReportParameters.Add(reportParameter1);
@@ -499,5 +508,6 @@ namespace dipndipTLReports.Reports
         private Telerik.Reporting.Shape shape10;
         private Telerik.Reporting.TextBox textBox3;
         private Telerik.Reporting.PictureBox pictureBox1;
+        private Telerik.Reporting.SqlDataSource WHAllAdjsqlDataSource;
     }
 }

@@ -1,4 +1,4 @@
-﻿using dipndipInventory.EF.DataServices;
+﻿using dipndipInventory.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,16 +17,15 @@ using Telerik.Windows.Controls;
 namespace dipndipInventory.Views.Reports
 {
     /// <summary>
-    /// Interaction logic for WHStockQuantityReportView.xaml
+    /// Interaction logic for CKWastageReportView.xaml
     /// </summary>
-    public partial class WHStockQuantityReportView : RadWindow
+    public partial class CKWastageReportView : RadWindow
     {
         Telerik.Reporting.IReportDocument myReport;
-        public WHStockQuantityReportView()
+        public CKWastageReportView()
         {
             InitializeComponent();
-            WHItemService wiscontext = new WHItemService();
-            //wiscontext.GetStockQtySP("CER001", Convert.ToDateTime("2016-12-01"));
+            ShowTaskBar.ShowInTaskbar(this, "Central Kitchen Wastage Report");
             LoadReport();
         }
 
@@ -35,9 +34,7 @@ namespace dipndipInventory.Views.Reports
             try
             {
                 DateTime defaultDate = DateTime.Today.Date;
-                //myReport = new dipndipTLReports.Reports.WHStockReport();
-                DateTime param_date = DateTime.Now;
-                myReport = new dipndipTLReports.Reports.WHItemsReport(param_date);
+                myReport = new dipndipTLReports.Reports.CKWastageReport();
 
                 Telerik.Reporting.InstanceReportSource instanceReportSource =
                     new Telerik.Reporting.InstanceReportSource();
@@ -57,6 +54,11 @@ namespace dipndipInventory.Views.Reports
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void btnView_Click(object sender, RoutedEventArgs e)
+        {
+            LoadReport();
         }
     }
 }

@@ -63,5 +63,18 @@ namespace dipndipInventory.EF
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ReadWarehouseItems_Result>("ReadWarehouseItems");
         }
+    
+        public virtual ObjectResult<StockQuantity_Result> StockQuantity(string wh_item_code, Nullable<System.DateTime> trans_date)
+        {
+            var wh_item_codeParameter = wh_item_code != null ?
+                new ObjectParameter("wh_item_code", wh_item_code) :
+                new ObjectParameter("wh_item_code", typeof(string));
+    
+            var trans_dateParameter = trans_date.HasValue ?
+                new ObjectParameter("trans_date", trans_date) :
+                new ObjectParameter("trans_date", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<StockQuantity_Result>("StockQuantity", wh_item_codeParameter, trans_dateParameter);
+        }
     }
 }

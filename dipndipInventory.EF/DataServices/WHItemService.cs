@@ -1,4 +1,5 @@
-﻿using System;
+﻿using dipndipInventory.EF.CustomModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -79,19 +80,32 @@ namespace dipndipInventory.EF.DataServices
             }
             catch { return null; }
         }
-
-        public IEnumerable<ckwh_items> GetStockQtySP(string wh_item_code, DateTime trans_date)
+        //public IEnumerable<ckwh_items> GetStockQtySP(string wh_item_code, DateTime trans_date)
+        public decimal GetStockQtySP(string wh_item_code, DateTime trans_date)
         {
+            decimal quantity = 0.000m;
             try
             {
                 _context = new CKEntities();
                 string query = "exec dbo.StockQuantity '" + wh_item_code + "', '" + trans_date + "'";
-                IEnumerable<ckwh_items> objWHItems = _context.ckwh_items.SqlQuery(query).ToList<ckwh_items>();
-                return objWHItems;
+                //IEnumerable<WHStockQuantityModel> objStockQuantity = _context.Database.SqlQuery<WHStockQuantityModel>(query);
+                //IEnumerable<transaction_details> objWHItems = _context.transaction_details.SqlQuery(query).ToList<transaction_details>();
+                var result = _context.Database.SqlQuery<decimal>(query);
+                //if (wh_item_code.Trim() == "CER001")
+                //{
+                //    var item = result.FirstOrDefault();
+                //}
+                
+                if(result != null)
+                {
+                    quantity = Convert.ToDecimal(result.FirstOrDefault());
+                }
+                 
+                return quantity;
             }
             catch(Exception ex)
             {
-                return null;
+                return 0;
             }
         }
 

@@ -284,7 +284,8 @@ namespace dipndipInventory.Views.Stock
             objWHAdj.wh_item_unit_description = cmbUnit.Text;
             objWHAdj.conversion_factor = conv_factor;
             objWHAdj.adj_qty = (decimal)txtQty.Value;
-            objWHAdj.ext_cost = objWHAdj.adj_qty * objWHAdj.conversion_factor;
+            objWHAdj.unit_cost = item_unit_cost;
+            objWHAdj.ext_cost = (objWHAdj.adj_qty * objWHAdj.conversion_factor) * item_unit_cost;
             objWHAdj.created_by = GlobalVariables.ActiveUser.Id;
             objWHAdj.created_date = DateTime.Now;
             objWHAdj.active = 1;
@@ -420,7 +421,7 @@ namespace dipndipInventory.Views.Stock
             transaction_details rcpt_transaction;
             while (true)
             {
-                rcpt_transaction = _tcontext.ReadNReceiptTransaction(skip_no);
+                rcpt_transaction = _tcontext.ReadNReceiptTransaction(selected_item_id, skip_no);
                 if(rcpt_transaction == null)
                 {
                     break;

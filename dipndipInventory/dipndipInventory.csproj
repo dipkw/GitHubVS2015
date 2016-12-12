@@ -230,6 +230,9 @@
     <Compile Include="Views\Login\loginView.xaml.cs">
       <DependentUpon>loginView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Reports\CKWastageReportView.xaml.cs">
+      <DependentUpon>CKWastageReportView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Reports\OrderDetailsPrint.xaml.cs">
       <DependentUpon>OrderDetailsPrint.xaml</DependentUpon>
     </Compile>
@@ -372,6 +375,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Login\loginView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Reports\CKWastageReportView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

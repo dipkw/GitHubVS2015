@@ -124,6 +124,12 @@
     <Compile Include="Reports\WHItemAdjReport.Designer.cs">
       <DependentUpon>WHItemAdjReport.cs</DependentUpon>
     </Compile>
+    <Compile Include="Reports\WHItemsReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\WHItemsReport.Designer.cs">
+      <DependentUpon>WHItemsReport.cs</DependentUpon>
+    </Compile>
     <Compile Include="Reports\WHReceiptConfirmation.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -141,6 +147,12 @@
     </Compile>
     <Compile Include="Reports\WHStockAdjReport.Designer.cs">
       <DependentUpon>WHStockAdjReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\WHStockReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\WHStockReport.Designer.cs">
+      <DependentUpon>WHStockReport.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -196,6 +208,9 @@
     <EmbeddedResource Include="Reports\WHItemAdjReport.resx">
       <DependentUpon>WHItemAdjReport.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reports\WHItemsReport.resx">
+      <DependentUpon>WHItemsReport.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reports\WHReceiptConfirmation.resx">
       <DependentUpon>WHReceiptConfirmation.cs</DependentUpon>
     </EmbeddedResource>
@@ -204,6 +219,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\WHStockAdjReport.resx">
       <DependentUpon>WHStockAdjReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\WHStockReport.resx">
+      <DependentUpon>WHStockReport.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -508,19 +508,6 @@
           <Property Name="modified_by" Type="int" />
           <Property Name="modified_date" Type="datetime" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="wh_cost_change_history">
-          <Property Name="ITEMNMBR" Type="varchar" MaxLength="31" />
-          <Property Name="WH_ITEM_CODE" Type="nvarchar" MaxLength="50" />
-          <Property Name="ORD" Type="int" />
-          <Property Name="PREVCOST" Type="numeric" Precision="19" Scale="5" />
-          <Property Name="PRESENTCOST" Type="numeric" Precision="19" Scale="5" />
-          <Property Name="CHANGEDATE_I" Type="datetime" />
-          <Property Name="TIME1" Type="datetime" />
-          <Property Name="CHANGEBY_I" Type="varchar" MaxLength="15" />
-          <Property Name="DEX_ROW_ID" Type="int" />
-        </EntityType>-->
         <EntityType Name="wh_item_cost_history">
           <Key>
             <PropertyRef Name="Id" />
@@ -1714,6 +1701,10 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
           </ReferentialConstraint>
         </Association>
         <Function Name="ReadWarehouseItems" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="StockQuantity" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="wh_item_code" Type="nvarchar" Mode="In" />
+          <Parameter Name="trans_date" Type="datetime" Mode="In" />
+        </Function>
         <EntityContainer Name="dipckModelStoreContainer">
           <EntitySet Name="app_form_permissions" EntityType="Self.app_form_permissions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="app_forms" EntityType="Self.app_forms" Schema="dbo" store:Type="Tables" />
@@ -2560,6 +2551,10 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
             <End Role="user_roles" EntitySet="user_roles" />
             <End Role="app_form_permissions" EntitySet="app_form_permissions" />
           </AssociationSet>
+          <FunctionImport Name="StockQuantity" ReturnType="Collection(dipckModel.StockQuantity_Result)">
+            <Parameter Name="wh_item_code" Mode="In" Type="String" />
+            <Parameter Name="trans_date" Mode="In" Type="DateTime" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="ReadWarehouseItems_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
@@ -4466,6 +4461,13 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="StockQuantity_Result">
+          <Property Type="Int64" Name="Id" Nullable="false" />
+          <Property Type="String" Name="wh_item_code" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="wh_item_description" Nullable="true" MaxLength="150" />
+          <Property Type="Decimal" Name="quantity" Nullable="true" Precision="38" Scale="3" />
+          <Property Type="Decimal" Name="unit_cost" Nullable="true" Precision="18" Scale="3" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5054,6 +5056,17 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="StockQuantity" FunctionName="dipckModel.Store.StockQuantity">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="dipckModel.StockQuantity_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="wh_item_code" ColumnName="wh_item_code" />
+                <ScalarProperty Name="wh_item_description" ColumnName="wh_item_description" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="unit_cost" ColumnName="unit_cost" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
