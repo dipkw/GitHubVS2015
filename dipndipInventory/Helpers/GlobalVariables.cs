@@ -19,5 +19,10 @@ namespace dipndipInventory.Helpers
         public static site ActiveSite = new site();
         public static long selected_stock_id = 0;
         public static string ActiveBranch = "CK";
+        public static string AppEnvironment = "Development";
+        //public static string AppEnvironment = "Production";
+        public static string ck_order_mail_cc = "jolly@dipndipkw.com";
+        public static string ck_receipt_mail_cc = "jolly@dipndipkw.com";
+        public static string wh_receipt_mail_conf_cc = "walid@dipndipkw.com; jolly@dipndipkw.com";
     }
 }

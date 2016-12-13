@@ -28,6 +28,7 @@ namespace dipndipInventory.Views.Reports
     {
         Telerik.Reporting.IReportDocument myReport;
         string g_order_no;
+        string g_receipt_no = string.Empty;
         ckorderView g_ck_order_view;
         public ReceiptConfirmationReportView()
         {
@@ -39,6 +40,12 @@ namespace dipndipInventory.Views.Reports
             InitializeComponent();
             g_order_no = order_no;
             g_ck_order_view = ck_order_view;
+            CKReceiptService ckrcontext = new CKReceiptService();
+            try
+            {
+                g_receipt_no = ckrcontext.GetCKReceiptNoByOrderNo(g_order_no);
+            }
+            catch { }
             //ShowTaskBar.ShowInTaskbar(this, "Central Kitchen Confirmation");
         }
 
@@ -119,13 +126,36 @@ namespace dipndipInventory.Views.Reports
         {
             Telerik.Reporting.Report myReport = new dipndipTLReports.Reports.WHReceiptConfirmation(g_order_no);
             string ftime = DateTime.Now.Hour.ToString() + "-" + DateTime.Now.Minute.ToString() + "-" + DateTime.Now.Second.ToString();
-            string fileName = @"D:\WHReceipts\Order-" + DateTime.Now.Date.ToString("dd-MM-yyyy") + "-" + ftime + ".pdf";
+            string fileName = string.Empty;
+            if (GlobalVariables.AppEnvironment == "Development")
+            {
+                //fileName = @"D:\WHReceipts\Receipt-" + DateTime.Now.Date.ToString("dd-MM-yyyy") + "-" + ftime + ".pdf";
+                fileName = @"D:\WHReceipts\" + g_receipt_no + ".pdf";
+            }
+            else
+            {
+                //fileName = @"K:\Receipts\CK\Receipt-" + DateTime.Now.Date.ToString("dd-MM-yyyy") + "-" + ftime + ".pdf";
+                fileName = @"K:\Receipts\CK\" + g_receipt_no + ".pdf";
+            }
             SaveReport(myReport, fileName);
 
             Microsoft.Office.Interop.Outlook.Application app = new Microsoft.Office.Interop.Outlook.Application();
             Microsoft.Office.Interop.Outlook.MailItem mailItem = app.CreateItem(Microsoft.Office.Interop.Outlook.OlItemType.olMailItem);
             mailItem.Subject = "Warehouse Receipt Confirmation";
-            mailItem.To = "jolly@dipndipkw.com";
+            if (GlobalVariables.AppEnvironment == "Development")
+            {
+                mailItem.To = "jolly@dipndipkw.com";
+            }
+            else
+            {
+                try
+                {
+                    SiteService stcontext = new SiteService();
+                    mailItem.To = stcontext.GetSiteMailBySiteCode("HO");
+                    mailItem.CC = GlobalVariables.wh_receipt_mail_conf_cc;
+                }
+                catch { MessageBox.Show("Please contact admin"); return; }
+            }
             mailItem.Body = @"Dear Warehouse Officer,
 
 Please find attached Receipt Confirmation for Central Kitchen.";

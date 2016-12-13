@@ -42,6 +42,37 @@ namespace dipndipInventory.EF.DataServices
             }
         }
 
+        public IEnumerable<ckwh_items> GetAllWHCategoryItems(string param_category)
+        {
+            try
+            {
+                _context = new CKEntities();
+                IEnumerable<ckwh_items> objWHItems = (from whitems in _context.ckwh_items where whitems.wh_item_code != "CASH001" && whitems.wh_category_description == param_category orderby whitems.wh_item_code ascending select whitems);
+                return objWHItems;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public List<string> ReadAllWHItemsCategory()
+        {
+            List<string> wh_categories = new List<string>();
+            try
+            {
+                _context = new CKEntities();
+                //IEnumerable<ckwh_items> cats = (from whitems in _context.ckwh_items where whitems.wh_item_code != "CASH001" select whitems);
+                IOrderedQueryable cats = (from whitems in _context.ckwh_items where whitems.wh_item_code != "CASH001" select new { categories = whitems.wh_category_description }).Distinct().OrderBy(o => o.categories);
+                wh_categories = cats as List<string>;
+                return wh_categories;
+            }
+            catch(Exception ex)
+            {
+                return wh_categories;
+            }
+        }
+
         public IEnumerable<ckwh_items> ReadAllWHItemsWithCash()
         {
             try
@@ -106,6 +137,30 @@ namespace dipndipInventory.EF.DataServices
             catch(Exception ex)
             {
                 return 0;
+            }
+        }
+
+        public List<string> GetWHCategories()
+        {
+            List<string> wh_categories = new List<string>();
+            try
+            {
+                _context = new CKEntities();
+                string query = "exec dbo.GetWHCategories";
+                //IEnumerable<WHStockQuantityModel> objStockQuantity = _context.Database.SqlQuery<WHStockQuantityModel>(query);
+                //IEnumerable<transaction_details> objWHItems = _context.transaction_details.SqlQuery(query).ToList<transaction_details>();
+                IEnumerable<string>ckwhitems = _context.Database.SqlQuery<string>(query);
+
+                //foreach (string ckwhitem in ckwhitems)
+                //{
+                //    wh_categories.Add(ckwhitem);
+                //}
+                wh_categories = ckwhitems.ToList<string>();
+                return wh_categories;
+            }
+            catch (Exception ex)
+            {
+                return wh_categories;
             }
         }
 

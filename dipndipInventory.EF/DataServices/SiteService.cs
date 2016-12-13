@@ -210,5 +210,20 @@ namespace dipndipInventory.EF.DataServices
 
             return site_id;
         }
+
+        public string GetSiteMailBySiteCode(string site_code)
+        {
+            string site_mail_id = string.Empty;
+
+            try
+            {
+                _context = new CKEntities();
+
+                site_mail_id = (from tmpsite in _context.sites where tmpsite.site_id == site_code select tmpsite.email).FirstOrDefault();
+            }
+            catch { site_mail_id = "jolly@dipndipkw.com"; }
+
+            return site_mail_id;
+        }
     }
 }

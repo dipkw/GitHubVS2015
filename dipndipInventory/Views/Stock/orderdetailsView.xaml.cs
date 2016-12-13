@@ -53,7 +53,7 @@ namespace dipndipInventory.Views.Stock
             string order_no = _context.GetNewCKOrderNo();
             txtOrderNo.Value = order_no;
 
-            DateTime delivery_date = DateTime.Now;
+            DateTime delivery_date = DateTime.Now.AddDays(1);
 
             try
             {
@@ -561,6 +561,11 @@ namespace dipndipInventory.Views.Stock
                 }
                 else
                 {
+                    if(ExistingOrder())
+                    {
+                        MessageBox.Show("Sorry, you can make only one order per day");
+                        return;
+                    }
                     order_master.created_by = GlobalVariables.ActiveUser.Id;
                     order_master.created_date = DateTime.Now;
                     CallSaveReport();
@@ -574,9 +579,17 @@ namespace dipndipInventory.Views.Stock
                             PrintOrder(txtOrderNo.Value);
                         }
                         IEnumerable<order> g_orders = _ocontext.ReadAllActiveSiteOrders(GlobalVariables.ActiveSite.Id);
-                        g_ck_order_view.dgCKOrders.ItemsSource = g_orders;
-                        g_ck_order_view.dgCKOrders.Rebind();
-                        ClearOrder();
+                        try
+                        {
+                            if (g_ck_order_view.dgCKOrders.ItemsSource != null)
+                            {
+                                g_ck_order_view.dgCKOrders.ItemsSource = null;
+                            }
+                            g_ck_order_view.dgCKOrders.ItemsSource = g_orders;
+                            g_ck_order_view.dgCKOrders.Rebind();
+                            ClearOrder();
+                        }
+                        catch { btnMail.IsEnabled = true; }
                     }
                 }
                 btnMail.IsEnabled = true;
@@ -589,11 +602,31 @@ namespace dipndipInventory.Views.Stock
             
         }
 
+        private bool ExistingOrder()
+        {
+            bool result = false;
+            try
+            {
+                CKOrderService ckocontext = new CKOrderService();
+                result = ckocontext.ExistingOrder((DateTime)dtpDate.SelectedDate);
+            }
+            catch
+            {
+                result = false;
+            }
+
+            return result;
+        }
+
         private void btnMail_Click(object sender, RoutedEventArgs e)
         {
             //SendMail();
             //SavePdfOrder();
             //MailOrder();
+            if(MessageBox.Show("Do you want to confirm the order?","Order Confirmation",MessageBoxButton.YesNo) == MessageBoxResult.No)
+            {
+                return;
+            }
             SendMail();
             CKOrderService ckocontext = new CKOrderService();
             if(ckocontext.UpdateCKOrderedStatus(id,"Ordered",(DateTime)dtpDate.SelectedDate, GlobalVariables.ActiveUser.Id)<1)
@@ -601,13 +634,17 @@ namespace dipndipInventory.Views.Stock
                 MessageBox.Show("Error");
             }
             IEnumerable<order> g_orders = ckocontext.ReadAllActiveSiteOrders(GlobalVariables.ActiveSite.Id);
-            if (g_ck_order_view.dgCKOrders.ItemsSource != null)
+            try
             {
-                g_ck_order_view.dgCKOrders.ItemsSource = null;
+                if (g_ck_order_view.dgCKOrders.ItemsSource != null)
+                {
+                    g_ck_order_view.dgCKOrders.ItemsSource = null;
+                }
+                g_ck_order_view.dgCKOrders.ItemsSource = g_orders;
+                g_ck_order_view.dgCKOrders.Rebind();
+                ClearOrder();
             }
-            g_ck_order_view.dgCKOrders.ItemsSource = g_orders;
-            g_ck_order_view.dgCKOrders.Rebind();
-            ClearOrder();
+            catch { }
         }
 
         private bool OrderPlaced()
@@ -632,45 +669,72 @@ namespace dipndipInventory.Views.Stock
         }
         private void SendMail()
         {
-            if(OrderPlaced())
+            try
             {
-                return;
-            }
+                if (OrderPlaced())
+                {
+                    return;
+                }
 
-            Telerik.Reporting.Report myReport = new dipndipTLReports.Reports.OrderDetailsB(txtOrderNo.Value);
-            string ftime = DateTime.Now.Hour.ToString() + "-" + DateTime.Now.Minute.ToString() + "-" + DateTime.Now.Second.ToString();
-            string fileName = @"D:\CKOrders\Order-" + DateTime.Now.Date.ToString("dd-MM-yyyy") + "-" + ftime + ".pdf";
-            SaveReport(myReport, fileName);
+                Telerik.Reporting.Report myReport = new dipndipTLReports.Reports.OrderDetailsB(txtOrderNo.Value);
+                string ftime = DateTime.Now.Hour.ToString() + "-" + DateTime.Now.Minute.ToString() + "-" + DateTime.Now.Second.ToString();
+                string fileName = string.Empty;
+                if (GlobalVariables.AppEnvironment == "Development")
+                {
+                    //fileName = @"D:\CKOrders\Order-" + DateTime.Now.Date.ToString("dd-MM-yyyy") + "-" + ftime + ".pdf";
+                    fileName = @"D:\CKOrders\" + txtOrderNo.Value + ".pdf";
+                }
+                else
+                {
+                    //fileName = @"E:\CKOrders\Order-" + DateTime.Now.Date.ToString("dd-MM-yyyy") + "-" + ftime + ".pdf";
+                    fileName = @"E:\WHOrders\" + txtOrderNo.Value + ".pdf";
+                }
+                SaveReport(myReport, fileName);
 
-            Microsoft.Office.Interop.Outlook.Application app = new Microsoft.Office.Interop.Outlook.Application();
-            Microsoft.Office.Interop.Outlook.MailItem mailItem = app.CreateItem(Microsoft.Office.Interop.Outlook.OlItemType.olMailItem);
-            mailItem.Subject = "Central Kitchen Order";
-            mailItem.To = "jolly@dipndipkw.com";
-            mailItem.Body = @"Dear Warehouse Officer,
+                Microsoft.Office.Interop.Outlook.Application app = new Microsoft.Office.Interop.Outlook.Application();
+                Microsoft.Office.Interop.Outlook.MailItem mailItem = app.CreateItem(Microsoft.Office.Interop.Outlook.OlItemType.olMailItem);
+                mailItem.Subject = "Central Kitchen Order";
+                if (GlobalVariables.AppEnvironment == "Development")
+                {
+                    mailItem.To = "jolly@dipndipkw.com";
+                }
+                else
+                {
+                    try
+                    {
+                        SiteService stcontext = new SiteService();
+                        mailItem.To = stcontext.GetSiteMailBySiteCode("WH");
+                        mailItem.CC = GlobalVariables.ck_order_mail_cc;
+                    }
+                    catch { MessageBox.Show("Please contact admin"); return; }
+                }
+                mailItem.Body = @"Dear Warehouse Officer,
 
 Please find attached Order for Central Kitchen to be delivered on " + DateTime.Now.AddDays(1).Date.ToString("dd-MM-yyyy") + ".";
-            mailItem.Body += @"
+                mailItem.Body += @"
 
 Regards";
-            mailItem.Body += @"
+                mailItem.Body += @"
 Central Kitchen";
-            //string logPath = @"D:\items.pdf";
-            string logPath = fileName;
-            mailItem.Attachments.Add(logPath);//logPath is a string holding path to the log.txt file
-            mailItem.Importance = Microsoft.Office.Interop.Outlook.OlImportance.olImportanceHigh;
-            mailItem.ReadReceiptRequested = true;
-            mailItem.Send();
-            //mailItem.Display(false);
+                //string logPath = @"D:\items.pdf";
+                string logPath = fileName;
+                mailItem.Attachments.Add(logPath);//logPath is a string holding path to the log.txt file
+                mailItem.Importance = Microsoft.Office.Interop.Outlook.OlImportance.olImportanceHigh;
+                mailItem.ReadReceiptRequested = true;
+                mailItem.Send();
+                //mailItem.Display(false);
 
-            CKOrderService ckocontext = new CKOrderService();
-            if(ckocontext.UpdateCKOrderMail(txtOrderNo.Value)>0)
-            {
-                MessageBox.Show("You order has been placed");
+                CKOrderService ckocontext = new CKOrderService();
+                if (ckocontext.UpdateCKOrderMail(txtOrderNo.Value) > 0)
+                {
+                    MessageBox.Show("You order has been placed");
+                }
+                else
+                {
+                    MessageBox.Show("Sorry");
+                }
             }
-            else
-            {
-                MessageBox.Show("Sorry");
-            }
+            catch { MessageBox.Show("Please contact admin"); }
         }
 
         private void btnPrint_Click(object sender, RoutedEventArgs e)
@@ -848,7 +912,18 @@ Central Kitchen";
         {
             //Telerik.Reporting.Report myReport = new dipndipTLReports.Reports.OrderDetailsB("CKOR-0007");
             Telerik.Reporting.Report myReport = new dipndipTLReports.Reports.OrderDetailsB(txtOrderNo.Value);
-            string fileName = @"D:\Order-" + DateTime.Now.Date.ToString("dd-MM-yyyy") + ".pdf";
+            //string fileName = @"D:\Order-" + DateTime.Now.Date.ToString("dd-MM-yyyy") + ".pdf";
+            string fileName = string.Empty;
+            if (GlobalVariables.AppEnvironment == "Development")
+            {
+                //fileName = @"D:\CKOrders\Order-" + DateTime.Now.Date.ToString("dd-MM-yyyy") + "-" + ftime + ".pdf";
+                fileName = @"D:\CKOrders\" + txtOrderNo.Value + ".pdf";
+            }
+            else
+            {
+                //fileName = @"E:\CKOrders\Order-" + DateTime.Now.Date.ToString("dd-MM-yyyy") + "-" + ftime + ".pdf";
+                fileName = @"E:\WHOrders\" + txtOrderNo.Value + ".pdf";
+            }
             SaveReport(myReport, fileName);
         }
         void SaveReport(Telerik.Reporting.Report report, string fileName)

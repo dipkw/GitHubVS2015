@@ -20,13 +20,15 @@
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <!--<StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" >
-            <telerik:Label Content="Start Date" Margin="10,0,0,0"/>
-            <telerik:RadDatePicker Height="25" x:Name="dtpStartDate" Margin="0,0,5,0"/>
-            <telerik:Label Content="End Date"/>
-            <telerik:RadDatePicker Height="25" x:Name="dtpEndDate" Margin="0,0,5,0"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+            <telerik:Label Content="Date" Margin="10,0,0,0"/>
+            <telerik:RadDatePicker Height="25" x:Name="dtpDate" Margin="0,0,5,0"/>
+            <!--<telerik:Label Content="End Date"/>
+            <telerik:RadDatePicker Height="25" x:Name="dtpEndDate" Margin="0,0,5,0"/>-->
+            <telerik:Label Content="Category" Height="25" Width="62"/>
+            <telerik:RadComboBox x:Name="cmbCategory" Height="25" Width="150" Margin="3" TabIndex="2"/>
             <telerik:RadButton Content="View" Margin="3" Height="25" Width="50" x:Name="btnView" TabIndex="8" Click="btnView_Click"/>
-        </StackPanel>-->
+        </StackPanel>
         <StackPanel Orientation="Horizontal"  Grid.Row="0" Grid.Column="1" Margin="0,0,5,5" HorizontalAlignment="Right" >
 
 

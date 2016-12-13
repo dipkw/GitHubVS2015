@@ -285,7 +285,7 @@ namespace dipndipInventory.Views.Stock
             objWHAdj.conversion_factor = conv_factor;
             objWHAdj.adj_qty = (decimal)txtQty.Value;
             objWHAdj.unit_cost = item_unit_cost;
-            objWHAdj.ext_cost = (objWHAdj.adj_qty * objWHAdj.conversion_factor) * item_unit_cost;
+            objWHAdj.ext_cost = (Math.Abs((decimal)(objWHAdj.adj_qty)) * objWHAdj.conversion_factor) * item_unit_cost;
             objWHAdj.created_by = GlobalVariables.ActiveUser.Id;
             objWHAdj.created_date = DateTime.Now;
             objWHAdj.active = 1;

@@ -552,13 +552,33 @@ namespace dipndipInventory.Views.Stock
             Telerik.Reporting.Report myReport = new dipndipTLReports.Reports.WHReceiptDetails(txtOrderNo.Value);
             string ftime = DateTime.Now.Hour.ToString() + "-" + DateTime.Now.Minute.ToString() + "-" + DateTime.Now.Second.ToString();
             //string fileName = @"D:\CKReceipts\Receipt-" + DateTime.Now.Date.ToString("dd-MM-yyyy") + "-" + ftime + ".pdf";
-            string fileName = @"D:\CKReceipts\" + active_receipt_no + ".pdf";
+            string fileName = string.Empty;
+            if (GlobalVariables.AppEnvironment == "Development")
+            {
+                fileName = @"D:\CKReceipts\" + active_receipt_no + ".pdf";
+            }
+            else
+            {
+                fileName = @"E:\CKReceipts\" + active_receipt_no + ".pdf";
+            }
             SaveReport(myReport, fileName);
 
             Microsoft.Office.Interop.Outlook.Application app = new Microsoft.Office.Interop.Outlook.Application();
             Microsoft.Office.Interop.Outlook.MailItem mailItem = app.CreateItem(Microsoft.Office.Interop.Outlook.OlItemType.olMailItem);
             mailItem.Subject = "Central Kitchen Receipt";
-            mailItem.To = "jolly@dipndipkw.com";
+            if (GlobalVariables.AppEnvironment == "Development")
+            {
+                mailItem.To = "jolly@dipndipkw.com";
+            }
+            else
+            {
+                try
+                {
+                    SiteService stcontext = new SiteService();
+                    mailItem.To = stcontext.GetSiteMailBySiteCode("WH");
+                }
+                catch { MessageBox.Show("Please contact admin"); return; }
+            }
             mailItem.Body = @"Dear Warehouse Officer,
 
 Please find attached Receipt for Central Kitchen Order No: " + txtOrderNo.Value + ".";

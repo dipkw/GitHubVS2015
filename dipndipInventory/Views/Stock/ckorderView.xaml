@@ -36,6 +36,13 @@
                             </DataTemplate>
                         </telerik:GridViewColumn.CellTemplate>
                     </telerik:GridViewColumn>
+                    <telerik:GridViewColumn Width="80">
+                        <telerik:GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <telerik:RadButton Content="Cancel" x:Name="btnCancel" Margin="5" Click="btnCancel_Click" Visibility="Visible"/>
+                            </DataTemplate>
+                        </telerik:GridViewColumn.CellTemplate>
+                    </telerik:GridViewColumn>
                     <!--<telerik:GridViewColumn Width="80">
                         <telerik:GridViewColumn.CellTemplate>
                             <DataTemplate>

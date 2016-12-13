@@ -88,6 +88,50 @@ namespace dipndipInventory.EF.DataServices
             }
         }
 
+        public int CancelCKOrder(string order_no)
+        {
+            try
+            {
+                _context = new CKEntities();
+                //ck_users objUserToUpdate = new ck_users();
+                order objCKOrderToCancel = (from ckorder in _context.orders where ckorder.order_no == order_no select ckorder).SingleOrDefault();
+                objCKOrderToCancel.active = false;
+                _context.SaveChanges();
+
+                _context.Dispose();
+                return 1;
+            }
+            catch
+            {
+                _context.Dispose();
+                return 0;
+            }
+        }
+
+        public bool ExistingOrder(DateTime order_date)
+        {
+            bool result = false;
+            order_date = order_date.Date;
+            try
+            {
+                _context = new CKEntities();
+
+
+                //order objCKOrder = (from ckorder in _context.orders where (ckorder.order_no == order_no && ((DateTime)ckorder.order_date).Date == order_date.Date) select ckorder).FirstOrDefault();
+                order objCKOrder = (from ckorder in _context.orders where (DbFunctions.TruncateTime(ckorder.order_date) == order_date && ckorder.active == true) select ckorder).FirstOrDefault();
+
+                if (objCKOrder != null)
+                {
+                    result = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+
+            return result;
+        }
         public bool OrderPlaced(string order_no, DateTime order_date)
         {
             bool result = false;
@@ -115,7 +159,7 @@ namespace dipndipInventory.EF.DataServices
 
         public DateTime? GetDeliveryDate(string order_no)
         {
-            DateTime delivery_date = DateTime.Now;
+            DateTime delivery_date = DateTime.Now.AddDays(1);
             try
             {
                 _context = new CKEntities();

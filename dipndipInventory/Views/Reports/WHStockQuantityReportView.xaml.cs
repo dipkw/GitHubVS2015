@@ -1,4 +1,5 @@
 ﻿using dipndipInventory.EF.DataServices;
+using dipndipInventory.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,19 +26,36 @@ namespace dipndipInventory.Views.Reports
         public WHStockQuantityReportView()
         {
             InitializeComponent();
-            WHItemService wiscontext = new WHItemService();
+            ShowTaskBar.ShowInTaskbar(this, "Warehouse Item Stock");
+            
+            dtpDate.SelectedDate = DateTime.Now;
+            FillCategory();
+            
             //wiscontext.GetStockQtySP("CER001", Convert.ToDateTime("2016-12-01"));
-            LoadReport();
+            //LoadReport();
         }
 
+        private void FillCategory()
+        {
+            try
+            {
+                WHItemService wiscontext = new WHItemService();
+                List<string> wh_categories = wiscontext.GetWHCategories();
+                wh_categories.Insert(0, "All");
+                cmbCategory.ItemsSource = wh_categories;
+                cmbCategory.Text = "All";
+            }
+            catch { }
+        }
         private void LoadReport()
         {
             try
             {
                 DateTime defaultDate = DateTime.Today.Date;
                 //myReport = new dipndipTLReports.Reports.WHStockReport();
-                DateTime param_date = DateTime.Now;
-                myReport = new dipndipTLReports.Reports.WHItemsReport(param_date);
+                //DateTime param_date = DateTime.Now;
+                DateTime param_date = dtpDate.SelectedDate.Value.Date;
+                myReport = new dipndipTLReports.Reports.WHItemsReport(param_date, cmbCategory.Text);
 
                 Telerik.Reporting.InstanceReportSource instanceReportSource =
                     new Telerik.Reporting.InstanceReportSource();
@@ -57,6 +75,11 @@ namespace dipndipInventory.Views.Reports
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void btnView_Click(object sender, RoutedEventArgs e)
+        {
+            LoadReport();
         }
     }
 }

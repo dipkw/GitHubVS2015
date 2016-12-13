@@ -43,6 +43,10 @@ namespace dipndipInventory.Views.Stock
                 //IEnumerable<order> objOrders = _context.ReadAllActiveCKOrders();
                 IEnumerable<order> objOrders = _context.ReadAllActiveSiteOrders(GlobalVariables.ActiveSite.Id);
                 //objOrders = _context.ReadAllActiveSiteOrders(GlobalVariables.ActiveSite.Id);
+                if(dgCKOrders.ItemsSource != null)
+                {
+                    dgCKOrders.ItemsSource = null;
+                }
                 dgCKOrders.ItemsSource = objOrders;
             }
             catch { }
@@ -116,6 +120,47 @@ namespace dipndipInventory.Views.Stock
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                order objOrder = (dgCKOrders.SelectedItem) as order;
+                SiteService stcontext = new SiteService();
+                int ck_site_id = stcontext.GetSiteIdBySiteCode("CK");
+                if (GlobalVariables.ActiveSite.Id != ck_site_id)
+                {
+                    return;
+                }
+                if (dgCKOrders.SelectedItem == null)
+                {
+                    RadWindow.Alert("Please select an order to cancel");
+                    return;
+                }
+                if(MessageBox.Show("Are you sure to cancel this order","Order Cancel Confirmation",MessageBoxButton.YesNo) == MessageBoxResult.No)
+                {
+                    return;
+                }
+                
+                if(GlobalVariables.ActiveSite.Id == ck_site_id && objOrder.order_status == "Pending")
+                {
+                    CKOrderService ckocontext = new CKOrderService();
+                    if(ckocontext.CancelCKOrder(objOrder.order_no)>0)
+                    {
+                        MessageBox.Show("Order cancelled successfully");
+                        ReadAllCKOrders();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Please contact admin");
+                    }
+                }
+            }
+            catch
+            {
+
+            }
         }
     }
 }

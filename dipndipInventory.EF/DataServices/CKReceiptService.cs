@@ -144,6 +144,18 @@ namespace dipndipInventory.EF.DataServices
             return objCKReceipt;
         }
 
+        public string GetCKReceiptNoByOrderNo(string order_no)
+        {
+            string receipt_no = string.Empty;
+            try
+            {
+                _context = new CKEntities();
+                receipt_no = (from ckreceipt in _context.receipts where ckreceipt.order_no == order_no select ckreceipt.receipt_no).FirstOrDefault();
+                return receipt_no;
+            }
+            catch { return receipt_no; }
+        }
+
         public receipt ReadCKReceiptByReceiptNo(string receipt_no)
         {
             _context = new CKEntities();
