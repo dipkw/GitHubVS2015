@@ -63,6 +63,7 @@ namespace dipndipTLReports.Reports
             this.shape4 = new Telerik.Reporting.Shape();
             this.shape6 = new Telerik.Reporting.Shape();
             this.shape8 = new Telerik.Reporting.Shape();
+            this.textBox7 = new Telerik.Reporting.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             // 
             // order_noGroupFooterSection
@@ -336,9 +337,10 @@ namespace dipndipTLReports.Reports
             // 
             // reportHeader
             // 
-            this.reportHeader.Height = Telerik.Reporting.Drawing.Unit.Inch(0.50000005960464478D);
+            this.reportHeader.Height = Telerik.Reporting.Drawing.Unit.Inch(0.70000016689300537D);
             this.reportHeader.Items.AddRange(new Telerik.Reporting.ReportItemBase[] {
-            this.titleTextBox});
+            this.titleTextBox,
+            this.textBox7});
             this.reportHeader.Name = "reportHeader";
             // 
             // titleTextBox
@@ -451,6 +453,14 @@ namespace dipndipTLReports.Reports
             this.shape8.Name = "shape8";
             this.shape8.ShapeType = new Telerik.Reporting.Drawing.Shapes.LineShape(Telerik.Reporting.Drawing.Shapes.LineDirection.NS);
             this.shape8.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Inch(0.20000000298023224D), Telerik.Reporting.Drawing.Unit.Inch(0.31000000238418579D));
+            // 
+            // textBox7
+            // 
+            this.textBox7.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Inch(3.9498012483818457E-05D), Telerik.Reporting.Drawing.Unit.Inch(0.46000000834465027D));
+            this.textBox7.Name = "textBox7";
+            this.textBox7.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Inch(6.4374604225158691D), Telerik.Reporting.Drawing.Unit.Inch(0.20000012218952179D));
+            this.textBox7.Style.TextAlign = Telerik.Reporting.Drawing.HorizontalAlign.Center;
+            this.textBox7.Value = "= Fields.site_name";
             // 
             // WHDeliveryDetails
             // 
@@ -579,5 +589,6 @@ namespace dipndipTLReports.Reports
         private Telerik.Reporting.Shape shape6;
         private Telerik.Reporting.Shape shape8;
         private Telerik.Reporting.PictureBox pictureBox1;
+        private Telerik.Reporting.TextBox textBox7;
     }
 }

@@ -370,7 +370,30 @@ namespace dipndipInventory.EF.DataServices
             }
         }
 
-        public int UpdateCKOrderReceiveStatus(long order_id, string order_status, DateTime receipt_date, int user_id)
+        public int UpdateCKOrderedStatus(string order_no, string order_status, DateTime order_date, int user_id)
+        {
+            try
+            {
+                _context = new CKEntities();
+                //ck_users objUserToUpdate = new ck_users();
+                order objCKOrderToUpdate = (from ckorder in _context.orders where ckorder.order_no == order_no select ckorder).SingleOrDefault();
+                objCKOrderToUpdate.order_date = order_date;
+                objCKOrderToUpdate.order_status = order_status;
+                objCKOrderToUpdate.modified_by = user_id;
+                objCKOrderToUpdate.modified_date = DateTime.Now;
+                _context.SaveChanges();
+
+                _context.Dispose();
+                return 1;
+            }
+            catch
+            {
+                _context.Dispose();
+                return 0;
+            }
+        }
+
+        public int UpdateCKOrderReceiveStatus1(long order_id, string order_status, DateTime receipt_date, int user_id)
         {
             try
             {

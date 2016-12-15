@@ -340,7 +340,7 @@ namespace dipndipTLReports.Reports
             // qtyDataTextBox
             // 
             this.qtyDataTextBox.CanGrow = true;
-            this.qtyDataTextBox.Format = "{0:N0}";
+            this.qtyDataTextBox.Format = "{0:N3}";
             this.qtyDataTextBox.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Inch(3.660416841506958D), Telerik.Reporting.Drawing.Unit.Inch(0.02083333395421505D));
             this.qtyDataTextBox.Name = "qtyDataTextBox";
             this.qtyDataTextBox.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Inch(0.50000005960464478D), Telerik.Reporting.Drawing.Unit.Inch(0.20000000298023224D));

@@ -78,6 +78,7 @@ namespace dipndipInventory.Views
             UnitsMenu.IsEnabled = afpcontext.GetAppRoleFormPermission(objUser.role_id, "Units", "Read");
             UsersMenu.IsEnabled = afpcontext.GetAppRoleFormPermission(objUser.role_id, "Users", "Read");
             SitesMenu.IsEnabled = afpcontext.GetAppRoleFormPermission(objUser.role_id, "Sites", "Read");
+            Wastage.IsEnabled = afpcontext.GetAppRoleFormPermission(objUser.role_id, "CK Item Wastage", "Read");
             FormPermissionsMenu.IsEnabled = afpcontext.GetAppRoleFormPermission(objUser.role_id, "Form Permissions", "Read");
 
             //if (objUser.role_id == 2)

@@ -80,9 +80,13 @@ namespace dipndipTLReports.Reports
             {
                 //report.Parameters["start_date"].Value = g_start_date.Date.ToString("yyyy-MM-dd");
                 //report.Parameters["end_date"].Value = g_end_date.Date.ToString("yyyy-MM-dd");
-                if (report.Parameters["ck_item_code"].Value == null)
+                if (report.Parameters["ck_item_code"].Value == null && (report.Parameters["start_date"].Value == null || report.Parameters["end_date"].Value == null))
                 {
                     report.DataSource = this.AllCKWastagesqlDataSource;
+                }
+                else if((report.Parameters["ck_item_code"].Value == null && (report.Parameters["start_date"].Value != null && report.Parameters["end_date"].Value != null)))
+                {
+                    report.DataSource = this.CKDateWastagesqlDataSource;
                 }
                 else
                 {

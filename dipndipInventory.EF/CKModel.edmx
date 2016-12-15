@@ -2579,7 +2579,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ck_item_id" Type="Int32" />
           <Property Name="ckwh_item_id" Type="Int32" />
-          <Property Name="ckwh_item_qty" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="ckwh_item_qty" Type="Decimal" Precision="20" Scale="12" />
           <Property Name="ckwh_item_unit_id" Type="Int32" />
           <Property Name="created_by" Type="Int32" />
           <Property Name="created_date" Type="DateTime" Precision="3" />
@@ -2692,7 +2692,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ckwh_item_id" Type="Int32" />
           <Property Name="ck_unit_id" Type="Int32" />
-          <Property Name="cnv_factor" Type="Decimal" Precision="18" Scale="8" />
+          <Property Name="cnv_factor" Type="Decimal" Precision="20" Scale="12" />
           <Property Name="created_by" Type="Int32" />
           <Property Name="created_date" Type="DateTime" Precision="3" />
           <Property Name="modified_by" Type="Int32" />
@@ -2714,8 +2714,8 @@
           <Property Name="wh_category_description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="wh_unit_id" Type="Int32" />
           <Property Name="wh_unit_description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="quantity" Type="Decimal" Precision="18" Scale="3" />
-          <Property Name="unit_cost" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="quantity" Type="Decimal" Precision="20" Scale="12" />
+          <Property Name="unit_cost" Type="Decimal" Precision="20" Scale="12" />
           <Property Name="site_id" Type="Int32" />
           <Property Name="created_by" Type="Int32" />
           <Property Name="created_date" Type="DateTime" Precision="3" />
@@ -2727,11 +2727,11 @@
           <NavigationProperty Name="ckwh_category" Relationship="dipckModel.FK_ckwh_items_ckwh_category" FromRole="ckwh_items" ToRole="ckwh_category" />
           <NavigationProperty Name="ckwh_item_unit" Relationship="dipckModel.FK_ckwh_item_unit_ckwh_items" FromRole="ckwh_items" ToRole="ckwh_item_unit" />
           <NavigationProperty Name="site" Relationship="dipckModel.FK_ckwh_items_sites" FromRole="ckwh_items" ToRole="site" />
-          <Property Name="ck_qty" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="ck_qty" Type="Decimal" Precision="20" Scale="12" />
           <NavigationProperty Name="order_details" Relationship="dipckModel.FK_order_details_ckwh_items" FromRole="ckwh_items" ToRole="order_details" />
           <NavigationProperty Name="receipt_details" Relationship="dipckModel.FK_receipt_details_ckwh_items" FromRole="ckwh_items" ToRole="receipt_details" />
           <NavigationProperty Name="transaction_details" Relationship="dipckModel.FK_transaction_details_ckwh_items" FromRole="ckwh_items" ToRole="transaction_details" />
-          <Property Name="ck_avg_unit_cost" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="ck_avg_unit_cost" Type="Decimal" Precision="20" Scale="12" />
           <NavigationProperty Name="wh_item_cost_history" Relationship="dipckModel.FK_wh_item_cost_history_ckwh_items" FromRole="ckwh_items" ToRole="wh_item_cost_history" />
           <NavigationProperty Name="ckwh_items_adj" Relationship="dipckModel.FK_ckwh_items_adj_ckwh_items" FromRole="ckwh_items" ToRole="ckwh_items_adj" />
           <NavigationProperty Name="item_site" Relationship="dipckModel.FK_item_site_ckwh_items" FromRole="ckwh_items" ToRole="item_site" />
@@ -2773,7 +2773,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="wh_item_id" Type="Int32" />
           <Property Name="ck_unit_id" Type="Int32" />
-          <Property Name="cnv_factor" Type="Decimal" Precision="18" Scale="8" />
+          <Property Name="cnv_factor" Type="Decimal" Precision="20" Scale="12" />
           <Property Name="created_by" Type="Int32" />
           <Property Name="created_date" Type="DateTime" Precision="3" />
           <Property Name="modified_by" Type="Int32" />
@@ -3063,9 +3063,9 @@
           <Property Name="order_no" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ckwh_item_id" Type="Int32" />
           <Property Name="wh_item_unit_id" Type="Int32" />
-          <Property Name="qty" Type="Decimal" Precision="18" Scale="3" />
-          <Property Name="qty_issued" Type="Decimal" Precision="18" Scale="3" />
-          <Property Name="qty_received" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="qty" Type="Decimal" Precision="20" Scale="12" />
+          <Property Name="qty_issued" Type="Decimal" Precision="20" Scale="12" />
+          <Property Name="qty_received" Type="Decimal" Precision="20" Scale="12" />
           <Property Name="created_by" Type="Int32" />
           <Property Name="created_date" Type="DateTime" Precision="3" />
           <Property Name="modified_by" Type="Int32" />
@@ -3113,11 +3113,11 @@
           <Property Name="receipt_no" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="wh_item_id" Type="Int32" />
           <Property Name="wh_item_unit_id" Type="Int32" />
-          <Property Name="qty_ordered" Type="Decimal" Precision="18" Scale="3" />
-          <Property Name="qty_received" Type="Decimal" Precision="18" Scale="3" />
-          <Property Name="qyt_returned" Type="Decimal" Precision="18" Scale="3" />
-          <Property Name="wh_item_unit_cost" Type="Decimal" Precision="18" Scale="3" />
-          <Property Name="wh_item_ext_cost" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="qty_ordered" Type="Decimal" Precision="20" Scale="12" />
+          <Property Name="qty_received" Type="Decimal" Precision="20" Scale="12" />
+          <Property Name="qyt_returned" Type="Decimal" Precision="20" Scale="12" />
+          <Property Name="wh_item_unit_cost" Type="Decimal" Precision="20" Scale="12" />
+          <Property Name="wh_item_ext_cost" Type="Decimal" Precision="20" Scale="12" />
           <Property Name="remarks" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="created_by" Type="Int32" />
           <Property Name="created_date" Type="DateTime" Precision="3" />
@@ -3167,9 +3167,9 @@
           <Property Name="trans_date" Type="DateTime" Precision="3" />
           <Property Name="wh_item_unit_id" Type="Int32" />
           <Property Name="ck_unit_description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="qty" Type="Decimal" Precision="18" Scale="3" />
-          <Property Name="unit_cost" Type="Decimal" Precision="18" Scale="3" />
-          <Property Name="total_cost" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="qty" Type="Decimal" Precision="20" Scale="12" />
+          <Property Name="unit_cost" Type="Decimal" Precision="20" Scale="12" />
+          <Property Name="total_cost" Type="Decimal" Precision="20" Scale="12" />
           <Property Name="order_from_site_id" Type="Int32" />
           <Property Name="order_to_site_id" Type="Int32" />
           <Property Name="trans_type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -3187,7 +3187,7 @@
           <Property Name="trans_ref_no" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="reason_id" Type="Int32" />
           <NavigationProperty Name="reason_codes" Relationship="dipckModel.FK_transaction_details_reason_codes" FromRole="transaction_details" ToRole="reason_codes" />
-          <Property Name="current_qty" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="current_qty" Type="Decimal" Precision="20" Scale="12" />
         </EntityType>
         <Association Name="FK_order_details_ck_users">
           <End Type="dipckModel.ck_users" Role="ck_users" Multiplicity="0..1" />
@@ -3498,8 +3498,8 @@
           <Property Name="ck_item_code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ck_item_description" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="ord" Type="Int32" />
-          <Property Name="prev_cost" Type="Decimal" Precision="18" Scale="3" />
-          <Property Name="curr_cost" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="prev_cost" Type="Decimal" Precision="20" Scale="12" />
+          <Property Name="curr_cost" Type="Decimal" Precision="20" Scale="12" />
           <Property Name="created_by" Type="Int32" />
           <Property Name="created_date" Type="DateTime" Precision="3" />
           <NavigationProperty Name="ck_users" Relationship="dipckModel.FK_ck_item_cost_history_ck_users_created" FromRole="ck_item_cost_history" ToRole="ck_users" />
@@ -3514,8 +3514,8 @@
           <Property Name="wh_item_code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="wh_item_description" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="ord" Type="Int32" />
-          <Property Name="prev_cost" Type="Decimal" Precision="18" Scale="3" />
-          <Property Name="curr_cost" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="prev_cost" Type="Decimal" Precision="20" Scale="12" />
+          <Property Name="curr_cost" Type="Decimal" Precision="20" Scale="12" />
           <Property Name="created_by" Type="Int32" />
           <Property Name="created_date" Type="DateTime" Precision="3" />
           <NavigationProperty Name="ck_users" Relationship="dipckModel.FK_wh_item_cost_history_ck_users_created" FromRole="wh_item_cost_history" ToRole="ck_users" />
@@ -3599,10 +3599,10 @@
           <Property Name="wh_item_description" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="wh_item_unit_id" Type="Int32" />
           <Property Name="wh_item_unit_description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="conversion_factor" Type="Decimal" Precision="18" Scale="3" />
-          <Property Name="adj_qty" Type="Decimal" Precision="18" Scale="3" />
-          <Property Name="unit_cost" Type="Decimal" Precision="18" Scale="3" />
-          <Property Name="ext_cost" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="conversion_factor" Type="Decimal" Precision="20" Scale="12" />
+          <Property Name="adj_qty" Type="Decimal" Precision="20" Scale="12" />
+          <Property Name="unit_cost" Type="Decimal" Precision="20" Scale="12" />
+          <Property Name="ext_cost" Type="Decimal" Precision="20" Scale="12" />
           <Property Name="created_by" Type="Int32" />
           <Property Name="created_date" Type="DateTime" Precision="3" />
           <Property Name="modified_by" Type="Int32" />
@@ -3764,10 +3764,10 @@
           <Property Name="exp_date" Type="DateTime" Precision="3" />
           <Property Name="ck_unit_id" Type="Int32" />
           <Property Name="ck_unit_desc" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="qty" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="qty" Type="Decimal" Precision="20" Scale="12" />
           <Property Name="trans_type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="unit_cost" Type="Decimal" Precision="18" Scale="3" />
-          <Property Name="total_cost" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="unit_cost" Type="Decimal" Precision="20" Scale="12" />
+          <Property Name="total_cost" Type="Decimal" Precision="20" Scale="12" />
           <Property Name="trans_from" Type="Int32" />
           <Property Name="trans_to" Type="Int32" />
           <Property Name="reason_id" Type="Int32" />
@@ -3805,7 +3805,7 @@
           <Property Name="wastage_master_id" Type="Int64" />
           <Property Name="ck_item_id" Type="Int32" />
           <Property Name="ck_item_unit_id" Type="Int32" />
-          <Property Name="wastage_qty" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="wastage_qty" Type="Decimal" Precision="20" Scale="12" />
           <Property Name="created_by" Type="Int32" />
           <Property Name="created_date" Type="DateTime" Precision="3" />
           <Property Name="modified_by" Type="Int32" />
@@ -3823,8 +3823,8 @@
           <Property Name="ck_exp_date" Type="DateTime" Precision="3" />
           <Property Name="ck_item_code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ck_item_desc" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="ck_item_unit_cost" Type="Decimal" Precision="18" Scale="3" />
-          <Property Name="ck_item_total_cost" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="ck_item_unit_cost" Type="Decimal" Precision="20" Scale="12" />
+          <Property Name="ck_item_total_cost" Type="Decimal" Precision="20" Scale="12" />
         </EntityType>
         <Association Name="FK_ck_wastage_details_ck_users_created">
           <End Type="dipckModel.ck_users" Role="ck_users" Multiplicity="0..1" />
@@ -3869,7 +3869,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ck_item_id" Type="Int32" />
           <Property Name="ck_unit_id" Type="Int32" />
-          <Property Name="cnv_factor" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="cnv_factor" Type="Decimal" Precision="20" Scale="12" />
           <Property Name="default_unit" Type="Boolean" />
           <Property Name="created_by" Type="Int32" />
           <Property Name="created_date" Type="DateTime" Precision="3" />
@@ -3945,10 +3945,10 @@
           <Property Name="ck_item_desc" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="ck_item_unit_id" Type="Int32" />
           <Property Name="ck_item_unit_desc" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="conv_factor" Type="Decimal" Precision="18" Scale="3" />
-          <Property Name="prod_qty" Type="Decimal" Precision="18" Scale="3" />
-          <Property Name="unit_cost" Type="Decimal" Precision="18" Scale="3" />
-          <Property Name="total_cost" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="conv_factor" Type="Decimal" Precision="20" Scale="12" />
+          <Property Name="prod_qty" Type="Decimal" Precision="20" Scale="12" />
+          <Property Name="unit_cost" Type="Decimal" Precision="20" Scale="12" />
+          <Property Name="total_cost" Type="Decimal" Precision="20" Scale="12" />
           <Property Name="created_by" Type="Int32" />
           <Property Name="created_date" Type="DateTime" Precision="3" />
           <Property Name="modified_by" Type="Int32" />
@@ -4040,10 +4040,10 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ck_item_code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ck_item_description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ck_design_qty" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="ck_design_qty" Type="Decimal" Precision="20" Scale="12" />
           <Property Name="ck_unit_id" Type="Int32" />
-          <Property Name="ck_item_unit_cost" Type="Decimal" Precision="18" Scale="3" />
-          <Property Name="qty_on_hand" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="ck_item_unit_cost" Type="Decimal" Precision="20" Scale="12" />
+          <Property Name="qty_on_hand" Type="Decimal" Precision="20" Scale="12" />
           <Property Name="production_date" Type="DateTime" Precision="3" />
           <Property Name="expiry_date" Type="DateTime" Precision="3" />
           <Property Name="created_by" Type="Int32" />
@@ -4058,7 +4058,7 @@
           <NavigationProperty Name="ck_users1" Relationship="dipckModel.FK_ck_items_ck_users1" FromRole="ck_items" ToRole="ck_users" />
           <NavigationProperty Name="ck_prod" Relationship="dipckModel.FK_ck_prod_ck_items" FromRole="ck_items" ToRole="ck_prod" />
           <NavigationProperty Name="ck_wastage_details" Relationship="dipckModel.FK_ck_wastage_details_ck_items" FromRole="ck_items" ToRole="ck_wastage_details" />
-          <Property Name="wastage_limit" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="wastage_limit" Type="Decimal" Precision="20" Scale="12" />
           <NavigationProperty Name="ck_issue_detais" Relationship="dipckModel.FK_ck_issue_detais_ck_items" FromRole="ck_items" ToRole="ck_issue_detais" />
           <NavigationProperty Name="ck_items_adj" Relationship="dipckModel.FK_ck_items_adj_ck_items" FromRole="ck_items" ToRole="ck_items_adj" />
         </EntityType>
@@ -4213,9 +4213,9 @@
           <Property Name="ck_item_code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ck_item_desc" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="ck_item_unit_id" Type="Int32" />
-          <Property Name="qty_issued" Type="Decimal" Precision="18" Scale="3" />
-          <Property Name="ck_item_unit_cost" Type="Decimal" Precision="18" Scale="3" />
-          <Property Name="ck_item_total_cost" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="qty_issued" Type="Decimal" Precision="20" Scale="12" />
+          <Property Name="ck_item_unit_cost" Type="Decimal" Precision="20" Scale="12" />
+          <Property Name="ck_item_total_cost" Type="Decimal" Precision="20" Scale="12" />
           <Property Name="active" Type="Boolean" />
           <Property Name="created_by" Type="Int32" />
           <Property Name="created_date" Type="DateTime" Precision="3" />
@@ -4303,10 +4303,10 @@
           <Property Name="ck_item_desc" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="ck_item_unit_id" Type="Int32" />
           <Property Name="ck_item_unit_desc" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="conv_factor" Type="Decimal" Precision="18" Scale="3" />
-          <Property Name="adj_qty" Type="Decimal" Precision="18" Scale="3" />
-          <Property Name="unit_cost" Type="Decimal" Precision="18" Scale="3" />
-          <Property Name="ext_cost" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="conv_factor" Type="Decimal" Precision="20" Scale="12" />
+          <Property Name="adj_qty" Type="Decimal" Precision="20" Scale="12" />
+          <Property Name="unit_cost" Type="Decimal" Precision="20" Scale="12" />
+          <Property Name="ext_cost" Type="Decimal" Precision="20" Scale="12" />
           <Property Name="active" Type="Boolean" />
           <Property Name="created_by" Type="Int32" />
           <Property Name="created_date" Type="DateTime" Precision="3" />

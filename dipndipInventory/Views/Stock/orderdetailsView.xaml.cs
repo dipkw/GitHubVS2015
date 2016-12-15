@@ -629,9 +629,10 @@ namespace dipndipInventory.Views.Stock
             }
             SendMail();
             CKOrderService ckocontext = new CKOrderService();
-            if(ckocontext.UpdateCKOrderedStatus(id,"Ordered",(DateTime)dtpDate.SelectedDate, GlobalVariables.ActiveUser.Id)<1)
+            //if(ckocontext.UpdateCKOrderedStatus(id,"Ordered",(DateTime)dtpDate.SelectedDate, GlobalVariables.ActiveUser.Id)<1)
+            if(ckocontext.UpdateCKOrderedStatus(txtOrderNo.Value,"Ordered",(DateTime)dtpDate.SelectedDate, GlobalVariables.ActiveUser.Id)<1)
             {
-                MessageBox.Show("Error");
+                MessageBox.Show("Code # RF0001");
             }
             IEnumerable<order> g_orders = ckocontext.ReadAllActiveSiteOrders(GlobalVariables.ActiveSite.Id);
             try

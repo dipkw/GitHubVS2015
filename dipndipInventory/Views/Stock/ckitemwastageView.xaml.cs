@@ -218,15 +218,18 @@ namespace dipndipInventory.Views.Stock
                     ckstocktrans.unit_cost = tmpckissuedetail.ck_item_unit_cost;
                     ckstocktrans.total_cost = tmpckissuedetail.ck_item_total_cost;
                     ckstocktrans.trans_from = GlobalVariables.ActiveSite.Id;
-                    ckstocktrans.trans_to = Convert.ToInt32(cmbBranch.SelectedValue);
+                    //ckstocktrans.trans_to = Convert.ToInt32(cmbBranch.SelectedValue);
                     ckstocktrans.active = true;
                     //ckstocktrans.site.Id = Convert.ToInt32(cmbBranch.SelectedValue.ToString());
-                    ckstocktrans.site.Id = GlobalVariables.ActiveSite.Id;
+                    //ckstocktrans.site.Id = GlobalVariables.ActiveSite.Id;
                     ckstocktrans.created_by = GlobalVariables.ActiveUser.Id;
                     ckstocktrans.created_date = DateTime.Now;
                     g_ck_stock_trans_list.Add(ckstocktrans);
                 }
-                catch { }
+                catch(Exception ex)
+                {
+
+                }
             }
 
 
