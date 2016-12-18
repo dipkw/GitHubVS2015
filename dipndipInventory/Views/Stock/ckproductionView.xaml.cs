@@ -403,7 +403,8 @@ namespace dipndipInventory.Views.Stock
                         transactiondetail.ck_unit_description = item_recipe.wh_item_unit.ck_units.unit_description;
                         transactiondetail.qty = (used_wh_item_qty) * (-1);
                         transactiondetail.unit_cost = (decimal)(avg_wh_item_cost * conv_factor) * (decimal)(recipe_wh_item_qty);
-                        transactiondetail.total_cost = transactiondetail.unit_cost * prodQty;
+                        //transactiondetail.total_cost = transactiondetail.unit_cost * prodQty;
+                        transactiondetail.total_cost = transactiondetail.unit_cost * transactiondetail.qty;
                         transactiondetail.order_from_site_id = GlobalVariables.ActiveSite.Id;
                         transactiondetail.order_to_site_id = GlobalVariables.ActiveSite.Id;
                         transactiondetail.trans_type = "Production";

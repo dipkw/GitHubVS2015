@@ -325,4 +325,57 @@
   INNER JOIN sites s ON m.site_id = s.Id
   WHERE (CAST(m.wastage_date as Date)&gt;= @start_date AND CAST(m.wastage_date as Date) &lt;= @end_date) AND d.[ck_item_code] = @ck_item_code </value>
   </data>
+  <data name="CKItemCodeWastagesqlDataSource.SelectCommand" xml:space="preserve">
+    <value>SELECT d.[Id]
+      ,d.[wastage_master_id]
+      ,d.[ck_wastage_code]
+      ,m.wastage_date
+      ,s.site_name
+      ,d.[ck_prod_code]
+      ,d.[ck_batch_no]
+      ,d.[ck_prod_date]
+      ,d.[ck_exp_date]
+      ,d.[ck_item_id]
+      ,d.[ck_item_code]
+      ,d.[ck_item_desc]
+      ,d.[ck_item_unit_id]
+      ,d.[wastage_qty]
+      ,d.[ck_item_unit_cost]
+      ,d.[ck_item_total_cost]
+      ,d.[created_by]
+      ,d.[created_date]
+      ,d.[modified_by]
+      ,d.[modified_date]
+      ,d.[active]
+  FROM [dipck].[dbo].[ck_wastage_details] d
+  INNER JOIN ck_wastage_master m ON d.wastage_master_id=m.Id
+  INNER JOIN sites s ON m.site_id = s.Id
+  WHERE d.[ck_item_code] = @ck_item_code </value>
+  </data>
+  <data name="DynamicsqlDataSource.SelectCommand" xml:space="preserve">
+    <value>SELECT d.[Id]
+      ,d.[wastage_master_id]
+      ,d.[ck_wastage_code]
+      ,m.wastage_date
+      ,s.site_name
+      ,d.[ck_prod_code]
+      ,d.[ck_batch_no]
+      ,d.[ck_prod_date]
+      ,d.[ck_exp_date]
+      ,d.[ck_item_id]
+      ,d.[ck_item_code]
+      ,d.[ck_item_desc]
+      ,d.[ck_item_unit_id]
+      ,d.[wastage_qty]
+      ,d.[ck_item_unit_cost]
+      ,d.[ck_item_total_cost]
+      ,d.[created_by]
+      ,d.[created_date]
+      ,d.[modified_by]
+      ,d.[modified_date]
+      ,d.[active]
+  FROM [dipck].[dbo].[ck_wastage_details] d
+  INNER JOIN ck_wastage_master m ON d.wastage_master_id=m.Id
+  INNER JOIN sites s ON m.site_id = s.Id</value>
+  </data>
 </root>

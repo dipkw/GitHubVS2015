@@ -25,7 +25,8 @@
                     <telerik:GridViewDataColumn x:Name="ItemCode" DataMemberBinding="{Binding wh_item_code}" Width="*" Header="Item Code"/>
                     <telerik:GridViewDataColumn x:Name="ItemDesc" DataMemberBinding="{Binding wh_item_description}" Width="2*" Header="Item Description"/>
                     <telerik:GridViewDataColumn x:Name="WHUnit" DataMemberBinding="{Binding wh_unit_description}" Width="0.5*" Header="WH Unit"/>
-                    <telerik:GridViewDataColumn x:Name="Qty" DataMemberBinding="{Binding ck_qty, StringFormat=N3}" Width=".25*" Header="Qty"/>
+                    <!--<telerik:GridViewDataColumn x:Name="Qty" DataMemberBinding="{Binding ck_qty, StringFormat=N3}" Width=".25*" Header="Qty"/>-->
+                    <telerik:GridViewDataColumn x:Name="Qty" DataMemberBinding="{Binding ck_qty}" Width=".25*" Header="Qty"/>
 
                     <telerik:GridViewDataColumn x:Name="ItemId" DataMemberBinding="{Binding wh_item_id}" Width="*" Header="Item Id" IsVisible="False"/>
                     <telerik:GridViewDataColumn x:Name="UnitId" DataMemberBinding="{Binding wh_unit_id}" Width="*" Header="Unit Id" IsVisible="False"/>

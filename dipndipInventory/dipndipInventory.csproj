@@ -239,6 +239,9 @@
     <Compile Include="Views\Reports\ReceiptConfirmationReportView.xaml.cs">
       <DependentUpon>ReceiptConfirmationReportView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Reports\WHItemQuantityInUnits.xaml.cs">
+      <DependentUpon>WHItemQuantityInUnits.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Reports\WHStockAdjReportView.xaml.cs">
       <DependentUpon>WHStockAdjReportView.xaml</DependentUpon>
     </Compile>
@@ -409,6 +412,10 @@
     <Page Include="Views\Reports\Themes\OfficeBlack\Telerik.Windows.Controls.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Reports\WHItemQuantityInUnits.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Reports\WHStockAdjReportView.xaml">
       <SubType>Designer</SubType>

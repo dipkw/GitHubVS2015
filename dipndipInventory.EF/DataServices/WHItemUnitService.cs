@@ -42,12 +42,25 @@ namespace dipndipInventory.EF.DataServices
             }
         }
 
+        //public IEnumerable<wh_item_unit> ReadAllWHItemUnitsByWHItemId(int wh_item_id)
+        //{
+        //    try
+        //    {
+        //        _context = new CKEntities();
+        //        IEnumerable<wh_item_unit> objWHItemUnits = (from whitemunits in _context.wh_item_unit where whitemunits.wh_item_id == wh_item_id orderby whitemunits.Id descending select whitemunits);
+        //        return objWHItemUnits;
+        //    }
+        //    catch
+        //    {
+        //        return null;
+        //    }
+        //}
         public IEnumerable<wh_item_unit> ReadAllWHItemUnitsByWHItemId(int wh_item_id)
         {
             try
             {
                 _context = new CKEntities();
-                IEnumerable<wh_item_unit> objWHItemUnits = (from whitemunits in _context.wh_item_unit where whitemunits.wh_item_id == wh_item_id orderby whitemunits.Id descending select whitemunits);
+                IEnumerable<wh_item_unit> objWHItemUnits = (from whitemunits in _context.wh_item_unit where whitemunits.wh_item_id == wh_item_id orderby whitemunits.cnv_factor descending select whitemunits);
                 return objWHItemUnits;
             }
             catch

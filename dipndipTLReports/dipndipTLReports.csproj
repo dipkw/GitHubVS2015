@@ -124,6 +124,12 @@
     <Compile Include="Reports\WHItemAdjReport.Designer.cs">
       <DependentUpon>WHItemAdjReport.cs</DependentUpon>
     </Compile>
+    <Compile Include="Reports\WHItemQuantityInUnits.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\WHItemQuantityInUnits.Designer.cs">
+      <DependentUpon>WHItemQuantityInUnits.cs</DependentUpon>
+    </Compile>
     <Compile Include="Reports\WHItemsReport.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -207,6 +213,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\WHItemAdjReport.resx">
       <DependentUpon>WHItemAdjReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\WHItemQuantityInUnits.resx">
+      <DependentUpon>WHItemQuantityInUnits.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\WHItemsReport.resx">
       <DependentUpon>WHItemsReport.cs</DependentUpon>

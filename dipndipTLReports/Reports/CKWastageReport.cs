@@ -78,20 +78,49 @@ namespace dipndipTLReports.Reports
             //}
             else
             {
-                //report.Parameters["start_date"].Value = g_start_date.Date.ToString("yyyy-MM-dd");
-                //report.Parameters["end_date"].Value = g_end_date.Date.ToString("yyyy-MM-dd");
-                if (report.Parameters["ck_item_code"].Value == null && (report.Parameters["start_date"].Value == null || report.Parameters["end_date"].Value == null))
+                string dynamic_sql = "SELECT d.[Id], d.[wastage_master_id],d.[ck_wastage_code],m.wastage_date,s.site_name,d.[ck_prod_code],d.[ck_batch_no]";
+                dynamic_sql += ",d.[ck_prod_date],d.[ck_exp_date],d.[ck_item_id],d.[ck_item_code],d.[ck_item_desc],d.[ck_item_unit_id],d.[wastage_qty]";
+                dynamic_sql += ",d.[ck_item_unit_cost],d.[ck_item_total_cost],d.[created_by],d.[created_date],d.[modified_by],d.[modified_date],d.[active]";
+                dynamic_sql += " FROM[dipck].[dbo].[ck_wastage_details] d INNER JOIN ck_wastage_master m ON d.wastage_master_id=m.Id";
+                dynamic_sql += " INNER JOIN sites s ON m.site_id = s.Id WHERE 1 = 1";
+                if (report.Parameters["ck_item_code"].Value != null)
                 {
-                    report.DataSource = this.AllCKWastagesqlDataSource;
+                    dynamic_sql += " AND d.[ck_item_code] = '";
+                    dynamic_sql += report.Parameters["ck_item_code"].Value;
+                    dynamic_sql += "'";
                 }
-                else if((report.Parameters["ck_item_code"].Value == null && (report.Parameters["start_date"].Value != null && report.Parameters["end_date"].Value != null)))
+
+                if ((report.Parameters["start_date"].Value != null && report.Parameters["end_date"].Value != null))
                 {
-                    report.DataSource = this.CKDateWastagesqlDataSource;
+                    dynamic_sql += " AND CAST(m.wastage_date as Date)>= '";
+                    dynamic_sql += report.Parameters["start_date"].Value;
+                    dynamic_sql += "' AND CAST(m.wastage_date as Date)<= '";
+                    dynamic_sql += report.Parameters["end_date"].Value;
+                    dynamic_sql += "'";
                 }
-                else
-                {
-                    report.DataSource = this.CKItemWastagesqlDataSource;
-                }
+
+                this.DynamicsqlDataSource.SelectCommand = dynamic_sql;
+                this.DynamicsqlDataSource.SelectCommandType = SqlDataSourceCommandType.Text;
+
+                report.DataSource = this.DynamicsqlDataSource;
+                ////report.Parameters["start_date"].Value = g_start_date.Date.ToString("yyyy-MM-dd");
+                ////report.Parameters["end_date"].Value = g_end_date.Date.ToString("yyyy-MM-dd");
+                //    if (report.Parameters["ck_item_code"].Value == null && (report.Parameters["start_date"].Value == null || report.Parameters["end_date"].Value == null))
+                //{
+                //    report.DataSource = this.AllCKWastagesqlDataSource;
+                //}
+                //else if ((report.Parameters["ck_item_code"].Value == null && (report.Parameters["start_date"].Value != null && report.Parameters["end_date"].Value != null)))
+                //{
+                //    report.DataSource = this.CKDateWastagesqlDataSource;
+                //}
+                //else if (report.Parameters["ck_item_code"].Value != null)
+                //{
+                //    report.DataSource = this.CKItemCodeWastagesqlDataSource;
+                //}
+                //else
+                //{
+                //    report.DataSource = this.CKItemWastagesqlDataSource;
+                //}
             }
         }
     }

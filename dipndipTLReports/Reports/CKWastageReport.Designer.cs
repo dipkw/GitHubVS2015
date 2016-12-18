@@ -10,19 +10,19 @@ namespace dipndipTLReports.Reports
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CKWastageReport));
-            Telerik.Reporting.Group group1 = new Telerik.Reporting.Group();
-            Telerik.Reporting.Group group2 = new Telerik.Reporting.Group();
-            Telerik.Reporting.Group group3 = new Telerik.Reporting.Group();
-            Telerik.Reporting.Group group4 = new Telerik.Reporting.Group();
-            Telerik.Reporting.ReportParameter reportParameter1 = new Telerik.Reporting.ReportParameter();
-            Telerik.Reporting.ReportParameter reportParameter2 = new Telerik.Reporting.ReportParameter();
-            Telerik.Reporting.ReportParameter reportParameter3 = new Telerik.Reporting.ReportParameter();
-            Telerik.Reporting.ReportParameter reportParameter4 = new Telerik.Reporting.ReportParameter();
-            Telerik.Reporting.Drawing.StyleRule styleRule1 = new Telerik.Reporting.Drawing.StyleRule();
-            Telerik.Reporting.Drawing.StyleRule styleRule2 = new Telerik.Reporting.Drawing.StyleRule();
-            Telerik.Reporting.Drawing.StyleRule styleRule3 = new Telerik.Reporting.Drawing.StyleRule();
-            Telerik.Reporting.Drawing.StyleRule styleRule4 = new Telerik.Reporting.Drawing.StyleRule();
-            Telerik.Reporting.Drawing.StyleRule styleRule5 = new Telerik.Reporting.Drawing.StyleRule();
+            Telerik.Reporting.Group group5 = new Telerik.Reporting.Group();
+            Telerik.Reporting.Group group6 = new Telerik.Reporting.Group();
+            Telerik.Reporting.Group group7 = new Telerik.Reporting.Group();
+            Telerik.Reporting.Group group8 = new Telerik.Reporting.Group();
+            Telerik.Reporting.ReportParameter reportParameter5 = new Telerik.Reporting.ReportParameter();
+            Telerik.Reporting.ReportParameter reportParameter6 = new Telerik.Reporting.ReportParameter();
+            Telerik.Reporting.ReportParameter reportParameter7 = new Telerik.Reporting.ReportParameter();
+            Telerik.Reporting.ReportParameter reportParameter8 = new Telerik.Reporting.ReportParameter();
+            Telerik.Reporting.Drawing.StyleRule styleRule6 = new Telerik.Reporting.Drawing.StyleRule();
+            Telerik.Reporting.Drawing.StyleRule styleRule7 = new Telerik.Reporting.Drawing.StyleRule();
+            Telerik.Reporting.Drawing.StyleRule styleRule8 = new Telerik.Reporting.Drawing.StyleRule();
+            Telerik.Reporting.Drawing.StyleRule styleRule9 = new Telerik.Reporting.Drawing.StyleRule();
+            Telerik.Reporting.Drawing.StyleRule styleRule10 = new Telerik.Reporting.Drawing.StyleRule();
             this.ck_wastage_codeGroupFooterSection = new Telerik.Reporting.GroupFooterSection();
             this.ck_wastage_codeGroupHeaderSection = new Telerik.Reporting.GroupHeaderSection();
             this.wastage_dateGroupFooterSection = new Telerik.Reporting.GroupFooterSection();
@@ -50,6 +50,8 @@ namespace dipndipTLReports.Reports
             this.shape4 = new Telerik.Reporting.Shape();
             this.shape5 = new Telerik.Reporting.Shape();
             this.shape6 = new Telerik.Reporting.Shape();
+            this.textBox10 = new Telerik.Reporting.TextBox();
+            this.shape13 = new Telerik.Reporting.Shape();
             this.WHItemsParamsqlDataSource = new Telerik.Reporting.SqlDataSource();
             this.CKWastagesqlDataSource = new Telerik.Reporting.SqlDataSource();
             this.pageHeader = new Telerik.Reporting.PageHeaderSection();
@@ -76,13 +78,13 @@ namespace dipndipTLReports.Reports
             this.shape10 = new Telerik.Reporting.Shape();
             this.shape11 = new Telerik.Reporting.Shape();
             this.shape12 = new Telerik.Reporting.Shape();
+            this.textBox11 = new Telerik.Reporting.TextBox();
+            this.shape14 = new Telerik.Reporting.Shape();
             this.AllCKWastagesqlDataSource = new Telerik.Reporting.SqlDataSource();
             this.CKDateWastagesqlDataSource = new Telerik.Reporting.SqlDataSource();
             this.CKItemWastagesqlDataSource = new Telerik.Reporting.SqlDataSource();
-            this.textBox10 = new Telerik.Reporting.TextBox();
-            this.textBox11 = new Telerik.Reporting.TextBox();
-            this.shape13 = new Telerik.Reporting.Shape();
-            this.shape14 = new Telerik.Reporting.Shape();
+            this.CKItemCodeWastagesqlDataSource = new Telerik.Reporting.SqlDataSource();
+            this.DynamicsqlDataSource = new Telerik.Reporting.SqlDataSource();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             // 
             // ck_wastage_codeGroupFooterSection
@@ -338,6 +340,25 @@ namespace dipndipTLReports.Reports
             this.shape6.ShapeType = new Telerik.Reporting.Drawing.Shapes.LineShape(Telerik.Reporting.Drawing.Shapes.LineDirection.NS);
             this.shape6.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Inch(0.10000000149011612D), Telerik.Reporting.Drawing.Unit.Inch(0.2800000011920929D));
             // 
+            // textBox10
+            // 
+            this.textBox10.CanGrow = true;
+            this.textBox10.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Inch(6D), Telerik.Reporting.Drawing.Unit.Inch(0.0416666679084301D));
+            this.textBox10.Name = "textBox10";
+            this.textBox10.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Inch(0.37916690111160278D), Telerik.Reporting.Drawing.Unit.Inch(0.20000000298023224D));
+            this.textBox10.Style.Font.Bold = true;
+            this.textBox10.Style.Font.Size = Telerik.Reporting.Drawing.Unit.Point(9D);
+            this.textBox10.Style.TextAlign = Telerik.Reporting.Drawing.HorizontalAlign.Center;
+            this.textBox10.StyleName = "Caption";
+            this.textBox10.Value = "Cost";
+            // 
+            // shape13
+            // 
+            this.shape13.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Inch(5.9000000953674316D), Telerik.Reporting.Drawing.Unit.Inch(0D));
+            this.shape13.Name = "shape13";
+            this.shape13.ShapeType = new Telerik.Reporting.Drawing.Shapes.LineShape(Telerik.Reporting.Drawing.Shapes.LineDirection.NS);
+            this.shape13.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Inch(0.10000000149011612D), Telerik.Reporting.Drawing.Unit.Inch(0.2800000011920929D));
+            // 
             // WHItemsParamsqlDataSource
             // 
             this.WHItemsParamsqlDataSource.ConnectionString = "dipndipTLReports.Properties.Settings.dipckConnectionString";
@@ -574,6 +595,25 @@ namespace dipndipTLReports.Reports
             this.shape12.ShapeType = new Telerik.Reporting.Drawing.Shapes.LineShape(Telerik.Reporting.Drawing.Shapes.LineDirection.NS);
             this.shape12.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Inch(0.10000000149011612D), Telerik.Reporting.Drawing.Unit.Inch(0.2800000011920929D));
             // 
+            // textBox11
+            // 
+            this.textBox11.CanGrow = true;
+            this.textBox11.Format = "{0:N3}";
+            this.textBox11.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Inch(6D), Telerik.Reporting.Drawing.Unit.Inch(0.03125D));
+            this.textBox11.Name = "textBox11";
+            this.textBox11.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Inch(0.40000024437904358D), Telerik.Reporting.Drawing.Unit.Inch(0.20000000298023224D));
+            this.textBox11.Style.Font.Size = Telerik.Reporting.Drawing.Unit.Point(8D);
+            this.textBox11.Style.TextAlign = Telerik.Reporting.Drawing.HorizontalAlign.Right;
+            this.textBox11.StyleName = "Data";
+            this.textBox11.Value = "= Fields.ck_item_total_cost";
+            // 
+            // shape14
+            // 
+            this.shape14.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Inch(5.9000000953674316D), Telerik.Reporting.Drawing.Unit.Inch(0D));
+            this.shape14.Name = "shape14";
+            this.shape14.ShapeType = new Telerik.Reporting.Drawing.Shapes.LineShape(Telerik.Reporting.Drawing.Shapes.LineDirection.NS);
+            this.shape14.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Inch(0.10000000149011612D), Telerik.Reporting.Drawing.Unit.Inch(0.2800000011920929D));
+            // 
             // AllCKWastagesqlDataSource
             // 
             this.AllCKWastagesqlDataSource.ConnectionString = "dipndipTLReports.Properties.Settings.dipckConnectionString";
@@ -599,67 +639,43 @@ namespace dipndipTLReports.Reports
             new Telerik.Reporting.SqlDataSourceParameter("@ck_item_code", System.Data.DbType.String, "= Parameters.ck_item_code.Value")});
             this.CKItemWastagesqlDataSource.SelectCommand = resources.GetString("CKItemWastagesqlDataSource.SelectCommand");
             // 
-            // textBox10
+            // CKItemCodeWastagesqlDataSource
             // 
-            this.textBox10.CanGrow = true;
-            this.textBox10.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Inch(6D), Telerik.Reporting.Drawing.Unit.Inch(0.0416666679084301D));
-            this.textBox10.Name = "textBox10";
-            this.textBox10.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Inch(0.37916690111160278D), Telerik.Reporting.Drawing.Unit.Inch(0.20000000298023224D));
-            this.textBox10.Style.Font.Bold = true;
-            this.textBox10.Style.Font.Size = Telerik.Reporting.Drawing.Unit.Point(9D);
-            this.textBox10.Style.TextAlign = Telerik.Reporting.Drawing.HorizontalAlign.Center;
-            this.textBox10.StyleName = "Caption";
-            this.textBox10.Value = "Cost";
+            this.CKItemCodeWastagesqlDataSource.ConnectionString = "dipndipTLReports.Properties.Settings.dipckConnectionString";
+            this.CKItemCodeWastagesqlDataSource.Name = "CKItemCodeWastagesqlDataSource";
+            this.CKItemCodeWastagesqlDataSource.Parameters.AddRange(new Telerik.Reporting.SqlDataSourceParameter[] {
+            new Telerik.Reporting.SqlDataSourceParameter("@ck_item_code", System.Data.DbType.String, "= Parameters.ck_item_code.Value")});
+            this.CKItemCodeWastagesqlDataSource.SelectCommand = resources.GetString("CKItemCodeWastagesqlDataSource.SelectCommand");
             // 
-            // textBox11
+            // DynamicsqlDataSource
             // 
-            this.textBox11.CanGrow = true;
-            this.textBox11.Format = "{0:N3}";
-            this.textBox11.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Inch(6D), Telerik.Reporting.Drawing.Unit.Inch(0.03125D));
-            this.textBox11.Name = "textBox11";
-            this.textBox11.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Inch(0.40000024437904358D), Telerik.Reporting.Drawing.Unit.Inch(0.20000000298023224D));
-            this.textBox11.Style.Font.Size = Telerik.Reporting.Drawing.Unit.Point(8D);
-            this.textBox11.Style.TextAlign = Telerik.Reporting.Drawing.HorizontalAlign.Right;
-            this.textBox11.StyleName = "Data";
-            this.textBox11.Value = "= Fields.ck_item_total_cost";
-            // 
-            // shape13
-            // 
-            this.shape13.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Inch(5.9000000953674316D), Telerik.Reporting.Drawing.Unit.Inch(0D));
-            this.shape13.Name = "shape13";
-            this.shape13.ShapeType = new Telerik.Reporting.Drawing.Shapes.LineShape(Telerik.Reporting.Drawing.Shapes.LineDirection.NS);
-            this.shape13.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Inch(0.10000000149011612D), Telerik.Reporting.Drawing.Unit.Inch(0.2800000011920929D));
-            // 
-            // shape14
-            // 
-            this.shape14.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Inch(5.9000000953674316D), Telerik.Reporting.Drawing.Unit.Inch(0D));
-            this.shape14.Name = "shape14";
-            this.shape14.ShapeType = new Telerik.Reporting.Drawing.Shapes.LineShape(Telerik.Reporting.Drawing.Shapes.LineDirection.NS);
-            this.shape14.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Inch(0.10000000149011612D), Telerik.Reporting.Drawing.Unit.Inch(0.2800000011920929D));
+            this.DynamicsqlDataSource.ConnectionString = "dipndipTLReports.Properties.Settings.dipckConnectionString";
+            this.DynamicsqlDataSource.Name = "DynamicsqlDataSource";
+            this.DynamicsqlDataSource.SelectCommand = resources.GetString("DynamicsqlDataSource.SelectCommand");
             // 
             // CKWastageReport
             // 
             this.DataSource = this.CKWastagesqlDataSource;
-            group1.GroupFooter = this.ck_wastage_codeGroupFooterSection;
-            group1.GroupHeader = this.ck_wastage_codeGroupHeaderSection;
-            group1.Groupings.Add(new Telerik.Reporting.Grouping("= Fields.ck_wastage_code"));
-            group1.Name = "ck_wastage_codeGroup";
-            group2.GroupFooter = this.wastage_dateGroupFooterSection;
-            group2.GroupHeader = this.wastage_dateGroupHeaderSection;
-            group2.Groupings.Add(new Telerik.Reporting.Grouping("= Fields.wastage_date"));
-            group2.Name = "wastage_dateGroup";
-            group3.GroupFooter = this.ck_item_codeGroupFooterSection;
-            group3.GroupHeader = this.ck_item_codeGroupHeaderSection;
-            group3.Groupings.Add(new Telerik.Reporting.Grouping("= Fields.ck_item_code"));
-            group3.Name = "ck_item_codeGroup";
-            group4.GroupFooter = this.labelsGroupFooterSection;
-            group4.GroupHeader = this.labelsGroupHeaderSection;
-            group4.Name = "labelsGroup";
+            group5.GroupFooter = this.ck_wastage_codeGroupFooterSection;
+            group5.GroupHeader = this.ck_wastage_codeGroupHeaderSection;
+            group5.Groupings.Add(new Telerik.Reporting.Grouping("= Fields.ck_wastage_code"));
+            group5.Name = "ck_wastage_codeGroup";
+            group6.GroupFooter = this.wastage_dateGroupFooterSection;
+            group6.GroupHeader = this.wastage_dateGroupHeaderSection;
+            group6.Groupings.Add(new Telerik.Reporting.Grouping("= Fields.wastage_date"));
+            group6.Name = "wastage_dateGroup";
+            group7.GroupFooter = this.ck_item_codeGroupFooterSection;
+            group7.GroupHeader = this.ck_item_codeGroupHeaderSection;
+            group7.Groupings.Add(new Telerik.Reporting.Grouping("= Fields.ck_item_code"));
+            group7.Name = "ck_item_codeGroup";
+            group8.GroupFooter = this.labelsGroupFooterSection;
+            group8.GroupHeader = this.labelsGroupHeaderSection;
+            group8.Name = "labelsGroup";
             this.Groups.AddRange(new Telerik.Reporting.Group[] {
-            group1,
-            group2,
-            group3,
-            group4});
+            group5,
+            group6,
+            group7,
+            group8});
             this.Items.AddRange(new Telerik.Reporting.ReportItemBase[] {
             this.ck_wastage_codeGroupHeaderSection,
             this.ck_wastage_codeGroupFooterSection,
@@ -677,66 +693,66 @@ namespace dipndipTLReports.Reports
             this.Name = "CKWastageReport";
             this.PageSettings.Margins = new Telerik.Reporting.Drawing.MarginsU(Telerik.Reporting.Drawing.Unit.Inch(1D), Telerik.Reporting.Drawing.Unit.Inch(1D), Telerik.Reporting.Drawing.Unit.Inch(1D), Telerik.Reporting.Drawing.Unit.Inch(1D));
             this.PageSettings.PaperKind = System.Drawing.Printing.PaperKind.Letter;
-            reportParameter1.AllowNull = true;
-            reportParameter1.Name = "ck_wastage_code";
-            reportParameter1.Text = "Wastage Code";
-            reportParameter2.AllowNull = true;
-            reportParameter2.Name = "start_date";
-            reportParameter2.Text = "Start Date";
-            reportParameter2.Type = Telerik.Reporting.ReportParameterType.DateTime;
-            reportParameter2.Visible = true;
-            reportParameter3.AllowNull = true;
-            reportParameter3.Name = "end_date";
-            reportParameter3.Text = "End Date";
-            reportParameter3.Type = Telerik.Reporting.ReportParameterType.DateTime;
-            reportParameter3.Visible = true;
-            reportParameter4.AllowNull = true;
-            reportParameter4.AvailableValues.DataSource = this.WHItemsParamsqlDataSource;
-            reportParameter4.AvailableValues.DisplayMember = "{= Trim (Fields.ck_item_code) + \" (\" + Trim(Fields.ck_item_description) + \")\"}";
-            reportParameter4.AvailableValues.ValueMember = "= Fields.ck_item_code";
-            reportParameter4.Name = "ck_item_code";
-            reportParameter4.Text = "Item Code";
-            reportParameter4.Visible = true;
-            this.ReportParameters.Add(reportParameter1);
-            this.ReportParameters.Add(reportParameter2);
-            this.ReportParameters.Add(reportParameter3);
-            this.ReportParameters.Add(reportParameter4);
-            styleRule1.Selectors.AddRange(new Telerik.Reporting.Drawing.ISelector[] {
+            reportParameter5.AllowNull = true;
+            reportParameter5.Name = "ck_wastage_code";
+            reportParameter5.Text = "Wastage Code";
+            reportParameter6.AllowNull = true;
+            reportParameter6.Name = "start_date";
+            reportParameter6.Text = "Start Date";
+            reportParameter6.Type = Telerik.Reporting.ReportParameterType.DateTime;
+            reportParameter6.Visible = true;
+            reportParameter7.AllowNull = true;
+            reportParameter7.Name = "end_date";
+            reportParameter7.Text = "End Date";
+            reportParameter7.Type = Telerik.Reporting.ReportParameterType.DateTime;
+            reportParameter7.Visible = true;
+            reportParameter8.AllowNull = true;
+            reportParameter8.AvailableValues.DataSource = this.WHItemsParamsqlDataSource;
+            reportParameter8.AvailableValues.DisplayMember = "{= Trim (Fields.ck_item_code) + \" (\" + Trim(Fields.ck_item_description) + \")\"}";
+            reportParameter8.AvailableValues.ValueMember = "= Fields.ck_item_code";
+            reportParameter8.Name = "ck_item_code";
+            reportParameter8.Text = "Item Code";
+            reportParameter8.Visible = true;
+            this.ReportParameters.Add(reportParameter5);
+            this.ReportParameters.Add(reportParameter6);
+            this.ReportParameters.Add(reportParameter7);
+            this.ReportParameters.Add(reportParameter8);
+            styleRule6.Selectors.AddRange(new Telerik.Reporting.Drawing.ISelector[] {
             new Telerik.Reporting.Drawing.TypeSelector(typeof(Telerik.Reporting.TextItemBase)),
             new Telerik.Reporting.Drawing.TypeSelector(typeof(Telerik.Reporting.HtmlTextBox))});
-            styleRule1.Style.Padding.Left = Telerik.Reporting.Drawing.Unit.Point(2D);
-            styleRule1.Style.Padding.Right = Telerik.Reporting.Drawing.Unit.Point(2D);
-            styleRule2.Selectors.AddRange(new Telerik.Reporting.Drawing.ISelector[] {
+            styleRule6.Style.Padding.Left = Telerik.Reporting.Drawing.Unit.Point(2D);
+            styleRule6.Style.Padding.Right = Telerik.Reporting.Drawing.Unit.Point(2D);
+            styleRule7.Selectors.AddRange(new Telerik.Reporting.Drawing.ISelector[] {
             new Telerik.Reporting.Drawing.StyleSelector("Title")});
-            styleRule2.Style.Color = System.Drawing.Color.Black;
-            styleRule2.Style.Font.Bold = true;
-            styleRule2.Style.Font.Italic = false;
-            styleRule2.Style.Font.Name = "Tahoma";
-            styleRule2.Style.Font.Size = Telerik.Reporting.Drawing.Unit.Point(18D);
-            styleRule2.Style.Font.Strikeout = false;
-            styleRule2.Style.Font.Underline = false;
-            styleRule3.Selectors.AddRange(new Telerik.Reporting.Drawing.ISelector[] {
+            styleRule7.Style.Color = System.Drawing.Color.Black;
+            styleRule7.Style.Font.Bold = true;
+            styleRule7.Style.Font.Italic = false;
+            styleRule7.Style.Font.Name = "Tahoma";
+            styleRule7.Style.Font.Size = Telerik.Reporting.Drawing.Unit.Point(18D);
+            styleRule7.Style.Font.Strikeout = false;
+            styleRule7.Style.Font.Underline = false;
+            styleRule8.Selectors.AddRange(new Telerik.Reporting.Drawing.ISelector[] {
             new Telerik.Reporting.Drawing.StyleSelector("Caption")});
-            styleRule3.Style.Color = System.Drawing.Color.Black;
-            styleRule3.Style.Font.Name = "Tahoma";
-            styleRule3.Style.Font.Size = Telerik.Reporting.Drawing.Unit.Point(10D);
-            styleRule3.Style.VerticalAlign = Telerik.Reporting.Drawing.VerticalAlign.Middle;
-            styleRule4.Selectors.AddRange(new Telerik.Reporting.Drawing.ISelector[] {
+            styleRule8.Style.Color = System.Drawing.Color.Black;
+            styleRule8.Style.Font.Name = "Tahoma";
+            styleRule8.Style.Font.Size = Telerik.Reporting.Drawing.Unit.Point(10D);
+            styleRule8.Style.VerticalAlign = Telerik.Reporting.Drawing.VerticalAlign.Middle;
+            styleRule9.Selectors.AddRange(new Telerik.Reporting.Drawing.ISelector[] {
             new Telerik.Reporting.Drawing.StyleSelector("Data")});
-            styleRule4.Style.Font.Name = "Tahoma";
-            styleRule4.Style.Font.Size = Telerik.Reporting.Drawing.Unit.Point(9D);
-            styleRule4.Style.VerticalAlign = Telerik.Reporting.Drawing.VerticalAlign.Middle;
-            styleRule5.Selectors.AddRange(new Telerik.Reporting.Drawing.ISelector[] {
+            styleRule9.Style.Font.Name = "Tahoma";
+            styleRule9.Style.Font.Size = Telerik.Reporting.Drawing.Unit.Point(9D);
+            styleRule9.Style.VerticalAlign = Telerik.Reporting.Drawing.VerticalAlign.Middle;
+            styleRule10.Selectors.AddRange(new Telerik.Reporting.Drawing.ISelector[] {
             new Telerik.Reporting.Drawing.StyleSelector("PageInfo")});
-            styleRule5.Style.Font.Name = "Tahoma";
-            styleRule5.Style.Font.Size = Telerik.Reporting.Drawing.Unit.Point(8D);
-            styleRule5.Style.VerticalAlign = Telerik.Reporting.Drawing.VerticalAlign.Middle;
+            styleRule10.Style.Font.Name = "Tahoma";
+            styleRule10.Style.Font.Size = Telerik.Reporting.Drawing.Unit.Point(8D);
+            styleRule10.Style.VerticalAlign = Telerik.Reporting.Drawing.VerticalAlign.Middle;
             this.StyleSheet.AddRange(new Telerik.Reporting.Drawing.StyleRule[] {
-            styleRule1,
-            styleRule2,
-            styleRule3,
-            styleRule4,
-            styleRule5});
+            styleRule6,
+            styleRule7,
+            styleRule8,
+            styleRule9,
+            styleRule10});
             this.Width = Telerik.Reporting.Drawing.Unit.Inch(6.4583334922790527D);
             this.NeedDataSource += new System.EventHandler(this.CKWastageReport_NeedDataSource);
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
@@ -804,5 +820,7 @@ namespace dipndipTLReports.Reports
         private Telerik.Reporting.TextBox textBox11;
         private Telerik.Reporting.Shape shape13;
         private Telerik.Reporting.Shape shape14;
+        private Telerik.Reporting.SqlDataSource CKItemCodeWastagesqlDataSource;
+        private Telerik.Reporting.SqlDataSource DynamicsqlDataSource;
     }
 }
