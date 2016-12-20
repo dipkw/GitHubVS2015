@@ -16,5 +16,6 @@ namespace dipndipTLReports.Reports.ReportVM
         public decimal Adj_Qty { get; set; }
         public DateTime Start_Date { get; set; }
         public DateTime End_Date { get; set; }
+        public DateTime Created_Date { get; set; }
     }
 }

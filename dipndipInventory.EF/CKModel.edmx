@@ -1702,14 +1702,14 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_wh_item_unit_wh_item_unit">
-          <End Role="wh_item_unit" Type="Self.wh_item_unit" Multiplicity="1" />
-          <End Role="wh_item_unit1" Type="Self.wh_item_unit" Multiplicity="0..1" />
+          <End Role="ckwh_items" Type="Self.ckwh_items" Multiplicity="0..1" />
+          <End Role="wh_item_unit" Type="Self.wh_item_unit" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="wh_item_unit">
+            <Principal Role="ckwh_items">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="wh_item_unit1">
-              <PropertyRef Name="Id" />
+            <Dependent Role="wh_item_unit">
+              <PropertyRef Name="wh_item_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2135,8 +2135,8 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
             <End Role="wh_item_unit" EntitySet="wh_item_unit" />
           </AssociationSet>
           <AssociationSet Name="FK_wh_item_unit_wh_item_unit" Association="Self.FK_wh_item_unit_wh_item_unit">
+            <End Role="ckwh_items" EntitySet="ckwh_items" />
             <End Role="wh_item_unit" EntitySet="wh_item_unit" />
-            <End Role="wh_item_unit1" EntitySet="wh_item_unit" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -2568,6 +2568,10 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
             <Parameter Name="wh_item_code" Mode="In" Type="String" />
             <Parameter Name="trans_date" Mode="In" Type="DateTime" />
           </FunctionImport>
+          <AssociationSet Name="FK_wh_item_unit_wh_item_unit1" Association="dipckModel.FK_wh_item_unit_wh_item_unit1">
+            <End Role="ckwh_items" EntitySet="ckwh_items" />
+            <End Role="wh_item_unit" EntitySet="wh_item_unit" />
+          </AssociationSet>
           </EntityContainer>
         <ComplexType Name="ReadWarehouseItems_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
@@ -2748,6 +2752,7 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
           <NavigationProperty Name="wh_item_cost_history" Relationship="dipckModel.FK_wh_item_cost_history_ckwh_items" FromRole="ckwh_items" ToRole="wh_item_cost_history" />
           <NavigationProperty Name="ckwh_items_adj" Relationship="dipckModel.FK_ckwh_items_adj_ckwh_items" FromRole="ckwh_items" ToRole="ckwh_items_adj" />
           <NavigationProperty Name="item_site" Relationship="dipckModel.FK_item_site_ckwh_items" FromRole="ckwh_items" ToRole="item_site" />
+          <NavigationProperty Name="wh_item_unit" Relationship="dipckModel.FK_wh_item_unit_wh_item_unit1" FromRole="ckwh_items" ToRole="wh_item_unit" />
         </EntityType>
         <EntityType Name="site">
           <Key>
@@ -2802,6 +2807,7 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
           <NavigationProperty Name="receipt_details" Relationship="dipckModel.FK_receipt_details_wh_item_unit" FromRole="wh_item_unit" ToRole="receipt_details" />
           <NavigationProperty Name="transaction_details" Relationship="dipckModel.FK_transaction_details_wh_item_unit" FromRole="wh_item_unit" ToRole="transaction_details" />
           <NavigationProperty Name="ckwh_items_adj" Relationship="dipckModel.FK_ckwh_items_adj_wh_item_unit" FromRole="wh_item_unit" ToRole="ckwh_items_adj" />
+          <NavigationProperty Name="ckwh_items" Relationship="dipckModel.FK_wh_item_unit_wh_item_unit1" FromRole="wh_item_unit" ToRole="ckwh_items" />
         </EntityType>
         <Association Name="FK_ck_item_details_ck_users">
           <End Type="dipckModel.ck_users" Role="ck_users" Multiplicity="0..1" />
@@ -4481,6 +4487,18 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
           <Property Type="Decimal" Name="quantity" Nullable="true" Precision="38" Scale="3" />
           <Property Type="Decimal" Name="unit_cost" Nullable="true" Precision="18" Scale="3" />
         </ComplexType>
+        <Association Name="FK_wh_item_unit_wh_item_unit1">
+          <End Type="dipckModel.ckwh_items" Role="ckwh_items" Multiplicity="0..1" />
+          <End Type="dipckModel.wh_item_unit" Role="wh_item_unit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ckwh_items">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="wh_item_unit">
+              <PropertyRef Name="wh_item_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->

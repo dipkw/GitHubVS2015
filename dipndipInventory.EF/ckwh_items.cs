@@ -25,6 +25,7 @@ namespace dipndipInventory.EF
             this.wh_item_cost_history = new HashSet<wh_item_cost_history>();
             this.ckwh_items_adj = new HashSet<ckwh_items_adj>();
             this.item_site = new HashSet<item_site>();
+            this.wh_item_unit = new HashSet<wh_item_unit>();
         }
     
         public int Id { get; set; }
@@ -64,5 +65,7 @@ namespace dipndipInventory.EF
         public virtual ICollection<ckwh_items_adj> ckwh_items_adj { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<item_site> item_site { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<wh_item_unit> wh_item_unit { get; set; }
     }
 }

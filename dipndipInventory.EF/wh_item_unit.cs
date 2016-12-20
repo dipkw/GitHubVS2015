@@ -49,5 +49,6 @@ namespace dipndipInventory.EF
         public virtual ICollection<transaction_details> transaction_details { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ckwh_items_adj> ckwh_items_adj { get; set; }
+        public virtual ckwh_items ckwh_items { get; set; }
     }
 }

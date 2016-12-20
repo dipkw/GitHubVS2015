@@ -606,6 +606,7 @@ namespace dipndipInventory.EF.DataServices
                     try
                     {
                         context.orders.Add(order_master);
+                        //context.SaveChanges();
                         foreach (var order_detail in order_detail_list)
                         {
                             //order_detail.order_id = order_master.Id;

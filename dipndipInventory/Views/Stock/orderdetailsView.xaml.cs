@@ -591,6 +591,11 @@ namespace dipndipInventory.Views.Stock
                         }
                         catch { btnMail.IsEnabled = true; }
                     }
+                    else
+                    {
+                        MessageBox.Show("Unable to create order. Please contact admin");
+                        return;
+                    }
                 }
                 btnMail.IsEnabled = true;
             }

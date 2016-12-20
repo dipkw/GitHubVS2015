@@ -9,7 +9,7 @@
         xmlns:telerikReporting="clr-namespace:Telerik.Reporting;assembly=Telerik.Reporting"
         xmlns:telerikInput="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Controls.Input"
         xmlns:telerikControls="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Controls"
-        Header="Warehouse Item Quantity" Height="700" Width="1024" WindowStartupLocation="CenterScreen" WindowState="Maximized">
+        Header="Warehouse Item Quantity" Height="700" Width="1024" WindowStartupLocation="CenterScreen" WindowState="Maximized" Activated="RadWindow_Activated">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"></RowDefinition>

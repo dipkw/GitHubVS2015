@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -98,6 +99,7 @@
     </Compile>
     <Compile Include="Reports\ReportVM\PrintOrderVM.cs" />
     <Compile Include="Reports\ReportVM\ReceiptReportVM.cs" />
+    <Compile Include="Reports\ReportVM\WHStockAdjObjVM.cs" />
     <Compile Include="Reports\ReportVM\WHStockAdjReportVM.cs" />
     <Compile Include="Reports\ReportVM\WHStockReportVM.cs" />
     <Compile Include="Reports\TestReport.cs">

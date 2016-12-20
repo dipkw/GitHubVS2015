@@ -7,11 +7,11 @@ using System.Windows;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("dipndipInventory")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("inFlow Inventory Solutions")]
+[assembly: AssemblyDescription("inFlow Inventory Solutions")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("dipndipInventory")]
+[assembly: AssemblyCompany("dipndip")]
+[assembly: AssemblyProduct("inFlow Inventory Solutions")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

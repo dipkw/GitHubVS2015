@@ -61,20 +61,23 @@ namespace dipndipTLReports.Reports
                 {
                     wh_item_details_vm.unit_description = whitemunit.ck_units.unit_description;
                     wh_item_details_vm.qty = Math.Truncate(g_wh_ck_qty);
-                    item_qty = Math.Truncate(g_wh_ck_qty)-wh_item_details_vm.qty;
+                    item_qty =g_wh_ck_qty-wh_item_details_vm.qty;
                 }
                 else
                 {
                     wh_item_details_vm.unit_description = whitemunit.ck_units.unit_description;
                     decimal cnv1 = (decimal)wh_item_units_copy[i - 1].cnv_factor;
                     decimal cnv2 = (decimal)wh_item_units_copy[i].cnv_factor;
-                    wh_item_details_vm.qty = item_qty * (cnv1/ cnv2);
-                    item_qty = Math.Truncate(wh_item_details_vm.qty);
-                    wh_item_details_vm.qty = item_qty;
+                    item_qty = item_qty * (cnv1/ cnv2);
+                    wh_item_details_vm.qty = Math.Truncate(item_qty);
+                    item_qty = item_qty - wh_item_details_vm.qty; 
                 }
+                wh_item_details_vm.wh_item_code = whitemunit.ckwh_items.wh_item_code;
+                wh_item_details_vm.wh_item_description = whitemunit.ckwh_items.wh_item_description;
                 wh_item_details.Add(wh_item_details_vm);
                 i++;
             }
+            this.Report.DataSource = wh_item_details;
 
         }
     }

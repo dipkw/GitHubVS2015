@@ -1,6 +1,7 @@
 ﻿<Application
   x:Class="dipndipInventory.App" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="clr-namespace:dipndipInventory"
-  StartupUri="Views/splashscreenView.xaml">
+  StartupUri="Views/splashscreenView.xaml"
+  DispatcherUnhandledException="App_DispatcherUnhandledException">
   <!--StartupUri="Views/Login/loginView.xaml">-->
   <Application.Resources>
     <ResourceDictionary>

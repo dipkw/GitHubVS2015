@@ -55,6 +55,7 @@ namespace dipndipTLReports.Reports
             this.shape9 = new Telerik.Reporting.Shape();
             this.shape10 = new Telerik.Reporting.Shape();
             this.WHAllAdjsqlDataSource = new Telerik.Reporting.SqlDataSource();
+            this.WHStockAdjobjectDataSource = new Telerik.Reporting.ObjectDataSource();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             // 
             // labelsGroupFooterSection
@@ -398,6 +399,11 @@ namespace dipndipTLReports.Reports
             this.WHAllAdjsqlDataSource.Name = "WHAllAdjsqlDataSource";
             this.WHAllAdjsqlDataSource.SelectCommand = resources.GetString("WHAllAdjsqlDataSource.SelectCommand");
             // 
+            // WHStockAdjobjectDataSource
+            // 
+            this.WHStockAdjobjectDataSource.DataSource = typeof(dipndipTLReports.Reports.ReportVM.WHStockAdjObjVM);
+            this.WHStockAdjobjectDataSource.Name = "WHStockAdjobjectDataSource";
+            // 
             // WHAdjReport
             // 
             this.DataSource = this.WHAdjsqlDataSource;
@@ -509,5 +515,6 @@ namespace dipndipTLReports.Reports
         private Telerik.Reporting.TextBox textBox3;
         private Telerik.Reporting.PictureBox pictureBox1;
         private Telerik.Reporting.SqlDataSource WHAllAdjsqlDataSource;
+        private Telerik.Reporting.ObjectDataSource WHStockAdjobjectDataSource;
     }
 }

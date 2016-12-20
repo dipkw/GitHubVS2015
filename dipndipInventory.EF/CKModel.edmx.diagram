@@ -140,6 +140,7 @@
         <EntityTypeShape EntityType="dipckModel.app_form_permissions" Width="1.5" PointX="5.375" PointY="4.75" />
         <AssociationConnector Association="dipckModel.FK_app_form_permissions_app_forms" />
         <AssociationConnector Association="dipckModel.FK_app_form_permissions_user_roles" />
+        <AssociationConnector Association="dipckModel.FK_wh_item_unit_wh_item_unit1" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

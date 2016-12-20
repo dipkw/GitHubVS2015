@@ -44,5 +44,17 @@ namespace dipndipInventory.EF.DataServices
             }
             catch { return null; }
         }
+
+        public IEnumerable<ckwh_items_adj> GetAllActiveAdj()
+        {
+            CKEntities _context;
+            try
+            {
+                _context = new CKEntities();
+                IEnumerable<ckwh_items_adj> stock_adjustments = (from ckstockadj in _context.ckwh_items_adj where ckstockadj.active == 1 select ckstockadj);
+                return stock_adjustments;
+            }
+            catch { return null; }
+        }
     }
 }
