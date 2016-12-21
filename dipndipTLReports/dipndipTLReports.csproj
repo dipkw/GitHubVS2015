@@ -108,6 +108,12 @@
     <Compile Include="Reports\TestReport.Designer.cs">
       <DependentUpon>TestReport.cs</DependentUpon>
     </Compile>
+    <Compile Include="Reports\TestWst.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\TestWst.Designer.cs">
+      <DependentUpon>TestWst.cs</DependentUpon>
+    </Compile>
     <Compile Include="Reports\WHAdjReport.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -206,6 +212,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\TestReport.resx">
       <DependentUpon>TestReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\TestWst.resx">
+      <DependentUpon>TestWst.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\WHAdjReport.resx">
       <DependentUpon>WHAdjReport.cs</DependentUpon>

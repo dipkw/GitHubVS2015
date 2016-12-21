@@ -34,7 +34,8 @@ namespace dipndipInventory.Views.Reports
             try
             {
                 DateTime defaultDate = DateTime.Today.Date;
-                myReport = new dipndipTLReports.Reports.CKWastageReport();
+                //myReport = new dipndipTLReports.Reports.CKWastageReport();
+                myReport = new dipndipTLReports.Reports.TestWst();
 
                 Telerik.Reporting.InstanceReportSource instanceReportSource =
                     new Telerik.Reporting.InstanceReportSource();

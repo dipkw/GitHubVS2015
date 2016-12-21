@@ -33,5 +33,27 @@ namespace dipndipTLReports.Properties {
                 return ((string)(this["dipckConnectionString"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=192.168.0.187\\MSSQLSERVER14;Initial Catalog=dipck;User ID=sa;Password" +
+            "=adnan2011")]
+        public string dipck {
+            get {
+                return ((string)(this["dipck"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=192.168.0.187\\MSSQLSERVER14;Initial Catalog=dipck;User ID=sa;Password" +
+            "=adnan2011")]
+        public string dipckcon {
+            get {
+                return ((string)(this["dipckcon"]));
+            }
+        }
     }
 }

@@ -595,6 +595,8 @@ namespace dipndipInventory.EF.DataServices
 
         //***************************** Order ************************************************
 
+
+        
         public int CreateOrder(order order_master, List<order_details> order_detail_list)
         {
             //int result = 0;
@@ -613,6 +615,7 @@ namespace dipndipInventory.EF.DataServices
                             //order_detail.order_no = order_master.order_no;
                             order_detail.order = order_master;
                             context.order_details.Add(order_detail);
+                            //context.SaveChanges();
                         }
                         context.SaveChanges();
                         dbcxtrx.Commit();
