@@ -53,7 +53,9 @@ namespace dipndipInventory.Views.Stock
 
         public int UpdateWarehouseItems()
         {
-            SqlConnection ssisConnection = new SqlConnection(@"Data Source=192.168.0.187\MSSQLSERVER14;Initial Catalog=dipck;Integrated Security=SSPI;");
+            //SqlConnection ssisConnection = new SqlConnection(@"Data Source=192.168.0.187\MSSQLSERVER14;Initial Catalog=dipck;Integrated Security=SSPI;");
+            string constr = @"Data Source=192.168.0.187\MSSQLSERVER14;Initial Catalog=dipck;User id=sa;Password=Dip@123.;";
+            SqlConnection ssisConnection = new SqlConnection(constr);
             IntegrationServices ssisServer = new IntegrationServices(ssisConnection);
             var projectBytes = ssisServer.Catalogs["SSISDB"]
                              .Folders["wh_item_updation"]
