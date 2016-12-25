@@ -23,6 +23,7 @@ using Telerik.Reporting.Processing;
 using Telerik.Windows.Controls;
 using Telerik.Windows.Controls.GridView;
 
+
 namespace dipndipInventory.Views.Stock
 {
     /// <summary>
@@ -53,31 +54,38 @@ namespace dipndipInventory.Views.Stock
 
         public int UpdateWarehouseItems()
         {
-            //SqlConnection ssisConnection = new SqlConnection(@"Data Source=192.168.0.187\MSSQLSERVER14;Initial Catalog=dipck;Integrated Security=SSPI;");
-            string constr = @"Data Source=192.168.0.187\MSSQLSERVER14;Initial Catalog=dipck;User id=sa;Password=Dip@123.;";
-            SqlConnection ssisConnection = new SqlConnection(constr);
-            IntegrationServices ssisServer = new IntegrationServices(ssisConnection);
-            var projectBytes = ssisServer.Catalogs["SSISDB"]
-                             .Folders["wh_item_updation"]
-                             .Projects["wh_item_updation"].GetProjectBytes();
-
-            // note that projectBytes is basically __URFILE__.ispac      
-            using (var existingProject = Project.OpenProject(new MemoryStream(projectBytes)))
-            {
-                //existingProject.PackageItems["master.dtsx"].Package.Execute(.... todo....)
-                DTSExecResult exec_result = existingProject.PackageItems["Package.dtsx"].Package.Execute();
-                if (exec_result == DTSExecResult.Success)
-                {
-                    //MessageBox.Show("Items Updated Successfully");
-                    return 1;
-                }
-                else
-                {
-                    MessageBox.Show("Updation Failed");
-                    return 0;
-                }
-            }
+            CKWHItemUpdateService ucontext = new CKWHItemUpdateService();
+            int result = 0;
+            result = ucontext.CKWHItemUpdate(GlobalVariables.ActiveUser.Id);
+            return result;
         }
+        //public int UpdateWarehouseItems()
+        //{
+        //    SqlConnection ssisConnection = new SqlConnection(@"Data Source=192.168.0.187\MSSQLSERVER14;Initial Catalog=dipck;Integrated Security=SSPI;");
+        //    //string constr = @"Data Source=192.168.0.187\MSSQLSERVER14;Initial Catalog=dipck;User id=sa;Password=Dip@123.;";
+        //    //SqlConnection ssisConnection = new SqlConnection(constr);
+        //    IntegrationServices ssisServer = new IntegrationServices(ssisConnection);
+        //    var projectBytes = ssisServer.Catalogs["SSISDB"]
+        //                     .Folders["wh_item_updation"]
+        //                     .Projects["wh_item_updation"].GetProjectBytes();
+
+        //    // note that projectBytes is basically __URFILE__.ispac      
+        //    using (var existingProject = Project.OpenProject(new MemoryStream(projectBytes)))
+        //    {
+        //        //existingProject.PackageItems["master.dtsx"].Package.Execute(.... todo....)
+        //        DTSExecResult exec_result = existingProject.PackageItems["Package.dtsx"].Package.Execute();
+        //        if (exec_result == DTSExecResult.Success)
+        //        {
+        //            //MessageBox.Show("Items Updated Successfully");
+        //            return 1;
+        //        }
+        //        else
+        //        {
+        //            MessageBox.Show("Updation Failed");
+        //            return 0;
+        //        }
+        //    }
+        //}
 
         public whitemreceiveView(long order_id, string order_no, DateTime order_date, DateTime issue_date, ckorderView ck_order_view) 
         {

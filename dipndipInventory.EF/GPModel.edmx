@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DIPKWModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DIPKW.dbo.VW_Item_QTY' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="VW_Item_QTY">
+          <Key>
+            <PropertyRef Name="ITEMNMBR" />
+            <PropertyRef Name="ITEMDESC" />
+            <PropertyRef Name="ITMSHNAM" />
+            <PropertyRef Name="CURRCOST" />
+            <PropertyRef Name="ITMCLSCD" />
+            <PropertyRef Name="USCATVLS_1" />
+            <PropertyRef Name="LOCNCODE" />
+            <PropertyRef Name="QTYONHND" />
+            <PropertyRef Name="ATYALLOC" />
+            <PropertyRef Name="UOMSCHDL" />
+          </Key>
+          <Property Name="ITEMNMBR" Type="char" MaxLength="31" Nullable="false" />
+          <Property Name="ITEMDESC" Type="char" MaxLength="101" Nullable="false" />
+          <Property Name="ITMSHNAM" Type="char" MaxLength="15" Nullable="false" />
+          <Property Name="CURRCOST" Type="numeric" Precision="19" Scale="5" Nullable="false" />
+          <Property Name="ITMCLSCD" Type="char" MaxLength="11" Nullable="false" />
+          <Property Name="USCATVLS_1" Type="char" MaxLength="11" Nullable="false" />
+          <Property Name="LOCNCODE" Type="char" MaxLength="11" Nullable="false" />
+          <Property Name="QTYONHND" Type="numeric" Precision="19" Scale="5" Nullable="false" />
+          <Property Name="ATYALLOC" Type="numeric" Precision="19" Scale="5" Nullable="false" />
+          <Property Name="QTYAVBLE" Type="numeric" Precision="20" Scale="5" />
+          <Property Name="UOMSCHDL" Type="char" MaxLength="11" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="DIPKWModelStoreContainer">
+          <EntitySet Name="VW_Item_QTY" EntityType="Self.VW_Item_QTY" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [VW_Item_QTY].[ITEMNMBR] AS [ITEMNMBR], 
+    [VW_Item_QTY].[ITEMDESC] AS [ITEMDESC], 
+    [VW_Item_QTY].[ITMSHNAM] AS [ITMSHNAM], 
+    [VW_Item_QTY].[CURRCOST] AS [CURRCOST], 
+    [VW_Item_QTY].[ITMCLSCD] AS [ITMCLSCD], 
+    [VW_Item_QTY].[USCATVLS_1] AS [USCATVLS_1], 
+    [VW_Item_QTY].[LOCNCODE] AS [LOCNCODE], 
+    [VW_Item_QTY].[QTYONHND] AS [QTYONHND], 
+    [VW_Item_QTY].[ATYALLOC] AS [ATYALLOC], 
+    [VW_Item_QTY].[QTYAVBLE] AS [QTYAVBLE], 
+    [VW_Item_QTY].[UOMSCHDL] AS [UOMSCHDL]
+    FROM [dbo].[VW_Item_QTY] AS [VW_Item_QTY]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DIPKWModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="VW_Item_QTY">
+          <Key>
+            <PropertyRef Name="ITEMNMBR" />
+            <PropertyRef Name="ITEMDESC" />
+            <PropertyRef Name="ITMSHNAM" />
+            <PropertyRef Name="CURRCOST" />
+            <PropertyRef Name="ITMCLSCD" />
+            <PropertyRef Name="USCATVLS_1" />
+            <PropertyRef Name="LOCNCODE" />
+            <PropertyRef Name="QTYONHND" />
+            <PropertyRef Name="ATYALLOC" />
+            <PropertyRef Name="UOMSCHDL" />
+          </Key>
+          <Property Name="ITEMNMBR" Type="String" MaxLength="31" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="ITEMDESC" Type="String" MaxLength="101" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="ITMSHNAM" Type="String" MaxLength="15" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="CURRCOST" Type="Decimal" Precision="19" Scale="5" Nullable="false" />
+          <Property Name="ITMCLSCD" Type="String" MaxLength="11" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="USCATVLS_1" Type="String" MaxLength="11" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="LOCNCODE" Type="String" MaxLength="11" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="QTYONHND" Type="Decimal" Precision="19" Scale="5" Nullable="false" />
+          <Property Name="ATYALLOC" Type="Decimal" Precision="19" Scale="5" Nullable="false" />
+          <Property Name="QTYAVBLE" Type="Decimal" Precision="20" Scale="5" />
+          <Property Name="UOMSCHDL" Type="String" MaxLength="11" FixedLength="true" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="DIPKWEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="VW_Item_QTY" EntityType="Self.VW_Item_QTY" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DIPKWModelStoreContainer" CdmEntityContainer="DIPKWEntities">
+          <EntitySetMapping Name="VW_Item_QTY">
+            <EntityTypeMapping TypeName="DIPKWModel.VW_Item_QTY">
+              <MappingFragment StoreEntitySet="VW_Item_QTY">
+                <ScalarProperty Name="ITEMNMBR" ColumnName="ITEMNMBR" />
+                <ScalarProperty Name="ITEMDESC" ColumnName="ITEMDESC" />
+                <ScalarProperty Name="ITMSHNAM" ColumnName="ITMSHNAM" />
+                <ScalarProperty Name="CURRCOST" ColumnName="CURRCOST" />
+                <ScalarProperty Name="ITMCLSCD" ColumnName="ITMCLSCD" />
+                <ScalarProperty Name="USCATVLS_1" ColumnName="USCATVLS_1" />
+                <ScalarProperty Name="LOCNCODE" ColumnName="LOCNCODE" />
+                <ScalarProperty Name="QTYONHND" ColumnName="QTYONHND" />
+                <ScalarProperty Name="ATYALLOC" ColumnName="ATYALLOC" />
+                <ScalarProperty Name="QTYAVBLE" ColumnName="QTYAVBLE" />
+                <ScalarProperty Name="UOMSCHDL" ColumnName="UOMSCHDL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -58,6 +58,7 @@ namespace dipndipInventory.EF
         public virtual DbSet<user_roles> user_roles { get; set; }
         public virtual DbSet<app_forms> app_forms { get; set; }
         public virtual DbSet<app_form_permissions> app_form_permissions { get; set; }
+        public virtual DbSet<ckwh_items_log> ckwh_items_log { get; set; }
     
         public virtual ObjectResult<ReadWarehouseItems_Result> ReadWarehouseItems()
         {

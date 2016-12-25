@@ -604,6 +604,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="CustomDLL\CKWHUpdate.dll.config" />
     <None Include="OpenAccessNuGet.targets" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -701,6 +702,10 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="CustomDLL\CKWHUpdate.dll" />
+    <Content Include="CustomDLL\CKWHUpdate.pdb" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="OpenAccessNuget.targets" />

@@ -39,6 +39,7 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -80,6 +81,9 @@
       <DependentUpon>CKModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ckwh_items_adj.cs">
+      <DependentUpon>CKModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ckwh_items_log.cs">
       <DependentUpon>CKModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ckwh_item_unit.cs">
@@ -143,6 +147,7 @@
     <Compile Include="DataServices\CKReceiptService.cs" />
     <Compile Include="DataServices\CKStockTransactionService.cs" />
     <Compile Include="DataServices\CKWastageService.cs" />
+    <Compile Include="DataServices\CKWHItemUpdateService.cs" />
     <Compile Include="DataServices\ReasonService.cs" />
     <Compile Include="DataServices\SiteService.cs" />
     <Compile Include="DataServices\TransactionService.cs" />
@@ -153,6 +158,21 @@
     <Compile Include="DataServices\WHItemCostService.cs" />
     <Compile Include="DataServices\WHItemService.cs" />
     <Compile Include="DataServices\WHItemUnitService.cs" />
+    <Compile Include="GPModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GPModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GPModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GPModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GPModel.edmx</DependentUpon>
+    </Compile>
     <Compile Include="item_site.cs">
       <DependentUpon>CKModel.tt</DependentUpon>
     </Compile>
@@ -187,6 +207,9 @@
     <Compile Include="user_roles.cs">
       <DependentUpon>CKModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="VW_Item_QTY.cs">
+      <DependentUpon>GPModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="wh_item_cost_history.cs">
       <DependentUpon>CKModel.tt</DependentUpon>
     </Compile>
@@ -203,6 +226,13 @@
     <None Include="CKModel.edmx.diagram">
       <DependentUpon>CKModel.edmx</DependentUpon>
     </None>
+    <EntityDeploy Include="GPModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>GPModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="GPModel.edmx.diagram">
+      <DependentUpon>GPModel.edmx</DependentUpon>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -218,6 +248,16 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>CKModel.edmx</DependentUpon>
       <LastGenOutput>CKModel.cs</LastGenOutput>
+    </Content>
+    <Content Include="GPModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>GPModel.edmx</DependentUpon>
+      <LastGenOutput>GPModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="GPModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>GPModel.edmx</DependentUpon>
+      <LastGenOutput>GPModel.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup />

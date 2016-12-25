@@ -61,6 +61,7 @@ namespace dipndipInventory.EF
             this.ck_issue_detais1 = new HashSet<ck_issue_detais>();
             this.ck_items_adj = new HashSet<ck_items_adj>();
             this.ck_items_adj1 = new HashSet<ck_items_adj>();
+            this.ckwh_items_log = new HashSet<ckwh_items_log>();
         }
     
         public int Id { get; set; }
@@ -162,5 +163,7 @@ namespace dipndipInventory.EF
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ck_items_adj> ck_items_adj1 { get; set; }
         public virtual user_roles user_roles { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ckwh_items_log> ckwh_items_log { get; set; }
     }
 }
