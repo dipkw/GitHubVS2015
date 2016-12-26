@@ -143,7 +143,8 @@ namespace dipndipInventory.Views.Stock
             g_ck_order_view.dgCKOrders.ItemsSource = g_orders;
             g_ck_order_view.dgCKOrders.Rebind();
 
-            RadWindow.Alert(response);
+            //RadWindow.Alert(response);
+            MessageBox.Show(response);
         }
 
         private void btnClose_Click(object sender, RoutedEventArgs e)

@@ -156,7 +156,7 @@ namespace dipndipInventory.Views.Reports
                 }
                 catch { MessageBox.Show("Please contact admin"); return; }
             }
-            mailItem.Body = @"Dear Warehouse Officer,
+            mailItem.Body = @"Good Day,
 
 Please find attached Receipt Confirmation for Central Kitchen.";
             mailItem.Body += @"

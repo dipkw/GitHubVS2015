@@ -58,7 +58,9 @@ namespace dipndipTLReports.Reports
             {
                 ReceiptReportVM receipt_report_vm = new ReceiptReportVM();
                 receipt_report_vm.OrderNo = receipt_item.receipt.order.order_no;
+                receipt_report_vm.OrderDate = (DateTime)receipt_item.receipt.order.order_date;
                 receipt_report_vm.ReceiptNo = receipt_item.receipt.receipt_no;
+                receipt_report_vm.ReceiptDate = (DateTime)receipt_item.receipt.receipt_date;
                 receipt_report_vm.item_code = receipt_item.wh_item_code;
                 receipt_report_vm.item_description = receipt_item.wh_item_description;
                 receipt_report_vm.iten_unit = receipt_item.ck_unit_description;

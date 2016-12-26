@@ -22,7 +22,7 @@ namespace dipndipInventory.EF.DataServices
                 IEnumerable<VW_Item_QTY> gp_items = (from gpitem in _gpcontext.VW_Item_QTY orderby gpitem.ITEMNMBR descending select gpitem);
 
                 //IEnumerable<ckwh_items>ck_wh_items = (from ckwhitem in _ckcontext.ckwh_items orderby ckwhitem.wh_item_code descending select ckwhitem);
-                MessageBox.Show("gp_items");
+                //MessageBox.Show("gp_items");
                 foreach (VW_Item_QTY gp_item in gp_items)
                 {
                     ckwh_items objWHItemToUpdate = (from whitem in _ckcontext.ckwh_items where whitem.wh_item_code == gp_item.ITEMNMBR select whitem).SingleOrDefault();
@@ -63,17 +63,17 @@ namespace dipndipInventory.EF.DataServices
                         objWHItemToUpdate.modified_by = user_id;
                         objWHItemToUpdate.modified_date = DateTime.Now;
 
-                        ckwh_items_log new_ckwh_item_log = new ckwh_items_log();
-                        new_ckwh_item_log.wh_item_code = gp_item.ITEMNMBR;
-                        new_ckwh_item_log.wh_item_description = gp_item.ITEMDESC;
-                        new_ckwh_item_log.wh_category_description = gp_item.ITMCLSCD;
-                        new_ckwh_item_log.wh_unit_description = gp_item.UOMSCHDL;
-                        new_ckwh_item_log.quantity = gp_item.QTYAVBLE;
-                        new_ckwh_item_log.unit_cost = gp_item.CURRCOST;
-                        new_ckwh_item_log.created_by = user_id;
-                        new_ckwh_item_log.created_date = DateTime.Now;
-                        new_ckwh_item_log.trans_type = "Update";
-                        _ckcontext.ckwh_items_log.Add(new_ckwh_item_log);
+                        //ckwh_items_log new_ckwh_item_log = new ckwh_items_log();
+                        //new_ckwh_item_log.wh_item_code = gp_item.ITEMNMBR;
+                        //new_ckwh_item_log.wh_item_description = gp_item.ITEMDESC;
+                        //new_ckwh_item_log.wh_category_description = gp_item.ITMCLSCD;
+                        //new_ckwh_item_log.wh_unit_description = gp_item.UOMSCHDL;
+                        //new_ckwh_item_log.quantity = gp_item.QTYAVBLE;
+                        //new_ckwh_item_log.unit_cost = gp_item.CURRCOST;
+                        //new_ckwh_item_log.created_by = user_id;
+                        //new_ckwh_item_log.created_date = DateTime.Now;
+                        //new_ckwh_item_log.trans_type = "Update";
+                        //_ckcontext.ckwh_items_log.Add(new_ckwh_item_log);
 
                         _ckcontext.SaveChanges();
                     }

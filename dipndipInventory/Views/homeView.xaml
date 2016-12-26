@@ -131,6 +131,12 @@
                             <TextBlock Text="Item Units" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </telerik:RadRibbonButton>
+                    <telerik:RadRibbonButton x:Name="WHItemsUpdate"  Width="100"  HorizontalContentAlignment="Center" Click="WHItemsUpdate_Click">
+                        <StackPanel>
+                            <Image Source="/dipndipInventory;component/Images/menu_icons/item-units.png" Width="32" Height="32"/>
+                            <TextBlock Text="WH Item Update" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </telerik:RadRibbonButton>
                     
                 </telerik:RadRibbonGroup>
 
@@ -268,6 +274,20 @@
                         <StackPanel>
                             <Image Source="/dipndipInventory;component/images/menu_icons/orders.png" Width="32" Height="32"/>
                             <TextBlock Text="CK Wastage Report" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </telerik:RadRibbonButton>
+                </telerik:RadRibbonGroup>
+                <telerik:RadRibbonGroup Header="Warehouse">
+                    <telerik:RadRibbonButton   Width="120"  HorizontalContentAlignment="Center" x:Name="WHDelivery">
+                        <StackPanel>
+                            <Image Source="/dipndipInventory;component/images/menu_icons/orders.png" Width="32" Height="32"/>
+                            <TextBlock Text="Warehouse Delivery" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </telerik:RadRibbonButton>
+                    <telerik:RadRibbonButton   Width="120"  HorizontalContentAlignment="Center" x:Name="WHReceipts">
+                        <StackPanel>
+                            <Image Source="/dipndipInventory;component/images/menu_icons/orders.png" Width="32" Height="32"/>
+                            <TextBlock Text="Warehouse Receipts" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </telerik:RadRibbonButton>
                 </telerik:RadRibbonGroup>

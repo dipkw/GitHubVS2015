@@ -1,6 +1,7 @@
 ﻿using dipndipInventory.EF;
 using dipndipInventory.EF.DataServices;
 using dipndipInventory.Helpers;
+using dipndipInventory.Views.Misc;
 using dipndipInventory.Views.Reports;
 using dipndipInventory.Views.Site;
 using dipndipInventory.Views.Stock;
@@ -335,6 +336,12 @@ namespace dipndipInventory.Views
         {
             CKWastageReportView wrv = new CKWastageReportView();
             wrv.Show();
+        }
+
+        private void WHItemsUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            inFlowProgressView ipv = new inFlowProgressView();
+            ipv.Show();
         }
     }
 }

@@ -32,10 +32,10 @@
                     <telerik:GridViewDataColumn x:Name="ItemDesc" DataMemberBinding="{Binding wh_item_description}" Width="*" Header="Item Description"/>
                     <telerik:GridViewDataColumn x:Name="CatDesc" DataMemberBinding="{Binding wh_category_description}" Width="*" Header="Category"/>
                     <telerik:GridViewDataColumn x:Name="Unit" DataMemberBinding="{Binding wh_unit_description}" Width="*" Header="Unit"/>
-                    <telerik:GridViewDataColumn x:Name="CurCost" DataMemberBinding="{Binding unit_cost}" Width="*" Header="Current Cost" TextAlignment="Right"/>
-                    <telerik:GridViewDataColumn x:Name="QtyOnHand" DataMemberBinding="{Binding quantity}" Width="*" Header="Qty on Hand" TextAlignment="Right"/>
+                    <telerik:GridViewDataColumn x:Name="CurCost" DataMemberBinding="{Binding unit_cost}" Width="*" Header="Current Cost" TextAlignment="Right" IsVisible="False"/>
+                    <telerik:GridViewDataColumn x:Name="QtyOnHand" DataMemberBinding="{Binding quantity}" Width="*" Header="Qty on Hand" TextAlignment="Right" IsVisible="False"/>
 
-                    <telerik:GridViewColumn Width="80">
+                    <telerik:GridViewColumn Width="80" IsVisible="False">
                         <telerik:GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <telerik:RadButton Content="Edit" x:Name="btnEdit" Margin="5"/>
