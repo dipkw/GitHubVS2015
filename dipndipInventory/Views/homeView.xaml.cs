@@ -343,5 +343,11 @@ namespace dipndipInventory.Views
             inFlowProgressView ipv = new inFlowProgressView();
             ipv.Show();
         }
+
+        private void WHDelivery_Click(object sender, RoutedEventArgs e)
+        {
+            WHDeliveryReportView wdv = new WHDeliveryReportView();
+            wdv.Show();
+        }
     }
 }

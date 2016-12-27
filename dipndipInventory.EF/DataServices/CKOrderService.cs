@@ -78,7 +78,7 @@ namespace dipndipInventory.EF.DataServices
                 objCKOrderToUpdate.sent_mail = true;
                 _context.SaveChanges();
 
-                _context.Dispose(); 
+                _context.Dispose();
                 return 1;
             }
             catch
@@ -229,7 +229,7 @@ namespace dipndipInventory.EF.DataServices
                     _result = true;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
 
             }
@@ -596,7 +596,7 @@ namespace dipndipInventory.EF.DataServices
         //***************************** Order ************************************************
 
 
-        
+
         public int CreateOrder(order order_master, List<order_details> order_detail_list)
         {
             //int result = 0;
@@ -672,7 +672,7 @@ namespace dipndipInventory.EF.DataServices
                         foreach (var order_detail in order_detail_list)
                         {
                             order_details objCKOrderDetailsToUpdate = (from ckorderdetails in context.order_details where ckorderdetails.Id == order_detail.Id select ckorderdetails).SingleOrDefault();
-                            if(objCKOrderDetailsToUpdate == null)
+                            if (objCKOrderDetailsToUpdate == null)
                             {
                                 order_details objCKOrderDetailsToAdd = new order_details();
                                 objCKOrderDetailsToAdd.order_id = order_detail.order_id;
@@ -810,13 +810,13 @@ namespace dipndipInventory.EF.DataServices
                         }
 
                         //Create transaction in transaction_details table
-                        foreach(transaction_details transactionDetail in g_transaction_detail_list)
+                        foreach (transaction_details transactionDetail in g_transaction_detail_list)
                         {
                             context.transaction_details.Add(transactionDetail);
                             context.SaveChanges();
                         }
                         //Update ck_qty and ck_avg_unit_cost in ckwh_items
-                        foreach(ckwh_items ckwh_item in g_ckwh_item_list)
+                        foreach (ckwh_items ckwh_item in g_ckwh_item_list)
                         {
                             ckwh_items objCKWHItemToUpdate = (from ckwhitem in context.ckwh_items where ckwhitem.Id == ckwh_item.Id select ckwhitem).SingleOrDefault();
                             objCKWHItemToUpdate.ck_qty = ckwh_item.ck_qty;
@@ -836,7 +836,7 @@ namespace dipndipInventory.EF.DataServices
                         context.SaveChanges();
 
                         //Create Warehouse Item Cost History if any
-                        foreach(wh_item_cost_history whitemcosthistory in g_wh_item_cost_history_list)
+                        foreach (wh_item_cost_history whitemcosthistory in g_wh_item_cost_history_list)
                         {
                             context.wh_item_cost_history.Add(whitemcosthistory);
                             context.SaveChanges();
@@ -861,5 +861,51 @@ namespace dipndipInventory.EF.DataServices
             }
         }
         //***** Transaction *****
+
+        public int SaveWHDelivery(List<order_details> g_order_details, long order_id, string order_status, DateTime issue_date, int user_id, wh_delivery_master delivery_master, List<wh_delivery_details> delivery_details)
+        {
+            using (var context = new CKEntities())
+            {
+                using (var dbcxtrx = context.Database.BeginTransaction())
+                {
+                    
+                    try
+                    {
+                        //Update qty_delivered in order_deails table
+                        foreach(order_details order_detail in g_order_details)
+                        {
+                            order_details objCKOrderDetailsToUpdate = (from ckorderdetails in context.order_details where ckorderdetails.Id == order_detail.Id select ckorderdetails).FirstOrDefault();
+                            objCKOrderDetailsToUpdate.qty_issued = order_detail.qty_issued;
+                            context.SaveChanges();
+                        }
+                        
+                        //Update qty_delivered in order_deails table
+                        order objCKOrderToUpdate = (from ckorder in context.orders where ckorder.Id == order_id select ckorder).SingleOrDefault();
+                        objCKOrderToUpdate.issue_date = issue_date;
+                        objCKOrderToUpdate.order_status = order_status;
+                        objCKOrderToUpdate.modified_by = user_id;
+                        objCKOrderToUpdate.modified_date = DateTime.Now;
+                        context.SaveChanges();
+
+                        //Create delivery order and delivery_order_details
+                        context.wh_delivery_master.Add(delivery_master);
+                        foreach (wh_delivery_details delivery_detail in delivery_details)
+                        {
+                            delivery_detail.wh_delivery_master = delivery_master;
+                            context.wh_delivery_details.Add(delivery_detail);
+                        }
+                        context.SaveChanges();
+
+                        dbcxtrx.Commit();
+                        return 1;
+                    }
+                    catch(Exception ex)
+                    {
+                        dbcxtrx.Rollback();
+                        return 0;
+                    }
+                }
+            }
+        }
     }
 }

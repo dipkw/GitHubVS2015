@@ -62,6 +62,10 @@ namespace dipndipInventory.EF
             this.ck_items_adj = new HashSet<ck_items_adj>();
             this.ck_items_adj1 = new HashSet<ck_items_adj>();
             this.ckwh_items_log = new HashSet<ckwh_items_log>();
+            this.wh_delivery_details = new HashSet<wh_delivery_details>();
+            this.wh_delivery_details1 = new HashSet<wh_delivery_details>();
+            this.wh_delivery_master = new HashSet<wh_delivery_master>();
+            this.wh_delivery_master1 = new HashSet<wh_delivery_master>();
         }
     
         public int Id { get; set; }
@@ -165,5 +169,13 @@ namespace dipndipInventory.EF
         public virtual user_roles user_roles { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ckwh_items_log> ckwh_items_log { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<wh_delivery_details> wh_delivery_details { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<wh_delivery_details> wh_delivery_details1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<wh_delivery_master> wh_delivery_master { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<wh_delivery_master> wh_delivery_master1 { get; set; }
     }
 }

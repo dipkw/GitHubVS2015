@@ -29,6 +29,9 @@ namespace dipndipInventory.Views.Stock
     {
         long active_order_id;
         ckorderView g_ck_order_view;
+        List<order_details> g_order_details;
+        wh_delivery_master g_wh_delivery_master;
+        List<wh_delivery_details> g_wh_delivery_details;
         public whitemissueView()
         {
             InitializeComponent();
@@ -116,7 +119,87 @@ namespace dipndipInventory.Views.Stock
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            if(MessageBox.Show("Do you want to continue","Confirm",MessageBoxButton.YesNo)== MessageBoxResult.No)
+            try
+            {
+                if (MessageBox.Show("Do you want to continue", "Confirm", MessageBoxButton.YesNo) == MessageBoxResult.No)
+                {
+                    return;
+                }
+
+                DateTime delivery_date = (DateTime)(dtpIssueDate.SelectedDate + DateTime.Now.TimeOfDay);
+                g_wh_delivery_master = new wh_delivery_master();
+                g_wh_delivery_master.order_id = active_order_id;
+
+                CKOrderService ckcontext = new CKOrderService();
+                order active_order = ckcontext.ReadCKOrderByID(active_order_id);
+
+                g_wh_delivery_master = new wh_delivery_master();
+                g_wh_delivery_master.order_id = active_order_id;
+                g_wh_delivery_master.order_no = active_order.order_no;
+                g_wh_delivery_master.order_date = active_order.order_date;
+                //g_wh_delivery_master.order = active_order;
+                g_wh_delivery_master.issue_date = delivery_date;
+                g_wh_delivery_master.order_from_site_id = active_order.order_from_site_id;
+                g_wh_delivery_master.order_to_site_id = active_order.order_to_site_id;
+                g_wh_delivery_master.order_status = "Issued";
+                g_wh_delivery_master.created_by = GlobalVariables.ActiveUser.Id;
+                g_wh_delivery_master.created_date = delivery_date;
+                g_wh_delivery_master.active = true;
+
+                var rows = this.dgCKOrderDetails.ChildrenOfType<GridViewRow>();
+                int result = 0;
+                CKOrderService _ocontext = new CKOrderService();
+                g_order_details = new List<order_details>();
+                g_wh_delivery_details = new List<wh_delivery_details>();
+                foreach (var row in rows)
+                {
+                    if (row is GridViewNewRow)
+                        continue;
+
+                    OrderDetailsViewModel objOrderDetails = row.Item as OrderDetailsViewModel;
+
+                    ////result = _ocontext.UpdateIssuedQty(active_order_id, objOrderDetails.qty_issued);
+                    //result = _ocontext.UpdateIssuedQty(objOrderDetails.id, objOrderDetails.qty_issued);
+                    order_details orderdetail = new order_details();
+                    orderdetail.Id = objOrderDetails.id;
+                    orderdetail.qty_issued = objOrderDetails.qty_issued;
+                    g_order_details.Add(orderdetail);
+
+                    wh_delivery_details deliverydetail = new wh_delivery_details();
+                    deliverydetail.order_id = active_order.Id;
+                    deliverydetail.order_no = active_order.order_no;
+                    deliverydetail.ckwh_item_id = objOrderDetails.id;
+                    deliverydetail.wh_item_unit_id = objOrderDetails.unitId;
+                    deliverydetail.order_qty = objOrderDetails.qty;
+                    deliverydetail.delivered_qty = objOrderDetails.qty_issued;
+                    deliverydetail.created_by = GlobalVariables.ActiveUser.Id;
+                    deliverydetail.created_date = delivery_date;
+                    deliverydetail.active = true;
+                    g_wh_delivery_details.Add(deliverydetail);
+                }
+                //if (result > 0)
+                //{
+                //    result = _ocontext.UpdateCKOrderStatus(active_order_id, "Issued", delivery_date, GlobalVariables.ActiveUser.Id);
+                //}
+                result = _ocontext.SaveWHDelivery(g_order_details, active_order_id, "Issued", delivery_date, GlobalVariables.ActiveUser.Id, g_wh_delivery_master, g_wh_delivery_details);
+                string response = result > 0 ? "Items Issued Successfully" : "Unable to issue the Items";
+
+                IEnumerable<order> g_orders = _ocontext.ReadAllActiveSiteOrders(GlobalVariables.ActiveSite.Id);
+                g_ck_order_view.dgCKOrders.ItemsSource = g_orders;
+                g_ck_order_view.dgCKOrders.Rebind();
+
+                //RadWindow.Alert(response);
+                MessageBox.Show(response);
+            }
+            catch
+            {
+                MessageBox.Show("Please contact admin");
+            }
+        }
+
+        private void btnSave_Click1(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("Do you want to continue", "Confirm", MessageBoxButton.YesNo) == MessageBoxResult.No)
             {
                 return;
             }
@@ -129,13 +212,13 @@ namespace dipndipInventory.Views.Stock
                     continue;
 
                 OrderDetailsViewModel objOrderDetails = row.Item as OrderDetailsViewModel;
-                
+
                 //result = _ocontext.UpdateIssuedQty(active_order_id, objOrderDetails.qty_issued);
                 result = _ocontext.UpdateIssuedQty(objOrderDetails.id, objOrderDetails.qty_issued);
             }
             if (result > 0)
             {
-                result = _ocontext.UpdateCKOrderStatus(active_order_id, "Issued", (DateTime)(dtpIssueDate.SelectedDate+DateTime.Now.TimeOfDay),GlobalVariables.ActiveUser.Id);
+                result = _ocontext.UpdateCKOrderStatus(active_order_id, "Issued", (DateTime)(dtpIssueDate.SelectedDate + DateTime.Now.TimeOfDay), GlobalVariables.ActiveUser.Id);
             }
             string response = result > 0 ? "Items Issued Successfully" : "Unable to issue the Items";
 

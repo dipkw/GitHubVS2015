@@ -30,6 +30,8 @@ namespace dipndipInventory.EF
             this.ck_stock_trans = new HashSet<ck_stock_trans>();
             this.ck_stock_trans1 = new HashSet<ck_stock_trans>();
             this.ck_issue_master = new HashSet<ck_issue_master>();
+            this.wh_delivery_master = new HashSet<wh_delivery_master>();
+            this.wh_delivery_master1 = new HashSet<wh_delivery_master>();
         }
     
         public int Id { get; set; }
@@ -71,5 +73,9 @@ namespace dipndipInventory.EF
         public virtual ICollection<ck_stock_trans> ck_stock_trans1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ck_issue_master> ck_issue_master { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<wh_delivery_master> wh_delivery_master { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<wh_delivery_master> wh_delivery_master1 { get; set; }
     }
 }

@@ -210,6 +210,12 @@
     <Compile Include="VW_Item_QTY.cs">
       <DependentUpon>GPModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="wh_delivery_details.cs">
+      <DependentUpon>CKModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="wh_delivery_master.cs">
+      <DependentUpon>CKModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="wh_item_cost_history.cs">
       <DependentUpon>CKModel.tt</DependentUpon>
     </Compile>

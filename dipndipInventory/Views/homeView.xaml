@@ -278,7 +278,7 @@
                     </telerik:RadRibbonButton>
                 </telerik:RadRibbonGroup>
                 <telerik:RadRibbonGroup Header="Warehouse">
-                    <telerik:RadRibbonButton   Width="120"  HorizontalContentAlignment="Center" x:Name="WHDelivery">
+                    <telerik:RadRibbonButton   Width="120"  HorizontalContentAlignment="Center" x:Name="WHDelivery" Click="WHDelivery_Click">
                         <StackPanel>
                             <Image Source="/dipndipInventory;component/images/menu_icons/orders.png" Width="32" Height="32"/>
                             <TextBlock Text="Warehouse Delivery" HorizontalAlignment="Center"/>
