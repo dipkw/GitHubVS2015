@@ -81,6 +81,9 @@ namespace dipndipInventory.Views
             SitesMenu.IsEnabled = afpcontext.GetAppRoleFormPermission(objUser.role_id, "Sites", "Read");
             Wastage.IsEnabled = afpcontext.GetAppRoleFormPermission(objUser.role_id, "CK Item Wastage", "Read");
             FormPermissionsMenu.IsEnabled = afpcontext.GetAppRoleFormPermission(objUser.role_id, "Form Permissions", "Read");
+            WHItemsUpdate.IsEnabled = afpcontext.GetAppRoleFormPermission(objUser.role_id, "Warehouse Item Updation", "Read");
+
+            CKProductionMenu.IsEnabled = afpcontext.GetAppRoleFormPermission(objUser.role_id, "CK Productions Report", "Read");
 
             //if (objUser.role_id == 2)
             //{
@@ -308,7 +311,7 @@ namespace dipndipInventory.Views
             fpv.Show();
         }
 
-        private void CKProductions_Click(object sender, RoutedEventArgs e)
+        private void CKProductionsReportMenu_Click(object sender, RoutedEventArgs e)
         {
             CKProductions cpv = new Stock.CKProductions();
             cpv.Show();

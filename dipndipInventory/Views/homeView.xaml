@@ -207,7 +207,7 @@
                             <TextBlock Text="Sites" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </telerik:RadRibbonButton>
-                    <telerik:RadRibbonButton x:Name="FormPermissionsMenu"  Width="100"  HorizontalContentAlignment="Center" Click="FormPermissionsMenu_Click" Visibility="Collapsed">
+                    <telerik:RadRibbonButton x:Name="FormPermissionsMenu"  Width="100"  HorizontalContentAlignment="Center" Click="FormPermissionsMenu_Click" Visibility="Visible">
                         <StackPanel>
                             <Image Source="/dipndipInventory;component/images/menu_icons/sites-2-icon.png" Width="32" Height="32"/>
                             <TextBlock Text="Form Permissions" HorizontalAlignment="Center"/>
@@ -244,9 +244,9 @@
                     </StackPanel>
                 </telerik:RadRibbonGroup>-->
             </telerik:RadRibbonTab>
-            <telerik:RadRibbonTab Header="Reports">
+            <telerik:RadRibbonTab Header="Reports" x:Name="ReportsTab">
                 <telerik:RadRibbonGroup Header="Central Kitchen">
-                    <telerik:RadRibbonButton   Width="100"  HorizontalContentAlignment="Center" x:Name="CKProductions" Click="CKProductions_Click">
+                    <telerik:RadRibbonButton   Width="100"  HorizontalContentAlignment="Center" x:Name="CKProductionsReportMenu" Click="CKProductionsReportMenu_Click">
                         <StackPanel>
                             <Image Source="/dipndipInventory;component/images/menu_icons/orders.png" Width="32" Height="32"/>
                             <TextBlock Text="CK Productions" HorizontalAlignment="Center"/>
