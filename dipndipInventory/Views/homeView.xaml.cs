@@ -83,7 +83,16 @@ namespace dipndipInventory.Views
             FormPermissionsMenu.IsEnabled = afpcontext.GetAppRoleFormPermission(objUser.role_id, "Form Permissions", "Read");
             WHItemsUpdate.IsEnabled = afpcontext.GetAppRoleFormPermission(objUser.role_id, "Warehouse Item Updation", "Read");
 
-            CKProductionMenu.IsEnabled = afpcontext.GetAppRoleFormPermission(objUser.role_id, "CK Productions Report", "Read");
+            if(objUser.role_id != 2)
+            {
+                CKReportsMenu.Visibility = Visibility.Collapsed;
+            }
+
+            CKProductionsReportMenu.IsEnabled = afpcontext.GetAppRoleFormPermission(objUser.role_id, "CK Productions Report", "Read");
+            CKBranchDelivery.IsEnabled = afpcontext.GetAppRoleFormPermission(objUser.role_id, "CK Productions Report", "Read");
+            WHStockAdjustment.IsEnabled = afpcontext.GetAppRoleFormPermission(objUser.role_id, "WH Stock Adjustment Report", "Read");
+
+
 
             //if (objUser.role_id == 2)
             //{

@@ -245,7 +245,7 @@
                 </telerik:RadRibbonGroup>-->
             </telerik:RadRibbonTab>
             <telerik:RadRibbonTab Header="Reports" x:Name="ReportsTab">
-                <telerik:RadRibbonGroup Header="Central Kitchen">
+                <telerik:RadRibbonGroup Header="Central Kitchen" x:Name="CKReportsMenu">
                     <telerik:RadRibbonButton   Width="100"  HorizontalContentAlignment="Center" x:Name="CKProductionsReportMenu" Click="CKProductionsReportMenu_Click">
                         <StackPanel>
                             <Image Source="/dipndipInventory;component/images/menu_icons/orders.png" Width="32" Height="32"/>
