@@ -65,7 +65,7 @@ namespace dipndipInventory.Views.Login
                 objSite.site_name = cmbSites.Text;
                 string username = txtUserName.Text;
                 string password = txtPassword.Password;
-                objUser = VerifyUser(username, password);
+                objUser = VerifyUser(username, password, objSite.Id);
                 if (objUser != null)
                 {
                     //if ((txtUserName.MaskedText == "admin" && txtPassword.Password == "admin"))
@@ -122,7 +122,19 @@ namespace dipndipInventory.Views.Login
             txtPassword.SelectAll();
         }
 
-        public ck_users VerifyUser(string username, string password)
+        public ck_users VerifyUser(string username, string password, int site_id)
+        {
+            _context = new CKEntities();
+            //IEnumerable<Customer> temp = datacontextobj.Customers;
+            //Systemuserinfo temp = (from tbl in datacontextobj.Systemuserinfos where tbl.Username == username && tbl.Password == password select tbl).FirstOrDefault();
+            //ActiveUser _user = new ActiveUser();
+            //string encPassword = Crypto.EncryptStringAES(password, username);
+            string encPassword = Crypto.CalculateHash(password, username);
+            ck_users objStaff = (from user in _context.ck_users where (user.username == username && user.password == encPassword) && (user.site_id == site_id || user.Id == 1) select user).FirstOrDefault();
+            return objStaff;
+        }
+
+        public ck_users VerifyUser1(string username, string password)
         {
             _context = new CKEntities();
             //IEnumerable<Customer> temp = datacontextobj.Customers;

@@ -83,9 +83,14 @@ namespace dipndipInventory.Views
             FormPermissionsMenu.IsEnabled = afpcontext.GetAppRoleFormPermission(objUser.role_id, "Form Permissions", "Read");
             WHItemsUpdate.IsEnabled = afpcontext.GetAppRoleFormPermission(objUser.role_id, "Warehouse Item Updation", "Read");
 
-            if(objUser.role_id != 2)
+            if(objUser.role_id != 1 && objUser.role_id != 2)
             {
                 CKReportsMenu.Visibility = Visibility.Collapsed;
+            }
+
+            if (objUser.role_id != 1 && objUser.role_id != 3)
+            {
+                WHReportsMenu.Visibility = Visibility.Collapsed;
             }
 
             CKProductionsReportMenu.IsEnabled = afpcontext.GetAppRoleFormPermission(objUser.role_id, "CK Productions Report", "Read");
@@ -359,6 +364,12 @@ namespace dipndipInventory.Views
         private void WHDelivery_Click(object sender, RoutedEventArgs e)
         {
             WHDeliveryReportView wdv = new WHDeliveryReportView();
+            wdv.Show();
+        }
+
+        private void WHDeliveryReport_Click(object sender, RoutedEventArgs e)
+        {
+            WHDeliveryReportView wdv = new WHDeliveryReportView("Details");
             wdv.Show();
         }
     }

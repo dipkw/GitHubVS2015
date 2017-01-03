@@ -156,6 +156,10 @@ namespace dipndipInventory.Views.Stock
                         MessageBox.Show("Please contact admin");
                     }
                 }
+                else
+                {
+                    MessageBox.Show("Sorry, you cannot cancel this order");
+                }
             }
             catch
             {

@@ -168,7 +168,7 @@ namespace dipndipInventory.Views.Stock
                     wh_delivery_details deliverydetail = new wh_delivery_details();
                     deliverydetail.order_id = active_order.Id;
                     deliverydetail.order_no = active_order.order_no;
-                    deliverydetail.ckwh_item_id = objOrderDetails.id;
+                    deliverydetail.ckwh_item_id = objOrderDetails.itemId;
                     deliverydetail.wh_item_unit_id = objOrderDetails.unitId;
                     deliverydetail.order_qty = objOrderDetails.qty;
                     deliverydetail.delivered_qty = objOrderDetails.qty_issued;

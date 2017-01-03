@@ -26,7 +26,11 @@ namespace dipndipInventory.Views.Reports
             InitializeComponent();
             LoadReport();
         }
-
+        public WHDeliveryReportView(string report_param)
+        {
+            InitializeComponent();
+            LoadReportDetails();
+        }
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
@@ -38,6 +42,28 @@ namespace dipndipInventory.Views.Reports
             {
                 DateTime defaultDate = DateTime.Today.Date;
                 myReport = new dipndipTLReports.Reports.WarehouseDeliveryReport();
+
+                Telerik.Reporting.InstanceReportSource instanceReportSource =
+                    new Telerik.Reporting.InstanceReportSource();
+
+                instanceReportSource.ReportDocument = myReport;
+
+                this.ReportViewer1.ReportSource = null;
+                this.ReportViewer1.ReportSource = instanceReportSource;
+                this.ReportViewer1.RefreshReport();
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        private void LoadReportDetails()
+        {
+            try
+            {
+                DateTime defaultDate = DateTime.Today.Date;
+                myReport = new dipndipTLReports.Reports.WHDeliveryDetailsReport();
 
                 Telerik.Reporting.InstanceReportSource instanceReportSource =
                     new Telerik.Reporting.InstanceReportSource();

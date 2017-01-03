@@ -277,11 +277,17 @@
                         </StackPanel>
                     </telerik:RadRibbonButton>
                 </telerik:RadRibbonGroup>
-                <telerik:RadRibbonGroup Header="Warehouse">
+                <telerik:RadRibbonGroup Header="Warehouse" x:Name="WHReportsMenu">
                     <telerik:RadRibbonButton   Width="120"  HorizontalContentAlignment="Center" x:Name="WHDelivery" Click="WHDelivery_Click">
                         <StackPanel>
                             <Image Source="/dipndipInventory;component/images/menu_icons/orders.png" Width="32" Height="32"/>
                             <TextBlock Text="Warehouse Delivery" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </telerik:RadRibbonButton>
+                    <telerik:RadRibbonButton   Width="154"  HorizontalContentAlignment="Center" x:Name="WHDeliveryReport" Click="WHDeliveryReport_Click">
+                        <StackPanel>
+                            <Image Source="/dipndipInventory;component/images/menu_icons/orders.png" Width="32" Height="32"/>
+                            <TextBlock Text="Warehouse Delivery Report" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </telerik:RadRibbonButton>
                     <telerik:RadRibbonButton   Width="120"  HorizontalContentAlignment="Center" x:Name="WHReceipts">
