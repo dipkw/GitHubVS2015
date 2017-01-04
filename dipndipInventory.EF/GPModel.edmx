@@ -4,7 +4,16 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="DIPKWModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="DIPKWModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'DIPKW.dbo.VW_Converted_Sales_data' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="VW_Converted_Sales_data">
+          <Property Name="Branch" Type="nvarchar(max)" />
+          <Property Name="Sales" Type="numeric" Precision="18" Scale="3" />
+          <Property Name="Date" Type="datetime" />
+          <Property Name="AddedDate" Type="datetime" />
+          <Property Name="MonthNames" Type="char" MaxLength="3" />
+        </EntityType>-->
         <!--Errors Found During Generation:
 warning 6002: The table/view 'DIPKW.dbo.VW_Item_QTY' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="VW_Item_QTY">
@@ -19,6 +28,8 @@ warning 6002: The table/view 'DIPKW.dbo.VW_Item_QTY' does not have a primary key
             <PropertyRef Name="QTYONHND" />
             <PropertyRef Name="ATYALLOC" />
             <PropertyRef Name="UOMSCHDL" />
+            <PropertyRef Name="CREATDDT" />
+            <PropertyRef Name="MODIFDT" />
           </Key>
           <Property Name="ITEMNMBR" Type="char" MaxLength="31" Nullable="false" />
           <Property Name="ITEMDESC" Type="char" MaxLength="101" Nullable="false" />
@@ -31,7 +42,16 @@ warning 6002: The table/view 'DIPKW.dbo.VW_Item_QTY' does not have a primary key
           <Property Name="ATYALLOC" Type="numeric" Precision="19" Scale="5" Nullable="false" />
           <Property Name="QTYAVBLE" Type="numeric" Precision="20" Scale="5" />
           <Property Name="UOMSCHDL" Type="char" MaxLength="11" Nullable="false" />
+          <Property Name="CREATDDT" Type="datetime" Nullable="false" />
+          <Property Name="MODIFDT" Type="datetime" Nullable="false" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'DIPKW.dbo.VW_Monthly_Sales_Branch' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="VW_Monthly_Sales_Branch">
+          <Property Name="Branch" Type="nvarchar(max)" />
+          <Property Name="Sales" Type="numeric" Precision="38" Scale="3" />
+          <Property Name="MonthNames" Type="char" MaxLength="3" />
+        </EntityType>-->
         <EntityContainer Name="DIPKWModelStoreContainer">
           <EntitySet Name="VW_Item_QTY" EntityType="Self.VW_Item_QTY" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -45,12 +65,13 @@ warning 6002: The table/view 'DIPKW.dbo.VW_Item_QTY' does not have a primary key
     [VW_Item_QTY].[QTYONHND] AS [QTYONHND], 
     [VW_Item_QTY].[ATYALLOC] AS [ATYALLOC], 
     [VW_Item_QTY].[QTYAVBLE] AS [QTYAVBLE], 
-    [VW_Item_QTY].[UOMSCHDL] AS [UOMSCHDL]
+    [VW_Item_QTY].[UOMSCHDL] AS [UOMSCHDL], 
+    [VW_Item_QTY].[CREATDDT] AS [CREATDDT], 
+    [VW_Item_QTY].[MODIFDT] AS [MODIFDT]
     FROM [dbo].[VW_Item_QTY] AS [VW_Item_QTY]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DIPKWModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -66,6 +87,8 @@ warning 6002: The table/view 'DIPKW.dbo.VW_Item_QTY' does not have a primary key
             <PropertyRef Name="QTYONHND" />
             <PropertyRef Name="ATYALLOC" />
             <PropertyRef Name="UOMSCHDL" />
+            <PropertyRef Name="CREATDDT" />
+            <PropertyRef Name="MODIFDT" />
           </Key>
           <Property Name="ITEMNMBR" Type="String" MaxLength="31" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="ITEMDESC" Type="String" MaxLength="101" FixedLength="true" Unicode="false" Nullable="false" />
@@ -78,6 +101,8 @@ warning 6002: The table/view 'DIPKW.dbo.VW_Item_QTY' does not have a primary key
           <Property Name="ATYALLOC" Type="Decimal" Precision="19" Scale="5" Nullable="false" />
           <Property Name="QTYAVBLE" Type="Decimal" Precision="20" Scale="5" />
           <Property Name="UOMSCHDL" Type="String" MaxLength="11" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="CREATDDT" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="MODIFDT" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <EntityContainer Name="DIPKWEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="VW_Item_QTY" EntityType="Self.VW_Item_QTY" />
@@ -91,6 +116,8 @@ warning 6002: The table/view 'DIPKW.dbo.VW_Item_QTY' does not have a primary key
           <EntitySetMapping Name="VW_Item_QTY">
             <EntityTypeMapping TypeName="DIPKWModel.VW_Item_QTY">
               <MappingFragment StoreEntitySet="VW_Item_QTY">
+                <ScalarProperty Name="MODIFDT" ColumnName="MODIFDT" />
+                <ScalarProperty Name="CREATDDT" ColumnName="CREATDDT" />
                 <ScalarProperty Name="ITEMNMBR" ColumnName="ITEMNMBR" />
                 <ScalarProperty Name="ITEMDESC" ColumnName="ITEMDESC" />
                 <ScalarProperty Name="ITMSHNAM" ColumnName="ITMSHNAM" />

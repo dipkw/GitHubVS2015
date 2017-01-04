@@ -27,9 +27,9 @@
             </Grid.RowDefinitions>
             <telerik:Label Content="User Authentication" Margin="15,80,0,0" Grid.ColumnSpan="2"/>
             <telerik:Label Content="User Name" Grid.Row="1" Grid.Column="1" Margin="8,0,9,0"/>
-            <TextBox Name="txtUserName"  Grid.Row="1" Grid.Column="2" Height="25" Text="admin"  />
+            <TextBox Name="txtUserName"  Grid.Row="1" Grid.Column="2" Height="25" Text=""  />
             <telerik:Label Content="Password" Grid.Row="2" Grid.Column="1" Margin="8,0,9,0"  />
-            <PasswordBox  Name="txtPassword" Grid.Row="2" Grid.Column="2"  Height="25"  KeyDown="txtPassword_KeyDown" Margin="0,11,0,14" GotFocus="txtPassword_GotFocus" Password="admin!2#" ToolTip="Please Enter Your Password"/>
+            <PasswordBox  Name="txtPassword" Grid.Row="2" Grid.Column="2"  Height="25"  KeyDown="txtPassword_KeyDown" Margin="0,11,0,14" GotFocus="txtPassword_GotFocus" Password="" ToolTip="Please Enter Your Password"/>
             <!--<telerik:Label Content="User Name" Grid.Row="1" Grid.Column="1" Margin="8,0,9,0"/>
             <TextBox Name="txtUserName"  Grid.Row="1" Grid.Column="2" Height="25" Text=""  />
             <telerik:Label Content="Password" Grid.Row="2" Grid.Column="1" Margin="8,0,9,0"  />

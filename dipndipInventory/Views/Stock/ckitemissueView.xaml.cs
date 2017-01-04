@@ -154,10 +154,14 @@ namespace dipndipInventory.Views.Stock
 
         private void cmbBranch_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            SiteService _scontext = new SiteService();
-            string site_code = _scontext.GetSiteCodeBySiteId((int)cmbBranch.SelectedValue);
-            DateTime order_date = (DateTime)dtpOrderDate.SelectedDate;
-            g_branch_order_no = site_code + order_date.Date.ToString("dd") + order_date.Month + order_date.ToString("yy");
+            try
+            {
+                SiteService _scontext = new SiteService();
+                string site_code = _scontext.GetSiteCodeBySiteId((int)cmbBranch.SelectedValue);
+                DateTime order_date = (DateTime)dtpOrderDate.SelectedDate;
+                g_branch_order_no = site_code + order_date.Date.ToString("dd") + order_date.Month + order_date.ToString("yy");
+            }
+            catch { }
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)

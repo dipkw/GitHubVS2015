@@ -79,6 +79,12 @@
     <Compile Include="Reports\CKWastageReport.Designer.cs">
       <DependentUpon>CKWastageReport.cs</DependentUpon>
     </Compile>
+    <Compile Include="Reports\CKWHReceiptReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\CKWHReceiptReport.Designer.cs">
+      <DependentUpon>CKWHReceiptReport.cs</DependentUpon>
+    </Compile>
     <Compile Include="Reports\ItemStockReport.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -212,6 +218,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\CKWastageReport.resx">
       <DependentUpon>CKWastageReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\CKWHReceiptReport.resx">
+      <DependentUpon>CKWHReceiptReport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\ItemStockReport.resx">
       <DependentUpon>ItemStockReport.cs</DependentUpon>

@@ -25,5 +25,7 @@ namespace dipndipInventory.EF
         public decimal ATYALLOC { get; set; }
         public Nullable<decimal> QTYAVBLE { get; set; }
         public string UOMSCHDL { get; set; }
+        public System.DateTime CREATDDT { get; set; }
+        public System.DateTime MODIFDT { get; set; }
     }
 }
