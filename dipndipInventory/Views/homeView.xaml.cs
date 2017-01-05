@@ -372,5 +372,11 @@ namespace dipndipInventory.Views
             WHDeliveryReportView wdv = new WHDeliveryReportView("Details");
             wdv.Show();
         }
+
+        private void WHReceipts_Click(object sender, RoutedEventArgs e)
+        {
+            WHReceiptsReport wrv = new WHReceiptsReport();
+            wrv.Show();
+        }
     }
 }

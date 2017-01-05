@@ -283,6 +283,9 @@
     <Compile Include="Views\Reports\WHItemQuantityInUnits.xaml.cs">
       <DependentUpon>WHItemQuantityInUnits.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Reports\WHReceiptsReport.xaml.cs">
+      <DependentUpon>WHReceiptsReport.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Reports\WHStockAdjReportView.xaml.cs">
       <DependentUpon>WHStockAdjReportView.xaml</DependentUpon>
     </Compile>
@@ -463,6 +466,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Reports\WHItemQuantityInUnits.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Reports\WHReceiptsReport.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

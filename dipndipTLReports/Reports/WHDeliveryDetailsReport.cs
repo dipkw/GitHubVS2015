@@ -35,11 +35,15 @@ namespace dipndipTLReports.Reports
             select_sql += "INNER JOIN ckwh_items ci ON wd.ckwh_item_id = ci.Id INNER JOIN wh_delivery_master dm ON wd.delivery_master_id = dm.Id ";
             select_sql += "INNER JOIN sites s1 ON dm.order_from_site_id = s1.Id INNER JOIN sites s2 ON dm.order_to_site_id = s2.Id ";
             select_sql += "INNER JOIN wh_item_unit wu ON wu.Id = wd.wh_item_unit_id INNER JOIN ck_units cu ON cu.Id = wu.ck_unit_id WHERE 1 = 1";
+            textBox13.Visible = false;
+            textBox14.Visible = false;
             if (report.Parameters["wh_item_code"].Value != null)
             {
                 select_sql += " AND ci.wh_item_code = '";
                 select_sql += report.Parameters["wh_item_code"].Value;
                 select_sql += "'";
+                textBox13.Visible = true;
+                textBox14.Visible = true;
             }
 
             if ((report.Parameters["start_date"].Value != null && report.Parameters["end_date"].Value != null))

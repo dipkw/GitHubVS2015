@@ -246,6 +246,12 @@
             </telerik:RadRibbonTab>
             <telerik:RadRibbonTab Header="Reports" x:Name="ReportsTab">
                 <telerik:RadRibbonGroup Header="Central Kitchen" x:Name="CKReportsMenu">
+                    <telerik:RadRibbonButton   Width="120"  HorizontalContentAlignment="Center" x:Name="WHReceipts" Click="WHReceipts_Click">
+                        <StackPanel>
+                            <Image Source="/dipndipInventory;component/images/menu_icons/orders.png" Width="32" Height="32"/>
+                            <TextBlock Text="Warehouse Receipts" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </telerik:RadRibbonButton>
                     <telerik:RadRibbonButton   Width="100"  HorizontalContentAlignment="Center" x:Name="CKProductionsReportMenu" Click="CKProductionsReportMenu_Click">
                         <StackPanel>
                             <Image Source="/dipndipInventory;component/images/menu_icons/orders.png" Width="32" Height="32"/>
@@ -290,12 +296,7 @@
                             <TextBlock Text="Warehouse Delivery Report" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </telerik:RadRibbonButton>
-                    <telerik:RadRibbonButton   Width="120"  HorizontalContentAlignment="Center" x:Name="WHReceipts">
-                        <StackPanel>
-                            <Image Source="/dipndipInventory;component/images/menu_icons/orders.png" Width="32" Height="32"/>
-                            <TextBlock Text="Warehouse Receipts" HorizontalAlignment="Center"/>
-                        </StackPanel>
-                    </telerik:RadRibbonButton>
+                    
                 </telerik:RadRibbonGroup>
             </telerik:RadRibbonTab>
             <telerik:RadRibbonTab Header="Admin">
