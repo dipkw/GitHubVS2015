@@ -31,7 +31,7 @@
                     </telerik:GridViewColumn>-->
                     <telerik:GridViewDataColumn x:Name="ItemDesc" DataMemberBinding="{Binding ck_item_description}" Width="*" Header="Item Description"/>
                     <telerik:GridViewDataColumn x:Name="Unit" DataMemberBinding="{Binding ck_units.unit_description}" Width="*" Header="Unit"/>
-                    <telerik:GridViewDataColumn x:Name="DesiredQty" DataMemberBinding="{Binding ck_design_qty}" Width="*" Header="Design Qty" TextAlignment="Right"/>
+                    <telerik:GridViewDataColumn x:Name="DesiredQty" DataMemberBinding="{Binding ck_design_qty}" Width="*" Header="Yield Qty" TextAlignment="Right"/>
                     <telerik:GridViewDataColumn x:Name="CurCost" DataMemberBinding="{Binding ck_item_unit_cost, StringFormat={}{0:N3}}" Width="*" Header="Current Cost" TextAlignment="Right" IsVisible="True"/>
                     <!--<telerik:GridViewDataColumn x:Name="QtyOnHand" DataMemberBinding="{Binding quantity}" Width="*" Header="Qty on Hand" TextAlignment="Right"/>
                     <telerik:GridViewDataColumn x:Name="UnitCost" DataMemberBinding="{Binding unit_cost}" Width="*" Header="Unit Cost" TextAlignment="Right"/>-->

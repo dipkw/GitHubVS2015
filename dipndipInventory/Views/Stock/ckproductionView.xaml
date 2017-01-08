@@ -34,7 +34,7 @@
                 <telerik:RadGridView.Columns>
                     <telerik:GridViewDataColumn x:Name="ItemCode" DataMemberBinding="{Binding itemCode}" Width="*" Header="Item Code" IsReadOnly="True"/>
                     <telerik:GridViewDataColumn x:Name="ItemDescription" DataMemberBinding="{Binding itemDescription}" Width="3*" Header="Description" IsReadOnly="True"/>
-                    <telerik:GridViewDataColumn x:Name="DesignQty" DataMemberBinding="{Binding designQty, StringFormat=N3}" Width="*" Header="Design Qty" IsReadOnly="True" TextAlignment="Right"/>
+                    <telerik:GridViewDataColumn x:Name="DesignQty" DataMemberBinding="{Binding designQty, StringFormat=N3}" Width="*" Header="Yield Qty" IsReadOnly="True" TextAlignment="Right"/>
                     <telerik:GridViewDataColumn x:Name="ProductionQty" DataMemberBinding="{Binding prodQty, StringFormat=N3}" Width="*" Header="Production Qty" TextAlignment="Right"/>
                     <!--<telerik:GridViewDataColumn x:Name="ProductionDate" DataMemberBinding="{Binding prodDate}" Width="*" Header="Production Date"/>
                     <telerik:GridViewDataColumn x:Name="ExpiryDate" DataMemberBinding="{Binding expDate}" Width="*" Header="Expiry Date"/>-->
