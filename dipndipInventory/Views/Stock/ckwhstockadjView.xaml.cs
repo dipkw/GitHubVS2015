@@ -419,30 +419,43 @@ namespace dipndipInventory.Views.Stock
             int skip_no = 0;
             decimal qty = 0.000m;
             transaction_details rcpt_transaction;
-            while (true)
+            bool no_transaction = false;
+            try
             {
-                rcpt_transaction = _tcontext.ReadNReceiptTransaction(selected_item_id, skip_no);
-                if(rcpt_transaction == null)
+                while (true)
                 {
-                    break;
-                }
-                if (qty_sum + (decimal)(rcpt_transaction.qty)> adj_qty)
-                {
-                    //qty = (qty_sum + (decimal)rcpt_transaction.qty) - (adj_qty);
-                    qty = adj_qty - qty_sum;
-                    qty_sum += qty;
+                    rcpt_transaction = _tcontext.ReadNReceiptTransaction(selected_item_id, skip_no);
+                    if (rcpt_transaction == null)
+                    {
+                        no_transaction = true;
+                        break;
+                    }
+                    if (qty_sum + (decimal)(rcpt_transaction.qty) > adj_qty)
+                    {
+                        //qty = (qty_sum + (decimal)rcpt_transaction.qty) - (adj_qty);
+                        qty = adj_qty - qty_sum;
+                        qty_sum += qty;
+                        total_ext_cost += (decimal)rcpt_transaction.unit_cost * qty;
+                        break;
+                    }
+                    else
+                    {
+                        qty = (decimal)rcpt_transaction.qty;
+                        qty_sum += qty;
+                    }
                     total_ext_cost += (decimal)rcpt_transaction.unit_cost * qty;
-                    break;
+                    skip_no++;
+                }
+                if (no_transaction)
+                {
+                    avg_unit_cost = (decimal)_wcontext.GetCurrentCost(selected_item_id);
                 }
                 else
                 {
-                    qty = (decimal)rcpt_transaction.qty;
-                    qty_sum += qty;
+                    avg_unit_cost = total_ext_cost / qty_sum;
                 }
-                total_ext_cost += (decimal)rcpt_transaction.unit_cost * qty;
-                skip_no++;
             }
-            avg_unit_cost = total_ext_cost / qty_sum;
+            catch { }
             return avg_unit_cost;
         }
 
