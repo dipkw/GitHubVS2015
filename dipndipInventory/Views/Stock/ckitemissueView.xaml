@@ -9,7 +9,7 @@
         Header="Cental Kitchen Item Issue" Height="700" Width="1024" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="30"/>
             <RowDefinition Height="350*"/>
             <!--<RowDefinition Height="150"/>-->
             <RowDefinition Height="50"/>

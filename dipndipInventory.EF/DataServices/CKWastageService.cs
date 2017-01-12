@@ -138,6 +138,19 @@ namespace dipndipInventory.EF.DataServices
             }
         }
 
+        public IEnumerable<ck_wastage_reasons> GetActiveCKWastageReasons()
+        {
+            try
+            {
+                _context = new CKEntities();
+                IEnumerable<ck_wastage_reasons> objReasons = (from reasons in _context.ck_wastage_reasons where reasons.active == true orderby reasons.Id descending select reasons);
+                return objReasons;
+            }
+            catch
+            {
+                return null;
+            }
+        }
 
     }
 }

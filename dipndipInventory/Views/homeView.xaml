@@ -298,6 +298,14 @@
                     </telerik:RadRibbonButton>
                     
                 </telerik:RadRibbonGroup>
+                <telerik:RadRibbonGroup Header="Management Reports" x:Name="MgmtReportsMenu">
+                    <telerik:RadRibbonButton   Width="120"  HorizontalContentAlignment="Center" x:Name="CKRecipeReport" Click="CKRecipeReport_Click">
+                        <StackPanel>
+                            <Image Source="/dipndipInventory;component/images/menu_icons/orders.png" Width="32" Height="32"/>
+                            <TextBlock Text="Recipe Report" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </telerik:RadRibbonButton>
+                </telerik:RadRibbonGroup>
             </telerik:RadRibbonTab>
             <telerik:RadRibbonTab Header="Admin">
                 <telerik:RadRibbonGroup/>

@@ -258,6 +258,7 @@
           <Property Name="ck_item_desc" Type="nvarchar" MaxLength="150" />
           <Property Name="ck_item_unit_id" Type="int" />
           <Property Name="wastage_qty" Type="decimal" Precision="20" Scale="12" />
+          <Property Name="ck_wastage_reason_id" Type="int" />
           <Property Name="ck_item_unit_cost" Type="decimal" Precision="20" Scale="12" />
           <Property Name="ck_item_total_cost" Type="decimal" Precision="20" Scale="12" />
           <Property Name="created_by" Type="int" />
@@ -278,6 +279,14 @@
           <Property Name="created_date" Type="datetime" />
           <Property Name="modified_by" Type="int" />
           <Property Name="modified_date" Type="datetime" />
+          <Property Name="active" Type="bit" />
+        </EntityType>
+        <EntityType Name="ck_wastage_reasons">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="description" Type="nvarchar" MaxLength="150" />
           <Property Name="active" Type="bit" />
         </EntityType>
         <EntityType Name="ckwh_category">
@@ -531,6 +540,19 @@
           <Property Name="modified_by" Type="int" />
           <Property Name="modified_date" Type="datetime" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="wh_cost_change_history">
+          <Property Name="ITEMNMBR" Type="varchar" MaxLength="31" />
+          <Property Name="WH_ITEM_CODE" Type="nvarchar" MaxLength="50" />
+          <Property Name="ORD" Type="int" />
+          <Property Name="PREVCOST" Type="numeric" Precision="19" Scale="5" />
+          <Property Name="PRESENTCOST" Type="numeric" Precision="19" Scale="5" />
+          <Property Name="CHANGEDATE_I" Type="datetime" />
+          <Property Name="TIME1" Type="datetime" />
+          <Property Name="CHANGEBY_I" Type="varchar" MaxLength="15" />
+          <Property Name="DEX_ROW_ID" Type="int" />
+        </EntityType>-->
         <EntityType Name="wh_delivery_details">
           <Key>
             <PropertyRef Name="Id" />
@@ -1120,6 +1142,18 @@
             </Principal>
             <Dependent Role="ck_wastage_details">
               <PropertyRef Name="wastage_master_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ck_wastage_details_ck_wastage_reasons">
+          <End Role="ck_wastage_reasons" Type="Self.ck_wastage_reasons" Multiplicity="0..1" />
+          <End Role="ck_wastage_details" Type="Self.ck_wastage_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ck_wastage_reasons">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ck_wastage_details">
+              <PropertyRef Name="ck_wastage_reason_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1936,6 +1970,7 @@
           <EntitySet Name="ck_users" EntityType="Self.ck_users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ck_wastage_details" EntityType="Self.ck_wastage_details" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ck_wastage_master" EntityType="Self.ck_wastage_master" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ck_wastage_reasons" EntityType="Self.ck_wastage_reasons" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ckwh_category" EntityType="Self.ckwh_category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ckwh_item_unit" EntityType="Self.ckwh_item_unit" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ckwh_items" EntityType="Self.ckwh_items" Schema="dbo" store:Type="Tables" />
@@ -2129,6 +2164,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_ck_wastage_details_ck_wastage_details" Association="Self.FK_ck_wastage_details_ck_wastage_details">
             <End Role="ck_wastage_master" EntitySet="ck_wastage_master" />
+            <End Role="ck_wastage_details" EntitySet="ck_wastage_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ck_wastage_details_ck_wastage_reasons" Association="Self.FK_ck_wastage_details_ck_wastage_reasons">
+            <End Role="ck_wastage_reasons" EntitySet="ck_wastage_reasons" />
             <End Role="ck_wastage_details" EntitySet="ck_wastage_details" />
           </AssociationSet>
           <AssociationSet Name="FK_ck_wastage_master_ck_users_created" Association="Self.FK_ck_wastage_master_ck_users_created">
@@ -2883,6 +2922,11 @@
           <AssociationSet Name="FK_wh_delivery_details_wh_item_unit" Association="dipckModel.FK_wh_delivery_details_wh_item_unit">
             <End Role="wh_item_unit" EntitySet="wh_item_unit" />
             <End Role="wh_delivery_details" EntitySet="wh_delivery_details" />
+          </AssociationSet>
+          <EntitySet Name="ck_wastage_reasons" EntityType="dipckModel.ck_wastage_reasons" />
+          <AssociationSet Name="FK_ck_wastage_details_ck_wastage_reasons" Association="dipckModel.FK_ck_wastage_details_ck_wastage_reasons">
+            <End Role="ck_wastage_reasons" EntitySet="ck_wastage_reasons" />
+            <End Role="ck_wastage_details" EntitySet="ck_wastage_details" />
           </AssociationSet>
           </EntityContainer>
         <ComplexType Name="ReadWarehouseItems_Result">
@@ -4168,6 +4212,8 @@
           <Property Name="ck_item_desc" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="ck_item_unit_cost" Type="Decimal" Precision="20" Scale="12" />
           <Property Name="ck_item_total_cost" Type="Decimal" Precision="20" Scale="12" />
+          <Property Name="ck_wastage_reason_id" Type="Int32" />
+          <NavigationProperty Name="ck_wastage_reasons" Relationship="dipckModel.FK_ck_wastage_details_ck_wastage_reasons" FromRole="ck_wastage_details" ToRole="ck_wastage_reasons" />
         </EntityType>
         <Association Name="FK_ck_wastage_details_ck_users_created">
           <End Type="dipckModel.ck_users" Role="ck_users" Multiplicity="0..1" />
@@ -5052,6 +5098,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="ck_wastage_reasons">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="description" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="active" Type="Boolean" />
+          <NavigationProperty Name="ck_wastage_details" Relationship="dipckModel.FK_ck_wastage_details_ck_wastage_reasons" FromRole="ck_wastage_reasons" ToRole="ck_wastage_details" />
+        </EntityType>
+        <Association Name="FK_ck_wastage_details_ck_wastage_reasons">
+          <End Type="dipckModel.ck_wastage_reasons" Role="ck_wastage_reasons" Multiplicity="0..1" />
+          <End Type="dipckModel.ck_wastage_details" Role="ck_wastage_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ck_wastage_reasons">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ck_wastage_details">
+              <PropertyRef Name="ck_wastage_reason_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5444,6 +5511,7 @@
           <EntitySetMapping Name="ck_wastage_details">
             <EntityTypeMapping TypeName="dipckModel.ck_wastage_details">
               <MappingFragment StoreEntitySet="ck_wastage_details">
+                <ScalarProperty Name="ck_wastage_reason_id" ColumnName="ck_wastage_reason_id" />
                 <ScalarProperty Name="ck_item_total_cost" ColumnName="ck_item_total_cost" />
                 <ScalarProperty Name="ck_item_unit_cost" ColumnName="ck_item_unit_cost" />
                 <ScalarProperty Name="ck_item_desc" ColumnName="ck_item_desc" />
@@ -5709,6 +5777,15 @@
                 <ScalarProperty Name="order_date" ColumnName="order_date" />
                 <ScalarProperty Name="order_no" ColumnName="order_no" />
                 <ScalarProperty Name="order_id" ColumnName="order_id" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ck_wastage_reasons">
+            <EntityTypeMapping TypeName="dipckModel.ck_wastage_reasons">
+              <MappingFragment StoreEntitySet="ck_wastage_reasons">
+                <ScalarProperty Name="active" ColumnName="active" />
+                <ScalarProperty Name="description" ColumnName="description" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

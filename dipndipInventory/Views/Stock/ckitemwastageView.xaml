@@ -9,7 +9,7 @@
         Header="Cental Kitchen Item Wastage" Height="700" Width="1024" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="30"/>
             <RowDefinition Height="350*"/>
             <!--<RowDefinition Height="150"/>-->
             <RowDefinition Height="50"/>
@@ -48,14 +48,15 @@
                     <!--<telerik:GridViewComboBoxColumn x:Name="cmbCKUnit" Header="CK Unit" Width="*"></telerik:GridViewComboBoxColumn>-->
 
 
-
                     <!--<telerik:GridViewDataColumn x:Name="QuantityOnHand" DataMemberBinding="{Binding qty_on_hand}" Width="*" Header="Quantity On Hand" IsReadOnly="True"/>-->
                     <telerik:GridViewDataColumn x:Name="QuantityOnHand" DataMemberBinding="{Binding qtyonHand, StringFormat=N3}" Width="*" Header="Quantity On Hand" IsReadOnly="True" TextAlignment="Right"/>
                     <!--<telerik:GridViewDataColumn x:Name="IssuedQuantity" DataMemberBinding="{Binding qty_issued}" Width="*" Header="Issued Quantity" />-->
-                    <telerik:GridViewDataColumn x:Name="IssuedQuantity" DataMemberBinding="{Binding qtyIssued, StringFormat=N3}" Width="*" Header="Issued Quantity" TextAlignment="Right"/>
-
+                    <telerik:GridViewDataColumn x:Name="IssuedQuantity" DataMemberBinding="{Binding qtyIssued, StringFormat=N3}" Width="*" Header="Wastage Quantity" TextAlignment="Right"/>
+                    <telerik:GridViewDataColumn x:Name="ReasonDesc" DataMemberBinding="{Binding ck_wastage_reason_desc}" Width="*" Header="Reason" IsReadOnly="True"/>
+                    
                     <telerik:GridViewDataColumn x:Name="ItemId" DataMemberBinding="{Binding ck_item_id}" Width="*" Header="Item Id" IsVisible="False"/>
                     <telerik:GridViewDataColumn x:Name="UnitId" DataMemberBinding="{Binding ck_unit_id}" Width="*" Header="Unit Id" IsVisible="False"/>
+                    <telerik:GridViewDataColumn x:Name="ReasonId" DataMemberBinding="{Binding ck_wastage_reason_id}" Width="*" Header="Wastage Reason Id" IsVisible="False"/>
                     <telerik:GridViewDataColumn x:Name="UnitCost" DataMemberBinding="{Binding unit_cost}" Width="*" Header="Unit Cost" IsVisible="False"/>
                     <telerik:GridViewDataColumn x:Name="TotalCost" DataMemberBinding="{Binding total_cost}" Width="*" Header="Total Cost" IsVisible="False"/>
                     <telerik:GridViewDataColumn x:Name="RowIndex" DataMemberBinding="{Binding row_index}" Width="*" Header="Row Index" IsVisible="False"/>

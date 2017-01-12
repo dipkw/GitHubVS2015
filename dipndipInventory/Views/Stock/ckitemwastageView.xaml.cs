@@ -236,7 +236,7 @@ namespace dipndipInventory.Views.Stock
             UpdateAllList();
             //update ck_issue_details.ck_issue_master_id in DataService
             CKWastageService cwscontext = new CKWastageService();
-
+            UpdateReasons();
             result = cwscontext.SaveCKWastage(g_ck_items_update_list, g_ck_prod_update_list, g_ck_wastage_master, g_ck_issue_details, g_ck_stock_trans_list, GlobalVariables.ActiveUser.Id) > 0 ? "CK Branch Item Wastage Saved Successfully" : "Unable to Save CK Branch Item Wastage";
             MessageBox.Show(result);
             //Clear All List after Save
@@ -262,7 +262,27 @@ namespace dipndipInventory.Views.Stock
                 txtIssueCode.Value = issue_code;
             }
         }
+        private void UpdateReasons()
+        {
+            var rows = this.dgCKIssueDetails.ChildrenOfType<GridViewRow>();
+            int indx = 0;
+            foreach (var row in rows)
+            {
+                try
+                {
+                    if (row is GridViewNewRow)
+                        continue;
 
+                    CKIssueViewModel objCKIssueVM = row.Item as CKIssueViewModel;
+                    if (objCKIssueVM.ck_wastage_reason_id > 0)
+                    {
+                        g_ck_issue_details[indx].ck_wastage_reason_id = objCKIssueVM.ck_wastage_reason_id;
+                        indx++;
+                    }
+                }
+                catch { }
+            }
+        }
         private void UpdateAllList()
         {
             foreach (CKIssueViewModel ck_issue_vm in g_ck_item_issue_list)

@@ -268,6 +268,9 @@
     <Compile Include="Views\Misc\inFlowProgressView.xaml.cs">
       <DependentUpon>inFlowProgressView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Reports\CKRecipeReportView.xaml.cs">
+      <DependentUpon>CKRecipeReportView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Reports\CKWastageReportView.xaml.cs">
       <DependentUpon>CKWastageReportView.xaml</DependentUpon>
     </Compile>
@@ -426,6 +429,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Misc\inFlowProgressView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Reports\CKRecipeReportView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

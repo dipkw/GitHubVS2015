@@ -32,7 +32,7 @@ namespace dipndipInventory.EF.DataServices
             try
             {
                 _context = new CKEntities();
-                IEnumerable<ck_items> objCKItems = (from ckitems in _context.ck_items orderby ckitems.Id ascending select ckitems);
+                IEnumerable<ck_items> objCKItems = (from ckitems in _context.ck_items where ckitems.active == true orderby ckitems.Id ascending select ckitems);
                 return objCKItems;
             }
             catch

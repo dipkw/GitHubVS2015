@@ -128,6 +128,9 @@
     <Compile Include="ck_wastage_master.cs">
       <DependentUpon>CKModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ck_wastage_reasons.cs">
+      <DependentUpon>CKModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="control_table.cs">
       <DependentUpon>CKModel.tt</DependentUpon>
     </Compile>

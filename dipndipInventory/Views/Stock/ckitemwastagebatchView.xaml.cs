@@ -53,8 +53,19 @@ namespace dipndipInventory.Views.Stock
             g_ck_wastage_details = ckwastage_details;
 
             FillUnits(g_ck_issue_vm.itemId);
+            FillActiveReasons();
             UpdateConvFactor();
             FillAllBatchItems(g_ck_issue_vm.itemCode);
+        }
+
+        private void FillActiveReasons()
+        {
+            CKWastageService _wcontext = new CKWastageService();
+            //IEnumerable<site> activeSites = _scontext.ReadAllActiveSitesWOActiveSite(GlobalVariables.ActiveSite.Id);
+            IEnumerable<ck_wastage_reasons> activeReasons = _wcontext.GetActiveCKWastageReasons();
+            cmbReason.DisplayMemberPath = "description";
+            cmbReason.SelectedValuePath = "Id";
+            cmbReason.ItemsSource = activeReasons.ToList();
         }
 
         private void FillUnits(int itemId)
@@ -121,6 +132,13 @@ namespace dipndipInventory.Views.Stock
             var rows = this.dgCKIssueDetails.ChildrenOfType<GridViewRow>();
             int result = 0;
             decimal total_qty_issued = 0.000m;
+
+            if(cmbReason.SelectedIndex == -1)
+            {
+                MessageBox.Show("Please select a reason");
+                return;
+            }
+
             CKOrderService _ocontext = new CKOrderService();
             foreach (var row in rows)
             {
@@ -200,6 +218,10 @@ namespace dipndipInventory.Views.Stock
                 item_conv_factor = (decimal)cucontext.GetConversionFactor(Convert.ToInt32(cmbUnit.SelectedValue.ToString()));
                 g_ck_item_issue_list[g_ck_issue_vm.rowIndex].unit_cost = ck_item_unit_cost * item_conv_factor;
                 g_ck_item_issue_list[g_ck_issue_vm.rowIndex].total_cost = g_ck_item_issue_list[g_ck_issue_vm.rowIndex].unit_cost * g_ck_item_issue_list[g_ck_issue_vm.rowIndex].qtyIssued;
+
+                g_ck_item_issue_list[g_ck_issue_vm.rowIndex].ck_wastage_reason_id = Convert.ToInt32(cmbReason.SelectedValue.ToString());
+                g_ck_item_issue_list[g_ck_issue_vm.rowIndex].ck_wastage_reason_desc = cmbReason.Text;
+
                 g_ck_item_issue_view.dgCKIssueDetails.ItemsSource = g_ck_item_issue_list;
                 g_ck_item_issue_view.dgCKIssueDetails.CommitEdit();
                 g_ck_item_issue_view.dgCKIssueDetails.Rebind();

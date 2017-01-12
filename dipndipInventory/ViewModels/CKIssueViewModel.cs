@@ -26,6 +26,8 @@ namespace dipndipInventory.ViewModels
         public decimal prodItemCost { get; set; }
         public int rowIndex { get; set; }
         public List<ckUnitVM> ckunitVM { get; set; }
+        public int ck_wastage_reason_id { get; set; }
+        public string ck_wastage_reason_desc { get; set; }
 
     }
     public class ckUnitVM

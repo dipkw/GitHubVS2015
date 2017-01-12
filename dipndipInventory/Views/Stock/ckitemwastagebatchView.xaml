@@ -18,6 +18,12 @@
             <ColumnDefinition Width="500"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
+        <StackPanel Grid.Row="0" Grid.Column="1" Visibility="Visible">
+            <!--<telerik:Label Content="Total Qty" Height="25" Width="83"/>
+            <telerik:RadMaskedNumericInput Name="txtTotalIssuedQty" Width="150" Margin="3" TabIndex="0" Placeholder="_" TextMode="MaskedText" Mask="" InputBehavior="Insert" AcceptsReturn="False" IsReadOnly="True" IsEnabled="False" FontSize="16"/>-->
+            <telerik:Label Content="Reason" Height="25" Width="83"/>
+            <telerik:RadComboBox Name="cmbReason" Width="150" Margin="3" TabIndex="0"/>
+        </StackPanel>
         <StackPanel Grid.Row="0" HorizontalAlignment="Right" Grid.Column="2" Visibility="Visible">
             <!--<telerik:Label Content="Total Qty" Height="25" Width="83"/>
             <telerik:RadMaskedNumericInput Name="txtTotalIssuedQty" Width="150" Margin="3" TabIndex="0" Placeholder="_" TextMode="MaskedText" Mask="" InputBehavior="Insert" AcceptsReturn="False" IsReadOnly="True" IsEnabled="False" FontSize="16"/>-->

@@ -378,5 +378,10 @@ namespace dipndipInventory.Views
             WHReceiptsReport wrv = new WHReceiptsReport();
             wrv.Show();
         }
+
+        private void CKRecipeReport_Click(object sender, RoutedEventArgs e)
+        {
+            CKRecipeReportView crv = new CKRecipeReportView();
+        }
     }
 }
