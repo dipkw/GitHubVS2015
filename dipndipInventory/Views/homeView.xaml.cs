@@ -382,6 +382,7 @@ namespace dipndipInventory.Views
         private void CKRecipeReport_Click(object sender, RoutedEventArgs e)
         {
             CKRecipeReportView crv = new CKRecipeReportView();
+            crv.Show();
         }
     }
 }
