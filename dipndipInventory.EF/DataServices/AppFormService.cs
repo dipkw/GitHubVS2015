@@ -53,7 +53,8 @@ namespace dipndipInventory.EF.DataServices
             {
                 _context = new CKEntities();
                 app_forms app_form_to_update = (from app_form in _context.app_forms orderby app_form.form_desc ascending where app_form.form_id == form_id select app_form).FirstOrDefault();
-                app_form_to_update.locked = lock_status;
+                //app_form_to_update.locked = lock_status;
+                app_form_to_update.locked = false;
                 _context.SaveChanges();
                 _context.Dispose();
                 return 1;
