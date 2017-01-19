@@ -122,6 +122,8 @@
       ,itd.[ck_item_id]
 	  ,ci.ck_item_code
 	  ,ci.ck_item_description
+	  ,ci.ck_design_qty
+	  ,cu1.unit_description yunit
       ,itd.[ckwh_item_id]
 	  ,wi.wh_item_code
 	  ,wi.wh_item_description
@@ -140,6 +142,7 @@
   INNER JOIN ckwh_items wi ON itd.ckwh_item_id = wi.Id
   INNER JOIN wh_item_unit wu ON itd.ckwh_item_unit_id = wu.Id
   INNER JOIN ck_units cu ON wu.ck_unit_id = cu.Id
+  INNER JOIN ck_units cu1 ON ci.ck_unit_id = cu1.Id
   ORDER BY itd.ck_item_id</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
