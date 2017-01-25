@@ -361,13 +361,18 @@ namespace dipndipInventory.Views.Stock
                 OrderDetailsViewModel odvm = (dgCKOrderDetails.SelectedItem) as OrderDetailsViewModel;
 
                 OrderDetailsList.RemoveAt(((int)odvm.rowIndex) - 1);
-
+                for(int i = 1; i <= OrderDetailsList.Count; i++)
+                {
+                    OrderDetailsList[i-1].rowIndex = i;
+                }
                 dgCKOrderDetails.ItemsSource = null;
                 dgCKOrderDetails.ItemsSource = OrderDetailsList;
                 btnSave.IsEnabled = true;
                 ClearItem();
             }
-            catch { }
+            catch (System.Exception ex)
+            {
+            }
         }
 
         private void dgCKOrderDetails_SelectionChanged(object sender, SelectionChangeEventArgs e)

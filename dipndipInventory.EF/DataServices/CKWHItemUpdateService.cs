@@ -29,6 +29,7 @@ namespace dipndipInventory.EF.DataServices
                 IEnumerable<VW_Item_QTY> gp_new_items = (from gpitem in _gpcontext.VW_Item_QTY where gpitem.CREATDDT >= last_update orderby gpitem.ITEMNMBR descending select gpitem);
                 IEnumerable<VW_Item_QTY> gp_modified_items = (from gpitem in _gpcontext.VW_Item_QTY where gpitem.MODIFDT >= last_update orderby gpitem.ITEMNMBR descending select gpitem);
 
+
                 foreach (VW_Item_QTY gp_item in gp_new_items)
                 {
                     ckwh_items objNewWHItems = (from whitem in _ckcontext.ckwh_items where whitem.wh_item_code == gp_item.ITEMNMBR select whitem).SingleOrDefault();
@@ -41,6 +42,7 @@ namespace dipndipInventory.EF.DataServices
                         new_ckwh_item.wh_unit_description = gp_item.UOMSCHDL;
                         new_ckwh_item.quantity = gp_item.QTYAVBLE;
                         new_ckwh_item.unit_cost = gp_item.CURRCOST;
+                        new_ckwh_item.ck_avg_unit_cost = gp_item.CURRCOST;
                         new_ckwh_item.created_by = user_id;
                         new_ckwh_item.created_date = DateTime.Now;
                         _ckcontext.ckwh_items.Add(new_ckwh_item);
@@ -110,6 +112,7 @@ namespace dipndipInventory.EF.DataServices
                         new_ckwh_item.wh_unit_description = gp_item.UOMSCHDL;
                         new_ckwh_item.quantity = gp_item.QTYAVBLE;
                         new_ckwh_item.unit_cost = gp_item.CURRCOST;
+                        new_ckwh_item.ck_avg_unit_cost = gp_item.CURRCOST;
                         new_ckwh_item.created_by = user_id;
                         new_ckwh_item.created_date = DateTime.Now;
                         _ckcontext.ckwh_items.Add(new_ckwh_item);
@@ -135,6 +138,7 @@ namespace dipndipInventory.EF.DataServices
                         objWHItemToUpdate.wh_unit_description = gp_item.UOMSCHDL;
                         objWHItemToUpdate.quantity = gp_item.QTYAVBLE;
                         objWHItemToUpdate.unit_cost = gp_item.CURRCOST;
+                        objWHItemToUpdate.ck_avg_unit_cost = gp_item.CURRCOST;
                         objWHItemToUpdate.modified_by = user_id;
                         objWHItemToUpdate.modified_date = DateTime.Now;
 
