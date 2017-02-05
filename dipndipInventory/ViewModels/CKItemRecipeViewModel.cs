@@ -14,6 +14,7 @@ namespace dipndipInventory.ViewModels
         public decimal quantity { get; set; }
         public int wh_item_unit_id { get; set; }
         public string uom { get; set; }
+        public decimal yield_cost { get; set; }
         public decimal unit_cost { get; set; }
     }
 }
