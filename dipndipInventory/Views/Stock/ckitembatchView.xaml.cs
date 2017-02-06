@@ -298,7 +298,8 @@ namespace dipndipInventory.Views.Stock
                 try
                 {
                     UpdateConvFactor();
-                    ck_item_batch_vm.rem_qty = ck_item_batch_vm.bal_qty / g_conv_factor;
+                    //ck_item_batch_vm.rem_qty = ck_item_batch_vm.bal_qty / g_conv_factor;
+                    ck_item_batch_vm.rem_qty = ck_item_batch_vm.bal_qty * g_conv_factor;
                     g_ck_item_batches[ck_item_batch_vm.row_id].bal_qty = ck_item_batch_vm.bal_qty;
                     ck_item_batch_vm.ck_unit_cost = ck_item_batch_vm.tmp_ck_unit_cost * g_conv_factor;
                     g_ck_item_batches[ck_item_batch_vm.row_id].tmp_ck_unit_cost = ck_item_batch_vm.tmp_ck_unit_cost;
