@@ -38,6 +38,7 @@ namespace dipndipInventory.Views.Stock
 
         decimal g_n_qty_on_hand = 0.000m;
         decimal g_n_qty_issued = 0.000m;
+        decimal g_unit_conv_factor = 0.002857143m;
         public ckitembatchView()
         {
             InitializeComponent();
@@ -217,7 +218,8 @@ namespace dipndipInventory.Views.Stock
                 ck_item_unit_cost = cscontext.GetCurrentCKItemCost(g_ck_issue_vm.itemId);
                 CKItemUnitService cucontext = new CKItemUnitService();
                 item_conv_factor = (decimal)cucontext.GetConversionFactor(Convert.ToInt32(cmbUnit.SelectedValue.ToString()));
-                g_ck_item_issue_list[g_ck_issue_vm.rowIndex].unit_cost = ck_item_unit_cost * item_conv_factor;
+                //g_ck_item_issue_list[g_ck_issue_vm.rowIndex].unit_cost = ck_item_unit_cost * item_conv_factor;
+                g_ck_item_issue_list[g_ck_issue_vm.rowIndex].unit_cost = ck_item_unit_cost;
                 g_ck_item_issue_list[g_ck_issue_vm.rowIndex].total_cost = g_ck_item_issue_list[g_ck_issue_vm.rowIndex].unit_cost * g_ck_item_issue_list[g_ck_issue_vm.rowIndex].qtyIssued;
                 g_ck_item_issue_view.dgCKIssueDetails.ItemsSource = g_ck_item_issue_list;
                 g_ck_item_issue_view.dgCKIssueDetails.CommitEdit();
@@ -298,8 +300,9 @@ namespace dipndipInventory.Views.Stock
                 try
                 {
                     UpdateConvFactor();
-                    //ck_item_batch_vm.rem_qty = ck_item_batch_vm.bal_qty / g_conv_factor;
-                    ck_item_batch_vm.rem_qty = ck_item_batch_vm.bal_qty * g_conv_factor;
+                    ck_item_batch_vm.rem_qty = ck_item_batch_vm.bal_qty / g_conv_factor;
+                    //ck_item_batch_vm.rem_qty = ck_item_batch_vm.bal_qty * g_conv_factor;
+                    //ck_item_batch_vm.rem_qty = ck_item_batch_vm.bal_qty * g_unit_conv_factor;
                     g_ck_item_batches[ck_item_batch_vm.row_id].bal_qty = ck_item_batch_vm.bal_qty;
                     ck_item_batch_vm.ck_unit_cost = ck_item_batch_vm.tmp_ck_unit_cost * g_conv_factor;
                     g_ck_item_batches[ck_item_batch_vm.row_id].tmp_ck_unit_cost = ck_item_batch_vm.tmp_ck_unit_cost;

@@ -348,8 +348,8 @@ namespace dipndipInventory.Views.Stock
             //DateTime curr_date = DateTime.Now.Date;
             DateTime curr_date = (DateTime)dtpProductionDate.SelectedDate;
             //string batch_no = tmpItemCode[0] + tmpItemCode[1] + DateTime.Today.Date.ToString("dd") + DateTime.Today.Month + DateTime.Now.Date.ToString("yy");
-            string batch_no = tmpItemCode[0] + tmpItemCode[1] + curr_date.Date.ToString("dd") + curr_date.Month + curr_date.ToString("yy");
-
+            string tm = DateTime.Now.ToString("hhmm");
+            string batch_no = tmpItemCode[0] + tmpItemCode[1] + curr_date.Date.ToString("dd") + curr_date.Month + curr_date.ToString("yy") + tm;
             return batch_no;
         }
 
