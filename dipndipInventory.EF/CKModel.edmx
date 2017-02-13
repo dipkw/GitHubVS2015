@@ -286,7 +286,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="description" Type="nvarchar" MaxLength="150" />
+          <Property Name="description" Type="nvarchar" MaxLength="50" />
           <Property Name="active" Type="bit" />
         </EntityType>
         <EntityType Name="ckwh_category">
@@ -336,6 +336,7 @@
           <Property Name="created_date" Type="datetime" />
           <Property Name="modified_by" Type="int" />
           <Property Name="modified_date" Type="datetime" />
+          <Property Name="inactive" Type="bit" />
         </EntityType>
         <EntityType Name="ckwh_items_adj">
           <Key>
@@ -3116,6 +3117,7 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
           <NavigationProperty Name="wh_item_unit" Relationship="dipckModel.FK_wh_item_unit_wh_item_unit1" FromRole="ckwh_items" ToRole="wh_item_unit" />
           <NavigationProperty Name="ckwh_items_log" Relationship="dipckModel.FK_ckwh_items_log_ckwh_items" FromRole="ckwh_items" ToRole="ckwh_items_log" />
           <NavigationProperty Name="wh_delivery_details" Relationship="dipckModel.FK_wh_delivery_details_ckwh_items" FromRole="ckwh_items" ToRole="wh_delivery_details" />
+          <Property Name="inactive" Type="Boolean" />
         </EntityType>
         <EntityType Name="site">
           <Key>
@@ -5103,7 +5105,7 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="description" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="active" Type="Boolean" />
           <NavigationProperty Name="ck_wastage_details" Relationship="dipckModel.FK_ck_wastage_details_ck_wastage_reasons" FromRole="ck_wastage_reasons" ToRole="ck_wastage_details" />
         </EntityType>
@@ -5220,6 +5222,7 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
           <EntitySetMapping Name="ckwh_items">
             <EntityTypeMapping TypeName="dipckModel.ckwh_items">
               <MappingFragment StoreEntitySet="ckwh_items">
+                <ScalarProperty Name="inactive" ColumnName="inactive" />
                 <ScalarProperty Name="ck_avg_unit_cost" ColumnName="ck_avg_unit_cost" />
                 <ScalarProperty Name="ck_qty" ColumnName="ck_qty" />
                 <ScalarProperty Name="modified_date" ColumnName="modified_date" />

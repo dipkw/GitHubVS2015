@@ -30,6 +30,7 @@ warning 6002: The table/view 'DIPKW.dbo.VW_Item_QTY' does not have a primary key
             <PropertyRef Name="UOMSCHDL" />
             <PropertyRef Name="CREATDDT" />
             <PropertyRef Name="MODIFDT" />
+            <PropertyRef Name="INACTIVE" />
           </Key>
           <Property Name="ITEMNMBR" Type="char" MaxLength="31" Nullable="false" />
           <Property Name="ITEMDESC" Type="char" MaxLength="101" Nullable="false" />
@@ -44,6 +45,7 @@ warning 6002: The table/view 'DIPKW.dbo.VW_Item_QTY' does not have a primary key
           <Property Name="UOMSCHDL" Type="char" MaxLength="11" Nullable="false" />
           <Property Name="CREATDDT" Type="datetime" Nullable="false" />
           <Property Name="MODIFDT" Type="datetime" Nullable="false" />
+          <Property Name="INACTIVE" Type="tinyint" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6013: The table/view 'DIPKW.dbo.VW_Monthly_Sales_Branch' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
@@ -67,7 +69,8 @@ warning 6013: The table/view 'DIPKW.dbo.VW_Monthly_Sales_Branch' does not have a
     [VW_Item_QTY].[QTYAVBLE] AS [QTYAVBLE], 
     [VW_Item_QTY].[UOMSCHDL] AS [UOMSCHDL], 
     [VW_Item_QTY].[CREATDDT] AS [CREATDDT], 
-    [VW_Item_QTY].[MODIFDT] AS [MODIFDT]
+    [VW_Item_QTY].[MODIFDT] AS [MODIFDT], 
+    [VW_Item_QTY].[INACTIVE] AS [INACTIVE]
     FROM [dbo].[VW_Item_QTY] AS [VW_Item_QTY]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
@@ -89,6 +92,7 @@ warning 6013: The table/view 'DIPKW.dbo.VW_Monthly_Sales_Branch' does not have a
             <PropertyRef Name="UOMSCHDL" />
             <PropertyRef Name="CREATDDT" />
             <PropertyRef Name="MODIFDT" />
+            <PropertyRef Name="INACTIVE" />
           </Key>
           <Property Name="ITEMNMBR" Type="String" MaxLength="31" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="ITEMDESC" Type="String" MaxLength="101" FixedLength="true" Unicode="false" Nullable="false" />
@@ -103,6 +107,7 @@ warning 6013: The table/view 'DIPKW.dbo.VW_Monthly_Sales_Branch' does not have a
           <Property Name="UOMSCHDL" Type="String" MaxLength="11" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="CREATDDT" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="MODIFDT" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="INACTIVE" Type="Byte" Nullable="false" />
         </EntityType>
         <EntityContainer Name="DIPKWEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="VW_Item_QTY" EntityType="Self.VW_Item_QTY" />
@@ -116,6 +121,7 @@ warning 6013: The table/view 'DIPKW.dbo.VW_Monthly_Sales_Branch' does not have a
           <EntitySetMapping Name="VW_Item_QTY">
             <EntityTypeMapping TypeName="DIPKWModel.VW_Item_QTY">
               <MappingFragment StoreEntitySet="VW_Item_QTY">
+                <ScalarProperty Name="INACTIVE" ColumnName="INACTIVE" />
                 <ScalarProperty Name="MODIFDT" ColumnName="MODIFDT" />
                 <ScalarProperty Name="CREATDDT" ColumnName="CREATDDT" />
                 <ScalarProperty Name="ITEMNMBR" ColumnName="ITEMNMBR" />

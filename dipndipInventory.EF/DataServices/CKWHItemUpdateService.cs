@@ -24,7 +24,8 @@ namespace dipndipInventory.EF.DataServices
 
                 control_table ctbl = (from ctable in _ckcontext.control_table where ctable.SourceTable == "ckwh_items" select ctable).FirstOrDefault();
 
-                DateTime last_update = ctbl.LastLoadDate;
+                //DateTime last_update = ctbl.LastLoadDate;
+                DateTime last_update = ctbl.LastLoadDate.Date;
 
                 IEnumerable<VW_Item_QTY> gp_new_items = (from gpitem in _gpcontext.VW_Item_QTY where gpitem.CREATDDT >= last_update orderby gpitem.ITEMNMBR descending select gpitem);
                 IEnumerable<VW_Item_QTY> gp_modified_items = (from gpitem in _gpcontext.VW_Item_QTY where gpitem.MODIFDT >= last_update orderby gpitem.ITEMNMBR descending select gpitem);
@@ -45,6 +46,14 @@ namespace dipndipInventory.EF.DataServices
                         new_ckwh_item.ck_avg_unit_cost = gp_item.CURRCOST;
                         new_ckwh_item.created_by = user_id;
                         new_ckwh_item.created_date = DateTime.Now;
+                        if(gp_item.INACTIVE==0)
+                        {
+                            new_ckwh_item.inactive = false;
+                        }
+                        else
+                        {
+                            new_ckwh_item.inactive = true;
+                        }
                         _ckcontext.ckwh_items.Add(new_ckwh_item);
 
                         ckwh_items_log new_ckwh_item_log = new ckwh_items_log();
@@ -64,6 +73,10 @@ namespace dipndipInventory.EF.DataServices
 
                 foreach (VW_Item_QTY gp_item in gp_modified_items)
                 {
+                    if(gp_item.ITEMNMBR.Trim().Equals("GEN143"))
+                    {
+                        MessageBox.Show(gp_item.ITEMDESC);
+                    }
                     ckwh_items objWHItemToUpdate = (from whitem in _ckcontext.ckwh_items where whitem.wh_item_code == gp_item.ITEMNMBR select whitem).SingleOrDefault();
                     objWHItemToUpdate.wh_item_description = gp_item.ITEMDESC;
                     objWHItemToUpdate.wh_category_description = gp_item.ITMCLSCD;
@@ -72,6 +85,14 @@ namespace dipndipInventory.EF.DataServices
                     objWHItemToUpdate.unit_cost = gp_item.CURRCOST;
                     objWHItemToUpdate.modified_by = user_id;
                     objWHItemToUpdate.modified_date = DateTime.Now;
+                    if (gp_item.INACTIVE == 0)
+                    {
+                        objWHItemToUpdate.inactive = false;
+                    }
+                    else
+                    {
+                        objWHItemToUpdate.inactive = true;
+                    }
                     _ckcontext.SaveChanges();
                 }
                 ctbl.LastLoadDate = DateTime.Now;

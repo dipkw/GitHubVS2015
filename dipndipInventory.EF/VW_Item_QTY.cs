@@ -27,5 +27,6 @@ namespace dipndipInventory.EF
         public string UOMSCHDL { get; set; }
         public System.DateTime CREATDDT { get; set; }
         public System.DateTime MODIFDT { get; set; }
+        public byte INACTIVE { get; set; }
     }
 }

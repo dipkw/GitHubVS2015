@@ -46,6 +46,7 @@ namespace dipndipInventory.EF
         public Nullable<System.DateTime> modified_date { get; set; }
         public Nullable<decimal> ck_qty { get; set; }
         public Nullable<decimal> ck_avg_unit_cost { get; set; }
+        public Nullable<bool> inactive { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ck_item_details> ck_item_details { get; set; }
