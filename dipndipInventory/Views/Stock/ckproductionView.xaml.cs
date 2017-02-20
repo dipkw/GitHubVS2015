@@ -266,6 +266,90 @@ namespace dipndipInventory.Views.Stock
             int result = 0;
             CKOrderService _ocontext = new CKOrderService();
             production_list.Clear();
+            List<decimal> order_qty = new List<decimal>();
+            for(int i=0;i<=27; i++)
+            {
+                var cell = new GridViewCellInfo(dgCKProduction.Items[i], dgCKProduction.Columns[5], dgCKProduction);
+                if (cell.Item != null)
+                {
+                    var props = cell.Item.GetType().GetProperties();
+                    foreach (var p in props)
+                    {
+                        if (p == null || cell.Item == null)
+                        {
+                            continue;
+                        }
+                        var t = p.GetValue(cell.Item);
+                        if(t==null)
+                        {
+                            continue;
+                        }
+                    }
+                    CKProductionViewModel objCKProductionViewModel = cell.Item as CKProductionViewModel;
+                    if (objCKProductionViewModel.prodQty > 0)
+                    {
+
+                        ck_prod objProduction = new ck_prod();
+                        objProduction.prod_code = txtProductionCode.Value;
+                        objProduction.prod_date = dtpProductionDate.SelectedDate;
+                        objProduction.exp_date = objCKProductionViewModel.expDate;
+                        objProduction.ck_item_id = objCKProductionViewModel.itemId;
+                        objProduction.ck_item_code = objCKProductionViewModel.itemCode;
+                        objProduction.ck_item_desc = objCKProductionViewModel.itemDescription;
+                        objProduction.batch_no = GetBatchNo(objCKProductionViewModel.itemCode);
+                        CKItemUnitService cuscontext = new CKItemUnitService();
+                        int ck_unit_id = (int)cuscontext.GetIdOfBaseUnit((int)objProduction.ck_item_id);
+                        objProduction.ck_item_unit_id = ck_unit_id;
+                        objProduction.conv_factor = 1.000m;
+                        objProduction.ck_item_unit_desc = objCKProductionViewModel.ckUnit;
+                        //objProduction.prod_qty = objCKProductionViewModel.prodQty;
+                        objProduction.prod_qty = objCKProductionViewModel.prodQty * objCKProductionViewModel.designQty;
+                        //objProduction.bal_qty = objCKProductionViewModel.prodQty;
+                        objProduction.bal_qty = objCKProductionViewModel.prodQty * objCKProductionViewModel.designQty;
+                        decimal cur_ck_item_prod_cost = GetCKItemProdCost(objCKProductionViewModel.itemId, objCKProductionViewModel.prodQty, objCKProductionViewModel.designQty);
+                        decimal cur_ck_item_cost = ((cur_ck_item_prod_cost / objCKProductionViewModel.prodQty) / objCKProductionViewModel.designQty);
+                        objProduction.unit_cost = GetCKItemAvgCost(objCKProductionViewModel.itemId, cur_ck_item_cost, objCKProductionViewModel.prodQty);
+                        objProduction.total_cost = (decimal)(objProduction.bal_qty * objProduction.unit_cost);
+                        //objProduction.total_cost = objCKProductionViewModel.prodQty * objProduction.unit_cost;
+                        objProduction.created_by = GlobalVariables.ActiveUser.Id;
+                        objProduction.created_date = DateTime.Now;
+                        objProduction.active = 1;
+                        production_list.Add(objProduction);
+
+                        ck_items objCKItem = new ck_items();
+                        CKItemService cicontext = new CKItemService();
+                        decimal? ck_item_current_qty = cicontext.GetCurrentCKItemQty(objCKProductionViewModel.itemId);
+                        if (ck_item_current_qty == null)
+                        {
+                            ck_item_current_qty = 0.000m;
+                        }
+                        objCKItem.Id = objCKProductionViewModel.itemId;
+                        objCKItem.ck_item_unit_cost = objProduction.unit_cost;
+                        //objCKItem.qty_on_hand = objCKProductionViewModel.prodQty + ck_item_current_qty;
+                        objCKItem.qty_on_hand = objProduction.prod_qty + ck_item_current_qty;
+                        ck_items_list.Add(objCKItem);
+
+                        objCKProductionViewModel.prodCode = txtProductionCode.Value;
+                        objCKProductionViewModel.batchNo = GetBatchNo(objCKProductionViewModel.itemCode);
+                        //objCKProductionViewModel.prodItemCost = GetCKItemProdCost(objCKProductionViewModel.itemId, objCKProductionViewModel.prodQty, objCKProductionViewModel.designQty);
+                        objCKProductionViewModel.prodItemCost = cur_ck_item_prod_cost;
+                        //MessageBox.Show(objCKProductionViewModel.itemCode + " " + objCKProductionViewModel.itemDescription + " " + objCKProductionViewModel.prodItemCost);
+                        ProductionVMList.Add(objCKProductionViewModel);
+
+
+
+                        //production_list.Clear();
+                    }
+
+                }
+            }
+        }
+        private void ReadProductionGrid1()
+        {
+            var rows = this.dgCKProduction.ChildrenOfType<GridViewRow>();
+            int result = 0;
+            CKOrderService _ocontext = new CKOrderService();
+            production_list.Clear();
             foreach (var row in rows)
             {
                 if (row is GridViewNewRow)
