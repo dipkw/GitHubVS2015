@@ -51,7 +51,8 @@ namespace dipndipInventory.Views.Stock
         {
             CKItemService _cicontext = new CKItemService();
 
-            IEnumerable<ck_items> objCKItems = _cicontext.ReadAllCKItems();
+            //IEnumerable<ck_items> objCKItems = _cicontext.ReadAllCKItems();
+            IEnumerable<ck_items> objCKItems = _cicontext.ReadAllActiveCKItems();
             List<CKProductionViewModel> objCKProductionViewModel = new List<CKProductionViewModel>();
 
             foreach (ck_items ckitem in objCKItems)
@@ -265,9 +266,19 @@ namespace dipndipInventory.Views.Stock
             var rows = this.dgCKProduction.ChildrenOfType<GridViewRow>();
             int result = 0;
             CKOrderService _ocontext = new CKOrderService();
+            int active_ck_items = 0;
+            try
+            {
+                CKItemService ckicontext = new CKItemService();
+                active_ck_items = ckicontext.CountAllActiveCKItems();
+            }
+            catch
+            {
+
+            }
             production_list.Clear();
             List<decimal> order_qty = new List<decimal>();
-            for(int i=0;i<=27; i++)
+            for(int i=0;i<=active_ck_items; i++)
             {
                 var cell = new GridViewCellInfo(dgCKProduction.Items[i], dgCKProduction.Columns[5], dgCKProduction);
                 if (cell.Item != null)

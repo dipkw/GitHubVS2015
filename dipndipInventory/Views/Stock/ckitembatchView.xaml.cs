@@ -39,6 +39,9 @@ namespace dipndipInventory.Views.Stock
         decimal g_n_qty_on_hand = 0.000m;
         decimal g_n_qty_issued = 0.000m;
         decimal g_unit_conv_factor = 0.002857143m;
+
+        int batch_count = 0;
+
         public ckitembatchView()
         {
             InitializeComponent();
@@ -115,6 +118,7 @@ namespace dipndipInventory.Views.Stock
                 }
 
                 dgCKIssueDetails.ItemsSource = g_ck_item_batches;
+                batch_count = g_ck_item_batches.Count();
             }
             catch { }
         }
@@ -137,6 +141,131 @@ namespace dipndipInventory.Views.Stock
             //    return;
             //}
 
+            ///foreach (var row in rows)
+            ///{
+            for (int i = 0; i <= batch_count; i++)
+            {
+                try
+                {
+                    ///if (row is GridViewNewRow)
+                    ///continue;
+
+                    ///CKItemBatchViewModel objItemBatchVM = row.Item as CKItemBatchViewModel;
+                    var cell = new GridViewCellInfo(dgCKIssueDetails.Items[i], dgCKIssueDetails.Columns[7], dgCKIssueDetails);
+                    if (cell.Item != null)
+                    {
+                        var props = cell.Item.GetType().GetProperties();
+                        foreach (var p in props)
+                        {
+                            if (p == null || cell.Item == null)
+                            {
+                                continue;
+                            }
+                            var t = p.GetValue(cell.Item);
+                            if (t == null)
+                            {
+                                continue;
+                            }
+                        }
+                        CKItemBatchViewModel objItemBatchVM = cell.Item as CKItemBatchViewModel;
+                        if (objItemBatchVM.bal_qty < objItemBatchVM.qty_issued)
+                        {
+                            string msg = "Insufficient quantity for batch no: " + objItemBatchVM.batch_no;
+                            MessageBox.Show(msg);
+                        }
+                        if (objItemBatchVM.qty_issued > 0)
+                        {
+                            g_ck_prod_update_list.RemoveAll(p => (p.prod_code == objItemBatchVM.ck_prod_code && p.batch_no == objItemBatchVM.batch_no));
+
+                            total_qty_issued += objItemBatchVM.qty_issued;
+
+                            ck_prod ckprod = new ck_prod();
+                            ckprod.prod_code = objItemBatchVM.ck_prod_code;
+                            ckprod.batch_no = objItemBatchVM.batch_no;
+                            ckprod.prod_date = objItemBatchVM.prod_date;
+                            ckprod.exp_date = objItemBatchVM.exp_date;
+                            ckprod.ck_item_id = objItemBatchVM.ck_item_id;
+                            ckprod.modified_by = GlobalVariables.ActiveUser.Id;
+                            ckprod.modified_date = DateTime.Now;
+
+                            CKProductionService pscontext = new CKProductionService();
+                            decimal ck_item_batch_qty = pscontext.GetCurrentCKItemBatchQty(ckprod.prod_code, ckprod.batch_no);
+
+                            decimal prod_item_conv_factor = 0.000m;
+                            CKItemService cscontext = new CKItemService();
+                            CKItemUnitService cucontext = new CKItemUnitService();
+                            prod_item_conv_factor = (decimal)cucontext.GetConversionFactor(Convert.ToInt32(cmbUnit.SelectedValue.ToString()));
+
+                            ckprod.bal_qty = (ck_item_batch_qty) - (objItemBatchVM.qty_issued * prod_item_conv_factor);
+                            g_ck_prod_update_list.Add(ckprod);
+
+
+                            //Updation for CK Issue Details
+                            g_ck_issue_details.RemoveAll(p => (p.ck_prod_code == objItemBatchVM.ck_prod_code && p.ck_batch_no == objItemBatchVM.batch_no));
+                            ck_issue_detais ckissuedetail = new ck_issue_detais();
+                            ckissuedetail.ck_prod_code = objItemBatchVM.ck_prod_code;
+                            ckissuedetail.ck_batch_no = objItemBatchVM.batch_no;
+                            ckissuedetail.ck_prod_date = objItemBatchVM.prod_date;
+                            ckissuedetail.ck_exp_date = objItemBatchVM.exp_date;
+                            ckissuedetail.ck_item_id = objItemBatchVM.ck_item_id;
+                            ckissuedetail.ck_item_code = objItemBatchVM.ck_item_code;
+                            ckissuedetail.ck_item_desc = objItemBatchVM.ck_item_description;
+                            ckissuedetail.ck_item_unit_id = objItemBatchVM.ck_item_unit_id;
+                            //ckissuedetail.qty_issued = objItemBatchVM.qty_issued;
+                            ckissuedetail.qty_issued = objItemBatchVM.qty_issued * g_conv_factor;
+                            ckissuedetail.ck_item_unit_cost = (objItemBatchVM.tmp_ck_unit_cost * g_conv_factor);
+                            ckissuedetail.ck_item_total_cost = (objItemBatchVM.tmp_ck_unit_cost * g_conv_factor) * (objItemBatchVM.qty_issued);
+                            ckissuedetail.created_by = GlobalVariables.ActiveUser.Id;
+                            ckissuedetail.created_date = DateTime.Now;
+                            ckissuedetail.active = true;
+                            g_ck_issue_details.Add(ckissuedetail);
+
+                        }
+                    }
+                }
+                catch { }
+                //
+                try
+                {
+                    
+                }
+                catch { }
+            }//foreach row
+            try
+            {
+                //Updation for ckitemissueView grid items
+                //g_ck_item_issue_list[g_ck_issue_vm.rowIndex].qtyIssued = total_qty_issued;
+                g_ck_item_issue_list[g_ck_issue_vm.rowIndex].qtyIssued = total_qty_issued * g_conv_factor;
+                decimal ck_item_unit_cost = 0.000m;
+                decimal item_conv_factor = 0.000m;
+                CKItemService cscontext = new CKItemService();
+                ck_item_unit_cost = cscontext.GetCurrentCKItemCost(g_ck_issue_vm.itemId);
+                CKItemUnitService cucontext = new CKItemUnitService();
+                item_conv_factor = (decimal)cucontext.GetConversionFactor(Convert.ToInt32(cmbUnit.SelectedValue.ToString()));
+                //g_ck_item_issue_list[g_ck_issue_vm.rowIndex].unit_cost = ck_item_unit_cost * item_conv_factor;
+                g_ck_item_issue_list[g_ck_issue_vm.rowIndex].unit_cost = ck_item_unit_cost;
+                g_ck_item_issue_list[g_ck_issue_vm.rowIndex].total_cost = g_ck_item_issue_list[g_ck_issue_vm.rowIndex].unit_cost * g_ck_item_issue_list[g_ck_issue_vm.rowIndex].qtyIssued;
+                g_ck_item_issue_view.dgCKIssueDetails.ItemsSource = g_ck_item_issue_list;
+                g_ck_item_issue_view.dgCKIssueDetails.CommitEdit();
+                g_ck_item_issue_view.dgCKIssueDetails.Rebind();
+            }
+            catch { }
+            this.Close();
+        }
+
+        private void btnSave_Click1(object sender, RoutedEventArgs e)
+        {
+            var rows = this.dgCKIssueDetails.ChildrenOfType<GridViewRow>();
+            int result = 0;
+            decimal total_qty_issued = 0.000m;
+            CKOrderService _ocontext = new CKOrderService();
+
+            //if(!ItemIssueIsBatchwise())
+            //{
+            //    MessageBox.Show("Please issue items in FIFO basis");
+            //    return;
+            //}
+
             foreach (var row in rows)
             {
                 try
@@ -145,7 +274,7 @@ namespace dipndipInventory.Views.Stock
                         continue;
 
                     CKItemBatchViewModel objItemBatchVM = row.Item as CKItemBatchViewModel;
-                    if(objItemBatchVM.bal_qty<objItemBatchVM.qty_issued)
+                    if (objItemBatchVM.bal_qty < objItemBatchVM.qty_issued)
                     {
                         string msg = "Insufficient quantity for batch no: " + objItemBatchVM.batch_no;
                         MessageBox.Show(msg);
@@ -173,7 +302,7 @@ namespace dipndipInventory.Views.Stock
                         CKItemUnitService cucontext = new CKItemUnitService();
                         prod_item_conv_factor = (decimal)cucontext.GetConversionFactor(Convert.ToInt32(cmbUnit.SelectedValue.ToString()));
 
-                        ckprod.bal_qty = (ck_item_batch_qty) - (objItemBatchVM.qty_issued* prod_item_conv_factor);
+                        ckprod.bal_qty = (ck_item_batch_qty) - (objItemBatchVM.qty_issued * prod_item_conv_factor);
                         g_ck_prod_update_list.Add(ckprod);
 
 
@@ -203,10 +332,10 @@ namespace dipndipInventory.Views.Stock
                 //
                 try
                 {
-                    
+
                 }
                 catch { }
-            }
+            }//foreach row
             try
             {
                 //Updation for ckitemissueView grid items

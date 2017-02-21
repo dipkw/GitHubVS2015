@@ -48,6 +48,7 @@ namespace dipndipInventory.Views.Stock
         List<order_details> g_order_detail_list = new List<order_details>();
         ckorderView g_ck_order_view;
         int g_update_status = 0;
+        int order_details_count = 0;
         public whitemreceiveView()
         {
             InitializeComponent();
@@ -140,6 +141,7 @@ namespace dipndipInventory.Views.Stock
             }
             dgCKOrderDetails.ItemsSource = null;
             dgCKOrderDetails.ItemsSource = order_detail_list;
+            order_details_count = order_detail_list.Count();
         }
 
         private void dgCKOrderDetails_CellValidating(object sender, GridViewCellValidatingEventArgs e)
@@ -350,6 +352,191 @@ namespace dipndipInventory.Views.Stock
                 //List<receipt_details> receipt_detail_list = new List<receipt_details>();
                 WHItemService _wcontext = new WHItemService();
 
+                ///foreach (var row in rows)
+                ///{
+                ///if (row is GridViewNewRow)
+                ///continue;
+                for (int i = 0; i <= order_details_count; i++)
+                {
+                    var cell = new GridViewCellInfo(dgCKOrderDetails.Items[i], dgCKOrderDetails.Columns[5], dgCKOrderDetails);
+                    if (cell.Item != null)
+                    {
+                        var props = cell.Item.GetType().GetProperties();
+                        foreach (var p in props)
+                        {
+                            if (p == null || cell.Item == null)
+                            {
+                                continue;
+                            }
+                            var t = p.GetValue(cell.Item);
+                            if (t == null)
+                            {
+                                continue;
+                            }
+                        }
+                        OrderDetailsViewModel objOrderDetails = cell.Item as OrderDetailsViewModel;
+                        ///OrderDetailsViewModel objOrderDetails = row.Item as OrderDetailsViewModel;
+
+                        // Update order_details table with received qty
+                        //result = _ocontext.UpdateReceivedQty(active_order_id, objOrderDetails.qty_received);
+
+                        order_details orderdetail = new order_details();
+                        orderdetail.Id = objOrderDetails.id;
+                        orderdetail.qty_received = objOrderDetails.qty_received;
+                        orderdetail.modified_by = GlobalVariables.ActiveUser.Id;
+                        orderdetail.modified_date = DateTime.Now;
+                        g_order_detail_list.Add(orderdetail);
+
+                        //g_order_detail_id = objOrderDetails.id;
+                        //g_qty_received = objOrderDetails.qty_received;
+
+                        //**Changed for making transaction
+
+                        //result = _ocontext.UpdateReceivedQty(objOrderDetails.id, objOrderDetails.qty_received);
+                        //if (result<=0)
+                        //{
+                        //    break;
+                        //}
+
+                        //**Changed for making transaction
+
+                        //Retreive current unit cost from ckwh_items table
+                        decimal item_unit_cost = (decimal)_wcontext.GetCurrentCost(objOrderDetails.itemId);
+                        //decimal item_unit_cost = CurrentAverageCost(objOrderDetails.itemId, (decimal)_wcontext.GetCurrentCost(objOrderDetails.itemId), objOrderDetails.qty_received);
+                        receipt_details objReceiptDetail = new receipt_details();
+                        objReceiptDetail.receipt_no = active_receipt_no;
+                        objReceiptDetail.wh_item_id = objOrderDetails.itemId;
+                        objReceiptDetail.wh_item_code = objOrderDetails.itemCode;
+                        objReceiptDetail.wh_item_description = objOrderDetails.itemDescription;
+                        objReceiptDetail.wh_item_unit_id = objOrderDetails.unitId;
+                        objReceiptDetail.ck_unit_description = objOrderDetails.unitDescription;
+                        objReceiptDetail.qty_ordered = objOrderDetails.qty;
+                        objReceiptDetail.qty_received = objOrderDetails.qty_received;
+                        objReceiptDetail.wh_item_unit_cost = item_unit_cost;
+                        objReceiptDetail.wh_item_ext_cost = item_unit_cost * objOrderDetails.qty_received;
+                        objReceiptDetail.active = true;
+                        objReceiptDetail.created_by = GlobalVariables.ActiveUser.Id;
+                        objReceiptDetail.created_date = receipt_date_time;
+
+                        g_receipt_detail_list.Add(objReceiptDetail);
+
+                        //Update new transaction in Transaction Table with current warehouse item cost as item_unit_cost
+
+                        //**Changed for making transaction
+                        //result = SaveTransaction(objOrderDetails, receipt_date_time, item_unit_cost);
+
+                        SaveTransaction(objOrderDetails, receipt_date_time, item_unit_cost);
+
+                        //if (result<=0)
+                        //{
+                        //    break;
+                        //}
+
+                        //**Changed for making transaction
+                        decimal current_item_qty = 0.0m;
+
+                        //Get current ck_qty from ckwh_items to update with the received qty
+                        if (_wcontext.GetCurrentCKQty(objOrderDetails.itemId) != null)
+                        {
+                            current_item_qty = (decimal)_wcontext.GetCurrentCKQty(objOrderDetails.itemId);
+                        }
+
+                        decimal ck_updated_qty = current_item_qty + objOrderDetails.qty_received;
+
+                        //Update ck_qty with ck_updated_qty in ckwh_items table
+
+                        //**Changed for making transaction
+                        //result = _wcontext.UpdateCKItemQty(objOrderDetails.itemId, ck_updated_qty, GlobalVariables.ActiveUser.Id);
+                        //if (result <= 0)
+                        //{
+                        //    break;
+                        //}
+                        //**Changed for making transaction
+
+                        ckwh_items ckwhitem = new ckwh_items();
+                        ckwhitem.Id = objOrderDetails.itemId;
+                        ckwhitem.ck_qty = ck_updated_qty;
+                        decimal current_average_cost = CurrentAverageCost(objOrderDetails.itemId, item_unit_cost, objOrderDetails.qty_received);
+                        ckwhitem.ck_avg_unit_cost = current_average_cost;
+                        ckwhitem.modified_by = GlobalVariables.ActiveUser.Id;
+                        ckwhitem.modified_date = DateTime.Now;
+                        g_ckwh_items_list.Add(ckwhitem);
+
+
+
+                        //**Changed for making transaction
+
+                        //decimal current_average_cost = CurrentAverageCost(objOrderDetails.itemId, item_unit_cost, objOrderDetails.qty_received);
+                        //result = _wcontext.UpdateCKItemAvgUnitCost(objOrderDetails.itemId, current_average_cost);
+
+                        //if(result<=0)
+                        //{
+                        //    break;
+                        //}
+
+                        //**Changed for making transaction
+                    }
+                }//foreach row
+
+                //result = CreateReceipt(receipt_date_time, g_receipt_detail_list);
+                //result = UpdateItemCostHistory(g_receipt_detail_list);
+                CreateReceipt(receipt_date_time, g_receipt_detail_list);
+                UpdateItemCostHistory(g_receipt_detail_list);
+
+                //if (result > 0)
+                //{
+                //**Changed for making transaction
+                //result = _ocontext.UpdateCKOrderReceiveStatus(active_order_id, "Received", receipt_date_time, GlobalVariables.ActiveUser.Id);
+                //**Changed for making transaction
+                //g_order_master.Id = active_order_id;
+                //g_order_master.order_status = "Received";
+                //g_order_master.receipt_date = receipt_date_time;
+                //g_order_master.modified_by = GlobalVariables.ActiveUser.Id;
+                //g_order_master.modified_date = DateTime.Now;
+                //}
+                g_order_master.Id = active_order_id;
+                g_order_master.order_status = "Received";
+                g_order_master.receipt_date = receipt_date_time;
+                g_order_master.modified_by = GlobalVariables.ActiveUser.Id;
+                g_order_master.modified_date = DateTime.Now;
+                result = _ocontext.SaveReceipt(g_order_master, g_order_detail_list, g_transaction_detail_list, g_ckwh_items_list, g_receipt_master, g_receipt_detail_list, g_wh_item_cost_history_list);
+                string response = result > 0 ? "Items Received Successfully" : "Unable to receive the Items. Please contact administrator";
+                //MessageBox.Show(response);
+                if (result > 0)
+                {
+                    SendMail();
+                    btnSave.IsEnabled = true;
+                    IEnumerable<order> g_orders = _ocontext.ReadAllActiveSiteOrders(GlobalVariables.ActiveSite.Id);
+                    g_ck_order_view.dgCKOrders.ItemsSource = g_orders;
+                    g_ck_order_view.dgCKOrders.Rebind();
+                }
+
+                //RadWindow.Alert(response);
+                MessageBox.Show(response);
+            }
+            catch(Exception ex) { MessageBox.Show("Exception: " + ex.Message); }
+        }
+
+        private void btnSave_Click1(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (MessageBox.Show("Do you want to continue?", "Confirm", MessageBoxButton.YesNo) == MessageBoxResult.No)
+                {
+                    return;
+                }
+                btnSave.IsEnabled = false;
+                var rows = this.dgCKOrderDetails.ChildrenOfType<GridViewRow>();
+                int result = 0;
+
+                DateTime receipt_date_time = (DateTime)dtpReceiptDate.SelectedDate + DateTime.Now.TimeOfDay;
+
+
+
+                CKOrderService _ocontext = new CKOrderService();
+                //List<receipt_details> receipt_detail_list = new List<receipt_details>();
+                WHItemService _wcontext = new WHItemService();
+
                 foreach (var row in rows)
                 {
                     if (row is GridViewNewRow)
@@ -493,7 +680,7 @@ namespace dipndipInventory.Views.Stock
                 //RadWindow.Alert(response);
                 MessageBox.Show(response);
             }
-            catch(Exception ex) { MessageBox.Show("Exception: " + ex.Message); }
+            catch (Exception ex) { MessageBox.Show("Exception: " + ex.Message); }
         }
 
         private void SaveTransaction(OrderDetailsViewModel objOrderDetails, DateTime receipt_date_time, decimal item_unit_cost)

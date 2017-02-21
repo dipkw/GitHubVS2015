@@ -100,6 +100,20 @@ namespace dipndipInventory.EF.DataServices
             }
         }
 
+        public int CountAllActiveCKItems()
+        {
+            try
+            {
+                _context = new CKEntities();
+                IEnumerable<ck_items> objCKItems = (from ckitems in _context.ck_items where ckitems.active == true orderby ckitems.Id ascending select ckitems);
+                return objCKItems.Count();
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+
         public bool IsExistingCKItem(int ck_item_id)
         {
             bool _result = false;
