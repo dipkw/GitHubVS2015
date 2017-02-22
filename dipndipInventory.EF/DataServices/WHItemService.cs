@@ -43,6 +43,21 @@ namespace dipndipInventory.EF.DataServices
             }
         }
 
+        public IEnumerable<ckwh_items> ReadAllActiveWHItems()
+        {
+            try
+            {
+                _context = new CKEntities();
+                //IEnumerable<ckwh_items> objWHItems = (from whitems in _context.ckwh_items where whitems.wh_item_code != "CASH001" orderby whitems.wh_item_code ascending select whitems);
+                IEnumerable<ckwh_items> objWHItems = (from whitems in _context.ckwh_items where whitems.wh_item_code != "CASH001" && whitems.inactive == false orderby whitems.wh_item_code ascending select whitems);
+                return objWHItems;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         public IEnumerable<ckwh_items> GetAllWHCategoryItems(string param_category)
         {
             try

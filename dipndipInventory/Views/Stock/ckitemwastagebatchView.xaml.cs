@@ -34,7 +34,7 @@ namespace dipndipInventory.Views.Stock
         List<CKItemBatchViewModel> g_ck_item_batches = new List<CKItemBatchViewModel>();
         List<ck_prod> g_ck_prod_update_list = new List<ck_prod>();
         decimal g_conv_factor = 0.000m;
-
+        int batch_count = 0;
         public ckitemwastagebatchView()
         {
             InitializeComponent();
@@ -118,6 +118,7 @@ namespace dipndipInventory.Views.Stock
                 }
 
                 dgCKIssueDetails.ItemsSource = g_ck_item_batches;
+                batch_count = g_ck_item_batches.Count();
             }
             catch { }
         }
@@ -128,6 +129,130 @@ namespace dipndipInventory.Views.Stock
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
+        {
+            var rows = this.dgCKIssueDetails.ChildrenOfType<GridViewRow>();
+            int result = 0;
+            decimal total_qty_issued = 0.000m;
+
+            if (cmbReason.SelectedIndex == -1)
+            {
+                MessageBox.Show("Please select a reason");
+                return;
+            }
+
+            CKOrderService _ocontext = new CKOrderService();
+            for (int i = 0; i <= batch_count; i++)
+            {
+                ///foreach (var row in rows)
+                ///{
+                try
+                {
+                    ///if (row is GridViewNewRow)
+                    ///continue;
+
+                    ///CKItemBatchViewModel objItemBatchVM = row.Item as CKItemBatchViewModel;
+
+                    var cell = new GridViewCellInfo(dgCKIssueDetails.Items[i], dgCKIssueDetails.Columns[7], dgCKIssueDetails);
+                    if (cell.Item != null)
+                    {
+                        var props = cell.Item.GetType().GetProperties();
+                        foreach (var p in props)
+                        {
+                            if (p == null || cell.Item == null)
+                            {
+                                continue;
+                            }
+                            var t = p.GetValue(cell.Item);
+                            if (t == null)
+                            {
+                                continue;
+                            }
+                        }
+                        CKItemBatchViewModel objItemBatchVM = cell.Item as CKItemBatchViewModel;
+
+                        if (objItemBatchVM.qty_issued > 0)
+                        {
+                            g_ck_prod_update_list.RemoveAll(p => (p.prod_code == objItemBatchVM.ck_prod_code && p.batch_no == objItemBatchVM.batch_no));
+
+                            total_qty_issued += objItemBatchVM.qty_issued;
+
+                            ck_prod ckprod = new ck_prod();
+                            ckprod.prod_code = objItemBatchVM.ck_prod_code;
+                            ckprod.batch_no = objItemBatchVM.batch_no;
+                            ckprod.prod_date = objItemBatchVM.prod_date;
+                            ckprod.exp_date = objItemBatchVM.exp_date;
+                            ckprod.ck_item_id = objItemBatchVM.ck_item_id;
+                            ckprod.modified_by = GlobalVariables.ActiveUser.Id;
+                            ckprod.modified_date = DateTime.Now;
+
+                            CKProductionService pscontext = new CKProductionService();
+                            decimal ck_item_batch_qty = pscontext.GetCurrentCKItemBatchQty(ckprod.prod_code, ckprod.batch_no);
+
+                            decimal prod_item_conv_factor = 0.000m;
+                            CKItemService cscontext = new CKItemService();
+                            CKItemUnitService cucontext = new CKItemUnitService();
+                            prod_item_conv_factor = (decimal)cucontext.GetConversionFactor(Convert.ToInt32(cmbUnit.SelectedValue.ToString()));
+
+                            ckprod.bal_qty = (ck_item_batch_qty) - (objItemBatchVM.qty_issued * prod_item_conv_factor);
+                            g_ck_prod_update_list.Add(ckprod);
+
+
+                            //Updation for CK Issue Details
+                            g_ck_wastage_details.RemoveAll(p => (p.ck_prod_code == objItemBatchVM.ck_prod_code && p.ck_batch_no == objItemBatchVM.batch_no));
+                            ck_wastage_details ckwastagedetail = new ck_wastage_details();
+                            ckwastagedetail.ck_prod_code = objItemBatchVM.ck_prod_code;
+                            ckwastagedetail.ck_batch_no = objItemBatchVM.batch_no;
+                            ckwastagedetail.ck_prod_date = objItemBatchVM.prod_date;
+                            ckwastagedetail.ck_exp_date = objItemBatchVM.exp_date;
+                            ckwastagedetail.ck_item_id = objItemBatchVM.ck_item_id;
+                            ckwastagedetail.ck_item_code = objItemBatchVM.ck_item_code;
+                            ckwastagedetail.ck_item_desc = objItemBatchVM.ck_item_description;
+                            ckwastagedetail.ck_item_unit_id = objItemBatchVM.ck_item_unit_id;
+                            //ckwastagedetail.wastage_qty = objItemBatchVM.qty_issued;
+                            ckwastagedetail.wastage_qty = objItemBatchVM.qty_issued * g_conv_factor; //Edited on 05-12-2016
+                            ckwastagedetail.ck_item_unit_cost = (objItemBatchVM.tmp_ck_unit_cost * g_conv_factor);
+                            ckwastagedetail.ck_item_total_cost = (objItemBatchVM.tmp_ck_unit_cost * g_conv_factor) * (objItemBatchVM.qty_issued);
+                            ckwastagedetail.created_by = GlobalVariables.ActiveUser.Id;
+                            ckwastagedetail.created_date = DateTime.Now;
+                            ckwastagedetail.active = true;
+                            g_ck_wastage_details.Add(ckwastagedetail);
+
+                        }// if (objItemBatchVM.qty_issued > 0)
+                    }
+                }
+                catch { }
+                //
+                try
+                {
+
+                }
+                catch { }
+            }//foreach
+            try
+            {
+                //Updation for ckitemissueView grid items
+                //g_ck_item_issue_list[g_ck_issue_vm.rowIndex].qtyIssued = total_qty_issued;
+                g_ck_item_issue_list[g_ck_issue_vm.rowIndex].qtyIssued = total_qty_issued * g_conv_factor; //Edited on 05-12-2016
+                decimal ck_item_unit_cost = 0.000m;
+                decimal item_conv_factor = 0.000m;
+                CKItemService cscontext = new CKItemService();
+                ck_item_unit_cost = cscontext.GetCurrentCKItemCost(g_ck_issue_vm.itemId);
+                CKItemUnitService cucontext = new CKItemUnitService();
+                item_conv_factor = (decimal)cucontext.GetConversionFactor(Convert.ToInt32(cmbUnit.SelectedValue.ToString()));
+                g_ck_item_issue_list[g_ck_issue_vm.rowIndex].unit_cost = ck_item_unit_cost * item_conv_factor;
+                g_ck_item_issue_list[g_ck_issue_vm.rowIndex].total_cost = g_ck_item_issue_list[g_ck_issue_vm.rowIndex].unit_cost * g_ck_item_issue_list[g_ck_issue_vm.rowIndex].qtyIssued;
+
+                g_ck_item_issue_list[g_ck_issue_vm.rowIndex].ck_wastage_reason_id = Convert.ToInt32(cmbReason.SelectedValue.ToString());
+                g_ck_item_issue_list[g_ck_issue_vm.rowIndex].ck_wastage_reason_desc = cmbReason.Text;
+
+                g_ck_item_issue_view.dgCKIssueDetails.ItemsSource = g_ck_item_issue_list;
+                g_ck_item_issue_view.dgCKIssueDetails.CommitEdit();
+                g_ck_item_issue_view.dgCKIssueDetails.Rebind();
+            }
+            catch { }
+            this.Close();
+        }
+        private void btnSave1_Click(object sender, RoutedEventArgs e)
         {
             var rows = this.dgCKIssueDetails.ChildrenOfType<GridViewRow>();
             int result = 0;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using dipndipInventory.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,6 +25,7 @@ namespace dipndipInventory.Views.Reports
         public CKRecipeReportView()
         {
             InitializeComponent();
+            ShowTaskBar.ShowInTaskbar(this, "Central Kitchen Recipe Details");
             LoadReport();
         }
 

@@ -37,7 +37,7 @@ namespace dipndipInventory.Views.Stock
         {
             InitializeComponent();
             objOrderDetailsView = ov;
-            dgWHItems.ItemsSource = _context.ReadAllWHItems();
+            dgWHItems.ItemsSource = _context.ReadAllActiveWHItems();
         }
 
         private void dgWHItems_MouseDoubleClick(object sender, MouseButtonEventArgs e)

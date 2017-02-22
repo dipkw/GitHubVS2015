@@ -28,13 +28,13 @@
         </StackPanel>
 
         <Border Grid.ColumnSpan="2" Margin="10" BorderBrush="Black" BorderThickness="0.5" Grid.Row="1">
-            <telerik:RadGridView x:Name="dgCKProduction" AutoGenerateColumns="False" RowIndicatorVisibility="Collapsed" IsSynchronizedWithCurrentItem="False" FocusManager.FocusedElement="{Binding ElementName=dgCKProduction}" HorizontalAlignment="Left" VerticalAlignment="Top" IsHitTestVisible="False">
+            <telerik:RadGridView x:Name="dgCKProduction" AutoGenerateColumns="False" RowIndicatorVisibility="Collapsed" IsSynchronizedWithCurrentItem="False" FocusManager.FocusedElement="{Binding ElementName=dgCKProduction}" HorizontalAlignment="Left" VerticalAlignment="Top" IsHitTestVisible="True">
                 <telerik:RadGridView.Columns>
                     <telerik:GridViewDataColumn x:Name="ItemCode" DataMemberBinding="{Binding ck_item_code}" Width="*" Header="Item Code" IsReadOnly="True"/>
                     <telerik:GridViewDataColumn x:Name="ItemDescription" DataMemberBinding="{Binding ck_item_desc}" Width="3*" Header="Description" IsReadOnly="True"/>
                     <telerik:GridViewDataColumn x:Name="ItemBatchNo" DataMemberBinding="{Binding batch_no}" Width="2*" Header="Batch No" IsReadOnly="True"/>
                     <!--<telerik:GridViewDataColumn x:Name="DesignQty" DataMemberBinding="{Binding designQty}" Width="*" Header="Design Qty" IsReadOnly="True"/>-->
-                    <telerik:GridViewDataColumn x:Name="ProductionQty" DataMemberBinding="{Binding prod_qty}" Width="*" Header="Production Qty"/>
+                    <telerik:GridViewDataColumn x:Name="ProductionQty" DataMemberBinding="{Binding prod_qty}" Width="*" Header="Production Qty" IsReadOnly="True"/>
                     <!--<telerik:GridViewDataColumn x:Name="ProductionDate" DataMemberBinding="{Binding prodDate}" Width="*" Header="Production Date"/>
                     <telerik:GridViewDataColumn x:Name="ExpiryDate" DataMemberBinding="{Binding expDate}" Width="*" Header="Expiry Date"/>
                     <telerik:GridViewDataColumn x:Name="ProductionDate" DataMemberBinding="{Binding prodDate}" Width="*" Header="Production Date">
@@ -45,8 +45,8 @@
                         </telerik:GridViewDataColumn.CellTemplate>
                         
                     </telerik:GridViewDataColumn>-->
-                    <telerik:GridViewDataColumn x:Name="CKUnit" DataMemberBinding="{Binding ck_item_unit_desc}" Width="*" Header="Unit"/>
-                    <telerik:GridViewDataColumn x:Name="ExpiryDate" DataMemberBinding="{Binding exp_date}" Width="*" Header="Expiry Date">
+                    <telerik:GridViewDataColumn x:Name="CKUnit" DataMemberBinding="{Binding ck_item_unit_desc}" Width="*" Header="Unit" IsReadOnly="True"/>
+                    <telerik:GridViewDataColumn x:Name="ExpiryDate" DataMemberBinding="{Binding exp_date}" Width="*" Header="Expiry Date" IsReadOnly="True">
                         <telerik:GridViewDataColumn.CellTemplate>
                             <DataTemplate>
                                 <!--<telerik:RadDatePicker SelectedValue="{Binding expDate, Mode=TwoWay}" SelectedDate="{x:Static sys:DateTime.Now}"></telerik:RadDatePicker>-->

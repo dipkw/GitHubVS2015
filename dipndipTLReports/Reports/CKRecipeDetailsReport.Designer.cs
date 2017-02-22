@@ -175,7 +175,7 @@ namespace dipndipTLReports.Reports
             // textBox10
             // 
             this.textBox10.CanGrow = true;
-            this.textBox10.Format = "{0:N2}";
+            this.textBox10.Format = "{0:N3}";
             this.textBox10.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Inch(7D), Telerik.Reporting.Drawing.Unit.Inch(0.091843798756599426D));
             this.textBox10.Name = "textBox10";
             this.textBox10.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Inch(0.75208348035812378D), Telerik.Reporting.Drawing.Unit.Inch(0.20000000298023224D));
