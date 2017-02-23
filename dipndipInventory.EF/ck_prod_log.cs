@@ -12,39 +12,35 @@ namespace dipndipInventory.EF
     using System;
     using System.Collections.Generic;
     
-    public partial class ck_prod
+    public partial class ck_prod_log
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ck_prod()
-        {
-            this.ck_prod_log = new HashSet<ck_prod_log>();
-        }
-    
-        public int Id { get; set; }
+        public long Id { get; set; }
+        public Nullable<int> prod_id { get; set; }
         public string prod_code { get; set; }
         public Nullable<System.DateTime> prod_date { get; set; }
-        public Nullable<int> ck_item_id { get; set; }
+        public string batch_no { get; set; }
+        public int ck_item_id { get; set; }
         public string ck_item_code { get; set; }
         public string ck_item_desc { get; set; }
-        public Nullable<int> ck_item_unit_id { get; set; }
-        public string ck_item_unit_desc { get; set; }
-        public Nullable<decimal> conv_factor { get; set; }
-        public Nullable<decimal> prod_qty { get; set; }
+        public Nullable<int> wh_item_id { get; set; }
+        public string wh_item_code { get; set; }
+        public string wh_item_description { get; set; }
+        public Nullable<int> wh_item_unit_id { get; set; }
+        public string ck_unit_description { get; set; }
         public Nullable<decimal> unit_cost { get; set; }
+        public Nullable<decimal> qty { get; set; }
         public Nullable<decimal> total_cost { get; set; }
+        public Nullable<bool> active { get; set; }
         public Nullable<int> created_by { get; set; }
         public Nullable<System.DateTime> created_date { get; set; }
         public Nullable<int> modified_by { get; set; }
         public Nullable<System.DateTime> modified_date { get; set; }
-        public Nullable<int> active { get; set; }
-        public string batch_no { get; set; }
-        public Nullable<System.DateTime> exp_date { get; set; }
-        public Nullable<decimal> bal_qty { get; set; }
     
+        public virtual ck_items ck_items { get; set; }
+        public virtual ck_prod ck_prod { get; set; }
         public virtual ck_users ck_users { get; set; }
         public virtual ck_users ck_users1 { get; set; }
-        public virtual ck_items ck_items { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ck_prod_log> ck_prod_log { get; set; }
+        public virtual ckwh_items ckwh_items { get; set; }
+        public virtual wh_item_unit wh_item_unit { get; set; }
     }
 }

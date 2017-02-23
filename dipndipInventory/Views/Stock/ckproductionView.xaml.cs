@@ -33,6 +33,7 @@ namespace dipndipInventory.Views.Stock
         List<ck_item_cost_history> ck_item_cost_list = new List<ck_item_cost_history>();
         List<ck_stock_trans> ck_stock_trans_list = new List<ck_stock_trans>();
         List<transaction_details> transaction_details_list = new List<transaction_details>();
+        List<ck_prod_log> prod_log_list = new List<ck_prod_log>();
         public ckproductionView()
         {
             InitializeComponent();
@@ -46,6 +47,7 @@ namespace dipndipInventory.Views.Stock
         {
             string prod_code = cpcontext.GetNewProductionCode();
             txtProductionCode.Value = prod_code;
+            prod_log_list.Clear();
         }
         private void FillProductionGrid()
         {
@@ -132,7 +134,7 @@ namespace dipndipInventory.Views.Stock
             }
 
             CKProductionService pscontext = new CKProductionService();
-            string result = pscontext.SaveCKItemProduction(production_list, ck_items_list, warehouse_items_list, ck_item_cost_list, ck_stock_trans_list, transaction_details_list, GlobalVariables.ActiveUser.Id) > 0 ? "CK Branch Item Production Saved Successfully" : "Unable to Save CK Branch Item Production";
+            string result = pscontext.SaveCKItemProduction(production_list, ck_items_list, warehouse_items_list, ck_item_cost_list, ck_stock_trans_list, transaction_details_list, prod_log_list, GlobalVariables.ActiveUser.Id) > 0 ? "CK Branch Item Production Saved Successfully" : "Unable to Save CK Branch Item Production";
             MessageBox.Show(result);
             if(result == "CK Branch Item Production Saved Successfully")
             {
@@ -508,6 +510,27 @@ namespace dipndipInventory.Views.Stock
                         transactiondetail.created_by = GlobalVariables.ActiveUser.Id;
                         transactiondetail.created_date = DateTime.Now;
                         transaction_details_list.Add(transactiondetail);
+
+
+                        ///ck_prod_log
+
+                        ck_prod_log obj_ck_prod_log = new ck_prod_log();
+                        obj_ck_prod_log.prod_code = txtProductionCode.Text;
+                        obj_ck_prod_log.prod_date = dtpProductionDate.SelectedDate + DateTime.Now.TimeOfDay;
+                        //obj_ck_prod_log.batch_no = 
+                        obj_ck_prod_log.ck_item_id = ckwh_item_id;
+                        obj_ck_prod_log.ck_item_code = item_recipe.ck_items.ck_item_code;
+                        obj_ck_prod_log.ck_items.ck_item_description = item_recipe.ck_items.ck_item_description;
+                        obj_ck_prod_log.wh_item_unit_id = wh_unit_id;
+                        obj_ck_prod_log.ck_unit_description = item_recipe.wh_item_unit.ck_units.unit_description;
+                        obj_ck_prod_log.qty = transactiondetail.qty;
+                        obj_ck_prod_log.unit_cost = transactiondetail.unit_cost;
+                        obj_ck_prod_log.total_cost = transactiondetail.total_cost;
+                        obj_ck_prod_log.active = true;
+                        obj_ck_prod_log.created_by = transactiondetail.created_by;
+                        obj_ck_prod_log.created_date = transactiondetail.created_date;
+                        prod_log_list.Add(obj_ck_prod_log);
+                        ///ck_prod_log
                     }
                     catch { }
 

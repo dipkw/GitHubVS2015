@@ -101,7 +101,7 @@ namespace dipndipInventory.EF.DataServices
         }
         
         //Save Item Production (List<ck_prod>)
-        public int SaveCKItemProduction(List<ck_prod> production_list, List<ck_items> ck_items_list, List<ckwh_items> warehouse_items_list, List<ck_item_cost_history> ck_item_cost_list, List<ck_stock_trans> ck_stock_trans_list, List<transaction_details>transaction_detail_list, int active_user)
+        public int SaveCKItemProduction(List<ck_prod> production_list, List<ck_items> ck_items_list, List<ckwh_items> warehouse_items_list, List<ck_item_cost_history> ck_item_cost_list, List<ck_stock_trans> ck_stock_trans_list, List<transaction_details>transaction_detail_list, List<ck_prod_log> prod_log_list, int active_user)
         {
             using (var context = new CKEntities())
             {
@@ -147,6 +147,12 @@ namespace dipndipInventory.EF.DataServices
                             context.SaveChanges();
                         }
 
+                        foreach(ck_prod_log ckprodlog in prod_log_list)
+                        {
+                            context.ck_prod_log.Add(ckprodlog);
+                            context.SaveChanges();
+                        }
+
                         if(ck_item_cost_list.Count>0)
                         {
                             foreach(ck_item_cost_history ck_item_cost in ck_item_cost_list)
@@ -160,6 +166,72 @@ namespace dipndipInventory.EF.DataServices
                         return 1;
                     }
                     catch(Exception ex)
+                    {
+                        dbcxtrx.Rollback();
+                        return 0;
+                    }
+                }
+            }
+        }
+        public int SaveCKItemProduction1(List<ck_prod> production_list, List<ck_items> ck_items_list, List<ckwh_items> warehouse_items_list, List<ck_item_cost_history> ck_item_cost_list, List<ck_stock_trans> ck_stock_trans_list, List<transaction_details> transaction_detail_list, int active_user)
+        {
+            using (var context = new CKEntities())
+            {
+                using (var dbcxtrx = context.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        foreach (ck_prod prod_item in production_list)
+                        {
+                            context.ck_prod.Add(prod_item);
+                            context.SaveChanges();
+                        }
+
+                        foreach (ck_items ck_item in ck_items_list)
+                        {
+                            ck_items ck_item_to_update = (from ckitem in context.ck_items where ckitem.Id == ck_item.Id select ckitem).SingleOrDefault();
+                            ck_item_to_update.ck_item_unit_cost = ck_item.ck_item_unit_cost;
+                            ck_item_to_update.qty_on_hand = ck_item.qty_on_hand;
+                            ck_item_to_update.modified_by = active_user;
+                            ck_item_to_update.modified_date = DateTime.Now;
+                            context.SaveChanges();
+                        }
+
+                        foreach (ckwh_items ckwh_item in warehouse_items_list)
+                        {
+                            ckwh_items ckwh_item_to_update = (from ckwhitem in context.ckwh_items where ckwhitem.Id == ckwh_item.Id select ckwhitem).SingleOrDefault();
+                            //ckwh_item_to_update.wh_item_code = ckwh_item.wh_item_code;
+                            ckwh_item_to_update.ck_qty = ckwh_item.ck_qty;
+                            ckwh_item_to_update.modified_by = active_user;
+                            ckwh_item_to_update.modified_date = DateTime.Now;
+                            context.SaveChanges();
+                        }
+
+                        foreach (ck_stock_trans ckstocktrans in ck_stock_trans_list)
+                        {
+                            context.ck_stock_trans.Add(ckstocktrans);
+                            context.SaveChanges();
+                        }
+
+                        foreach (transaction_details transactiondetail in transaction_detail_list)
+                        {
+                            context.transaction_details.Add(transactiondetail);
+                            context.SaveChanges();
+                        }
+
+                        if (ck_item_cost_list.Count > 0)
+                        {
+                            foreach (ck_item_cost_history ck_item_cost in ck_item_cost_list)
+                            {
+                                context.ck_item_cost_history.Add(ck_item_cost);
+                                context.SaveChanges();
+                            }
+                        }
+
+                        dbcxtrx.Commit();
+                        return 1;
+                    }
+                    catch (Exception ex)
                     {
                         dbcxtrx.Rollback();
                         return 0;

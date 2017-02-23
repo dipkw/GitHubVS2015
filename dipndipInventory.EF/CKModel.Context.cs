@@ -62,6 +62,7 @@ namespace dipndipInventory.EF
         public virtual DbSet<wh_delivery_details> wh_delivery_details { get; set; }
         public virtual DbSet<wh_delivery_master> wh_delivery_master { get; set; }
         public virtual DbSet<ck_wastage_reasons> ck_wastage_reasons { get; set; }
+        public virtual DbSet<ck_prod_log> ck_prod_log { get; set; }
     
         public virtual ObjectResult<ReadWarehouseItems_Result> ReadWarehouseItems()
         {

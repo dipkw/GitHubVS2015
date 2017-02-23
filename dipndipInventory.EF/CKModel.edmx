@@ -187,6 +187,32 @@
           <Property Name="modified_date" Type="datetime" />
           <Property Name="active" Type="int" />
         </EntityType>
+        <EntityType Name="ck_prod_log">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="prod_id" Type="int" />
+          <Property Name="prod_code" Type="nvarchar" MaxLength="50" />
+          <Property Name="prod_date" Type="datetime" />
+          <Property Name="batch_no" Type="nvarchar" MaxLength="50" />
+          <Property Name="ck_item_id" Type="int" Nullable="false" />
+          <Property Name="ck_item_code" Type="nvarchar" MaxLength="50" />
+          <Property Name="ck_item_desc" Type="nvarchar" MaxLength="150" />
+          <Property Name="wh_item_id" Type="int" />
+          <Property Name="wh_item_code" Type="nvarchar" MaxLength="50" />
+          <Property Name="wh_item_description" Type="nvarchar" MaxLength="150" />
+          <Property Name="wh_item_unit_id" Type="int" />
+          <Property Name="ck_unit_description" Type="nvarchar" MaxLength="50" />
+          <Property Name="unit_cost" Type="decimal" Precision="20" Scale="12" />
+          <Property Name="qty" Type="decimal" Precision="20" Scale="12" />
+          <Property Name="total_cost" Type="decimal" Precision="20" Scale="12" />
+          <Property Name="active" Type="bit" />
+          <Property Name="created_by" Type="int" />
+          <Property Name="created_date" Type="datetime" />
+          <Property Name="modified_by" Type="int" />
+          <Property Name="modified_date" Type="datetime" />
+        </EntityType>
         <EntityType Name="ck_stock_trans">
           <Key>
             <PropertyRef Name="Id" />
@@ -762,6 +788,18 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ck_item_details_ck_items">
+          <End Role="ck_items" Type="Self.ck_items" Multiplicity="0..1" />
+          <End Role="ck_item_details" Type="Self.ck_item_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ck_items">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ck_item_details">
+              <PropertyRef Name="ck_item_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ck_item_details_ck_users">
           <End Role="ck_users" Type="Self.ck_users" Multiplicity="0..1" />
           <End Role="ck_item_details" Type="Self.ck_item_details" Multiplicity="*" />
@@ -975,6 +1013,78 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
             </Principal>
             <Dependent Role="ck_prod">
               <PropertyRef Name="modified_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ck_prod_log_ck_items">
+          <End Role="ck_items" Type="Self.ck_items" Multiplicity="1" />
+          <End Role="ck_prod_log" Type="Self.ck_prod_log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ck_items">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ck_prod_log">
+              <PropertyRef Name="ck_item_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ck_prod_log_ck_prod">
+          <End Role="ck_prod" Type="Self.ck_prod" Multiplicity="0..1" />
+          <End Role="ck_prod_log" Type="Self.ck_prod_log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ck_prod">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ck_prod_log">
+              <PropertyRef Name="prod_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ck_prod_log_ck_users_created">
+          <End Role="ck_users" Type="Self.ck_users" Multiplicity="0..1" />
+          <End Role="ck_prod_log" Type="Self.ck_prod_log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ck_users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ck_prod_log">
+              <PropertyRef Name="created_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ck_prod_log_ck_users_modified">
+          <End Role="ck_users" Type="Self.ck_users" Multiplicity="0..1" />
+          <End Role="ck_prod_log" Type="Self.ck_prod_log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ck_users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ck_prod_log">
+              <PropertyRef Name="modified_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ck_prod_log_ckwh_items">
+          <End Role="ckwh_items" Type="Self.ckwh_items" Multiplicity="0..1" />
+          <End Role="ck_prod_log" Type="Self.ck_prod_log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ckwh_items">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ck_prod_log">
+              <PropertyRef Name="wh_item_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ck_prod_log_wh_item_unit">
+          <End Role="wh_item_unit" Type="Self.wh_item_unit" Multiplicity="0..1" />
+          <End Role="ck_prod_log" Type="Self.ck_prod_log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="wh_item_unit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ck_prod_log">
+              <PropertyRef Name="wh_item_unit_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1966,6 +2076,7 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
           <EntitySet Name="ck_items" EntityType="Self.ck_items" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ck_items_adj" EntityType="Self.ck_items_adj" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ck_prod" EntityType="Self.ck_prod" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ck_prod_log" EntityType="Self.ck_prod_log" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ck_stock_trans" EntityType="Self.ck_stock_trans" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ck_units" EntityType="Self.ck_units" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ck_users" EntityType="Self.ck_users" Schema="dbo" store:Type="Tables" />
@@ -2039,6 +2150,10 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
             <End Role="ck_users" EntitySet="ck_users" />
             <End Role="ck_item_cost_history" EntitySet="ck_item_cost_history" />
           </AssociationSet>
+          <AssociationSet Name="FK_ck_item_details_ck_items" Association="Self.FK_ck_item_details_ck_items">
+            <End Role="ck_items" EntitySet="ck_items" />
+            <End Role="ck_item_details" EntitySet="ck_item_details" />
+          </AssociationSet>
           <AssociationSet Name="FK_ck_item_details_ck_users" Association="Self.FK_ck_item_details_ck_users">
             <End Role="ck_users" EntitySet="ck_users" />
             <End Role="ck_item_details" EntitySet="ck_item_details" />
@@ -2110,6 +2225,30 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
           <AssociationSet Name="FK_ck_prod_ck_users_modified" Association="Self.FK_ck_prod_ck_users_modified">
             <End Role="ck_users" EntitySet="ck_users" />
             <End Role="ck_prod" EntitySet="ck_prod" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ck_prod_log_ck_items" Association="Self.FK_ck_prod_log_ck_items">
+            <End Role="ck_items" EntitySet="ck_items" />
+            <End Role="ck_prod_log" EntitySet="ck_prod_log" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ck_prod_log_ck_prod" Association="Self.FK_ck_prod_log_ck_prod">
+            <End Role="ck_prod" EntitySet="ck_prod" />
+            <End Role="ck_prod_log" EntitySet="ck_prod_log" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ck_prod_log_ck_users_created" Association="Self.FK_ck_prod_log_ck_users_created">
+            <End Role="ck_users" EntitySet="ck_users" />
+            <End Role="ck_prod_log" EntitySet="ck_prod_log" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ck_prod_log_ck_users_modified" Association="Self.FK_ck_prod_log_ck_users_modified">
+            <End Role="ck_users" EntitySet="ck_users" />
+            <End Role="ck_prod_log" EntitySet="ck_prod_log" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ck_prod_log_ckwh_items" Association="Self.FK_ck_prod_log_ckwh_items">
+            <End Role="ckwh_items" EntitySet="ckwh_items" />
+            <End Role="ck_prod_log" EntitySet="ck_prod_log" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ck_prod_log_wh_item_unit" Association="Self.FK_ck_prod_log_wh_item_unit">
+            <End Role="wh_item_unit" EntitySet="wh_item_unit" />
+            <End Role="ck_prod_log" EntitySet="ck_prod_log" />
           </AssociationSet>
           <AssociationSet Name="FK_ck_stock_trans_ck_items" Association="Self.FK_ck_stock_trans_ck_items">
             <End Role="reason_codes" EntitySet="reason_codes" />
@@ -2929,6 +3068,35 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
             <End Role="ck_wastage_reasons" EntitySet="ck_wastage_reasons" />
             <End Role="ck_wastage_details" EntitySet="ck_wastage_details" />
           </AssociationSet>
+          <EntitySet Name="ck_prod_log" EntityType="dipckModel.ck_prod_log" />
+          <AssociationSet Name="FK_ck_prod_log_ck_items" Association="dipckModel.FK_ck_prod_log_ck_items">
+            <End Role="ck_items" EntitySet="ck_items" />
+            <End Role="ck_prod_log" EntitySet="ck_prod_log" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ck_prod_log_ck_prod" Association="dipckModel.FK_ck_prod_log_ck_prod">
+            <End Role="ck_prod" EntitySet="ck_prod" />
+            <End Role="ck_prod_log" EntitySet="ck_prod_log" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ck_prod_log_ck_users_created" Association="dipckModel.FK_ck_prod_log_ck_users_created">
+            <End Role="ck_users" EntitySet="ck_users" />
+            <End Role="ck_prod_log" EntitySet="ck_prod_log" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ck_prod_log_ck_users_modified" Association="dipckModel.FK_ck_prod_log_ck_users_modified">
+            <End Role="ck_users" EntitySet="ck_users" />
+            <End Role="ck_prod_log" EntitySet="ck_prod_log" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ck_prod_log_ckwh_items" Association="dipckModel.FK_ck_prod_log_ckwh_items">
+            <End Role="ckwh_items" EntitySet="ckwh_items" />
+            <End Role="ck_prod_log" EntitySet="ck_prod_log" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ck_prod_log_wh_item_unit" Association="dipckModel.FK_ck_prod_log_wh_item_unit">
+            <End Role="wh_item_unit" EntitySet="wh_item_unit" />
+            <End Role="ck_prod_log" EntitySet="ck_prod_log" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ck_item_details_ck_items" Association="dipckModel.FK_ck_item_details_ck_items">
+            <End Role="ck_items" EntitySet="ck_items" />
+            <End Role="ck_item_details" EntitySet="ck_item_details" />
+          </AssociationSet>
           </EntityContainer>
         <ComplexType Name="ReadWarehouseItems_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
@@ -2964,6 +3132,7 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
           <NavigationProperty Name="ck_users1" Relationship="dipckModel.FK_ck_item_details_ck_users1" FromRole="ck_item_details" ToRole="ck_users" />
           <NavigationProperty Name="ckwh_items" Relationship="dipckModel.FK_ck_item_details_ckwh_items" FromRole="ck_item_details" ToRole="ckwh_items" />
           <NavigationProperty Name="wh_item_unit" Relationship="dipckModel.FK_ck_item_details_wh_item_unit" FromRole="ck_item_details" ToRole="wh_item_unit" />
+          <NavigationProperty Name="ck_items" Relationship="dipckModel.FK_ck_item_details_ck_items" FromRole="ck_item_details" ToRole="ck_items" />
         </EntityType>
         <EntityType Name="ck_units">
           <Key>
@@ -3047,6 +3216,8 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
           <NavigationProperty Name="wh_delivery_details1" Relationship="dipckModel.FK_wh_delivery_details_ck_users_modified" FromRole="ck_users" ToRole="wh_delivery_details" />
           <NavigationProperty Name="wh_delivery_master" Relationship="dipckModel.FK_wh_delivery_master_ck_users" FromRole="ck_users" ToRole="wh_delivery_master" />
           <NavigationProperty Name="wh_delivery_master1" Relationship="dipckModel.FK_wh_delivery_master_ck_users_modified" FromRole="ck_users" ToRole="wh_delivery_master" />
+          <NavigationProperty Name="ck_prod_log" Relationship="dipckModel.FK_ck_prod_log_ck_users_created" FromRole="ck_users" ToRole="ck_prod_log" />
+          <NavigationProperty Name="ck_prod_log1" Relationship="dipckModel.FK_ck_prod_log_ck_users_modified" FromRole="ck_users" ToRole="ck_prod_log" />
           </EntityType>
         <EntityType Name="ckwh_category">
           <Key>
@@ -3118,6 +3289,7 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
           <NavigationProperty Name="ckwh_items_log" Relationship="dipckModel.FK_ckwh_items_log_ckwh_items" FromRole="ckwh_items" ToRole="ckwh_items_log" />
           <NavigationProperty Name="wh_delivery_details" Relationship="dipckModel.FK_wh_delivery_details_ckwh_items" FromRole="ckwh_items" ToRole="wh_delivery_details" />
           <Property Name="inactive" Type="Boolean" />
+          <NavigationProperty Name="ck_prod_log" Relationship="dipckModel.FK_ck_prod_log_ckwh_items" FromRole="ckwh_items" ToRole="ck_prod_log" />
         </EntityType>
         <EntityType Name="site">
           <Key>
@@ -3176,6 +3348,7 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
           <NavigationProperty Name="ckwh_items_adj" Relationship="dipckModel.FK_ckwh_items_adj_wh_item_unit" FromRole="wh_item_unit" ToRole="ckwh_items_adj" />
           <NavigationProperty Name="ckwh_items" Relationship="dipckModel.FK_wh_item_unit_wh_item_unit1" FromRole="wh_item_unit" ToRole="ckwh_items" />
           <NavigationProperty Name="wh_delivery_details" Relationship="dipckModel.FK_wh_delivery_details_wh_item_unit" FromRole="wh_item_unit" ToRole="wh_delivery_details" />
+          <NavigationProperty Name="ck_prod_log" Relationship="dipckModel.FK_ck_prod_log_wh_item_unit" FromRole="wh_item_unit" ToRole="ck_prod_log" />
         </EntityType>
         <Association Name="FK_ck_item_details_ck_users">
           <End Type="dipckModel.ck_users" Role="ck_users" Multiplicity="0..1" />
@@ -4351,6 +4524,7 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
           <Property Name="batch_no" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="exp_date" Type="DateTime" Precision="3" />
           <Property Name="bal_qty" Type="Decimal" Precision="20" Scale="12" />
+          <NavigationProperty Name="ck_prod_log" Relationship="dipckModel.FK_ck_prod_log_ck_prod" FromRole="ck_prod" ToRole="ck_prod_log" />
         </EntityType>
         <Association Name="FK_ck_prod_ck_item_unit_created">
           <End Type="dipckModel.ck_users" Role="ck_users" Multiplicity="0..1" />
@@ -4452,6 +4626,8 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
           <Property Name="wastage_limit" Type="Decimal" Precision="20" Scale="12" />
           <NavigationProperty Name="ck_issue_detais" Relationship="dipckModel.FK_ck_issue_detais_ck_items" FromRole="ck_items" ToRole="ck_issue_detais" />
           <NavigationProperty Name="ck_items_adj" Relationship="dipckModel.FK_ck_items_adj_ck_items" FromRole="ck_items" ToRole="ck_items_adj" />
+          <NavigationProperty Name="ck_prod_log" Relationship="dipckModel.FK_ck_prod_log_ck_items" FromRole="ck_items" ToRole="ck_prod_log" />
+          <NavigationProperty Name="ck_item_details" Relationship="dipckModel.FK_ck_item_details_ck_items" FromRole="ck_items" ToRole="ck_item_details" />
         </EntityType>
         <Association Name="FK_ck_item_cost_history_ck_items">
           <End Type="dipckModel.ck_items" Role="ck_items" Multiplicity="0..1" />
@@ -5118,6 +5294,122 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
             </Principal>
             <Dependent Role="ck_wastage_details">
               <PropertyRef Name="ck_wastage_reason_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ck_prod_log">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="prod_id" Type="Int32" />
+          <Property Name="prod_code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="prod_date" Type="DateTime" Precision="3" />
+          <Property Name="batch_no" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ck_item_id" Type="Int32" Nullable="false" />
+          <Property Name="ck_item_code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ck_item_desc" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="wh_item_id" Type="Int32" />
+          <Property Name="wh_item_code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="wh_item_description" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="wh_item_unit_id" Type="Int32" />
+          <Property Name="ck_unit_description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="unit_cost" Type="Decimal" Precision="20" Scale="12" />
+          <Property Name="qty" Type="Decimal" Precision="20" Scale="12" />
+          <Property Name="total_cost" Type="Decimal" Precision="20" Scale="12" />
+          <Property Name="active" Type="Boolean" />
+          <Property Name="created_by" Type="Int32" />
+          <Property Name="created_date" Type="DateTime" Precision="3" />
+          <Property Name="modified_by" Type="Int32" />
+          <Property Name="modified_date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ck_items" Relationship="dipckModel.FK_ck_prod_log_ck_items" FromRole="ck_prod_log" ToRole="ck_items" />
+          <NavigationProperty Name="ck_prod" Relationship="dipckModel.FK_ck_prod_log_ck_prod" FromRole="ck_prod_log" ToRole="ck_prod" />
+          <NavigationProperty Name="ck_users" Relationship="dipckModel.FK_ck_prod_log_ck_users_created" FromRole="ck_prod_log" ToRole="ck_users" />
+          <NavigationProperty Name="ck_users1" Relationship="dipckModel.FK_ck_prod_log_ck_users_modified" FromRole="ck_prod_log" ToRole="ck_users" />
+          <NavigationProperty Name="ckwh_items" Relationship="dipckModel.FK_ck_prod_log_ckwh_items" FromRole="ck_prod_log" ToRole="ckwh_items" />
+          <NavigationProperty Name="wh_item_unit" Relationship="dipckModel.FK_ck_prod_log_wh_item_unit" FromRole="ck_prod_log" ToRole="wh_item_unit" />
+        </EntityType>
+        <Association Name="FK_ck_prod_log_ck_items">
+          <End Type="dipckModel.ck_items" Role="ck_items" Multiplicity="1" />
+          <End Type="dipckModel.ck_prod_log" Role="ck_prod_log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ck_items">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ck_prod_log">
+              <PropertyRef Name="ck_item_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ck_prod_log_ck_prod">
+          <End Type="dipckModel.ck_prod" Role="ck_prod" Multiplicity="0..1" />
+          <End Type="dipckModel.ck_prod_log" Role="ck_prod_log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ck_prod">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ck_prod_log">
+              <PropertyRef Name="prod_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ck_prod_log_ck_users_created">
+          <End Type="dipckModel.ck_users" Role="ck_users" Multiplicity="0..1" />
+          <End Type="dipckModel.ck_prod_log" Role="ck_prod_log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ck_users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ck_prod_log">
+              <PropertyRef Name="created_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ck_prod_log_ck_users_modified">
+          <End Type="dipckModel.ck_users" Role="ck_users" Multiplicity="0..1" />
+          <End Type="dipckModel.ck_prod_log" Role="ck_prod_log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ck_users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ck_prod_log">
+              <PropertyRef Name="modified_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ck_prod_log_ckwh_items">
+          <End Type="dipckModel.ckwh_items" Role="ckwh_items" Multiplicity="0..1" />
+          <End Type="dipckModel.ck_prod_log" Role="ck_prod_log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ckwh_items">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ck_prod_log">
+              <PropertyRef Name="wh_item_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ck_prod_log_wh_item_unit">
+          <End Type="dipckModel.wh_item_unit" Role="wh_item_unit" Multiplicity="0..1" />
+          <End Type="dipckModel.ck_prod_log" Role="ck_prod_log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="wh_item_unit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ck_prod_log">
+              <PropertyRef Name="wh_item_unit_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ck_item_details_ck_items">
+          <End Type="dipckModel.ck_items" Role="ck_items" Multiplicity="0..1" />
+          <End Type="dipckModel.ck_item_details" Role="ck_item_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ck_items">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ck_item_details">
+              <PropertyRef Name="ck_item_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -5789,6 +6081,33 @@ warning 6013: The table/view 'dipck.dbo.wh_cost_change_history' does not have a 
               <MappingFragment StoreEntitySet="ck_wastage_reasons">
                 <ScalarProperty Name="active" ColumnName="active" />
                 <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ck_prod_log">
+            <EntityTypeMapping TypeName="dipckModel.ck_prod_log">
+              <MappingFragment StoreEntitySet="ck_prod_log">
+                <ScalarProperty Name="modified_date" ColumnName="modified_date" />
+                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="active" ColumnName="active" />
+                <ScalarProperty Name="total_cost" ColumnName="total_cost" />
+                <ScalarProperty Name="qty" ColumnName="qty" />
+                <ScalarProperty Name="unit_cost" ColumnName="unit_cost" />
+                <ScalarProperty Name="ck_unit_description" ColumnName="ck_unit_description" />
+                <ScalarProperty Name="wh_item_unit_id" ColumnName="wh_item_unit_id" />
+                <ScalarProperty Name="wh_item_description" ColumnName="wh_item_description" />
+                <ScalarProperty Name="wh_item_code" ColumnName="wh_item_code" />
+                <ScalarProperty Name="wh_item_id" ColumnName="wh_item_id" />
+                <ScalarProperty Name="ck_item_desc" ColumnName="ck_item_desc" />
+                <ScalarProperty Name="ck_item_code" ColumnName="ck_item_code" />
+                <ScalarProperty Name="ck_item_id" ColumnName="ck_item_id" />
+                <ScalarProperty Name="batch_no" ColumnName="batch_no" />
+                <ScalarProperty Name="prod_date" ColumnName="prod_date" />
+                <ScalarProperty Name="prod_code" ColumnName="prod_code" />
+                <ScalarProperty Name="prod_id" ColumnName="prod_id" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

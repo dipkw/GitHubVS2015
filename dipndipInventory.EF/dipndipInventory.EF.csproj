@@ -113,6 +113,9 @@
     <Compile Include="ck_prod.cs">
       <DependentUpon>CKModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ck_prod_log.cs">
+      <DependentUpon>CKModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="ck_stock_trans.cs">
       <DependentUpon>CKModel.tt</DependentUpon>
     </Compile>

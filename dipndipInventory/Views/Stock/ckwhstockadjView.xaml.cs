@@ -56,7 +56,7 @@ namespace dipndipInventory.Views.Stock
         private void ReadAllWHItems()
         {
             dgCKWHItems.ItemsSource = null;
-            IEnumerable<ckwh_items> objItems = _context.ReadAllWHItems();
+            IEnumerable<ckwh_items> objItems = _context.ReadAllActiveWHItems();
             dgCKWHItems.ItemsSource = objItems;
             
             WHItemUnitService unitContext = new WHItemUnitService();

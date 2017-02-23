@@ -159,6 +159,7 @@
         <AssociationConnector Association="dipckModel.FK_wh_delivery_details_wh_item_unit" />
         <EntityTypeShape EntityType="dipckModel.ck_wastage_reasons" Width="1.5" PointX="7.375" PointY="0.875" />
         <AssociationConnector Association="dipckModel.FK_ck_wastage_details_ck_wastage_reasons" />
+        <AssociationConnector Association="dipckModel.FK_ck_item_details_ck_items" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

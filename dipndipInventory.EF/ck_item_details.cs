@@ -29,5 +29,6 @@ namespace dipndipInventory.EF
         public virtual ck_users ck_users1 { get; set; }
         public virtual ckwh_items ckwh_items { get; set; }
         public virtual wh_item_unit wh_item_unit { get; set; }
+        public virtual ck_items ck_items { get; set; }
     }
 }
